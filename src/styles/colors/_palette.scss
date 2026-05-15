@@ -1,0 +1,19 @@
+@use 'sass:color';
+
+@mixin color-scale($name, $base) {
+  $chroma: color.channel($base, 'chroma', $space: oklch);
+  $hue: color.channel($base, 'hue', $space: oklch);
+
+  :root {
+    --color-#{$name}-50: oklch(0.97 #{$chroma * 0.12} #{$hue});
+    --color-#{$name}-100: oklch(0.93 #{$chroma * 0.2} #{$hue});
+    --color-#{$name}-200: oklch(0.87 #{$chroma * 0.35} #{$hue});
+    --color-#{$name}-300: oklch(0.79 #{$chroma * 0.5} #{$hue});
+    --color-#{$name}-400: oklch(0.7 #{$chroma * 0.75} #{$hue});
+    --color-#{$name}-500: oklch(0.62 #{$chroma} #{$hue});
+    --color-#{$name}-600: oklch(0.55 #{$chroma * 0.95} #{$hue});
+    --color-#{$name}-700: oklch(0.48 #{$chroma * 0.85} #{$hue});
+    --color-#{$name}-800: oklch(0.4 #{$chroma * 0.7} #{$hue});
+    --color-#{$name}-900: oklch(0.32 #{$chroma * 0.55} #{$hue});
+  }
+}

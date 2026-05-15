@@ -1,0 +1,6 @@
+@use './palette';
+
+@include palette.color-scale('success', #16a34a);
+@include palette.color-scale('warning', #d97706);
+@include palette.color-scale('danger', #dc2626);
+@include palette.color-scale('info', #0284c7);

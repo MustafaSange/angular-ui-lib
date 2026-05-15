@@ -1,0 +1,45 @@
+@mixin interactive-color($name) {
+  --color-#{$name}: var(--color-#{$name}-600);
+  --color-#{$name}-hover: var(--color-#{$name}-700);
+  --color-#{$name}-active: var(--color-#{$name}-800);
+  --color-#{$name}-subtle: var(--color-#{$name}-50);
+  --color-#{$name}-text: var(--color-#{$name}-800);
+  --color-#{$name}-border: var(--color-#{$name}-300);
+  --color-#{$name}-contrast: #ffffff;
+}
+
+@mixin feedback-color($name) {
+  --color-#{$name}: var(--color-#{$name}-600);
+  --color-#{$name}-subtle: var(--color-#{$name}-50);
+  --color-#{$name}-text: var(--color-#{$name}-800);
+  --color-#{$name}-border: var(--color-#{$name}-300);
+  --color-#{$name}-contrast: #ffffff;
+}
+
+:root {
+  /* Brand colors */
+  @include interactive-color('primary');
+  @include interactive-color('secondary');
+  @include interactive-color('accent');
+
+  /* Feedback colors */
+  @include feedback-color('success');
+  @include feedback-color('warning');
+  @include feedback-color('danger');
+  @include feedback-color('info');
+
+  /* Text colors */
+  --color-text-primary: #0f172a; /* Main headings, body text, and labels */
+  --color-text-secondary: #475569; /* Supporting descriptions and metadata */
+  --color-text-muted: #64748b; /* Low-emphasis captions, hints, and timestamps */
+  --color-text-inverse: #ffffff; /* Text on dark or solid colored surfaces */
+
+  /* Background and surface colors */
+  --color-background: #f8fafc; /* App canvas and page background */
+  --color-surface: #ffffff; /* Default cards, panels, and content surfaces */
+  --color-surface-muted: #f1f5f9; /* Subtle grouped or inset surfaces */
+  --color-surface-raised: #ffffff; /* Dropdowns, popovers, and floating surfaces */
+  --color-surface-overlay: #ffffff; /* Dialogs, sheets, and topmost surfaces */
+  --color-border: #cbd5e1;
+  --color-border-strong: #94a3b8;
+}

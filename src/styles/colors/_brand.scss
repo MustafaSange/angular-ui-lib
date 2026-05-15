@@ -1,0 +1,5 @@
+@use './palette';
+
+@include palette.color-scale('primary', #2563eb);
+@include palette.color-scale('secondary', #64748b);
+@include palette.color-scale('accent', #8b5cf6);

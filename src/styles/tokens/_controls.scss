@@ -1,0 +1,10 @@
+:root {
+  /* Form controls */
+  --control-height-sm: 2rem; /* 32px */
+  --control-height-md: 2.5rem; /* 40px */
+  --control-height-lg: 3rem; /* 48px */
+  --control-padding-x: 0.75rem; /* 12px */
+  --control-border-width: 1px;
+  --control-border-color: var(--color-border);
+  --control-focus-ring: 0 0 0 3px var(--color-focus-ring);
+}
