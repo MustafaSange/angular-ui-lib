@@ -15,4 +15,4 @@ Use modern Angular patterns:
   - root component class is `App`
   - app template/style files are `app.html` and `app.scss`
   - routes are in `src/app/app.routes.ts`
-- Add/update tests for behavior changes.
+- Do not add/update tests for behavior changes.
