@@ -21,7 +21,7 @@ Create the foundational design-token system for the Angular UI library.
   - layout and z-index
   - containers and breakpoints
   - UI states
-  - form controls
+  - form controls, including size-based height and padding tokens
 - Keep tokens grouped by domain and document non-obvious usage with concise comments.
 - Do not add component styles.
 

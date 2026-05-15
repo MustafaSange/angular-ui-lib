@@ -66,7 +66,7 @@ Create flex utilities:
 Create margin and padding utilities:
 - `.m-*`, `.mt-*`, `.mr-*`, `.mb-*`, `.ml-*`, `.ms-*`, `.me-*`, `.mx-*`, `.my-*`
 - `.p-*`, `.pt-*`, `.pr-*`, `.pb-*`, `.pl-*`, `.ps-*`, `.pe-*`, `.px-*`, `.py-*`
-- Use the spacing scale: `0`, `4`, `8`, `12`, `16`, `20`, `24`, `28`, `32`, `36`, `40`, `48`
+- Use the spacing scale: `0`, `2`, `4`, `8`, `12`, `16`, `20`, `24`, `28`, `32`, `36`, `40`, `48`
 
 ### _typography.scss
 Create typography utilities:

@@ -10,6 +10,8 @@
 
 @mixin feedback-color($name) {
   --color-#{$name}: var(--color-#{$name}-600);
+  --color-#{$name}-hover: var(--color-#{$name}-700);
+  --color-#{$name}-active: var(--color-#{$name}-800);
   --color-#{$name}-subtle: var(--color-#{$name}-50);
   --color-#{$name}-text: var(--color-#{$name}-800);
   --color-#{$name}-border: var(--color-#{$name}-300);

@@ -1,9 +1,19 @@
 :root {
   /* Form controls */
-  --control-height-sm: 2rem; /* 32px */
-  --control-height-md: 2.5rem; /* 40px */
+  --control-height-xs: 1.5rem; /* 24px */
+  --control-height-sm: 1.75rem; /* 28px */
+  --control-height-md: 2rem; /* 32px */
   --control-height-lg: 3rem; /* 48px */
-  --control-padding-x: 0.75rem; /* 12px */
+  --control-padding-x-0: var(--spacing-0);
+  --control-padding-x-xs: var(--spacing-8);
+  --control-padding-x-sm: var(--spacing-12);
+  --control-padding-x-md: var(--spacing-16);
+  --control-padding-x-lg: var(--spacing-20);
+  --control-padding-y-0: var(--spacing-0);
+  --control-padding-y-xs: var(--spacing-2);
+  --control-padding-y-sm: var(--spacing-4);
+  --control-padding-y-md: var(--spacing-8);
+  --control-padding-y-lg: var(--spacing-12);
   --control-border-width: var(--border-width-sm);
   --control-border-color: var(--color-border);
   --control-focus-ring: 0 0 0 3px var(--color-focus-ring);
