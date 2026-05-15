@@ -1,0 +1,75 @@
+$-spacing-sizes: 0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 48;
+
+@each $space in $-spacing-sizes {
+  .m-#{$space} {
+    margin: var(--spacing-#{$space});
+  }
+
+  .mt-#{$space} {
+    margin-top: var(--spacing-#{$space});
+  }
+
+  .mr-#{$space} {
+    margin-right: var(--spacing-#{$space});
+  }
+
+  .mb-#{$space} {
+    margin-bottom: var(--spacing-#{$space});
+  }
+
+  .ml-#{$space} {
+    margin-left: var(--spacing-#{$space});
+  }
+
+  .ms-#{$space} {
+    margin-inline-start: var(--spacing-#{$space});
+  }
+
+  .me-#{$space} {
+    margin-inline-end: var(--spacing-#{$space});
+  }
+
+  .mx-#{$space} {
+    margin-inline: var(--spacing-#{$space});
+  }
+
+  .my-#{$space} {
+    margin-block: var(--spacing-#{$space});
+  }
+
+  .p-#{$space} {
+    padding: var(--spacing-#{$space});
+  }
+
+  .pt-#{$space} {
+    padding-top: var(--spacing-#{$space});
+  }
+
+  .pr-#{$space} {
+    padding-right: var(--spacing-#{$space});
+  }
+
+  .pb-#{$space} {
+    padding-bottom: var(--spacing-#{$space});
+  }
+
+  .pl-#{$space} {
+    padding-left: var(--spacing-#{$space});
+  }
+
+  .ps-#{$space} {
+    padding-inline-start: var(--spacing-#{$space});
+  }
+
+  .pe-#{$space} {
+    padding-inline-end: var(--spacing-#{$space});
+  }
+
+  .px-#{$space} {
+    padding-inline: var(--spacing-#{$space});
+  }
+
+  .py-#{$space} {
+    padding-block: var(--spacing-#{$space});
+  }
+}

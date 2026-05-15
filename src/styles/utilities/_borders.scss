@@ -1,0 +1,15 @@
+.border {
+  border: var(--border-width-sm) solid var(--color-border);
+}
+
+.border-0 {
+  border: 0;
+}
+
+$radius-sizes: sm, md, lg, xl, full;
+
+@each $size in $radius-sizes {
+  .rounded-#{$size} {
+    border-radius: var(--radius-#{$size});
+  }
+}

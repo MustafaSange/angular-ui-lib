@@ -1,36 +1,31 @@
-# Feature 001: Theme Variables
+# Feature 001: Theme Tokens
 
 ## Goal
-Create the base theme variables for this Angular project.
+Create the foundational design-token system for the Angular UI library.
 
-## Task
-Create this file:
+## Structure
+- `src/styles/colors/` — palette generation and semantic color tokens
+- `src/styles/tokens/` — typography, spacing, borders, shape, motion, layout, containers, breakpoints, states, and controls
+- `src/styles/_index.scss` — global token entrypoint
 
-src/styles/_variables.scss
+## Requirements
+- Use SCSS and CSS custom properties.
+- Generate reusable color ramps for brand and feedback colors.
+- Expose semantic color tokens for solid, subtle, text, border, and contrast use cases.
+- Provide reusable tokens for:
+  - typography
+  - value-based spacing
+  - border widths
+  - radius and shadows
+  - motion
+  - layout and z-index
+  - containers and breakpoints
+  - UI states
+  - form controls
+- Keep tokens grouped by domain and document non-obvious usage with concise comments.
+- Do not add component styles.
 
-## What to include
-Inside `_variables.scss`, create a `:root` block with reusable CSS variables for:
-
-- colors
-- text colors
-- background/surface colors
-- font sizes
-- font families
-- spacing
-- border radius
-- shadows
-- transitions
-- layout sizes
-- z-index
-- form controls
-
-## Rules
-- Use SCSS.
-- Use CSS variables like `--color-primary`.
-- Keep variables grouped with comments.
-- Use realistic default values.
-- Do not create component styles yet.
-- Do not modify unrelated files.
-
-## Also do this
-Import `_variables.scss` into the `_index.scss` global stylesheet.
+## Acceptance Criteria
+- Global styles import the token entrypoint.
+- Token files compile through Sass.
+- Palette tokens are emitted before semantic aliases that reference them.
