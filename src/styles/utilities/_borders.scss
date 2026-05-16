@@ -6,7 +6,7 @@
   border: 0;
 }
 
-$radius-sizes: sm, md, lg, xl, full;
+$radius-sizes: 0, sm, md, lg, xl, full;
 
 @each $size in $radius-sizes {
   .rounded-#{$size} {
