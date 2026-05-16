@@ -1,0 +1,46 @@
+:host {
+  position: fixed;
+  z-index: var(--z-index-sticky);
+  inset-block-start: var(--spacing-16);
+  inset-inline-end: var(--spacing-16);
+}
+
+.theme-switcher {
+  display: inline-flex;
+  gap: var(--spacing-4);
+  padding: var(--spacing-4);
+  border: var(--border-width-sm) solid var(--color-border);
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.theme-option {
+  min-block-size: var(--control-height-sm);
+  padding-inline: var(--control-padding-x-sm);
+  border: 0;
+  border-radius: var(--radius-full);
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    box-shadow var(--transition-fast);
+
+  &:hover {
+    color: var(--color-text-primary);
+  }
+
+  &:focus-visible {
+    outline: 0;
+    box-shadow: var(--control-focus-ring);
+  }
+
+  &.is-active {
+    background-color: var(--color-primary);
+    color: var(--color-primary-contrast);
+  }
+}

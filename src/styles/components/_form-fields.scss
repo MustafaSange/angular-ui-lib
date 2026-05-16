@@ -4,7 +4,7 @@
 
   label,
   .form-field-label {
-    color: var(--color-neutral-600);
+    color: var(--color-text-secondary);
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-medium);
   }
@@ -37,7 +37,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-neutral-500);
+    color: var(--color-text-muted);
     font-size: var(--font-size-sm);
     white-space: nowrap;
   }
@@ -57,7 +57,7 @@
     padding-inline: var(--control-padding-x-xs);
     border: 0;
     background-color: transparent;
-    color: var(--color-neutral-500);
+    color: var(--color-text-muted);
     cursor: pointer;
     transition:
       background-color var(--transition-fast),
@@ -104,7 +104,7 @@
     }
 
     &::placeholder {
-      color: var(--color-neutral-300);
+      color: var(--color-border);
     }
   }
 
@@ -163,7 +163,7 @@
   &.is-disabled,
   &:has(:disabled) {
     .form-field-label {
-      color: var(--color-neutral-500);
+      color: var(--color-text-muted);
     }
 
     .form-field-control {
@@ -177,7 +177,7 @@
     .form-field-prefix,
     .form-field-suffix,
     .form-field-action {
-      color: var(--color-neutral-500);
+      color: var(--color-text-muted);
       cursor: not-allowed;
     }
   }

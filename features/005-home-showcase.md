@@ -8,6 +8,7 @@ The project already contains feature pages for:
 
 - Buttons
 - Grid system
+- Form fields
 
 Each feature page should be discoverable from one central place, and users should be able to return there without using browser navigation.
 
@@ -27,6 +28,7 @@ Create:
 - Render the Home feature at `/`.
 - Keep the Buttons feature at `/buttons`.
 - Keep the Grid feature at `/grid`.
+- Keep the Form Fields feature at `/form-fields`.
 
 ## Home page
 
@@ -36,6 +38,7 @@ Create a simple showcase landing page with:
 - a short description
 - a card or link for the Buttons showcase
 - a card or link for the Grid showcase
+- a card or link for the Form Fields showcase
 
 Selecting a showcase item should navigate to its page.
 
@@ -45,6 +48,7 @@ Add a visible back control to:
 
 - Buttons page
 - Grid page
+- Form Fields page
 
 Each control should navigate back to `/`.
 
@@ -60,5 +64,6 @@ Each control should navigate back to `/`.
 
 - Visiting `/` shows the Home page.
 - The Home page links to Buttons and Grid.
-- Buttons and Grid pages both provide a visible path back to Home.
+- The Home page links to Buttons, Grid, and Form Fields.
+- Buttons, Grid, and Form Fields pages all provide a visible path back to Home.
 - Navigation works without a full page reload.

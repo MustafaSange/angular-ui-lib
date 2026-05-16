@@ -30,22 +30,4 @@
   @include feedback-color('danger');
   @include feedback-color('info');
 
-  /* Text colors */
-  --color-text-primary: var(--color-neutral-900); /* Main headings, body text, and labels */
-  --color-text-secondary: var(--color-neutral-600); /* Supporting descriptions and metadata */
-  --color-text-muted: var(--color-neutral-500); /* Low-emphasis captions, hints, and timestamps */
-  --color-text-inverse: #ffffff; /* Text on dark or solid colored surfaces */
-
-  /* Link colors */
-  --color-link: #1d4ed8;
-  --color-link-hover: #1e40af;
-
-  /* Background and surface colors */
-  --color-background: var(--color-neutral-50); /* App canvas and page background */
-  --color-surface: #ffffff; /* Default cards, panels, and content surfaces */
-  --color-surface-muted: var(--color-neutral-100); /* Subtle grouped or inset surfaces */
-  --color-surface-raised: #ffffff; /* Dropdowns, popovers, and floating surfaces */
-  --color-surface-overlay: #ffffff; /* Dialogs, sheets, and topmost surfaces */
-  --color-border: var(--color-neutral-300);
-  --color-border-strong: var(--color-neutral-400);
 }
