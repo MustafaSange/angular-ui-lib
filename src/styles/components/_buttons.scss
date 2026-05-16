@@ -51,17 +51,27 @@ $solid-variants: primary, secondary, danger, success;
   }
 }
 
-.btn-outline {
+@mixin outline-variant($variant) {
   background-color: transparent;
-  border-color: var(--color-primary-border);
-  color: var(--color-primary-text);
+  border-color: var(--color-#{$variant}-border);
+  color: var(--color-#{$variant}-text);
 
   &:hover:not(:disabled):not([aria-disabled='true']) {
-    background-color: var(--color-primary-subtle);
+    background-color: var(--color-#{$variant}-subtle);
   }
 
   &:active:not(:disabled):not([aria-disabled='true']) {
-    background-color: var(--color-primary-border);
+    background-color: var(--color-#{$variant}-border);
+  }
+}
+
+.btn-outline {
+  @include outline-variant('primary');
+}
+
+@each $variant in $solid-variants {
+  .btn-outline-#{$variant} {
+    @include outline-variant($variant);
   }
 }
 

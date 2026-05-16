@@ -38,6 +38,10 @@ Create button variants:
 - .btn-primary
 - .btn-secondary
 - .btn-outline
+- .btn-outline-primary
+- .btn-outline-secondary
+- .btn-outline-danger
+- .btn-outline-success
 - .btn-ghost
 - .btn-danger
 - .btn-success
@@ -64,6 +68,19 @@ Create icon button:
 
 - .btn-icon — square icon-only button using the matching control height for both inline and block size
 
+## Demo page
+
+Create a Buttons feature page that showcases:
+
+- solid variants
+- outline variants
+- available sizes
+- disabled states for every visual variant
+- full-width buttons
+- icon-only buttons for every visual variant
+- icon-only button sizes
+- disabled icon-only buttons for every visual variant
+
 ## Rules
 
 - Use CSS variables only.
@@ -74,9 +91,8 @@ Create icon button:
 - Focus state must be visible.
 - Button sizes must use matching control height and horizontal padding tokens.
 - Icon buttons should stay square and remove inline padding.
+- Icon buttons should compose with the same visual variants as regular buttons.
 - Keep styles reusable across future projects.
-- Do not create Angular components yet.
-- Only create SCSS button styles.
 
 ## _index.scss
 

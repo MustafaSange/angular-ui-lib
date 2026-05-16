@@ -1,5 +1,6 @@
 <main class="buttons-page">
   <header class="buttons-header">
+    <a class="btn btn-ghost back-link" routerLink="/">← Back to home</a>
     <p class="eyebrow">Components</p>
     <h1>Buttons</h1>
     <p class="description">A single place to inspect button variants, sizes, states, width, and icon-only controls.</p>
@@ -18,6 +19,16 @@
   </section>
 
   <section class="button-section">
+    <h2>Outline variants</h2>
+    <div class="button-row">
+      <button class="btn btn-outline-primary">Primary outline</button>
+      <button class="btn btn-outline-secondary">Secondary outline</button>
+      <button class="btn btn-outline-danger">Danger outline</button>
+      <button class="btn btn-outline-success">Success outline</button>
+    </div>
+  </section>
+
+  <section class="button-section">
     <h2>Sizes</h2>
     <div class="button-row align-end">
       <button class="btn btn-primary btn-xs">Extra small</button>
@@ -30,9 +41,12 @@
   <section class="button-section">
     <h2>States</h2>
     <div class="button-row">
-      <button class="btn btn-primary">Enabled</button>
-      <button class="btn btn-primary" disabled>Disabled</button>
-      <button class="btn btn-outline" aria-disabled="true">ARIA disabled</button>
+      <button class="btn btn-primary" disabled>Primary disabled</button>
+      <button class="btn btn-secondary" disabled>Secondary disabled</button>
+      <button class="btn btn-outline" disabled>Outline disabled</button>
+      <button class="btn btn-ghost" disabled>Ghost disabled</button>
+      <button class="btn btn-danger" disabled>Danger disabled</button>
+      <button class="btn btn-success" disabled>Success disabled</button>
     </div>
   </section>
 
@@ -44,6 +58,30 @@
   <section class="button-section">
     <h2>Icon only</h2>
     <div class="button-row align-center">
+      <button class="btn btn-primary btn-icon" aria-label="Primary action">
+        <span aria-hidden="true">+</span>
+      </button>
+      <button class="btn btn-secondary btn-icon" aria-label="Secondary action">
+        <span aria-hidden="true">+</span>
+      </button>
+      <button class="btn btn-outline btn-icon" aria-label="Outline action">
+        <span aria-hidden="true">+</span>
+      </button>
+      <button class="btn btn-ghost btn-icon" aria-label="Ghost action">
+        <span aria-hidden="true">+</span>
+      </button>
+      <button class="btn btn-danger btn-icon" aria-label="Danger action">
+        <span aria-hidden="true">+</span>
+      </button>
+      <button class="btn btn-success btn-icon" aria-label="Success action">
+        <span aria-hidden="true">+</span>
+      </button>
+    </div>
+  </section>
+
+  <section class="button-section">
+    <h2>Icon sizes</h2>
+    <div class="button-row align-center">
       <button class="btn btn-primary btn-icon btn-xs" aria-label="Add extra small">
         <span aria-hidden="true">+</span>
       </button>
@@ -54,6 +92,30 @@
         <span aria-hidden="true">+</span>
       </button>
       <button class="btn btn-primary btn-icon btn-lg" aria-label="Add large">
+        <span aria-hidden="true">+</span>
+      </button>
+    </div>
+  </section>
+
+  <section class="button-section">
+    <h2>Disabled icons</h2>
+    <div class="button-row align-center">
+      <button class="btn btn-primary btn-icon" aria-label="Primary disabled" disabled>
+        <span aria-hidden="true">+</span>
+      </button>
+      <button class="btn btn-secondary btn-icon" aria-label="Secondary disabled" disabled>
+        <span aria-hidden="true">+</span>
+      </button>
+      <button class="btn btn-outline btn-icon" aria-label="Outline disabled" disabled>
+        <span aria-hidden="true">+</span>
+      </button>
+      <button class="btn btn-ghost btn-icon" aria-label="Ghost disabled" disabled>
+        <span aria-hidden="true">+</span>
+      </button>
+      <button class="btn btn-danger btn-icon" aria-label="Danger disabled" disabled>
+        <span aria-hidden="true">+</span>
+      </button>
+      <button class="btn btn-success btn-icon" aria-label="Success disabled" disabled>
         <span aria-hidden="true">+</span>
       </button>
     </div>
