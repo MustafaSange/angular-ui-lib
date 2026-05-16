@@ -62,12 +62,18 @@ Make `input`, `button`, `textarea`, and `select` inherit the surrounding font wi
 font: inherit;
 ```
 
+### Links
+Style native links consistently:
+
+- use dedicated semantic link colors
+- keep visible text decoration
+- use the dedicated link hover color
+- show a visible focus ring consistent with interactive controls
+
 ## Out of scope for this first version
 Do not reset or restyle:
 
-- links
 - button chrome
-- focus styles
 
 These can be expanded later when the design system has stronger opinions for them.
 
@@ -91,3 +97,4 @@ Forward the reset partial:
 - Global body typography and colors come from existing tokens.
 - Media elements do not overflow their container by default.
 - Form controls inherit typography from their surrounding context.
+- Links use shared semantic colors and a visible focus style.

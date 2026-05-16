@@ -36,6 +36,10 @@
   --color-text-muted: var(--color-neutral-500); /* Low-emphasis captions, hints, and timestamps */
   --color-text-inverse: #ffffff; /* Text on dark or solid colored surfaces */
 
+  /* Link colors */
+  --color-link: #1d4ed8;
+  --color-link-hover: #1e40af;
+
   /* Background and surface colors */
   --color-background: var(--color-neutral-50); /* App canvas and page background */
   --color-surface: #ffffff; /* Default cards, panels, and content surfaces */

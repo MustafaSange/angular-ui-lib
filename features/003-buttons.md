@@ -73,6 +73,7 @@ Create icon button:
 Create a Buttons feature page that showcases:
 
 - solid variants
+- plain links and anchor elements styled as buttons
 - outline variants
 - available sizes
 - disabled states for every visual variant
@@ -89,6 +90,7 @@ Create a Buttons feature page that showcases:
 - Use `cursor: pointer`.
 - Disabled buttons should use `cursor: not-allowed`.
 - Focus state must be visible.
+- Base buttons should use the small radius token.
 - Button sizes must use matching control height and horizontal padding tokens.
 - Icon buttons should stay square and remove inline padding.
 - Icon buttons should compose with the same visual variants as regular buttons.
