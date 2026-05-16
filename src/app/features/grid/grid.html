@@ -1,0 +1,53 @@
+<main class="grid-page">
+  <header class="grid-header">
+    <p class="eyebrow">Layout</p>
+    <h1>Grid system</h1>
+    <p class="description">A visual pass over the 12-column grid, row gaps, responsive spans, and named containers.</p>
+  </header>
+
+  <section class="grid-section">
+    <h2>12 columns</h2>
+    <div class="row row-gap-8 grid-demo">
+      @for (column of columns; track column) {
+        <div class="col-1 grid-cell">{{ column }}</div>
+      }
+    </div>
+  </section>
+
+  <section class="grid-section">
+    <h2>Common spans</h2>
+    <div class="row row-gap-12 grid-demo">
+      <div class="col-12 grid-cell">col-12</div>
+      <div class="col-6 grid-cell">col-6</div>
+      <div class="col-6 grid-cell">col-6</div>
+      <div class="col-4 grid-cell">col-4</div>
+      <div class="col-4 grid-cell">col-4</div>
+      <div class="col-4 grid-cell">col-4</div>
+      <div class="col-3 grid-cell">col-3</div>
+      <div class="col-3 grid-cell">col-3</div>
+      <div class="col-3 grid-cell">col-3</div>
+      <div class="col-3 grid-cell">col-3</div>
+    </div>
+  </section>
+
+  <section class="grid-section">
+    <h2>Responsive aliases</h2>
+    <p class="section-copy">These cards use <code>col-12 gt-xs-col-6 gt-sm-col-4</code>.</p>
+    <div class="row row-gap-12 grid-demo">
+      <div class="col-12 gt-xs-col-6 gt-sm-col-4 grid-cell">Responsive A</div>
+      <div class="col-12 gt-xs-col-6 gt-sm-col-4 grid-cell">Responsive B</div>
+      <div class="col-12 gt-xs-col-6 gt-sm-col-4 grid-cell">Responsive C</div>
+    </div>
+  </section>
+
+  <section class="grid-section">
+    <h2>Named containers</h2>
+    <div class="container-stack">
+      <div class="container-narrow grid-cell">container-narrow</div>
+      <div class="container-content grid-cell">container-content</div>
+      <div class="container-page grid-cell">container-page</div>
+      <div class="container-wide grid-cell">container-wide</div>
+      <div class="container-full grid-cell">container-full</div>
+    </div>
+  </section>
+</main>

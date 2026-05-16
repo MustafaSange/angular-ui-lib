@@ -73,11 +73,3 @@
 .align-stretch {
   align-items: stretch;
 }
-
-$-spacing-sizes: 0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 48;
-
-@each $space in $-spacing-sizes {
-  .gap-#{$space} {
-    gap: var(--spacing-#{$space});
-  }
-}

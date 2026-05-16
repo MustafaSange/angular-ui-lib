@@ -1,0 +1,7 @@
+$-container-sizes: narrow, content, page, wide, full;
+
+@each $size in $-container-sizes {
+  .container-#{$size} {
+    inline-size: min(100%, var(--container-#{$size}));
+  }
+}

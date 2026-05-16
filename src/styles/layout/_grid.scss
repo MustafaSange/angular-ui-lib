@@ -1,0 +1,29 @@
+@use '../tokens/breakpoints';
+
+$-columns: 12;
+
+@mixin column-utilities($prefix: '') {
+  @for $column from 1 through $-columns {
+    .#{$prefix}col-#{$column} {
+      grid-column: span $column;
+    }
+  }
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  inline-size: 100%;
+
+  > * {
+    grid-column: span 12;
+  }
+}
+
+@include column-utilities;
+
+@each $alias, $query in breakpoints.$media-aliases {
+  @media #{$query} {
+    @include column-utilities('#{$alias}-');
+  }
+}

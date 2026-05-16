@@ -18,6 +18,7 @@ Create these files:
 - _index.scss
 - _display.scss
 - _flex.scss
+- _gaps.scss
 - _spacing.scss
 - _typography.scss
 - _colors.scss
@@ -60,7 +61,14 @@ Create flex utilities:
 - .align-center
 - .align-end
 - .align-stretch
-- .gap-0, .gap-4, .gap-8, .gap-12, .gap-16, .gap-20, .gap-24, .gap-28, .gap-32, .gap-36, .gap-40, .gap-48
+
+### _gaps.scss
+Create shared gap utilities:
+- `.gap-*`
+- `.row-gap-*`
+- `.column-gap-*`
+- Use the spacing scale: `0`, `2`, `4`, `8`, `12`, `16`, `20`, `24`, `28`, `32`, `36`, `40`, `48`
+- Generate alias-based responsive gap variants with `.{alias}-{utility}-{value}` class names.
 
 ### _spacing.scss
 Create margin and padding utilities:
@@ -70,7 +78,7 @@ Create margin and padding utilities:
 - Use the spacing scale: `0`, `2`, `4`, `8`, `12`, `16`, `20`, `24`, `28`, `32`, `36`, `40`, `48`
 - Generate alias-based responsive spacing variants with `.{alias}-{utility}-{value}` class names, such as `.sm-p-12`, `.lt-lg-px-16`, and `.gt-md-my-auto`
 - Support exact-range aliases `xs`, `sm`, `md`, `lg`, `xl`; less-than aliases `lt-sm`, `lt-md`, `lt-lg`, `lt-xl`; and greater-than aliases `gt-xs`, `gt-sm`, `gt-md`, `gt-lg`
-- Keep responsive utility generation scoped to spacing in this feature.
+- Keep responsive utility generation scoped to spacing-related utilities in this feature: spacing and gaps.
 
 ### _typography.scss
 Create typography utilities:
