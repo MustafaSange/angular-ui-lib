@@ -19,7 +19,7 @@ Create the foundational design-token system for the Angular UI library.
   - radius and shadows
   - motion
   - layout and z-index
-  - containers and breakpoints
+  - containers and breakpoints, including scalar width tokens and Sass media aliases
   - UI states
   - form controls, including size-based height and padding tokens
 - Keep tokens grouped by domain and document non-obvious usage with concise comments.
@@ -29,3 +29,4 @@ Create the foundational design-token system for the Angular UI library.
 - Global styles import the token entrypoint.
 - Token files compile through Sass.
 - Palette tokens are emitted before semantic aliases that reference them.
+- Breakpoint CSS variables and responsive media aliases are generated from shared Sass definitions.
