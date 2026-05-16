@@ -11,6 +11,7 @@ Create the foundational design-token system for the Angular UI library.
 ## Requirements
 - Use SCSS and CSS custom properties.
 - Generate reusable color ramps for brand and feedback colors.
+- Provide a neutral color scale for structural UI colors such as text, surfaces, and borders.
 - Expose semantic color tokens for solid, subtle, text, border, and contrast use cases.
 - Provide reusable tokens for:
   - typography

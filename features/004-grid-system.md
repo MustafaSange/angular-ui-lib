@@ -1,7 +1,7 @@
-# Feature 004: Grid System
+# Feature 006: Form Field Style Guide
 
 ## Goal
-Create a reusable layout layer with a 12-column CSS Grid system and named container-width classes.
+Create a reusable form field SCSS style guide that supports labels, controls, hints, errors, required, readonly, and disabled states.
 
 ## Context
 The project already contains:
@@ -10,77 +10,152 @@ The project already contains:
 - `src/styles/utilities/`
 - `src/styles/components/`
 
-The layout system must integrate with the existing design token and breakpoint alias system.
+The form field style guide must integrate with the existing design tokens, typography, spacing, color, radius, and component patterns.
 
 ## Task
-Create a new layout styles folder:
+Create or update the form field styles inside the appropriate styles folder.
 
-`src/styles/layout/`
+Prefer:
 
-Create these files:
+`src/styles/components/`
 
-- `_index.scss`
-- `_grid.scss`
-- `_containers.scss`
+Create a form field SCSS file if one does not already exist.
 
-## Grid container
+## Form field structure
 
-Create a base `.row` class:
+Create a base `.form-field` class with 3 rows:
 
-- use CSS Grid only
-- `display: grid`
-- `grid-template-columns: repeat(12, minmax(0, 1fr))`
-- `inline-size: 100%`
-- no default gap
-- direct children default to full-width spans
+- label row
+- control row
+- message row
 
-## Column classes
+Suggested classes:
 
-Generate base column spans:
+- `.form-field`
+- `.form-field-label`
+- `.form-field-control`
+- `.form-field-message`
+- `.form-field-hint`
+- `.form-field-error`
 
-- `.col-1` through `.col-12`
+## Naming rules
 
-Each class uses `grid-column: span X`.
+- Do not use BEM naming.
+- Do not use `__`.
+- Do not use `--`.
+- Use simple hyphen-separated class names only.
+- Use simple state classes:
+  - `.is-required`
+  - `.is-error`
+  - `.is-disabled`
+  - `.is-readonly`
 
-## Responsive column classes
+## Control styling
 
-Generate prefix-first responsive column spans using the shared breakpoint aliases:
+Support native form controls:
 
-- exact ranges: `xs`, `sm`, `md`, `lg`, `xl`
-- less-than aliases: `lt-sm`, `lt-md`, `lt-lg`, `lt-xl`
-- greater-than aliases: `gt-xs`, `gt-sm`, `gt-md`, `gt-lg`
+- `input`
+- `textarea`
+- `select`
 
-Examples:
+Do not create separate control classes such as:
 
-- `.md-col-6`
-- `.gt-sm-col-4`
-- `.lt-lg-col-12`
+- `.form-field-input`
+- `.form-field-textarea`
+- `.form-field-select`
 
-## Container classes
+Instead, style native elements directly inside the scoped `.form-field` component.
 
-Create named width-only container classes using existing container tokens:
+Shared control styles should be grouped together.
 
-- `.container-narrow`
-- `.container-content`
-- `.container-page`
-- `.container-wide`
-- `.container-full`
+Element-specific styles should only be added where behavior differs.
 
-Container classes should not auto-center; compose centering with existing utilities such as `.mx-auto`.
+## Required state
+
+When `.is-required` is applied:
+
+- display a red `*` after the label text
+- implement the marker using SCSS
+- do not use inline styles
+
+## Hint and error state
+
+The message row supports mutually exclusive messages:
+
+- hint text
+- error text
+
+Rules:
+
+- show hint text by default when available
+- when `.is-error` is active, hide the hint text
+- when `.is-error` is active, show the error text
+- hint and error must never be visible at the same time
+- error state should visually affect:
+  - control border
+  - focus state
+  - message color
+
+## Disabled and readonly states
+
+When `.is-disabled`, `.is-readonly`, `[disabled]`, or `[readonly]` is active:
+
+- dim both the label and the control
+- visually communicate the field is not editable
+- keep styling consistent with the existing design system
+
+## Interaction states
+
+Include styling for:
+
+- default
+- hover
+- focus
+- active
+- error
+- disabled
+- readonly
 
 ## Rules
 
-- Use SCSS loops where helpful.
-- Use CSS Grid only; do not use Flexbox.
-- Use existing gap utilities plus container and breakpoint definitions.
-- Responsive classes must come from the shared breakpoint alias map.
-- Keep the layout system reusable across future projects.
+- Review existing files before implementation.
+- Reuse existing tokens, variables, mixins, utilities, and component patterns.
+- Do not duplicate hardcoded values already available as tokens.
+- Keep selectors scoped to `.form-field`.
+- Avoid global styling leakage.
+- Keep the implementation reusable across future projects.
+- Do not use BEM.
+- Do not add or update tests unless required by the existing project setup.
 
-## `_index.scss`
+## Examples
 
-Forward layout styles:
+Provide example markup for:
 
-```scss
-@forward './grid';
-@forward './containers';
-```
+- standard input
+- required input
+- textarea
+- select
+- input with hint
+- input with error
+- disabled input
+- readonly input
+
+## Accessibility
+
+- Preserve proper label and control association.
+- Keep visible focus styling.
+- Do not rely only on color for error indication.
+- Make readonly and disabled states visually clear.
+- Preserve screen reader accessibility.
+
+## Acceptance Criteria
+
+- `.form-field` provides a reusable 3-row layout.
+- `input`, `textarea`, and `select` are styled using scoped native selectors.
+- No `.form-field-input`, `.form-field-textarea`, or `.form-field-select` classes are created.
+- Required fields show a red `*`.
+- Hint text is visible by default.
+- Error text replaces hint text when `.is-error` is active.
+- Hint and error are never visible at the same time.
+- Disabled and readonly states dim both label and control.
+- Styling uses existing project tokens, utilities, and conventions.

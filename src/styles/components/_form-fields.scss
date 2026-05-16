@@ -1,0 +1,202 @@
+.form-field {
+  display: grid;
+  align-content: start;
+
+  label,
+  .form-field-label {
+    color: var(--color-neutral-600);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .form-field-control {
+    display: flex;
+    align-items: stretch;
+    min-block-size: var(--control-height-md);
+    border: var(--control-border-width) solid var(--control-border-color);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-surface);
+    overflow: hidden;
+    transition:
+      background-color var(--transition-fast),
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast);
+
+    &:hover:not(:has(:disabled)):not(:has([readonly])) {
+      border-color: var(--color-border-strong);
+    }
+
+    &:focus-within {
+      border-color: var(--color-primary);
+      box-shadow: var(--control-focus-ring);
+    }
+  }
+
+  .form-field-prefix,
+  .form-field-suffix {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-neutral-500);
+    font-size: var(--font-size-sm);
+    white-space: nowrap;
+  }
+
+  .form-field-prefix:not(.form-field-action) {
+    padding-inline: var(--control-padding-x-xs);
+    border-inline-end: var(--control-border-width) solid var(--color-border);
+  }
+
+  .form-field-suffix:not(.form-field-action) {
+    padding-inline: var(--control-padding-x-xs);
+    border-inline-start: var(--control-border-width) solid var(--color-border);
+  }
+
+  .form-field-action {
+    min-inline-size: var(--control-height-md);
+    padding-inline: var(--control-padding-x-xs);
+    border: 0;
+    background-color: transparent;
+    color: var(--color-neutral-500);
+    cursor: pointer;
+    transition:
+      background-color var(--transition-fast),
+      color var(--transition-fast);
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-surface-muted);
+      color: var(--color-text-primary);
+    }
+
+    &:focus-visible {
+      outline: 0;
+      background-color: var(--color-primary-subtle);
+      color: var(--color-primary-text);
+    }
+
+    &.is-segmented {
+      background-color: var(--color-surface-muted);
+    }
+  }
+
+  .form-field-prefix.form-field-action {
+    border-inline-end: var(--control-border-width) solid var(--color-border);
+  }
+
+  .form-field-suffix.form-field-action {
+    border-inline-start: var(--control-border-width) solid var(--color-border);
+  }
+
+  input,
+  textarea,
+  select {
+    flex: 1 1 auto;
+    inline-size: 100%;
+    min-inline-size: 0;
+    min-height: var(--control-height-md);
+    padding-inline: var(--control-padding-x-xs);
+    border: 0;
+    background-color: transparent;
+    color: var(--color-text-primary);
+
+    &:focus-visible {
+      outline: 0;
+    }
+
+    &::placeholder {
+      color: var(--color-neutral-300);
+    }
+  }
+
+  input,
+  select {
+    block-size: var(--control-height-md);
+  }
+
+  textarea {
+    min-block-size: calc(var(--control-height-md) + var(--control-height-md) + var(--control-height-md));
+    padding-block: var(--control-padding-y-md);
+    resize: vertical;
+  }
+
+  select {
+    cursor: pointer;
+  }
+
+  .form-field-message {
+    min-block-size: 1lh;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+  }
+
+  .form-field-error {
+    display: none;
+    color: var(--color-danger-text);
+  }
+
+  &.is-required {
+    .form-field-label::after {
+      content: ' *';
+      color: var(--color-danger);
+    }
+  }
+
+  &.is-error {
+    .form-field-control {
+      border-color: var(--color-danger);
+
+      &:focus-within {
+        border-color: var(--color-danger);
+        box-shadow: 0 0 0 3px var(--color-danger-subtle);
+      }
+    }
+
+    .form-field-hint {
+      display: none;
+    }
+
+    .form-field-error {
+      display: block;
+    }
+  }
+
+  &.is-disabled,
+  &:has(:disabled) {
+    .form-field-label {
+      color: var(--color-neutral-500);
+    }
+
+    .form-field-control {
+      border-color: var(--color-border);
+      background-color: var(--color-surface-muted);
+    }
+
+    input,
+    textarea,
+    select,
+    .form-field-prefix,
+    .form-field-suffix,
+    .form-field-action {
+      color: var(--color-neutral-500);
+      cursor: not-allowed;
+    }
+  }
+
+  &.is-readonly,
+  &:has([readonly]) {
+    .form-field-label,
+    .form-field-control {
+      opacity: var(--opacity-muted);
+    }
+
+    .form-field-control {
+      background-color: var(--color-surface-muted);
+    }
+
+    input,
+    textarea,
+    select {
+      cursor: default;
+    }
+  }
+}

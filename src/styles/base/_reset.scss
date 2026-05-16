@@ -1,6 +1,8 @@
 *,
 *::before,
 *::after {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -9,7 +11,6 @@ html {
 }
 
 body {
-  margin: 0;
   background-color: var(--color-background);
   color: var(--color-text-primary);
   font-family: var(--font-family-sans);

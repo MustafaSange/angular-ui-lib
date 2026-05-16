@@ -28,8 +28,8 @@ Import the base layer from the shared style entrypoint before tokens, utilities,
 
 ## Requirements
 
-### Universal sizing
-Apply `box-sizing: border-box` to:
+### Universal box model and spacing
+Apply a shared baseline to:
 
 ```scss
 *,
@@ -37,9 +37,16 @@ Apply `box-sizing: border-box` to:
 *::after
 ```
 
+using:
+
+```scss
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+```
+
 ### Document baseline
 - Add `-webkit-text-size-adjust: 100%` to `html`.
-- Reset the default `body` margin.
 - Set `body` background color, text color, font family, and line height from existing design tokens.
 
 ### Responsive media defaults
@@ -59,8 +66,6 @@ font: inherit;
 Do not reset or restyle:
 
 - links
-- lists
-- heading or paragraph margins
 - button chrome
 - focus styles
 
@@ -82,7 +87,7 @@ Forward the reset partial:
 ## Acceptance Criteria
 - The base layer is imported globally before the other style layers.
 - Sass compiles with the new reset files in place.
-- The page body has no default browser margin.
+- Elements have no default browser margin or padding.
 - Global body typography and colors come from existing tokens.
 - Media elements do not overflow their container by default.
 - Form controls inherit typography from their surrounding context.

@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { Buttons } from './features/buttons/buttons';
+import { FormFields } from './features/form-fields/form-fields';
 import { Grid } from './features/grid/grid';
 import { Home } from './features/home/home';
 
@@ -16,5 +17,9 @@ export const routes: Routes = [
   {
     path: 'grid',
     component: Grid,
+  },
+  {
+    path: 'form-fields',
+    component: FormFields,
   },
 ];
