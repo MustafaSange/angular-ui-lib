@@ -1,75 +1,123 @@
-$-spacing-sizes: 0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 48;
+@use '../tokens/breakpoints';
 
-@each $space in $-spacing-sizes {
-  .m-#{$space} {
-    margin: var(--spacing-#{$space});
+$-spacing-sizes: 0, 2, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 48;
+
+@mixin spacing-utilities($prefix: '') {
+  @each $space in $-spacing-sizes {
+    .#{$prefix}m-#{$space} {
+      margin: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}mt-#{$space} {
+      margin-top: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}mr-#{$space} {
+      margin-right: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}mb-#{$space} {
+      margin-bottom: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}ml-#{$space} {
+      margin-left: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}ms-#{$space} {
+      margin-inline-start: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}me-#{$space} {
+      margin-inline-end: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}mx-#{$space} {
+      margin-inline: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}my-#{$space} {
+      margin-block: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}p-#{$space} {
+      padding: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}pt-#{$space} {
+      padding-top: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}pr-#{$space} {
+      padding-right: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}pb-#{$space} {
+      padding-bottom: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}pl-#{$space} {
+      padding-left: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}ps-#{$space} {
+      padding-inline-start: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}pe-#{$space} {
+      padding-inline-end: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}px-#{$space} {
+      padding-inline: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}py-#{$space} {
+      padding-block: var(--spacing-#{$space});
+    }
   }
 
-  .mt-#{$space} {
-    margin-top: var(--spacing-#{$space});
+  .#{$prefix}m-auto {
+    margin: auto;
   }
 
-  .mr-#{$space} {
-    margin-right: var(--spacing-#{$space});
+  .#{$prefix}mt-auto {
+    margin-top: auto;
   }
 
-  .mb-#{$space} {
-    margin-bottom: var(--spacing-#{$space});
+  .#{$prefix}mr-auto {
+    margin-right: auto;
   }
 
-  .ml-#{$space} {
-    margin-left: var(--spacing-#{$space});
+  .#{$prefix}mb-auto {
+    margin-bottom: auto;
   }
 
-  .ms-#{$space} {
-    margin-inline-start: var(--spacing-#{$space});
+  .#{$prefix}ml-auto {
+    margin-left: auto;
   }
 
-  .me-#{$space} {
-    margin-inline-end: var(--spacing-#{$space});
+  .#{$prefix}ms-auto {
+    margin-inline-start: auto;
   }
 
-  .mx-#{$space} {
-    margin-inline: var(--spacing-#{$space});
+  .#{$prefix}me-auto {
+    margin-inline-end: auto;
   }
 
-  .my-#{$space} {
-    margin-block: var(--spacing-#{$space});
+  .#{$prefix}mx-auto {
+    margin-inline: auto;
   }
 
-  .p-#{$space} {
-    padding: var(--spacing-#{$space});
+  .#{$prefix}my-auto {
+    margin-block: auto;
   }
+}
 
-  .pt-#{$space} {
-    padding-top: var(--spacing-#{$space});
-  }
+@include spacing-utilities;
 
-  .pr-#{$space} {
-    padding-right: var(--spacing-#{$space});
-  }
-
-  .pb-#{$space} {
-    padding-bottom: var(--spacing-#{$space});
-  }
-
-  .pl-#{$space} {
-    padding-left: var(--spacing-#{$space});
-  }
-
-  .ps-#{$space} {
-    padding-inline-start: var(--spacing-#{$space});
-  }
-
-  .pe-#{$space} {
-    padding-inline-end: var(--spacing-#{$space});
-  }
-
-  .px-#{$space} {
-    padding-inline: var(--spacing-#{$space});
-  }
-
-  .py-#{$space} {
-    padding-block: var(--spacing-#{$space});
+@each $alias, $query in breakpoints.$media-aliases {
+  @media #{$query} {
+    @include spacing-utilities('#{$alias}-');
   }
 }

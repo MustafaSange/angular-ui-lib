@@ -1,7 +1,29 @@
+$breakpoint-widths: (
+  xs: 37.5rem, /* 600px */
+  sm: 60rem, /* 960px */
+  md: 80rem, /* 1280px */
+  lg: 120rem, /* 1920px */
+);
+
+$media-aliases: (
+  xs: 'screen and (max-width: 37.4375rem)', /* 599px */
+  sm: 'screen and (min-width: 37.5rem) and (max-width: 59.9375rem)', /* 600px to 959px */
+  md: 'screen and (min-width: 60rem) and (max-width: 79.9375rem)', /* 960px to 1279px */
+  lg: 'screen and (min-width: 80rem) and (max-width: 119.9375rem)', /* 1280px to 1919px */
+  xl: 'screen and (min-width: 120rem) and (max-width: 312.5rem)', /* 1920px to 5000px */
+  lt-sm: 'screen and (max-width: 37.4375rem)', /* 599px */
+  lt-md: 'screen and (max-width: 59.9375rem)', /* 959px */
+  lt-lg: 'screen and (max-width: 79.9375rem)', /* 1279px */
+  lt-xl: 'screen and (max-width: 119.9375rem)', /* 1919px */
+  gt-xs: 'screen and (min-width: 37.5rem)', /* 600px */
+  gt-sm: 'screen and (min-width: 60rem)', /* 960px */
+  gt-md: 'screen and (min-width: 80rem)', /* 1280px */
+  gt-lg: 'screen and (min-width: 120rem)', /* 1920px */
+);
+
 :root {
   /* Breakpoints */
-  --breakpoint-xs: 37.5rem; /* 600px */
-  --breakpoint-sm: 60rem; /* 960px */
-  --breakpoint-md: 80rem; /* 1280px */
-  --breakpoint-lg: 120rem; /* 1920px */
+  @each $name, $value in $breakpoint-widths {
+    --breakpoint-#{$name}: #{$value};
+  }
 }

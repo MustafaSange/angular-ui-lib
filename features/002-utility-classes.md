@@ -65,8 +65,11 @@ Create flex utilities:
 ### _spacing.scss
 Create margin and padding utilities:
 - `.m-*`, `.mt-*`, `.mr-*`, `.mb-*`, `.ml-*`, `.ms-*`, `.me-*`, `.mx-*`, `.my-*`
+- `.m-auto`, `.mt-auto`, `.mr-auto`, `.mb-auto`, `.ml-auto`, `.ms-auto`, `.me-auto`, `.mx-auto`, `.my-auto`
 - `.p-*`, `.pt-*`, `.pr-*`, `.pb-*`, `.pl-*`, `.ps-*`, `.pe-*`, `.px-*`, `.py-*`
 - Use the spacing scale: `0`, `2`, `4`, `8`, `12`, `16`, `20`, `24`, `28`, `32`, `36`, `40`, `48`
+- Generate responsive spacing variants with `.{alias}-{utility}-{value}` class names, such as `.sm-p-12`, `.lt-lg-px-16`, and `.gt-md-my-auto`
+- Support exact-range aliases `xs`, `sm`, `md`, `lg`, `xl`; less-than aliases `lt-sm`, `lt-md`, `lt-lg`, `lt-xl`; and greater-than aliases `gt-xs`, `gt-sm`, `gt-md`, `gt-lg`
 
 ### _typography.scss
 Create typography utilities:
