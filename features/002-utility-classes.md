@@ -39,6 +39,7 @@ Create display utilities:
 - .d-inline-flex
 - .d-grid
 - .d-none
+- Generate alias-based responsive display variants with `.{alias}-d-{value}` class names, such as `.sm-d-flex`, `.lt-md-d-none`, and `.gt-lg-d-grid`
 
 ### _flex.scss
 Create flex utilities:
@@ -78,7 +79,7 @@ Create margin and padding utilities:
 - Use the spacing scale: `0`, `2`, `4`, `8`, `12`, `16`, `20`, `24`, `28`, `32`, `36`, `40`, `48`
 - Generate alias-based responsive spacing variants with `.{alias}-{utility}-{value}` class names, such as `.sm-p-12`, `.lt-lg-px-16`, and `.gt-md-my-auto`
 - Support exact-range aliases `xs`, `sm`, `md`, `lg`, `xl`; less-than aliases `lt-sm`, `lt-md`, `lt-lg`, `lt-xl`; and greater-than aliases `gt-xs`, `gt-sm`, `gt-md`, `gt-lg`
-- Keep responsive utility generation scoped to spacing-related utilities in this feature: spacing and gaps.
+- Reuse the same responsive alias set for display, gap, and spacing utilities.
 
 ### _typography.scss
 Create typography utilities:

@@ -1,27 +1,39 @@
-.d-block {
-  display: block;
+@use '../tokens/breakpoints';
+
+@mixin display-utilities($prefix: '') {
+  .#{$prefix}d-block {
+    display: block;
+  }
+
+  .#{$prefix}d-inline {
+    display: inline;
+  }
+
+  .#{$prefix}d-inline-block {
+    display: inline-block;
+  }
+
+  .#{$prefix}d-flex {
+    display: flex;
+  }
+
+  .#{$prefix}d-inline-flex {
+    display: inline-flex;
+  }
+
+  .#{$prefix}d-grid {
+    display: grid;
+  }
+
+  .#{$prefix}d-none {
+    display: none;
+  }
 }
 
-.d-inline {
-  display: inline;
-}
+@include display-utilities;
 
-.d-inline-block {
-  display: inline-block;
-}
-
-.d-flex {
-  display: flex;
-}
-
-.d-inline-flex {
-  display: inline-flex;
-}
-
-.d-grid {
-  display: grid;
-}
-
-.d-none {
-  display: none;
+@each $alias, $query in breakpoints.$media-aliases {
+  @media #{$query} {
+    @include display-utilities('#{$alias}-');
+  }
 }
