@@ -1,16 +1,16 @@
 # Feature 005: Home Showcase
 
 ## Goal
-Create a small home page that acts as the entry point for the UI library demos.
+Maintain a small home page that acts as the entry point for the UI library demos and makes the current theme system visible at a glance.
 
 ## Context
-The project already contains feature pages for:
+The showcase currently includes feature pages for:
 
 - Buttons
 - Grid system
 - Form fields
 
-Each feature page should be discoverable from one central place, and users should be able to return there without using browser navigation.
+Each feature page is discoverable from one central place, and users can return there without relying on browser navigation.
 
 ## Task
 Create a Home feature under:
@@ -32,13 +32,14 @@ Create:
 
 ## Home page
 
-Create a simple showcase landing page with:
+The showcase landing page includes:
 
 - a page heading
 - a short description
 - a card or link for the Buttons showcase
 - a card or link for the Grid showcase
 - a card or link for the Form Fields showcase
+- a compact theme preview that demonstrates palette-backed background, surface, muted-surface, border, and text relationships across light and dark modes
 
 Selecting a showcase item should navigate to its page.
 
@@ -63,7 +64,7 @@ Each control should navigate back to `/`.
 ## Acceptance Criteria
 
 - Visiting `/` shows the Home page.
-- The Home page links to Buttons and Grid.
 - The Home page links to Buttons, Grid, and Form Fields.
+- The Home page includes a theme preview for the current structural color system.
 - Buttons, Grid, and Form Fields pages all provide a visible path back to Home.
 - Navigation works without a full page reload.
