@@ -68,6 +68,8 @@ Do not hardcode theme colors directly inside components.
 
 Components should consume semantic theme variables only.
 
+Theme semantics should be built from the shared color palette wherever a reusable palette value exists. Use the neutral scale for structural layers such as backgrounds, surfaces, borders, inverse text, and light-theme contrast colors.
+
 ## Theme selectors
 
 Support theme switching using a root-level attribute or class.
@@ -128,6 +130,7 @@ Light tokens remain the default fallback, and dark tokens should apply automatic
 - Preserve the existing semantic `--color-*` API for current components and utilities.
 - If a new `--theme-*` layer is introduced, bridge it back to the existing semantic color names.
 - Interactive and feedback tokens should remain theme-aware in both light and dark modes.
+- Keep the dark structural ladder palette-based so background, surfaces, and borders remain visually coherent across the theme.
 
 ## Acceptance Criteria
 
@@ -135,6 +138,7 @@ Light tokens remain the default fallback, and dark tokens should apply automatic
 - Light, dark, and system modes are supported.
 - `system` mode follows `prefers-color-scheme`.
 - Components consume semantic theme variables rather than raw palette values.
+- Structural theme colors are sourced from the shared palette rather than duplicated literals.
 - Existing semantic color names continue to work for current styles.
 - A global theme switcher can select all three modes.
 - The selected mode updates the root `data-theme` attribute.

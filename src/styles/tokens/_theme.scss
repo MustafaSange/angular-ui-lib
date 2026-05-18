@@ -3,14 +3,14 @@
 
   /* Reusable theme tokens */
   --theme-background: var(--color-neutral-50);
-  --theme-surface: #ffffff;
+  --theme-surface: var(--color-neutral-0);
   --theme-surface-alt: var(--color-neutral-100);
-  --theme-surface-raised: #ffffff;
-  --theme-surface-overlay: #ffffff;
+  --theme-surface-raised: var(--color-neutral-0);
+  --theme-surface-overlay: var(--color-neutral-0);
   --theme-text: var(--color-neutral-900);
   --theme-text-secondary: var(--color-neutral-600);
   --theme-text-muted: var(--color-neutral-500);
-  --theme-text-inverse: #ffffff;
+  --theme-text-inverse: var(--color-neutral-0);
   --theme-border: var(--color-neutral-300);
   --theme-border-muted: var(--color-neutral-200);
   --theme-border-strong: var(--color-neutral-400);
@@ -30,61 +30,61 @@
   --color-primary-subtle: var(--color-primary-50);
   --color-primary-text: var(--color-primary-800);
   --color-primary-border: var(--color-primary-300);
-  --color-primary-contrast: #ffffff;
+  --color-primary-contrast: var(--color-neutral-0);
   --color-accent-hover: var(--color-accent-700);
   --color-accent-active: var(--color-accent-800);
   --color-accent-subtle: var(--color-accent-50);
   --color-accent-text: var(--color-accent-800);
   --color-accent-border: var(--color-accent-300);
-  --color-accent-contrast: #ffffff;
+  --color-accent-contrast: var(--color-neutral-0);
   --color-secondary-hover: var(--color-secondary-700);
   --color-secondary-active: var(--color-secondary-800);
   --color-secondary-subtle: var(--color-secondary-50);
   --color-secondary-text: var(--color-secondary-800);
   --color-secondary-border: var(--color-secondary-300);
-  --color-secondary-contrast: #ffffff;
+  --color-secondary-contrast: var(--color-neutral-0);
   --color-success-hover: var(--color-success-700);
   --color-success-active: var(--color-success-800);
   --color-success-subtle: var(--color-success-50);
   --color-success-text: var(--color-success-800);
   --color-success-border: var(--color-success-300);
-  --color-success-contrast: #ffffff;
+  --color-success-contrast: var(--color-neutral-0);
   --color-warning-hover: var(--color-warning-700);
   --color-warning-active: var(--color-warning-800);
   --color-warning-subtle: var(--color-warning-50);
   --color-warning-text: var(--color-warning-800);
   --color-warning-border: var(--color-warning-300);
-  --color-warning-contrast: #ffffff;
+  --color-warning-contrast: var(--color-neutral-0);
   --color-danger-hover: var(--color-danger-700);
   --color-danger-active: var(--color-danger-800);
   --color-danger-subtle: var(--color-danger-50);
   --color-danger-text: var(--color-danger-800);
   --color-danger-border: var(--color-danger-300);
-  --color-danger-contrast: #ffffff;
+  --color-danger-contrast: var(--color-neutral-0);
   --color-info-hover: var(--color-info-700);
   --color-info-active: var(--color-info-800);
   --color-info-subtle: var(--color-info-50);
   --color-info-text: var(--color-info-800);
   --color-info-border: var(--color-info-300);
-  --color-info-contrast: #ffffff;
+  --color-info-contrast: var(--color-neutral-0);
 }
 
 @mixin dark-theme {
   color-scheme: dark;
 
   /* Reusable theme tokens */
-  --theme-background: var(--color-neutral-900);
-  --theme-surface: var(--color-neutral-800);
-  --theme-surface-alt: var(--color-neutral-700);
-  --theme-surface-raised: var(--color-neutral-800);
-  --theme-surface-overlay: var(--color-neutral-800);
+  --theme-background: var(--color-neutral-950);
+  --theme-surface: var(--color-neutral-900);
+  --theme-surface-alt: var(--color-neutral-800);
+  --theme-surface-raised: var(--color-neutral-900);
+  --theme-surface-overlay: var(--color-neutral-900);
   --theme-text: var(--color-neutral-50);
   --theme-text-secondary: var(--color-neutral-300);
   --theme-text-muted: var(--color-neutral-400);
   --theme-text-inverse: var(--color-neutral-900);
-  --theme-border: var(--color-neutral-600);
-  --theme-border-muted: var(--color-neutral-700);
-  --theme-border-strong: var(--color-neutral-500);
+  --theme-border: var(--color-neutral-700);
+  --theme-border-muted: var(--color-neutral-800);
+  --theme-border-strong: var(--color-neutral-600);
   --theme-primary: var(--color-primary-400);
   --theme-primary-hover: var(--color-primary-300);
   --theme-secondary: var(--color-secondary-400);
