@@ -1,25 +1,21 @@
 import { Routes } from '@angular/router';
 
-import { Buttons } from './features/buttons/buttons';
-import { FormFields } from './features/form-fields/form-fields';
-import { Grid } from './features/grid/grid';
-import { Home } from './features/home/home';
-
 export const routes: Routes = [
   {
     path: '',
-    component: Home,
+    loadComponent: () => import('./features/home/home').then((m) => m.Home),
   },
   {
     path: 'buttons',
-    component: Buttons,
+    loadComponent: () => import('./features/buttons/buttons').then((m) => m.Buttons),
   },
   {
     path: 'grid',
-    component: Grid,
+    loadComponent: () => import('./features/grid/grid').then((m) => m.Grid),
   },
   {
     path: 'form-fields',
-    component: FormFields,
+    loadComponent: () =>
+      import('./features/form-fields/form-fields').then((m) => m.FormFields),
   },
 ];
