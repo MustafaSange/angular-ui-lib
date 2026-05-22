@@ -108,6 +108,10 @@ Do not add state inputs, state classes, or `data-*` state attributes to `ms-sign
 
 The form-fields showcase should use `ms-signal-form-field` examples so the new behavior is visible.
 
+Selection controls in the same showcase should use the projected choice-control components documented in:
+
+`context/010-choice-controls.md`
+
 For the showcase grid, use the built-in grid utilities:
 
 ```html

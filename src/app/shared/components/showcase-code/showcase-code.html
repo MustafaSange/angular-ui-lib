@@ -1,19 +1,35 @@
 <section class="showcase-code" [attr.data-language]="language()">
   <header class="showcase-code-header">
     <span class="showcase-code-label">{{ label() }}</span>
-    <button class="btn btn-ghost btn-sm" type="button" (click)="copyCode()">
-      @switch (copyState()) {
-        @case ('copied') {
-          Copied
+    <div class="showcase-code-actions">
+      <button
+        class="btn btn-ghost btn-sm"
+        type="button"
+        [attr.aria-expanded]="isExpanded()"
+        (click)="toggleExpanded()"
+      >
+        @if (isExpanded()) {
+          Hide code
+        } @else {
+          Show code
         }
-        @case ('failed') {
-          Select code
+      </button>
+      <button class="btn btn-ghost btn-sm" type="button" (click)="copyCode()">
+        @switch (copyState()) {
+          @case ('copied') {
+            Copied
+          }
+          @case ('failed') {
+            Select code
+          }
+          @default {
+            Copy
+          }
         }
-        @default {
-          Copy
-        }
-      }
-    </button>
+      </button>
+    </div>
   </header>
-  <pre><code>{{ code() }}</code></pre>
+  @if (isExpanded()) {
+    <pre><code>{{ code() }}</code></pre>
+  }
 </section>

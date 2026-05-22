@@ -127,4 +127,97 @@
       }
     </div>
   </section>
+
+  <section class="form-field-section">
+    <h2>Selection controls</h2>
+    <div class="row gap-20 row-align-start">
+      <ms-checkbox-group class="col-4">
+        <legend>Checkboxes</legend>
+        <ms-checkbox-control>
+          <input type="checkbox" checked />
+          <label>Email updates</label>
+          <ms-choice-hint>Send product and release notes.</ms-choice-hint>
+        </ms-checkbox-control>
+        <ms-checkbox-control>
+          <input type="checkbox" />
+          <label>Weekly digest</label>
+          <ms-choice-hint>Group activity into one summary.</ms-choice-hint>
+        </ms-checkbox-control>
+        <ms-checkbox-control>
+          <input type="checkbox" disabled />
+          <label>Billing alerts</label>
+          <ms-choice-hint>Managed by account owners.</ms-choice-hint>
+        </ms-checkbox-control>
+        <ms-checkbox-control>
+          <input type="checkbox" />
+          <label>Terms agreement</label>
+          <ms-choice-error>Accept the terms before continuing.</ms-choice-error>
+        </ms-checkbox-control>
+        <ms-checkbox-control slot="label-before">
+          <input type="checkbox" />
+          <label>Label before</label>
+          <ms-choice-hint>Places text before the checkbox.</ms-choice-hint>
+        </ms-checkbox-control>
+      </ms-checkbox-group>
+
+      <ms-radio-group class="col-4">
+        <legend>Radio group</legend>
+        <ms-radio-control>
+          <input type="radio" name="support-plan" value="starter" />
+          <label>Starter</label>
+          <ms-choice-hint>For small teams getting set up.</ms-choice-hint>
+        </ms-radio-control>
+        <ms-radio-control>
+          <input type="radio" name="support-plan" value="growth" checked />
+          <label>Growth</label>
+          <ms-choice-hint>Priority support for active teams.</ms-choice-hint>
+        </ms-radio-control>
+        <ms-radio-control>
+          <input type="radio" name="support-plan" value="enterprise" disabled />
+          <label>Enterprise</label>
+          <ms-choice-error>Contact sales to enable this plan.</ms-choice-error>
+        </ms-radio-control>
+        <ms-radio-control slot="label-before">
+          <input type="radio" name="support-plan" value="custom" />
+          <label>Label before</label>
+          <ms-choice-hint>Places text before the radio.</ms-choice-hint>
+        </ms-radio-control>
+      </ms-radio-group>
+
+      <ms-switch-group class="col-4">
+        <legend>Switches</legend>
+        <ms-switch-control>
+          <input type="checkbox" role="switch" checked />
+          <label>Notifications</label>
+          <ms-choice-hint>Push critical alerts immediately.</ms-choice-hint>
+        </ms-switch-control>
+        <ms-switch-control>
+          <input type="checkbox" role="switch" />
+          <label>Compact mode</label>
+          <ms-choice-hint>Reduce spacing in dense views.</ms-choice-hint>
+        </ms-switch-control>
+        <ms-switch-control>
+          <input type="checkbox" role="switch" disabled />
+          <label>Audit logging</label>
+          <ms-choice-hint>Available on enterprise plans.</ms-choice-hint>
+        </ms-switch-control>
+        <ms-switch-control>
+          <input type="checkbox" role="switch" />
+          <label>Public profile</label>
+          <ms-choice-error>Review visibility settings before enabling.</ms-choice-error>
+        </ms-switch-control>
+        <ms-switch-control slot="label-before">
+          <input type="checkbox" role="switch" />
+          <label>Label before</label>
+          <ms-choice-hint>Places text before the switch.</ms-choice-hint>
+        </ms-switch-control>
+      </ms-switch-group>
+    </div>
+
+    <div class="snippet-stack">
+      @for (snippet of selectionSnippets; track snippet.label) {
+        <app-showcase-code [label]="snippet.label" [code]="snippet.code" />
+      }
+    </div>
+  </section>
 </main>

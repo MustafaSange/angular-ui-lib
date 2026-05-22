@@ -11,6 +11,7 @@ export class ShowcaseCode {
   readonly label = input('Example');
   readonly language = input('ts');
 
+  protected readonly isExpanded = signal(false);
   protected readonly copyState = signal<'idle' | 'copied' | 'failed'>('idle');
 
   private copyResetId: ReturnType<typeof setTimeout> | undefined;
@@ -22,6 +23,10 @@ export class ShowcaseCode {
     } catch {
       this.setCopyState('failed');
     }
+  }
+
+  protected toggleExpanded(): void {
+    this.isExpanded.update((isExpanded) => !isExpanded);
   }
 
   private setCopyState(state: 'copied' | 'failed'): void {

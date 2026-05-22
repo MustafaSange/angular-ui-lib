@@ -7,6 +7,7 @@ Use modern Angular patterns:
 - Do not add `standalone: true`.
 - Prefer signals: `signal`, `computed`, `input`, `output`, `model`.
 - Prefer `inject()` over constructor injection.
+- Prefer `host` metadata in `@Component` over `@HostBinding` and `@HostListener`.
 - Use `ChangeDetectionStrategy.OnPush`.
 - Use native template control flow: `@if`, `@for`, `@switch`.
 - Prefer reactive forms for non-trivial forms.

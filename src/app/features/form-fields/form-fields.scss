@@ -48,6 +48,10 @@ h1 {
   border: var(--border-width-sm) solid var(--color-border);
   border-radius: var(--radius-lg);
   background-color: var(--color-surface);
+
+  & + & {
+    margin-block-start: var(--spacing-16);
+  }
 }
 
 h2 {

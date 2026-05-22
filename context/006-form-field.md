@@ -27,6 +27,10 @@ The form field should support:
 - disabled state
 - readonly state
 
+Selection controls are handled separately by projected choice components. Follow:
+
+`context/010-choice-controls.md`
+
 ## Component Structure
 Create a form field layout with 3 rows:
 
@@ -166,6 +170,8 @@ Include styles for:
 - Keep selectors scoped to `.form-field`.
 - Avoid global styling leakage.
 - Keep the implementation modular, reusable, and production-ready.
+- Keep text/select/textarea form-field styles in `_form-fields.scss`.
+- Keep checkbox, radio, and switch choice styles in `_choice-controls.scss`.
 
 ## Examples
 

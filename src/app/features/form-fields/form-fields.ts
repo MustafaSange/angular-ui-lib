@@ -3,6 +3,16 @@ import { FormField, form, required, schema } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
 
 import {
+  CheckboxControl,
+  CheckboxGroup,
+  ChoiceError,
+  ChoiceHint,
+  RadioControl,
+  RadioGroup,
+  SwitchControl,
+  SwitchGroup,
+} from '../../shared/components/choice-controls';
+import {
   SignalFormError,
   SignalFormField,
   SignalFormHint,
@@ -23,6 +33,14 @@ type SignalFormExample = {
     SignalFormHint,
     SignalFormError,
     ShowcaseCode,
+    CheckboxGroup,
+    CheckboxControl,
+    RadioGroup,
+    RadioControl,
+    SwitchGroup,
+    SwitchControl,
+    ChoiceHint,
+    ChoiceError,
   ],
   templateUrl: './form-fields.html',
   styleUrl: './form-fields.scss',
@@ -211,6 +229,162 @@ import { SignalFormField } from './shared/components/signal-form-field';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReadonlyDisabledFieldsExample {}`,
+    },
+  ];
+
+  protected readonly selectionSnippets = [
+    {
+      label: 'Checkbox group',
+      code: `import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import {
+  CheckboxControl,
+  CheckboxGroup,
+  ChoiceError,
+  ChoiceHint,
+} from './shared/components/choice-controls';
+
+@Component({
+  selector: 'app-checkbox-group-example',
+  imports: [CheckboxGroup, CheckboxControl, ChoiceHint, ChoiceError],
+  template: \`
+    <ms-checkbox-group>
+      <legend>Notifications</legend>
+
+      <ms-checkbox-control>
+        <input type="checkbox" checked />
+        <label>Email updates</label>
+        <ms-choice-hint>Send product and release notes.</ms-choice-hint>
+      </ms-checkbox-control>
+
+      <ms-checkbox-control>
+        <input type="checkbox" />
+        <label>Weekly digest</label>
+        <ms-choice-hint>Group activity into one summary.</ms-choice-hint>
+      </ms-checkbox-control>
+
+      <ms-checkbox-control>
+        <input type="checkbox" disabled />
+        <label>Billing alerts</label>
+        <ms-choice-hint>Managed by account owners.</ms-choice-hint>
+      </ms-checkbox-control>
+
+      <ms-checkbox-control>
+        <input type="checkbox" />
+        <label>Terms agreement</label>
+        <ms-choice-error>Accept the terms before continuing.</ms-choice-error>
+      </ms-checkbox-control>
+
+      <ms-checkbox-control slot="label-before">
+        <input type="checkbox" />
+        <label>Label before</label>
+        <ms-choice-hint>Places text before the checkbox.</ms-choice-hint>
+      </ms-checkbox-control>
+    </ms-checkbox-group>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class CheckboxGroupExample {}`,
+    },
+    {
+      label: 'Radio group',
+      code: `import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import {
+  ChoiceError,
+  ChoiceHint,
+  RadioControl,
+  RadioGroup,
+} from './shared/components/choice-controls';
+
+@Component({
+  selector: 'app-radio-group-example',
+  imports: [RadioGroup, RadioControl, ChoiceHint, ChoiceError],
+  template: \`
+    <ms-radio-group>
+      <legend>Support plan</legend>
+
+      <ms-radio-control>
+        <input type="radio" name="support-plan" value="starter" />
+        <label>Starter</label>
+        <ms-choice-hint>For small teams getting set up.</ms-choice-hint>
+      </ms-radio-control>
+
+      <ms-radio-control>
+        <input type="radio" name="support-plan" value="growth" checked />
+        <label>Growth</label>
+        <ms-choice-hint>Priority support for active teams.</ms-choice-hint>
+      </ms-radio-control>
+
+      <ms-radio-control>
+        <input type="radio" name="support-plan" value="enterprise" disabled />
+        <label>Enterprise</label>
+        <ms-choice-error>Contact sales to enable this plan.</ms-choice-error>
+      </ms-radio-control>
+
+      <ms-radio-control slot="label-before">
+        <input type="radio" name="support-plan" value="custom" />
+        <label>Label before</label>
+        <ms-choice-hint>Places text before the radio.</ms-choice-hint>
+      </ms-radio-control>
+    </ms-radio-group>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class RadioGroupExample {}`,
+    },
+    {
+      label: 'Switch controls',
+      code: `import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import {
+  ChoiceError,
+  ChoiceHint,
+  SwitchControl,
+  SwitchGroup,
+} from './shared/components/choice-controls';
+
+@Component({
+  selector: 'app-switch-controls-example',
+  imports: [SwitchGroup, SwitchControl, ChoiceHint, ChoiceError],
+  template: \`
+    <ms-switch-group>
+      <legend>Preferences</legend>
+
+      <ms-switch-control>
+        <input type="checkbox" role="switch" checked />
+        <label>Notifications</label>
+        <ms-choice-hint>Push critical alerts immediately.</ms-choice-hint>
+      </ms-switch-control>
+
+      <ms-switch-control>
+        <input type="checkbox" role="switch" />
+        <label>Compact mode</label>
+        <ms-choice-hint>Reduce spacing in dense views.</ms-choice-hint>
+      </ms-switch-control>
+
+      <ms-switch-control>
+        <input type="checkbox" role="switch" disabled />
+        <label>Audit logging</label>
+        <ms-choice-hint>Available on enterprise plans.</ms-choice-hint>
+      </ms-switch-control>
+
+      <ms-switch-control>
+        <input type="checkbox" role="switch" />
+        <label>Public profile</label>
+        <ms-choice-error>Review visibility settings before enabling.</ms-choice-error>
+      </ms-switch-control>
+
+      <ms-switch-control slot="label-before">
+        <input type="checkbox" role="switch" />
+        <label>Label before</label>
+        <ms-choice-hint>Places text before the switch.</ms-choice-hint>
+      </ms-switch-control>
+    </ms-switch-group>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class SwitchControlsExample {}`,
     },
   ];
 }
