@@ -22,30 +22,32 @@ import {
 
 Components:
 
-- `SignalFormField` with selector `app-signal-form-field`
-- `SignalFormHint` with selector `app-hint`
-- `SignalFormError` with selector `app-error`
+- `SignalFormField` with selector `ms-signal-form-field`
+- `SignalFormHint` with selector `ms-hint`
+- `SignalFormError` with selector `ms-error`
+
+Shared reusable components use the `ms-` selector prefix. Do not use `app-` for components under `src/app/shared`.
 
 ## Desired Usage
 
 Use Angular 21 signal forms with `[formField]`.
 
 ```html
-<app-signal-form-field>
+<ms-signal-form-field>
   <label for="email">Email</label>
   <span slot="label-extra">Optional</span>
   <button slot="label-action" type="button">Help</button>
   <input id="email" type="email" [formField]="emailField" />
 
-  <app-hint>
+  <ms-hint>
     Enter your email.
     <span slot="hint-extra">Required</span>
-  </app-hint>
-  <app-error>
+  </ms-hint>
+  <ms-error>
     This field is required.
     <span slot="error-extra">Required</span>
-  </app-error>
-</app-signal-form-field>
+  </ms-error>
+</ms-signal-form-field>
 ```
 
 Do not use `[field]`; this project uses the Angular signal forms `[formField]` directive.
@@ -70,7 +72,7 @@ The implementation is split into separate files:
 2. Projected input/control row
 3. Message row
 
-`app-hint` and `app-error` are separate projected support components.
+`ms-hint` and `ms-error` are separate projected support components.
 
 ## Projection Rules
 
@@ -78,12 +80,12 @@ The implementation is split into separate files:
 - Label, control, hint, and error are all passed through content projection.
 - The label area projects the native `label` on the left.
 - Optional right-side label content uses `slot="label-extra"` or `slot="label-action"`.
-- Optional right-side hint content uses `slot="hint-extra"` inside `app-hint`.
-- Optional right-side error content uses `slot="error-extra"` inside `app-error`.
+- Optional right-side hint content uses `slot="hint-extra"` inside `ms-hint`.
+- Optional right-side error content uses `slot="error-extra"` inside `ms-error`.
 - The projected control remains fully owned by the consumer.
-- The wrapper detects projected `app-hint`, `app-error`, and Angular signal `FormField`.
-- The wrapper shows `app-error` only when an error component exists and the projected signal field is invalid and touched or dirty.
-- The wrapper shows `app-hint` before interaction and whenever no error is visible.
+- The wrapper detects projected `ms-hint`, `ms-error`, and Angular signal `FormField`.
+- The wrapper shows `ms-error` only when an error component exists and the projected signal field is invalid and touched or dirty.
+- The wrapper shows `ms-hint` before interaction and whenever no error is visible.
 - Initial invalid fields should not display errors until the field becomes touched or dirty.
 - The message row remains present so spacing does not jump.
 
@@ -96,21 +98,21 @@ Reuse the existing form field styling in:
 The styles support both:
 
 - legacy `.form-field` markup
-- `app-signal-form-field`, `app-hint`, and `app-error` element selectors
+- `ms-signal-form-field`, `ms-hint`, and `ms-error` element selectors
 - a 2-column `.form-field-label` area using `1fr auto`
-- 2-column `app-hint` and `app-error` message layouts using `1fr auto`
+- 2-column `ms-hint` and `ms-error` message layouts using `1fr auto`
 
-Do not add state inputs, state classes, or `data-*` state attributes to `app-signal-form-field`.
+Do not add state inputs, state classes, or `data-*` state attributes to `ms-signal-form-field`.
 
 ## Showcase
 
-The form-fields showcase should use `app-signal-form-field` examples so the new behavior is visible.
+The form-fields showcase should use `ms-signal-form-field` examples so the new behavior is visible.
 
 For the showcase grid, use the built-in grid utilities:
 
 ```html
 <div class="row gap-20 row-align-start">
-  <app-signal-form-field class="col-4">...</app-signal-form-field>
+  <ms-signal-form-field class="col-4">...</ms-signal-form-field>
 </div>
 ```
 
@@ -129,11 +131,11 @@ For the showcase grid, use the built-in grid utilities:
 
 ## Acceptance Criteria
 
-- `app-signal-form-field` renders label, control, and message rows.
+- `ms-signal-form-field` renders label, control, and message rows.
 - Label-side content can be projected with `slot="label-extra"` or `slot="label-action"`.
 - Hint-side content can be projected with `slot="hint-extra"`.
 - Error-side content can be projected with `slot="error-extra"`.
-- `app-hint` and `app-error` are projected components in separate folders.
+- `ms-hint` and `ms-error` are projected components in separate folders.
 - Consumers import all signal form field pieces from the folder `index.ts`.
 - `[formField]` works with projected controls.
 - Hint and error are mutually exclusive.

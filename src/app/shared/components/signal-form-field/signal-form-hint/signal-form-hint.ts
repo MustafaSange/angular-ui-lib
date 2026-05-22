@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'app-hint',
+  selector: 'ms-hint',
   templateUrl: './signal-form-hint.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -1,5 +1,5 @@
 .form-field,
-app-signal-form-field {
+ms-signal-form-field {
   display: grid;
   align-content: start;
   row-gap: var(--spacing-2);
@@ -123,7 +123,9 @@ app-signal-form-field {
   }
 
   textarea {
-    min-block-size: calc(var(--control-height-md) + var(--control-height-md) + var(--control-height-md));
+    min-block-size: calc(
+      var(--control-height-md) + var(--control-height-md) + var(--control-height-md)
+    );
     padding-block: var(--control-padding-y-md);
     resize: vertical;
   }
@@ -138,8 +140,8 @@ app-signal-form-field {
     font-size: var(--font-size-xs);
   }
 
-  app-hint,
-  app-error {
+  ms-hint,
+  ms-error {
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
@@ -151,13 +153,12 @@ app-signal-form-field {
     color: var(--color-danger-text);
   }
 
-  app-error {
+  ms-error {
     color: var(--color-danger-text);
   }
 
   &.is-required,
   &:has(:required) {
-
     label::after,
     .form-field-label:not(:has(label))::after {
       content: ' *';
@@ -166,7 +167,7 @@ app-signal-form-field {
   }
 
   &.is-error,
-  &:has(.form-field-message app-error) {
+  &:has(.form-field-message ms-error) {
     .form-field-control {
       border-color: var(--color-danger);
 
@@ -184,14 +185,13 @@ app-signal-form-field {
       display: block;
     }
 
-    app-error {
+    ms-error {
       display: grid;
     }
   }
 
   &.is-disabled,
   &:has(:disabled) {
-
     label,
     .form-field-label {
       color: var(--color-text-muted);
@@ -208,8 +208,8 @@ app-signal-form-field {
     .form-field-prefix,
     .form-field-suffix,
     .form-field-action,
-    app-hint,
-    app-error {
+    ms-hint,
+    ms-error {
       color: var(--color-text-muted);
       cursor: not-allowed;
     }
@@ -217,7 +217,6 @@ app-signal-form-field {
 
   &.is-readonly,
   &:has([readonly]) {
-
     label,
     .form-field-label,
     .form-field-control {

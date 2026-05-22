@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ThemeMode, ThemeService } from '../../../core/theme.service';
 
 @Component({
-  selector: 'app-theme-switcher',
+  selector: 'ms-theme-switcher',
   templateUrl: './theme-switcher.html',
   styleUrl: './theme-switcher.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

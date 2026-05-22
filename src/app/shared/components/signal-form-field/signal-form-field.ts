@@ -5,7 +5,7 @@ import { SignalFormError } from './signal-form-error/signal-form-error';
 import { SignalFormHint } from './signal-form-hint/signal-form-hint';
 
 @Component({
-  selector: 'app-signal-form-field',
+  selector: 'ms-signal-form-field',
   templateUrl: './signal-form-field.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

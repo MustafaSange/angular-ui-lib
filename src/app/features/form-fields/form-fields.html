@@ -11,73 +11,73 @@
   <section class="form-field-section">
     <h2>Examples</h2>
     <div class="row gap-20 row-align-start">
-      <app-signal-form-field class="col-4">
+      <ms-signal-form-field class="col-4">
         <label for="full-name">Full name</label>
         <input id="full-name" type="text" placeholder="Ada Lovelace" />
-      </app-signal-form-field>
+      </ms-signal-form-field>
 
-      <app-signal-form-field class="col-4">
+      <ms-signal-form-field class="col-4">
         <label for="signal-email">Signal email</label>
         <input id="signal-email" type="email" [formField]="emailField" />
 
-        <app-hint>
+        <ms-hint>
           Enter your email.
           <span slot="hint-extra">Required</span>
-        </app-hint>
-        <app-error>
+        </ms-hint>
+        <ms-error>
           This field is required.
           <span slot="error-extra">Required</span>
-        </app-error>
-      </app-signal-form-field>
+        </ms-error>
+      </ms-signal-form-field>
 
-      <app-signal-form-field class="col-4">
+      <ms-signal-form-field class="col-4">
         <label for="email">Email address</label>
         <input id="email" type="email" placeholder="ada@example.com" required />
-      </app-signal-form-field>
+      </ms-signal-form-field>
 
-      <app-signal-form-field class="col-4">
+      <ms-signal-form-field class="col-4">
         <label for="bio">Bio</label>
         <span slot="label-extra">0 / 280</span>
         <textarea id="bio" placeholder="Tell us a little about yourself"></textarea>
-      </app-signal-form-field>
+      </ms-signal-form-field>
 
-      <app-signal-form-field class="col-4">
+      <ms-signal-form-field class="col-4">
         <label for="role">Role</label>
         <select id="role">
           <option>Designer</option>
           <option>Developer</option>
           <option>Product manager</option>
         </select>
-      </app-signal-form-field>
+      </ms-signal-form-field>
 
-      <app-signal-form-field class="col-4">
+      <ms-signal-form-field class="col-4">
         <label for="username">Username</label>
         <input id="username" type="text" aria-describedby="username-hint" />
-        <app-hint id="username-hint">
+        <ms-hint id="username-hint">
           Use letters, numbers, or underscores.
           <span slot="hint-extra">3 min</span>
-        </app-hint>
-      </app-signal-form-field>
+        </ms-hint>
+      </ms-signal-form-field>
 
-      <app-signal-form-field class="col-4">
+      <ms-signal-form-field class="col-4">
         <label for="price">Price</label>
         <span class="form-field-prefix" aria-hidden="true">$</span>
         <input id="price" type="text" placeholder="0.00" />
-      </app-signal-form-field>
+      </ms-signal-form-field>
 
-      <app-signal-form-field class="col-4">
+      <ms-signal-form-field class="col-4">
         <label for="weight">Weight</label>
         <input id="weight" type="text" placeholder="12" />
         <span class="form-field-suffix" aria-hidden="true">kg</span>
-      </app-signal-form-field>
+      </ms-signal-form-field>
 
-      <app-signal-form-field class="col-4">
+      <ms-signal-form-field class="col-4">
         <label for="search">Search</label>
         <span class="form-field-prefix" aria-hidden="true">⌕</span>
         <input id="search" type="search" placeholder="Search projects" />
-      </app-signal-form-field>
+      </ms-signal-form-field>
 
-      <app-signal-form-field class="col-4">
+      <ms-signal-form-field class="col-4">
         <label for="secret">Password</label>
         <button slot="label-action" type="button">Generate</button>
         <input id="secret" type="password" value="lovelace" />
@@ -88,37 +88,37 @@
         >
           ◉
         </button>
-      </app-signal-form-field>
+      </ms-signal-form-field>
 
-      <app-signal-form-field class="col-4">
+      <ms-signal-form-field class="col-4">
         <label for="domain">Domain</label>
         <input id="domain" type="text" placeholder="analytical-engines" />
         <button class="form-field-suffix form-field-action is-segmented" type="button">.com</button>
-      </app-signal-form-field>
+      </ms-signal-form-field>
 
-      <app-signal-form-field class="col-4">
+      <ms-signal-form-field class="col-4">
         <label for="signal-required-email">Work email</label>
         <input id="signal-required-email" type="email" [formField]="requiredEmailField" />
 
-        <app-hint>
+        <ms-hint>
           We will send project updates here.
           <span slot="hint-extra">Private</span>
-        </app-hint>
-        <app-error>
+        </ms-hint>
+        <ms-error>
           This field is required.
           <span slot="error-extra">Required</span>
-        </app-error>
-      </app-signal-form-field>
+        </ms-error>
+      </ms-signal-form-field>
 
-      <app-signal-form-field class="col-4">
+      <ms-signal-form-field class="col-4">
         <label for="company">Company</label>
         <input id="company" type="text" value="Analytical Engines" disabled />
-      </app-signal-form-field>
+      </ms-signal-form-field>
 
-      <app-signal-form-field class="col-4">
+      <ms-signal-form-field class="col-4">
         <label for="account-id">Account ID</label>
         <input id="account-id" type="text" value="ACC-1843" readonly />
-      </app-signal-form-field>
+      </ms-signal-form-field>
     </div>
   </section>
 </main>

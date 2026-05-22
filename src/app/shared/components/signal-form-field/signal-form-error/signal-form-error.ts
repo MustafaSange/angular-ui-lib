@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'app-error',
+  selector: 'ms-error',
   templateUrl: './signal-form-error.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

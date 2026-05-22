@@ -1,9 +1,11 @@
 # Feature 007: Theme Mode System
 
 ## Goal
+
 Create a reusable theme mode system that supports light mode, dark mode, and system preference mode while maintaining compatibility with the existing style guide.
 
 ## Context
+
 The project already contains:
 
 - `src/styles/tokens/`
@@ -15,6 +17,7 @@ The existing style guide already uses design tokens, CSS variables, spacing, typ
 The theme system must integrate with the current architecture and should become the foundation for future styling across all projects.
 
 ## Task
+
 Create a reusable theme mode system inside the styles architecture.
 
 Create or update the appropriate files inside:
@@ -90,14 +93,16 @@ Expose the theme modes through a small reusable Angular UI control.
 Create:
 
 - `src/app/core/theme.service.ts`
-- `src/app/shared/theme-switcher/theme-switcher.ts`
-- `src/app/shared/theme-switcher/theme-switcher.html`
-- `src/app/shared/theme-switcher/theme-switcher.scss`
+- `src/app/shared/components/theme-switcher/theme-switcher.ts`
+- `src/app/shared/components/theme-switcher/theme-switcher.html`
+- `src/app/shared/components/theme-switcher/theme-switcher.scss`
+- `src/app/shared/components/theme-switcher/index.ts`
 
 The theme switcher should:
 
 - allow selecting `light`, `dark`, or `system`
 - be available globally from the app shell
+- use the shared reusable component selector prefix `ms-`
 - update `data-theme` on the root document element
 - persist the selected mode between sessions
 - use existing design tokens for its styling
