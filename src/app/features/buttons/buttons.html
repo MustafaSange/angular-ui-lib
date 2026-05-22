@@ -16,6 +16,7 @@
       <button class="btn btn-danger">Danger</button>
       <button class="btn btn-success">Success</button>
     </div>
+    <app-showcase-code label="Button variants" [code]="snippets.variants" />
   </section>
 
   <section class="button-section">
@@ -26,6 +27,7 @@
       <a class="btn btn-outline" href="#">Outline link button</a>
       <a class="btn btn-ghost" href="#">Ghost link button</a>
     </div>
+    <app-showcase-code label="Link buttons" [code]="snippets.links" />
   </section>
 
   <section class="button-section">
@@ -36,6 +38,7 @@
       <button class="btn btn-outline-danger">Danger outline</button>
       <button class="btn btn-outline-success">Success outline</button>
     </div>
+    <app-showcase-code label="Outline buttons" [code]="snippets.outlineVariants" />
   </section>
 
   <section class="button-section">
@@ -46,6 +49,7 @@
       <button class="btn btn-primary btn-md">Medium</button>
       <button class="btn btn-primary btn-lg">Large</button>
     </div>
+    <app-showcase-code label="Button sizes" [code]="snippets.sizes" />
   </section>
 
   <section class="button-section">
@@ -58,11 +62,13 @@
       <button class="btn btn-danger" disabled>Danger disabled</button>
       <button class="btn btn-success" disabled>Success disabled</button>
     </div>
+    <app-showcase-code label="Disabled buttons" [code]="snippets.states" />
   </section>
 
   <section class="button-section">
     <h2>Full width</h2>
     <button class="btn btn-primary btn-full">Full width button</button>
+    <app-showcase-code label="Full width button" [code]="snippets.fullWidth" />
   </section>
 
   <section class="button-section">
@@ -87,6 +93,7 @@
         <span aria-hidden="true">+</span>
       </button>
     </div>
+    <app-showcase-code label="Icon button" [code]="snippets.iconOnly" />
   </section>
 
   <section class="button-section">
@@ -105,6 +112,7 @@
         <span aria-hidden="true">+</span>
       </button>
     </div>
+    <app-showcase-code label="Icon button sizes" [code]="snippets.iconSizes" />
   </section>
 
   <section class="button-section">
@@ -129,5 +137,6 @@
         <span aria-hidden="true">+</span>
       </button>
     </div>
+    <app-showcase-code label="Disabled icon button" [code]="snippets.disabledIcons" />
   </section>
 </main>

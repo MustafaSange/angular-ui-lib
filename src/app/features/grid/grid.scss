@@ -66,6 +66,10 @@ h2 {
 
 .grid-demo {
   column-gap: var(--spacing-8);
+
+  & + app-showcase-code {
+    margin-block-start: var(--spacing-16);
+  }
 }
 
 .grid-cell {
@@ -80,6 +84,10 @@ h2 {
 .container-stack {
   display: grid;
   gap: var(--spacing-12);
+
+  & + app-showcase-code {
+    margin-block-start: var(--spacing-16);
+  }
 }
 
 code {

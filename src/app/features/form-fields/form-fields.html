@@ -120,5 +120,11 @@
         <input id="account-id" type="text" value="ACC-1843" readonly />
       </ms-signal-form-field>
     </div>
+
+    <div class="snippet-stack">
+      @for (snippet of snippets; track snippet.label) {
+        <app-showcase-code [label]="snippet.label" [code]="snippet.code" />
+      }
+    </div>
   </section>
 </main>

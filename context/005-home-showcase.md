@@ -53,6 +53,13 @@ Add a visible back control to:
 
 Each control should navigate back to `/`.
 
+## Feature page snippets
+
+New feature showcase pages should include copyable full-component examples using the shared
+`ShowcaseCode` component. Follow:
+
+`context/009-showcase-code-snippets.md`
+
 ## Rules
 
 - Use standalone Angular APIs.

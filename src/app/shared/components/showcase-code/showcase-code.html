@@ -1,0 +1,19 @@
+<section class="showcase-code" [attr.data-language]="language()">
+  <header class="showcase-code-header">
+    <span class="showcase-code-label">{{ label() }}</span>
+    <button class="btn btn-ghost btn-sm" type="button" (click)="copyCode()">
+      @switch (copyState()) {
+        @case ('copied') {
+          Copied
+        }
+        @case ('failed') {
+          Select code
+        }
+        @default {
+          Copy
+        }
+      }
+    </button>
+  </header>
+  <pre><code>{{ code() }}</code></pre>
+</section>

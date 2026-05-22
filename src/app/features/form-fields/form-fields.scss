@@ -54,3 +54,9 @@ h2 {
   margin-block-end: var(--spacing-16);
   font-size: var(--font-size-lg);
 }
+
+.snippet-stack {
+  display: grid;
+  gap: var(--spacing-16);
+  margin-block-start: var(--spacing-20);
+}

@@ -63,6 +63,14 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-12);
+
+  & + app-showcase-code {
+    margin-block-start: var(--spacing-16);
+  }
+}
+
+.button-section > .btn-full + app-showcase-code {
+  margin-block-start: var(--spacing-16);
 }
 
 .align-end {
