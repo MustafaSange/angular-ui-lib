@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-error',
-  template: '<ng-content />',
+  templateUrl: './signal-form-error.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignalFormError {}

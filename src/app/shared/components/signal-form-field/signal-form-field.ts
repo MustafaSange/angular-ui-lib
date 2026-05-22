@@ -16,8 +16,9 @@ export class SignalFormField {
 
   protected readonly showError = computed(() => {
     const field = this.field();
+    const state = field?.state();
 
-    return Boolean(this.error() && field?.state().invalid());
+    return Boolean(this.error() && state?.invalid() && (state.touched() || state.dirty()));
   });
 
   protected readonly showHint = computed(() => Boolean(this.hint() && !this.showError()));

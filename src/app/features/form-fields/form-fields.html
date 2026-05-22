@@ -20,8 +20,14 @@
         <label for="signal-email">Signal email</label>
         <input id="signal-email" type="email" [formField]="emailField" />
 
-        <app-hint>Enter your email.</app-hint>
-        <app-error>This field is required.</app-error>
+        <app-hint>
+          Enter your email.
+          <span slot="hint-extra">Required</span>
+        </app-hint>
+        <app-error>
+          This field is required.
+          <span slot="error-extra">Required</span>
+        </app-error>
       </app-signal-form-field>
 
       <app-signal-form-field class="col-4">
@@ -31,6 +37,7 @@
 
       <app-signal-form-field class="col-4">
         <label for="bio">Bio</label>
+        <span slot="label-extra">0 / 280</span>
         <textarea id="bio" placeholder="Tell us a little about yourself"></textarea>
       </app-signal-form-field>
 
@@ -46,7 +53,10 @@
       <app-signal-form-field class="col-4">
         <label for="username">Username</label>
         <input id="username" type="text" aria-describedby="username-hint" />
-        <app-hint id="username-hint">Use letters, numbers, or underscores.</app-hint>
+        <app-hint id="username-hint">
+          Use letters, numbers, or underscores.
+          <span slot="hint-extra">3 min</span>
+        </app-hint>
       </app-signal-form-field>
 
       <app-signal-form-field class="col-4">
@@ -69,6 +79,7 @@
 
       <app-signal-form-field class="col-4">
         <label for="secret">Password</label>
+        <button slot="label-action" type="button">Generate</button>
         <input id="secret" type="password" value="lovelace" />
         <button
           class="form-field-suffix form-field-action"
@@ -89,8 +100,14 @@
         <label for="signal-required-email">Work email</label>
         <input id="signal-required-email" type="email" [formField]="requiredEmailField" />
 
-        <app-hint>We will send project updates here.</app-hint>
-        <app-error>This field is required.</app-error>
+        <app-hint>
+          We will send project updates here.
+          <span slot="hint-extra">Private</span>
+        </app-hint>
+        <app-error>
+          This field is required.
+          <span slot="error-extra">Required</span>
+        </app-error>
       </app-signal-form-field>
 
       <app-signal-form-field class="col-4">

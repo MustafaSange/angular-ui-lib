@@ -1,5 +1,6 @@
-<div class="form-field-label-row">
+<div class="form-field-label">
   <ng-content select="label" />
+  <ng-content select="[slot=label-extra], [slot=label-action]" />
 </div>
 
 <div class="form-field-control">

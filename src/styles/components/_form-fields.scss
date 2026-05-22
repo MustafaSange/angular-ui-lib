@@ -2,6 +2,14 @@
 app-signal-form-field {
   display: grid;
   align-content: start;
+  row-gap: var(--spacing-2);
+
+  .form-field-label {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: var(--spacing-8);
+  }
 
   label,
   .form-field-label {
@@ -115,9 +123,7 @@ app-signal-form-field {
   }
 
   textarea {
-    min-block-size: calc(
-      var(--control-height-md) + var(--control-height-md) + var(--control-height-md)
-    );
+    min-block-size: calc(var(--control-height-md) + var(--control-height-md) + var(--control-height-md));
     padding-block: var(--control-padding-y-md);
     resize: vertical;
   }
@@ -134,7 +140,10 @@ app-signal-form-field {
 
   app-hint,
   app-error {
-    display: block;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: var(--spacing-8);
   }
 
   .form-field-error {
@@ -148,8 +157,9 @@ app-signal-form-field {
 
   &.is-required,
   &:has(:required) {
+
     label::after,
-    .form-field-label::after {
+    .form-field-label:not(:has(label))::after {
       content: ' *';
       color: var(--color-danger);
     }
@@ -170,14 +180,18 @@ app-signal-form-field {
       display: none;
     }
 
-    .form-field-error,
-    app-error {
+    .form-field-error {
       display: block;
+    }
+
+    app-error {
+      display: grid;
     }
   }
 
   &.is-disabled,
   &:has(:disabled) {
+
     label,
     .form-field-label {
       color: var(--color-text-muted);
@@ -203,6 +217,7 @@ app-signal-form-field {
 
   &.is-readonly,
   &:has([readonly]) {
+
     label,
     .form-field-label,
     .form-field-control {
