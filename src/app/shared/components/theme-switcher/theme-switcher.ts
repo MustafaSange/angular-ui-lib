@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { ThemeMode, ThemeService } from '../../core/theme.service';
+import { ThemeMode, ThemeService } from '../../../core/theme.service';
 
 @Component({
   selector: 'app-theme-switcher',

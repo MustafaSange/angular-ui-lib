@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-import { ThemeSwitcher } from './shared/theme-switcher/theme-switcher';
+import { ThemeSwitcher } from './shared/components/theme-switcher';
 
 @Component({
   selector: 'app-root',

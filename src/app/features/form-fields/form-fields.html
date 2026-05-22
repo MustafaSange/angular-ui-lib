@@ -3,118 +3,105 @@
     <a class="btn btn-ghost back-link" routerLink="/">← Back to home</a>
     <p class="eyebrow">Components</p>
     <h1>Form fields</h1>
-    <p class="description">A visual pass over labels, native controls, support text, and field states.</p>
+    <p class="description">
+      A visual pass over labels, native controls, support text, and field states.
+    </p>
   </header>
 
   <section class="form-field-section">
     <h2>Examples</h2>
-    <div class="form-field-grid">
-      <div class="form-field">
-        <label class="form-field-label" for="full-name">Full name</label>
-        <div class="form-field-control">
-          <input id="full-name" type="text" placeholder="Ada Lovelace" />
-        </div>
-      </div>
+    <div class="row gap-20 row-align-start">
+      <app-signal-form-field class="col-4">
+        <label for="full-name">Full name</label>
+        <input id="full-name" type="text" placeholder="Ada Lovelace" />
+      </app-signal-form-field>
 
-      <div class="form-field is-required">
-        <label class="form-field-label" for="email">Email address</label>
-        <div class="form-field-control">
-          <input id="email" type="email" placeholder="ada@example.com" required />
-        </div>
-      </div>
+      <app-signal-form-field class="col-4">
+        <label for="signal-email">Signal email</label>
+        <input id="signal-email" type="email" [formField]="emailField" />
 
-      <div class="form-field">
-        <label class="form-field-label" for="bio">Bio</label>
-        <div class="form-field-control">
-          <textarea id="bio" placeholder="Tell us a little about yourself"></textarea>
-        </div>
-      </div>
+        <app-hint>Enter your email.</app-hint>
+        <app-error>This field is required.</app-error>
+      </app-signal-form-field>
 
-      <div class="form-field">
-        <label class="form-field-label" for="role">Role</label>
-        <div class="form-field-control">
-          <select id="role">
-            <option>Designer</option>
-            <option>Developer</option>
-            <option>Product manager</option>
-          </select>
-        </div>
-      </div>
+      <app-signal-form-field class="col-4">
+        <label for="email">Email address</label>
+        <input id="email" type="email" placeholder="ada@example.com" required />
+      </app-signal-form-field>
 
-      <div class="form-field">
-        <label class="form-field-label" for="username">Username</label>
-        <div class="form-field-control">
-          <input id="username" type="text" aria-describedby="username-hint" />
-        </div>
-        <div class="form-field-message">
-          <p class="form-field-hint" id="username-hint">Use letters, numbers, or underscores.</p>
-        </div>
-      </div>
+      <app-signal-form-field class="col-4">
+        <label for="bio">Bio</label>
+        <textarea id="bio" placeholder="Tell us a little about yourself"></textarea>
+      </app-signal-form-field>
 
-      <div class="form-field">
-        <label class="form-field-label" for="price">Price</label>
-        <div class="form-field-control">
-          <span class="form-field-prefix" aria-hidden="true">$</span>
-          <input id="price" type="text" placeholder="0.00" />
-        </div>
-      </div>
+      <app-signal-form-field class="col-4">
+        <label for="role">Role</label>
+        <select id="role">
+          <option>Designer</option>
+          <option>Developer</option>
+          <option>Product manager</option>
+        </select>
+      </app-signal-form-field>
 
-      <div class="form-field">
-        <label class="form-field-label" for="weight">Weight</label>
-        <div class="form-field-control">
-          <input id="weight" type="text" placeholder="12" />
-          <span class="form-field-suffix" aria-hidden="true">kg</span>
-        </div>
-      </div>
+      <app-signal-form-field class="col-4">
+        <label for="username">Username</label>
+        <input id="username" type="text" aria-describedby="username-hint" />
+        <app-hint id="username-hint">Use letters, numbers, or underscores.</app-hint>
+      </app-signal-form-field>
 
-      <div class="form-field">
-        <label class="form-field-label" for="search">Search</label>
-        <div class="form-field-control">
-          <span class="form-field-prefix" aria-hidden="true">⌕</span>
-          <input id="search" type="search" placeholder="Search projects" />
-        </div>
-      </div>
+      <app-signal-form-field class="col-4">
+        <label for="price">Price</label>
+        <span class="form-field-prefix" aria-hidden="true">$</span>
+        <input id="price" type="text" placeholder="0.00" />
+      </app-signal-form-field>
 
-      <div class="form-field">
-        <label class="form-field-label" for="secret">Password</label>
-        <div class="form-field-control">
-          <input id="secret" type="password" value="lovelace" />
-          <button class="form-field-suffix form-field-action" type="button" aria-label="Show password">◉</button>
-        </div>
-      </div>
+      <app-signal-form-field class="col-4">
+        <label for="weight">Weight</label>
+        <input id="weight" type="text" placeholder="12" />
+        <span class="form-field-suffix" aria-hidden="true">kg</span>
+      </app-signal-form-field>
 
-      <div class="form-field">
-        <label class="form-field-label" for="domain">Domain</label>
-        <div class="form-field-control">
-          <input id="domain" type="text" placeholder="analytical-engines" />
-          <button class="form-field-suffix form-field-action is-segmented" type="button">.com</button>
-        </div>
-      </div>
+      <app-signal-form-field class="col-4">
+        <label for="search">Search</label>
+        <span class="form-field-prefix" aria-hidden="true">⌕</span>
+        <input id="search" type="search" placeholder="Search projects" />
+      </app-signal-form-field>
 
-      <div class="form-field is-error">
-        <label class="form-field-label" for="work-email">Work email</label>
-        <div class="form-field-control">
-          <input id="work-email" type="email" value="ada@" aria-describedby="work-email-error" aria-invalid="true" />
-        </div>
-        <div class="form-field-message">
-          <p class="form-field-hint">We will send project updates here.</p>
-          <p class="form-field-error" id="work-email-error">Enter a valid email address.</p>
-        </div>
-      </div>
+      <app-signal-form-field class="col-4">
+        <label for="secret">Password</label>
+        <input id="secret" type="password" value="lovelace" />
+        <button
+          class="form-field-suffix form-field-action"
+          type="button"
+          aria-label="Show password"
+        >
+          ◉
+        </button>
+      </app-signal-form-field>
 
-      <div class="form-field is-disabled">
-        <label class="form-field-label" for="company">Company</label>
-        <div class="form-field-control">
-          <input id="company" type="text" value="Analytical Engines" disabled />
-        </div>
-      </div>
+      <app-signal-form-field class="col-4">
+        <label for="domain">Domain</label>
+        <input id="domain" type="text" placeholder="analytical-engines" />
+        <button class="form-field-suffix form-field-action is-segmented" type="button">.com</button>
+      </app-signal-form-field>
 
-      <div class="form-field is-readonly">
-        <label class="form-field-label" for="account-id">Account ID</label>
-        <div class="form-field-control">
-          <input id="account-id" type="text" value="ACC-1843" readonly />
-        </div>
-      </div>
+      <app-signal-form-field class="col-4">
+        <label for="signal-required-email">Work email</label>
+        <input id="signal-required-email" type="email" [formField]="requiredEmailField" />
+
+        <app-hint>We will send project updates here.</app-hint>
+        <app-error>This field is required.</app-error>
+      </app-signal-form-field>
+
+      <app-signal-form-field class="col-4">
+        <label for="company">Company</label>
+        <input id="company" type="text" value="Analytical Engines" disabled />
+      </app-signal-form-field>
+
+      <app-signal-form-field class="col-4">
+        <label for="account-id">Account ID</label>
+        <input id="account-id" type="text" value="ACC-1843" readonly />
+      </app-signal-form-field>
     </div>
   </section>
 </main>

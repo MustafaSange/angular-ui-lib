@@ -1,0 +1,17 @@
+<div class="form-field-label-row">
+  <ng-content select="label" />
+</div>
+
+<div class="form-field-control">
+  <ng-content
+    select="[formField], input, textarea, select, button, .form-field-prefix, .form-field-suffix, .form-field-action"
+  />
+</div>
+
+<div class="form-field-message">
+  @if (showError()) {
+    <ng-content select="app-error" />
+  } @else if (showHint()) {
+    <ng-content select="app-hint" />
+  }
+</div>

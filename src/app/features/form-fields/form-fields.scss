@@ -54,10 +54,3 @@ h2 {
   margin-block-end: var(--spacing-16);
   font-size: var(--font-size-lg);
 }
-
-.form-field-grid {
-  display: grid;
-  align-items: start;
-  gap: var(--spacing-20);
-  grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
-}

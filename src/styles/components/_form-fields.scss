@@ -1,4 +1,5 @@
-.form-field {
+.form-field,
+app-signal-form-field {
   display: grid;
   align-content: start;
 
@@ -114,7 +115,9 @@
   }
 
   textarea {
-    min-block-size: calc(var(--control-height-md) + var(--control-height-md) + var(--control-height-md));
+    min-block-size: calc(
+      var(--control-height-md) + var(--control-height-md) + var(--control-height-md)
+    );
     padding-block: var(--control-padding-y-md);
     resize: vertical;
   }
@@ -129,19 +132,31 @@
     font-size: var(--font-size-xs);
   }
 
+  app-hint,
+  app-error {
+    display: block;
+  }
+
   .form-field-error {
     display: none;
     color: var(--color-danger-text);
   }
 
-  &.is-required {
+  app-error {
+    color: var(--color-danger-text);
+  }
+
+  &.is-required,
+  &:has(:required) {
+    label::after,
     .form-field-label::after {
       content: ' *';
       color: var(--color-danger);
     }
   }
 
-  &.is-error {
+  &.is-error,
+  &:has(.form-field-message app-error) {
     .form-field-control {
       border-color: var(--color-danger);
 
@@ -155,13 +170,15 @@
       display: none;
     }
 
-    .form-field-error {
+    .form-field-error,
+    app-error {
       display: block;
     }
   }
 
   &.is-disabled,
   &:has(:disabled) {
+    label,
     .form-field-label {
       color: var(--color-text-muted);
     }
@@ -176,7 +193,9 @@
     select,
     .form-field-prefix,
     .form-field-suffix,
-    .form-field-action {
+    .form-field-action,
+    app-hint,
+    app-error {
       color: var(--color-text-muted);
       cursor: not-allowed;
     }
@@ -184,6 +203,7 @@
 
   &.is-readonly,
   &:has([readonly]) {
+    label,
     .form-field-label,
     .form-field-control {
       opacity: var(--opacity-muted);
