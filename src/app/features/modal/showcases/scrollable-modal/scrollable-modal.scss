@@ -1,0 +1,25 @@
+:host {
+  display: block;
+}
+
+h2 {
+  margin-block-end: var(--spacing-16);
+  font-size: var(--font-size-lg);
+}
+
+.modal-demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-12);
+
+  & + app-showcase-code {
+    display: block;
+    margin-block-start: var(--spacing-16);
+  }
+}
+
+.result-note {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}

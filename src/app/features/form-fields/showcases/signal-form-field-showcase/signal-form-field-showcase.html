@@ -1,0 +1,31 @@
+<div class="showcase-preview">
+      <ms-signal-form-field>
+        <label for="signal-email">Signal email</label>
+        <input id="signal-email" type="email" [formField]="emailField" />
+
+        <ms-hint>
+          Enter your email.
+          <span slot="hint-extra">Required</span>
+        </ms-hint>
+        <ms-error>
+          This field is required.
+          <span slot="error-extra">Required</span>
+        </ms-error>
+      </ms-signal-form-field>
+
+      <ms-signal-form-field>
+        <label for="signal-required-email">Work email</label>
+        <input id="signal-required-email" type="email" [formField]="requiredEmailField" />
+
+        <ms-hint>
+          We will send project updates here.
+          <span slot="hint-extra">Private</span>
+        </ms-hint>
+        <ms-error>
+          This field is required.
+          <span slot="error-extra">Required</span>
+        </ms-error>
+      </ms-signal-form-field>
+    </div>
+    <app-showcase-code label="Signal form field" [code]="snippet" />
+  

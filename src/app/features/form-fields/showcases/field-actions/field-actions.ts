@@ -1,0 +1,39 @@
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import { ShowcaseCode } from '../../../../shared/components/showcase-code';
+import { SignalFormField } from '../../../../shared/components/signal-form-field';
+
+@Component({
+  selector: 'app-field-actions-showcase',
+  imports: [SignalFormField, ShowcaseCode],
+  templateUrl: './field-actions.html',
+  styleUrl: './field-actions.scss',
+  host: { class: 'showcase-pair' },
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class FieldActionsShowcase {
+  protected readonly snippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import { SignalFormField } from './shared/components/signal-form-field';
+
+@Component({
+  selector: 'app-field-actions-example',
+  imports: [SignalFormField],
+  template: \`
+    <ms-signal-form-field>
+      <label for="secret">Password</label>
+      <button slot="label-action" type="button">Generate</button>
+      <input id="secret" type="password" value="lovelace" />
+      <button
+        class="form-field-suffix form-field-action"
+        type="button"
+        aria-label="Show password"
+      >
+        Show
+      </button>
+    </ms-signal-form-field>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class FieldActionsExample {}`;
+}

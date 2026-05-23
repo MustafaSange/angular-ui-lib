@@ -1,0 +1,64 @@
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import {
+  ChoiceError,
+  ChoiceHint,
+  RadioControl,
+  RadioGroup,
+} from '../../../../shared/components/choice-controls';
+import { ShowcaseCode } from '../../../../shared/components/showcase-code';
+
+@Component({
+  selector: 'app-radio-group-showcase',
+  imports: [RadioGroup, RadioControl, ChoiceHint, ChoiceError, ShowcaseCode],
+  templateUrl: './radio-group-showcase.html',
+  styleUrl: './radio-group-showcase.scss',
+  host: { class: 'showcase-pair' },
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class RadioGroupShowcase {
+  protected readonly snippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import {
+  ChoiceError,
+  ChoiceHint,
+  RadioControl,
+  RadioGroup,
+} from './shared/components/choice-controls';
+
+@Component({
+  selector: 'app-radio-group-example',
+  imports: [RadioGroup, RadioControl, ChoiceHint, ChoiceError],
+  template: \`
+    <ms-radio-group>
+      <legend>Support plan</legend>
+
+      <ms-radio-control>
+        <input type="radio" name="support-plan" value="starter" />
+        <label>Starter</label>
+        <ms-choice-hint>For small teams getting set up.</ms-choice-hint>
+      </ms-radio-control>
+
+      <ms-radio-control>
+        <input type="radio" name="support-plan" value="growth" checked />
+        <label>Growth</label>
+        <ms-choice-hint>Priority support for active teams.</ms-choice-hint>
+      </ms-radio-control>
+
+      <ms-radio-control>
+        <input type="radio" name="support-plan" value="enterprise" disabled />
+        <label>Enterprise</label>
+        <ms-choice-error>Contact sales to enable this plan.</ms-choice-error>
+      </ms-radio-control>
+
+      <ms-radio-control slot="label-before">
+        <input type="radio" name="support-plan" value="custom" />
+        <label>Label before</label>
+        <ms-choice-hint>Places text before the radio.</ms-choice-hint>
+      </ms-radio-control>
+    </ms-radio-group>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class RadioGroupExample {}`;
+}

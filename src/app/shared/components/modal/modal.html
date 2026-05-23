@@ -1,0 +1,50 @@
+<div class="modal-overlay">
+  <div
+    class="modal-backdrop"
+    [style.z-index]="backdropZIndex()"
+    (click)="handleBackdropClick()"
+  ></div>
+
+  <div class="modal-host" [style.z-index]="modalZIndex()">
+    <section
+      #dialog
+      class="modal"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-labelledby]="titleId"
+      [style.width]="width()"
+      [style.max-width]="maxWidth()"
+      [style.max-height]="maxHeight()"
+      tabindex="-1"
+    >
+      <header class="modal-header">
+        <div class="modal-title-section">
+          <h2 class="modal-title" [id]="titleId">{{ title() }}</h2>
+          <div class="modal-header-actions">
+            <ng-content select="[slot='headerActions']" />
+          </div>
+        </div>
+
+        @if (showCloseButton()) {
+          <button
+            class="btn btn-ghost btn-icon modal-close-button"
+            type="button"
+            aria-label="Close modal"
+            (click)="close.emit()"
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        }
+      </header>
+
+      <div class="modal-content">
+        <ng-content />
+        <ng-template #contentHost />
+      </div>
+
+      <footer class="modal-footer">
+        <ng-content select="[slot='footer']" />
+      </footer>
+    </section>
+  </div>
+</div>

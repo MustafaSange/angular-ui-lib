@@ -18,4 +18,8 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/form-fields/form-fields').then((m) => m.FormFields),
   },
+  {
+    path: 'modal',
+    loadComponent: () => import('./features/modal/modal').then((m) => m.Modal),
+  },
 ];
