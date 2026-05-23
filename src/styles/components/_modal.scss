@@ -1,0 +1,134 @@
+body.ms-modal-open {
+  overflow: hidden;
+}
+
+.modal-overlay {
+  pointer-events: none;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgb(15 23 42 / 0.48);
+  pointer-events: auto;
+}
+
+.modal-host {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: var(--spacing-16);
+  pointer-events: none;
+}
+
+.modal {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  inline-size: min(36rem, 100%);
+  max-inline-size: 90%;
+  max-block-size: 90svh;
+  overflow: hidden;
+  border: var(--border-width-sm) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-overlay);
+  color: var(--color-text-primary);
+  box-shadow: var(--shadow-lg);
+  pointer-events: auto;
+  transform: translateY(0);
+  animation: modal-enter var(--transition-base);
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.modal-header,
+.modal-footer {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  padding: var(--spacing-16) var(--spacing-20);
+}
+
+.modal-header {
+  justify-content: space-between;
+  min-block-size: var(--spacing-40);
+  padding-block: 0;
+  padding-inline: var(--spacing-20) 0;
+  border-block-end: var(--border-width-sm) solid var(--color-border-muted);
+}
+
+.modal-title-section {
+  display: flex;
+  min-inline-size: 0;
+  align-items: center;
+  gap: var(--spacing-12);
+}
+
+.modal-title {
+  margin: 0;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-heading);
+}
+
+.modal-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+.modal-close-button {
+  flex: 0 0 auto;
+  align-self: stretch;
+  inline-size: var(--spacing-40);
+  block-size: var(--spacing-40);
+  min-block-size: var(--spacing-40);
+  padding-inline: 0;
+  border-radius: 0;
+
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+}
+
+.modal-content {
+  flex: 1 1 auto;
+  min-block-size: 0;
+  overflow: auto;
+  padding: var(--spacing-20);
+}
+
+.modal-footer {
+  justify-content: flex-end;
+  border-block-start: var(--border-width-sm) solid var(--color-border-muted);
+
+  &:empty {
+    display: none;
+  }
+}
+
+.modal-stack {
+  display: grid;
+  gap: var(--spacing-16);
+}
+
+@keyframes modal-enter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--spacing-8)) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

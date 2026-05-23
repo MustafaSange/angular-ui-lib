@@ -1,0 +1,8 @@
+<ms-modal title="Stacked child modal" (close)="modalRef.close()">
+  <div class="modal-stack">
+    <p>
+      <strong>{{ data.name }}</strong> is owned by {{ data.owner }}.
+    </p>
+    <p>Closing it should preserve the underlying modal state.</p>
+  </div>
+</ms-modal>

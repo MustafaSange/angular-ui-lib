@@ -1,0 +1,32 @@
+:host {
+  display: block;
+}
+
+h2 {
+  margin-block-end: var(--spacing-16);
+  font-size: var(--font-size-lg);
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-12);
+
+  & + app-showcase-code {
+    display: block;
+    margin-block-start: var(--spacing-16);
+  }
+}
+
+.btn-full + app-showcase-code {
+  display: block;
+  margin-block-start: var(--spacing-16);
+}
+
+.align-end {
+  align-items: flex-end;
+}
+
+.align-center {
+  align-items: center;
+}

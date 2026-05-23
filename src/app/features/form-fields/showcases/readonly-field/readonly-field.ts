@@ -1,0 +1,31 @@
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import { ShowcaseCode } from '../../../../shared/components/showcase-code';
+import { SignalFormField } from '../../../../shared/components/signal-form-field';
+
+@Component({
+  selector: 'app-readonly-field-showcase',
+  imports: [SignalFormField, ShowcaseCode],
+  templateUrl: './readonly-field.html',
+  styleUrl: './readonly-field.scss',
+  host: { class: 'showcase-pair' },
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class ReadonlyFieldShowcase {
+  protected readonly snippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import { SignalFormField } from './shared/components/signal-form-field';
+
+@Component({
+  selector: 'app-readonly-field-example',
+  imports: [SignalFormField],
+  template: \`
+    <ms-signal-form-field>
+      <label for="account-id">Account ID</label>
+      <input id="account-id" type="text" value="ACC-1843" readonly />
+    </ms-signal-form-field>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class ReadonlyFieldExample {}`;
+}
