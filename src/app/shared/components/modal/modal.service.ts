@@ -1,29 +1,18 @@
-import {
-  ApplicationRef,
-  ComponentRef,
-  EnvironmentInjector,
-  Injectable,
-  Injector,
-  Type,
-  createComponent,
-  inject,
-  signal,
-} from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { Injectable, Injector, Type, inject, signal } from '@angular/core';
 
-import { ModalConfig } from './modal-config';
-import { ModalInternalConfig, MODAL_INTERNAL_CONFIG } from './modal-internal-config';
-import { ModalComponent } from './modal';
+import { MODAL_CONFIG, ModalConfig, ModalOpenOptions } from './modal-config';
 import { ModalRef } from './modal-ref';
 import { MODAL_DATA, MODAL_REF } from './modal-tokens';
 
-type ModalEntry = {
+export type ModalEntry = {
+  id: number;
+  component: Type<unknown>;
+  injector: Injector;
   modalRef: ModalRef<unknown>;
-  modalRefComponent: ComponentRef<ModalComponent<unknown>>;
-  internalConfig: ModalInternalConfig;
-  contentRef: ComponentRef<unknown>;
-  previouslyFocusedElement: HTMLElement | null;
   closeOnEscape: boolean;
+  stackOffset: string;
+  previouslyFocusedElement: HTMLElement | null;
 };
 
 const FOCUSABLE_SELECTOR = [
@@ -35,53 +24,26 @@ const FOCUSABLE_SELECTOR = [
   '[tabindex]:not([tabindex="-1"])',
 ].join(',');
 
+let nextModalEntryId = 0;
+
 @Injectable({
   providedIn: 'root',
 })
 export class ModalService {
-  private readonly appRef = inject(ApplicationRef);
-  private readonly environmentInjector = inject(EnvironmentInjector);
   private readonly injector = inject(Injector);
   private readonly document = inject(DOCUMENT);
-
-  private readonly entries: ModalEntry[] = [];
+  private readonly modalEntries = signal<ModalEntry[]>([]);
   private keydownListener: ((event: KeyboardEvent) => void) | undefined;
+
+  readonly entries = this.modalEntries.asReadonly();
 
   open<TComponent, TData = unknown, TResult = unknown>(
     component: Type<TComponent>,
-    config: ModalConfig<TData, TResult>,
+    config: ModalOpenOptions<TData> = {},
   ): ModalRef<TResult> {
     const modalRef = new ModalRef<TResult>();
     const previouslyFocusedElement = this.document.activeElement;
-    const internalConfig: ModalInternalConfig = {
-      showCloseButton: config.showCloseButton ?? true,
-      width: config.width,
-      maxWidth: config.maxWidth ?? '90%',
-      maxHeight: config.maxHeight ?? '90svh',
-      closeOnBackdrop: config.closeOnBackdrop ?? true,
-      backdropZIndex: signal('var(--z-index-modal)'),
-      modalZIndex: signal('calc(var(--z-index-modal) + 1)'),
-    };
-    const modalInjector = Injector.create({
-      parent: this.injector,
-      providers: [
-        {
-          provide: MODAL_INTERNAL_CONFIG,
-          useValue: internalConfig,
-        },
-      ],
-    });
-
-    const modalRefComponent = createComponent<ModalComponent<TResult>>(ModalComponent, {
-      environmentInjector: this.environmentInjector,
-      elementInjector: modalInjector,
-    });
-
-    modalRefComponent.setInput('title', config.title);
-    this.appRef.attachView(modalRefComponent.hostView);
-    this.document.body.append(this.getHostElement(modalRefComponent));
-    modalRefComponent.changeDetectorRef.detectChanges();
-
+    const modalConfig = this.getModalConfig(config);
     const contentInjector = Injector.create({
       parent: this.injector,
       providers: [
@@ -90,36 +52,28 @@ export class ModalService {
           useValue: config.data,
         },
         {
+          provide: MODAL_CONFIG,
+          useValue: modalConfig,
+        },
+        {
           provide: MODAL_REF,
           useValue: modalRef,
         },
       ],
     });
-
-    const contentRef = modalRefComponent.instance.getContentHost().createComponent(component, {
-      environmentInjector: this.environmentInjector,
-      injector: contentInjector,
-    });
-
     const entry: ModalEntry = {
+      id: nextModalEntryId++,
+      component,
+      injector: contentInjector,
       modalRef: modalRef as ModalRef<unknown>,
-      modalRefComponent: modalRefComponent as ComponentRef<ModalComponent<unknown>>,
-      internalConfig,
-      contentRef,
+      closeOnEscape: modalConfig.closeOnEscape ?? true,
+      stackOffset: '0',
       previouslyFocusedElement:
         previouslyFocusedElement instanceof HTMLElement ? previouslyFocusedElement : null,
-      closeOnEscape: config.closeOnEscape ?? true,
     };
 
     modalRef.setCloseHandler((result) => this.close(entry, result));
-    modalRefComponent.instance.close.subscribe(() => {
-      if (this.isTopModal(entry)) {
-        modalRef.close();
-      }
-    });
-
-    this.entries.push(entry);
-    this.updateStacking();
+    this.modalEntries.update((entries) => this.withStacking([...entries, entry]));
     this.ensureKeydownListener();
     this.document.body.classList.add('ms-modal-open');
 
@@ -129,23 +83,18 @@ export class ModalService {
   }
 
   private close<TResult>(entry: ModalEntry, result: TResult | undefined): void {
-    const entryIndex = this.entries.indexOf(entry);
+    const entries = this.modalEntries();
+    const entryIndex = entries.indexOf(entry);
 
     if (entryIndex === -1) {
       return;
     }
 
-    this.entries.splice(entryIndex, 1);
-    entry.contentRef.destroy();
-    const hostElement = this.getHostElement(entry.modalRefComponent);
-    this.appRef.detachView(entry.modalRefComponent.hostView);
-    entry.modalRefComponent.destroy();
-    hostElement.remove();
+    this.modalEntries.set(this.withStacking(entries.filter((item) => item !== entry)));
     entry.modalRef.finishClose(result);
     entry.previouslyFocusedElement?.focus();
-    this.updateStacking();
 
-    if (this.entries.length === 0) {
+    if (this.modalEntries().length === 0) {
       this.document.body.classList.remove('ms-modal-open');
       this.removeKeydownListener();
     }
@@ -170,7 +119,7 @@ export class ModalService {
   }
 
   private handleKeydown(event: KeyboardEvent): void {
-    const topEntry = this.entries.at(-1);
+    const topEntry = this.modalEntries().at(-1);
 
     if (!topEntry) {
       return;
@@ -188,7 +137,13 @@ export class ModalService {
   }
 
   private trapFocus(entry: ModalEntry, event: KeyboardEvent): void {
-    const focusableElements = this.getFocusableElements(this.getHostElement(entry.modalRefComponent));
+    const hostElement = this.getHostElement(entry);
+
+    if (!hostElement) {
+      return;
+    }
+
+    const focusableElements = this.getFocusableElements(hostElement);
 
     if (focusableElements.length === 0) {
       event.preventDefault();
@@ -212,7 +167,12 @@ export class ModalService {
   }
 
   private focusInitialElement(entry: ModalEntry): void {
-    const hostElement = this.getHostElement(entry.modalRefComponent);
+    const hostElement = this.getHostElement(entry);
+
+    if (!hostElement) {
+      return;
+    }
+
     const focusableElement = this.getFocusableElements(hostElement)[0];
 
     if (focusableElement) {
@@ -230,21 +190,31 @@ export class ModalService {
   }
 
   private getDialogElement(entry: ModalEntry): HTMLElement | null {
-    return this.getHostElement(entry.modalRefComponent).querySelector<HTMLElement>('[role="dialog"]');
+    return this.getHostElement(entry)?.querySelector<HTMLElement>('[role="dialog"]') ?? null;
   }
 
-  private updateStacking(): void {
-    this.entries.forEach((entry, index) => {
-      entry.internalConfig.backdropZIndex.set(`calc(var(--z-index-modal) + ${index * 2})`);
-      entry.internalConfig.modalZIndex.set(`calc(var(--z-index-modal) + ${index * 2 + 1})`);
+  private getModalConfig(config: ModalOpenOptions<unknown>): ModalConfig {
+    const { closeOnEscape, closeOnBackdrop, showCloseButton, width, maxWidth, maxHeight } = config;
+
+    return {
+      closeOnEscape,
+      closeOnBackdrop,
+      showCloseButton,
+      width,
+      maxWidth,
+      maxHeight,
+    };
+  }
+
+  private withStacking(entries: ModalEntry[]): ModalEntry[] {
+    return entries.map((entry, index) => {
+      entry.stackOffset = `${index * 2}`;
+
+      return entry;
     });
   }
 
-  private isTopModal(entry: ModalEntry): boolean {
-    return this.entries.at(-1) === entry;
-  }
-
-  private getHostElement(componentRef: ComponentRef<unknown>): HTMLElement {
-    return componentRef.location.nativeElement as HTMLElement;
+  private getHostElement(entry: ModalEntry): HTMLElement | null {
+    return this.document.querySelector<HTMLElement>(`[data-modal-entry-id="${entry.id}"]`);
   }
 }

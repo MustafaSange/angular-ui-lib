@@ -1,15 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ViewContainerRef,
-  computed,
-  inject,
-  input,
-  output,
-  viewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 
-import { MODAL_INTERNAL_CONFIG } from './modal-internal-config';
+import { MODAL_CONFIG } from './modal-config';
 
 let nextModalId = 0;
 
@@ -19,7 +10,7 @@ let nextModalId = 0;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalComponent<TResult = unknown> {
-  private readonly internalConfig = inject(MODAL_INTERNAL_CONFIG, {
+  private readonly config = inject(MODAL_CONFIG, {
     optional: true,
   });
 
@@ -28,39 +19,21 @@ export class ModalComponent<TResult = unknown> {
   readonly close = output<void>();
 
   protected readonly titleId = `modal-title-${nextModalId++}`;
-  protected readonly showCloseButton = computed(
-    () => this.internalConfig?.showCloseButton ?? true,
-  );
-  protected readonly width = computed(() => this.internalConfig?.width);
-  protected readonly maxWidth = computed(() => this.internalConfig?.maxWidth ?? '90%');
-  protected readonly maxHeight = computed(() => this.internalConfig?.maxHeight ?? '90svh');
-  protected readonly closeOnBackdrop = computed(
-    () => this.internalConfig?.closeOnBackdrop ?? true,
-  );
+  protected readonly showCloseButton = computed(() => this.config?.showCloseButton ?? true);
+  protected readonly width = computed(() => this.config?.width);
+  protected readonly maxWidth = computed(() => this.config?.maxWidth ?? '90%');
+  protected readonly maxHeight = computed(() => this.config?.maxHeight ?? '90svh');
+  protected readonly closeOnBackdrop = computed(() => this.config?.closeOnBackdrop ?? true);
   protected readonly backdropZIndex = computed(
-    () => this.internalConfig?.backdropZIndex() ?? 'var(--z-index-modal)',
+    () => 'calc(var(--z-index-modal) + var(--ms-modal-stack-offset, 0))',
   );
   protected readonly modalZIndex = computed(
-    () => this.internalConfig?.modalZIndex() ?? 'calc(var(--z-index-modal) + 1)',
+    () => 'calc(var(--z-index-modal) + var(--ms-modal-stack-offset, 0) + 1)',
   );
 
-  private readonly contentHost = viewChild('contentHost', {
-    read: ViewContainerRef,
-  });
-
-  handleBackdropClick(): void {
+  protected handleBackdropClick(): void {
     if (this.closeOnBackdrop()) {
       this.close.emit();
     }
-  }
-
-  getContentHost(): ViewContainerRef {
-    const contentHost = this.contentHost();
-
-    if (!contentHost) {
-      throw new Error('Modal content host is not available.');
-    }
-
-    return contentHost;
   }
 }

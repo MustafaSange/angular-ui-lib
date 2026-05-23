@@ -1,10 +1,10 @@
 # Feature 011: Modal System
 
-## Goal
+## Context
 
-Create a production-quality reusable modal/dialog system for the UI library.
+The modal system is a reusable Angular dialog system for the UI library. It supports declarative modals, service-opened modals, typed close results, shell configuration, injected content data, focus trapping, backdrop/Escape close behavior, scrollable content, and stacked modals.
 
-The modal system must be reusable, extensible, strongly typed, accessible, dynamically created through a service, and support stacked modals.
+Shared reusable components use the `ms-` selector prefix. Do not use `app-` for components under `src/app/shared`.
 
 ## Public API
 
@@ -12,8 +12,12 @@ Import modal primitives from the folder barrel:
 
 ```ts
 import {
+  MODAL_CONFIG,
+  MODAL_DATA,
+  MODAL_REF,
   ModalComponent,
   ModalConfig,
+  ModalOpenOptions,
   ModalRef,
   ModalService,
 } from '../../shared/components/modal';
@@ -22,17 +26,16 @@ import {
 Public pieces:
 
 - `ModalComponent` with selector `ms-modal`
-- `ModalService` with `open()` for dynamic modal creation
+- `ModalOutletComponent` with selector `ms-modal-outlet`
+- `ModalService.open()` for opening full modal components through the global outlet
 - `ModalRef<TResult = unknown>` for closing and observing close results
-- `ModalConfig<TData = unknown>` for modal options and typed data
+- `ModalConfig` for shell behavior/config only
+- `ModalOpenOptions<TData = unknown>` for service open options, including optional `data`
+- `MODAL_CONFIG` for shell config injection
+- `MODAL_DATA` for business/content data injection
+- `MODAL_REF` for closing from opened modal content
 
-Shared reusable components use the `ms-` selector prefix. Do not use `app-` for components under `src/app/shared`.
-
-Required service API:
-
-```ts
-const modalRef = modalService.open(SomeComponent, config);
-```
+`ModalComponent` accepts only `title` as a public input. Shell options such as width, max height, close button visibility, backdrop close, and Escape close are configured through `MODAL_CONFIG` or `ModalService.open(..., options)`.
 
 Required reference API:
 
@@ -43,19 +46,21 @@ class ModalRef<TResult = unknown> {
 }
 ```
 
-Required config API:
+Required config types:
 
 ```ts
-interface ModalConfig<TData = unknown> {
-  title: string;
-  data?: TData;
-  closeOnBackdrop?: boolean;
+type ModalConfig = {
   closeOnEscape?: boolean;
+  closeOnBackdrop?: boolean;
   showCloseButton?: boolean;
   width?: string;
   maxWidth?: string;
   maxHeight?: string;
-}
+};
+
+type ModalOpenOptions<TData = unknown> = ModalConfig & {
+  data?: TData;
+};
 ```
 
 Defaults:
@@ -66,9 +71,27 @@ Defaults:
 - `maxWidth` is `90%`
 - `maxHeight` is `90svh`
 
-Use strong typing throughout for config data, close results, and modal references. Avoid `any`.
+## Architecture
 
-## Desired Usage
+Mount the global outlet once in the root app template:
+
+```html
+<router-outlet /> <ms-modal-outlet />
+```
+
+`ModalService.open(Component, options?)` adds an entry to a signal-backed stack. `ModalOutletComponent` renders each entry with `NgComponentOutlet`. The opened component is the full modal component and is responsible for rendering `<ms-modal>`.
+
+Service-opened modal components receive:
+
+- `MODAL_REF` for closing and returning typed results
+- `MODAL_DATA` for business payloads from `options.data`
+- `MODAL_CONFIG` for shell options from `options`, with `data` stripped out
+
+`MODAL_CONFIG` must remain shell-only. Do not read business data from it; use `MODAL_DATA`.
+
+Stacking is coordinated by the outlet with `--ms-modal-stack-offset`. `ModalComponent` derives backdrop and dialog z-index from that CSS variable and `--z-index-modal`.
+
+## Usage
 
 Open a modal with typed data and typed result:
 
@@ -77,217 +100,152 @@ type UserModalData = {
   userId: string;
 };
 
-type UserModalResult = {
-  action: 'save';
-  payload: {
-    name: string;
-  };
-} | {
-  action: 'cancel';
-};
+type UserModalResult =
+  | {
+      action: 'save';
+      payload: {
+        name: string;
+      };
+    }
+  | {
+      action: 'cancel';
+    };
 
 const modalRef = modalService.open<UserModalComponent, UserModalData, UserModalResult>(
   UserModalComponent,
   {
-    title: 'Edit user',
+    width: '42rem',
     data: {
       userId: 'user-1',
     },
   },
 );
 
-modalRef.afterClosed().subscribe(result => {
+modalRef.afterClosed().subscribe((result) => {
   if (result?.action === 'save') {
     // continue workflow
   }
 });
 ```
 
-Close from modal content with a typed result:
+Opened modal component:
 
 ```ts
-modalRef.close({
-  action: 'save',
-  payload: {
-    name: formData.name,
-  },
-});
+@Component({
+  selector: 'app-user-modal',
+  imports: [ModalComponent],
+  template: `
+    <ms-modal title="Edit user" (close)="modalRef.close({ action: 'cancel' })">
+      <p>Editing user {{ data.userId }}</p>
+
+      <div slot="footer">
+        <button
+          class="btn btn-secondary"
+          type="button"
+          (click)="modalRef.close({ action: 'cancel' })"
+        >
+          Cancel
+        </button>
+        <button class="btn btn-primary" type="button" (click)="save()">Save</button>
+      </div>
+    </ms-modal>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class UserModalComponent {
+  protected readonly data = inject(MODAL_DATA) as UserModalData;
+  protected readonly modalRef = inject(MODAL_REF) as ModalRef<UserModalResult>;
+
+  protected save(): void {
+    this.modalRef.close({
+      action: 'save',
+      payload: {
+        name: 'Ada Lovelace',
+      },
+    });
+  }
+}
 ```
 
-Render a modal shell with projected header actions, dynamic body content, and projected footer actions:
+Declarative modal shell config uses the raw token directly:
 
-```html
-<ms-modal [title]="title">
-  <button slot="headerActions" type="button" class="btn btn-ghost">
-    Help
-  </button>
-
-  <ng-container modalContent></ng-container>
-
-  <div slot="footer">
-    <button type="button" class="btn btn-secondary">Cancel</button>
-    <button type="button" class="btn btn-primary">Save</button>
-  </div>
-</ms-modal>
+```ts
+@Component({
+  selector: 'app-scrollable-modal-example',
+  imports: [ModalComponent],
+  providers: [
+    {
+      provide: MODAL_CONFIG,
+      useValue: {
+        width: '42rem',
+      },
+    },
+  ],
+  template: `
+    @if (isOpen()) {
+      <ms-modal title="Scrollable content" (close)="isOpen.set(false)"> ... </ms-modal>
+    }
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class ScrollableModalExample {
+  protected readonly isOpen = signal(false);
+}
 ```
 
-Do not use `titleExtra`; use `headerActions` for optional content next to the title.
-
-## Component Structure
-
-The implementation lives in:
-
-`src/app/shared/components/modal`
-
-The modal system includes:
-
-- `ModalComponent`
-- `ModalService`
-- `ModalRef`
-- `ModalConfig`
-- overlay host handling
-- stack management, if needed
-- injection helpers, if needed
-- `index.ts`
+## Component Behavior
 
 `ModalComponent` renders:
 
-- a fixed header with a required title, optional `headerActions`, and optional close button
-- a scrollable content area that consumes remaining vertical space
-- a fixed projected footer intended for action buttons
+- fixed backdrop and centered dialog
+- fixed header with required title, optional `headerActions`, and optional close button
+- scrollable content area that consumes remaining vertical space
+- projected footer intended for action buttons
 
-Header layout:
+Projection slots:
 
-```html
-<header>
-  <div class="title-section">
-    <div class="title"></div>
-    <div class="header-actions"></div>
-  </div>
+- default content renders in the modal body
+- `[slot='headerActions']` renders next to the title
+- `[slot='footer']` renders in the footer
 
-  <button class="close-button"></button>
-</header>
-```
+Close behavior:
 
-Expected modal layout:
+- backdrop click emits `close` only when `closeOnBackdrop` is enabled
+- Escape closes only the top modal when `closeOnEscape` is enabled
+- close button renders only when `showCloseButton` is enabled
+- service-opened content should call `modalRef.close(result?)`
 
-```css
-modal
- ├── header (fixed)
- ├── content (scrollable / flex-grow)
- └── footer (fixed)
-```
-
-The implementation must be complete, not scaffolding only. Include component code, service code, interfaces/types, lifecycle handling, styles, accessibility logic, dynamic component creation logic, and cleanup logic.
-
-## Dynamic Creation
-
-The modal must not require manual placement in consumer templates.
-
-`ModalService` is responsible for:
-
-- dynamically creating modal instances
-- attaching modals to the application root or overlay host
-- injecting target component content
-- passing typed configuration data
-- returning a strongly typed `ModalRef<TResult>`
-- managing lifecycle and cleanup after close
-- supporting multiple open modals
-
-Opening a modal with typed data and result should support this shape:
-
-```ts
-modalService.open<UserModalComponent, UserData, SaveResult>(UserModalComponent, config);
-```
-
-## Projection and Injection Rules
-
-- The modal title is provided through config/input.
-- Body content is dynamically injected into the modal shell.
-- Footer content is projected and intended for action buttons.
-- Optional header content is projected next to the title with `headerActions`.
-- Programmatic close uses `ModalRef.close(result)`.
-- Close results are emitted through `ModalRef.afterClosed()`.
-- Close subscriptions are cleaned up properly.
-- The API should remain library-friendly and extensible.
-
-## Stacking and Overlay Behavior
-
-The system must support opening modals on top of other modals.
-
-Requirements:
-
-- multiple simultaneous modals
-- correct z-index stacking
-- backdrop stacking
-- modal stacking order management
-- closing the top modal preserves underlying modal state
-- background interaction is prevented while a modal is open
-
-Use existing design/style token z-index values. Do not hardcode arbitrary z-index values if tokens already exist.
-
-Expected z-index logic:
-
-```ts
-zIndex = modalBaseToken + stackIndex
-```
-
-The backdrop should stack correctly beneath each modal.
-
-## Styling
-
-Modal styles live in:
-
-`src/styles/components/_modal.scss`
-
-The styles are forwarded from:
-
-`src/styles/components/_index.scss`
-
-Styling rules:
-
-- use existing tokens for color, spacing, radius, shadow, border width, motion, and focus rings
-- modal container uses `max-height: 90svh` and `max-width: 90%` by default
-- modal container is centered in the viewport
-- modal container uses flex column layout
-- header and footer remain fixed within the modal
-- content area scrolls when overflowing and consumes remaining vertical space
-- responsive behavior avoids layout overflow bugs
-- open and close lifecycle should feel smooth
-
-## Accessibility
-
-Implement proper dialog accessibility.
-
-Required behavior:
+Accessibility:
 
 - `role="dialog"`
 - `aria-modal="true"`
 - title association through `aria-labelledby`
-- keyboard Escape support when `closeOnEscape` is enabled
-- focus trapping
-- restore focus after close
-- close button is keyboard accessible
-- tab navigation stays inside the modal
-- backdrop close only runs when `closeOnBackdrop` is enabled
-- close button only renders when `showCloseButton` is enabled
+- focus is trapped while a service modal is open
+- focus is restored after close
+- tab navigation stays inside the top modal
+
+## Styling
+
+Modal styles live in `src/styles/components/_modal.scss` and are forwarded from `src/styles/components/_index.scss`.
+
+Use existing tokens for color, spacing, radius, shadow, border width, motion, and z-index. The default modal uses `max-height: 90svh`, `max-width: 90%`, centered viewport layout, fixed header/footer, and scrollable body content.
 
 ## Showcase
 
-Add a modal showcase page or section that demonstrates:
+The modal showcase should demonstrate:
 
-- opening a basic modal
-- footer action buttons
-- `headerActions`
+- declarative modal usage
+- basic modal content
+- header actions and footer actions
 - typed close result handling
-- disabled backdrop close
-- disabled Escape close
-- stacked modals
+- disabled backdrop close through `ModalService.open(..., { closeOnBackdrop: false })`
+- disabled Escape close through `ModalService.open(..., { closeOnEscape: false })`
+- stacked service modals
+- `MODAL_DATA` consumption in an opened modal
+- declarative shell configuration through `MODAL_CONFIG`
 - scrollable content
 
-Showcase snippets should use `ShowcaseCode` from `src/app/shared/components/showcase-code`.
-
-Keep snippets hand-authored in the feature component `.ts` file and make each snippet a full standalone Angular component example that users can copy/paste.
+Showcase snippets must use `ShowcaseCode`, be hand-authored in the feature component `.ts` file, and be full standalone Angular component examples that users can copy/paste.
 
 ## Angular Rules
 
@@ -304,19 +262,17 @@ Keep snippets hand-authored in the feature component `.ts` file and make each sn
 
 ## Acceptance Criteria
 
-- Consumers can open modals through `ModalService.open(SomeComponent, config)` without placing modal markup manually.
-- Opening a modal returns a strongly typed `ModalRef<TResult>`.
+- Root app includes one `ms-modal-outlet`.
+- Consumers can open full modal components through `ModalService.open(Component, options?)`.
+- Opened service components render their own `<ms-modal>`.
 - `ModalRef.close(result)` closes the modal and emits the typed result through `afterClosed()`.
-- `ModalConfig<TData>` supports typed data and configurable backdrop, Escape, close button, width, max width, and max height options.
-- The modal renders a fixed header, scrollable body, and fixed projected footer.
-- The header renders the required title, optional `headerActions`, and optional close button.
-- Dynamic modal content receives configuration data.
-- Multiple modals can be open at the same time with correct modal and backdrop stacking.
+- `MODAL_CONFIG` exposes only shell config.
+- `MODAL_DATA` exposes only business/content data.
+- `ModalOpenOptions<TData>` supports typed data and shell config options.
+- Backdrop, Escape, close button, width, max width, and max height behavior respect config.
+- Multiple modals can be open with correct backdrop/dialog stacking.
 - Closing the top modal preserves underlying modal state.
-- Existing z-index tokens are used for stacking when available.
-- Backdrop, Escape, and close button behaviors respect their config options.
-- Focus is trapped while the modal is open and restored after close.
+- Focus is trapped while service modals are open and restored after close.
 - Dialog accessibility attributes are present and correctly associated.
-- Lifecycle listeners, subscriptions, and dynamic components are cleaned up after close.
 - Modal styles are reusable, responsive, token-based, and forwarded from the components style index.
-- The showcase demonstrates core modal variants and renders matching copyable snippets.
+- Showcase examples and snippets reflect the current API.

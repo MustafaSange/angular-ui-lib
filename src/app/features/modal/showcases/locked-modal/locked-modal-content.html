@@ -1,5 +1,7 @@
-<div class="modal-stack">
-  <p>Backdrop and Escape closing are disabled for this modal.</p>
-  <p>Use the explicit action button to close it.</p>
-  <button class="btn btn-primary" type="button" (click)="modalRef.close()">Close modal</button>
-</div>
+<ms-modal title="Explicit close required" (close)="modalRef.close()">
+  <div class="modal-stack">
+    <p>Backdrop and Escape closing are disabled for this modal.</p>
+    <p>Use the explicit action button to close it.</p>
+    <button class="btn btn-primary" type="button" (click)="modalRef.close()">Close modal</button>
+  </div>
+</ms-modal>

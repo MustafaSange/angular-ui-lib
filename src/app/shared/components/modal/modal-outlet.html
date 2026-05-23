@@ -1,0 +1,5 @@
+@for (entry of entries(); track entry.id) {
+  <div [attr.data-modal-entry-id]="entry.id" [style.--ms-modal-stack-offset]="entry.stackOffset">
+    <ng-container *ngComponentOutlet="entry.component; injector: entry.injector" />
+  </div>
+}
