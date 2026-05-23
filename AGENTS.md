@@ -21,4 +21,5 @@ Use modern Angular patterns:
   - Keep snippets hand-authored in the feature component `.ts` file.
   - Snippets should be full standalone Angular component examples that users can copy/paste.
   - Render snippets near the matching visual example with `<app-showcase-code>`.
+  - On the form-fields showcase, render each form-field variant with its snippet directly below the visual example.
 - Do not add/update tests for behavior changes.

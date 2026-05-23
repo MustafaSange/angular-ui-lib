@@ -157,6 +157,8 @@ The Form Fields showcase should include a Selection Controls section with:
 
 Showcase snippets should use the projected component API, not raw `.choice-*` or `.switch-*` class markup.
 
+Each selection-control group should keep its matching `<app-showcase-code>` snippet directly below the visual group in the Form Fields showcase.
+
 ## Angular Rules
 
 - Use standalone Angular APIs.

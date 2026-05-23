@@ -59,8 +59,26 @@ h2 {
   font-size: var(--font-size-lg);
 }
 
-.snippet-stack {
+.showcase-pair-stack {
   display: grid;
   gap: var(--spacing-16);
-  margin-block-start: var(--spacing-20);
+}
+
+.showcase-pair {
+  display: grid;
+  gap: var(--spacing-12);
+  padding-block-start: var(--spacing-16);
+  border-block-start: var(--border-width-sm) solid var(--color-border);
+
+  &:first-child {
+    padding-block-start: 0;
+    border-block-start: 0;
+  }
+}
+
+.showcase-preview {
+  display: grid;
+  gap: var(--spacing-16);
+  max-inline-size: 42rem;
+  min-inline-size: 0;
 }

@@ -134,6 +134,74 @@ export class SignalFormFieldExample {
 }`,
     },
     {
+      label: 'Required email field',
+      code: `import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import { SignalFormField } from './shared/components/signal-form-field';
+
+@Component({
+  selector: 'app-required-email-field-example',
+  imports: [SignalFormField],
+  template: \`
+    <ms-signal-form-field>
+      <label for="email">Email address</label>
+      <input id="email" type="email" placeholder="ada@example.com" required />
+    </ms-signal-form-field>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class RequiredEmailFieldExample {}`,
+    },
+    {
+      label: 'Select field',
+      code: `import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import { SignalFormField } from './shared/components/signal-form-field';
+
+@Component({
+  selector: 'app-select-field-example',
+  imports: [SignalFormField],
+  template: \`
+    <ms-signal-form-field>
+      <label for="role">Role</label>
+      <select id="role">
+        <option>Designer</option>
+        <option>Developer</option>
+        <option>Product manager</option>
+      </select>
+    </ms-signal-form-field>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class SelectFieldExample {}`,
+    },
+    {
+      label: 'Field with hint',
+      code: `import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import {
+  SignalFormField,
+  SignalFormHint,
+} from './shared/components/signal-form-field';
+
+@Component({
+  selector: 'app-field-with-hint-example',
+  imports: [SignalFormField, SignalFormHint],
+  template: \`
+    <ms-signal-form-field>
+      <label for="username">Username</label>
+      <input id="username" type="text" aria-describedby="username-hint" />
+      <ms-hint id="username-hint">
+        Use letters, numbers, or underscores.
+        <span slot="hint-extra">3 min</span>
+      </ms-hint>
+    </ms-signal-form-field>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class FieldWithHintExample {}`,
+    },
+    {
       label: 'Textarea with label extra',
       code: `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
@@ -154,13 +222,13 @@ import { SignalFormField } from './shared/components/signal-form-field';
 export class TextareaFieldExample {}`,
     },
     {
-      label: 'Prefix and suffix',
+      label: 'Prefix field',
       code: `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { SignalFormField } from './shared/components/signal-form-field';
 
 @Component({
-  selector: 'app-prefix-suffix-field-example',
+  selector: 'app-prefix-field-example',
   imports: [SignalFormField],
   template: \`
     <ms-signal-form-field>
@@ -168,7 +236,21 @@ import { SignalFormField } from './shared/components/signal-form-field';
       <span class="form-field-prefix" aria-hidden="true">$</span>
       <input id="price" type="text" placeholder="0.00" />
     </ms-signal-form-field>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class PrefixFieldExample {}`,
+    },
+    {
+      label: 'Suffix field',
+      code: `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
+import { SignalFormField } from './shared/components/signal-form-field';
+
+@Component({
+  selector: 'app-suffix-field-example',
+  imports: [SignalFormField],
+  template: \`
     <ms-signal-form-field>
       <label for="weight">Weight</label>
       <input id="weight" type="text" placeholder="12" />
@@ -177,7 +259,27 @@ import { SignalFormField } from './shared/components/signal-form-field';
   \`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PrefixSuffixFieldExample {}`,
+export class SuffixFieldExample {}`,
+    },
+    {
+      label: 'Search field',
+      code: `import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import { SignalFormField } from './shared/components/signal-form-field';
+
+@Component({
+  selector: 'app-search-field-example',
+  imports: [SignalFormField],
+  template: \`
+    <ms-signal-form-field>
+      <label for="search">Search</label>
+      <span class="form-field-prefix" aria-hidden="true">⌕</span>
+      <input id="search" type="search" placeholder="Search projects" />
+    </ms-signal-form-field>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class SearchFieldExample {}`,
     },
     {
       label: 'Field actions',
@@ -207,20 +309,54 @@ import { SignalFormField } from './shared/components/signal-form-field';
 export class FieldActionsExample {}`,
     },
     {
-      label: 'Readonly and disabled',
+      label: 'Segmented suffix action',
       code: `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { SignalFormField } from './shared/components/signal-form-field';
 
 @Component({
-  selector: 'app-readonly-disabled-fields-example',
+  selector: 'app-segmented-suffix-action-example',
+  imports: [SignalFormField],
+  template: \`
+    <ms-signal-form-field>
+      <label for="domain">Domain</label>
+      <input id="domain" type="text" placeholder="analytical-engines" />
+      <button class="form-field-suffix form-field-action is-segmented" type="button">.com</button>
+    </ms-signal-form-field>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class SegmentedSuffixActionExample {}`,
+    },
+    {
+      label: 'Disabled field',
+      code: `import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import { SignalFormField } from './shared/components/signal-form-field';
+
+@Component({
+  selector: 'app-disabled-field-example',
   imports: [SignalFormField],
   template: \`
     <ms-signal-form-field>
       <label for="company">Company</label>
       <input id="company" type="text" value="Analytical Engines" disabled />
     </ms-signal-form-field>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DisabledFieldExample {}`,
+    },
+    {
+      label: 'Readonly field',
+      code: `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
+import { SignalFormField } from './shared/components/signal-form-field';
+
+@Component({
+  selector: 'app-readonly-field-example',
+  imports: [SignalFormField],
+  template: \`
     <ms-signal-form-field>
       <label for="account-id">Account ID</label>
       <input id="account-id" type="text" value="ACC-1843" readonly />
@@ -228,7 +364,7 @@ import { SignalFormField } from './shared/components/signal-form-field';
   \`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ReadonlyDisabledFieldsExample {}`,
+export class ReadonlyFieldExample {}`,
     },
   ];
 
@@ -387,4 +523,21 @@ import {
 export class SwitchControlsExample {}`,
     },
   ];
+
+  protected readonly basicTextSnippet = this.snippets[0];
+  protected readonly signalFormFieldSnippet = this.snippets[1];
+  protected readonly requiredEmailSnippet = this.snippets[2];
+  protected readonly selectFieldSnippet = this.snippets[3];
+  protected readonly fieldWithHintSnippet = this.snippets[4];
+  protected readonly textareaSnippet = this.snippets[5];
+  protected readonly prefixFieldSnippet = this.snippets[6];
+  protected readonly suffixFieldSnippet = this.snippets[7];
+  protected readonly searchFieldSnippet = this.snippets[8];
+  protected readonly fieldActionsSnippet = this.snippets[9];
+  protected readonly segmentedSuffixActionSnippet = this.snippets[10];
+  protected readonly disabledFieldSnippet = this.snippets[11];
+  protected readonly readonlyFieldSnippet = this.snippets[12];
+  protected readonly checkboxGroupSnippet = this.selectionSnippets[0];
+  protected readonly radioGroupSnippet = this.selectionSnippets[1];
+  protected readonly switchControlsSnippet = this.selectionSnippets[2];
 }

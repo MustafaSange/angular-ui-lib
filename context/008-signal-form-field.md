@@ -106,23 +106,20 @@ Do not add state inputs, state classes, or `data-*` state attributes to `ms-sign
 
 ## Showcase
 
-The form-fields showcase should use `ms-signal-form-field` examples so the new behavior is visible.
+The form-fields showcase should use `ms-signal-form-field` examples so the behavior is visible.
+
+Each form-field variant should render as a small vertical showcase item:
+
+1. The live `ms-signal-form-field` visual example
+2. The matching `<app-showcase-code>` snippet directly below it
+
+Keep snippets hand-authored in `form-fields.ts` and make each snippet a full standalone Angular component example. Include separate snippets for individual variants such as text input, signal form field, required email, select, hint, textarea, prefix, suffix, search, actions, segmented suffix action, disabled, and readonly fields.
 
 Selection controls in the same showcase should use the projected choice-control components documented in:
 
 `context/010-choice-controls.md`
 
-For the showcase grid, use the built-in grid utilities:
-
-```html
-<div class="row gap-20 row-align-start">
-  <ms-signal-form-field class="col-4">...</ms-signal-form-field>
-</div>
-```
-
-`row-align-start` is defined in:
-
-`src/styles/layout/_grid.scss`
+Selection-control examples can stay grouped by control type, with each group followed by its matching snippet.
 
 ## Angular Rules
 
@@ -145,4 +142,4 @@ For the showcase grid, use the built-in grid utilities:
 - Hint and error are mutually exclusive.
 - Errors are gated by invalid plus touched or dirty state.
 - Existing `.form-field` examples and styling remain supported.
-- The showcase uses the signal form field component and built-in grid utilities.
+- The showcase uses the signal form field component and renders each form-field variant with its snippet directly below the visual example.

@@ -42,3 +42,46 @@ code {
   line-height: var(--line-height-body);
   white-space: pre;
 }
+
+:host ::ng-deep .token.comment,
+:host ::ng-deep .token.prolog,
+:host ::ng-deep .token.doctype,
+:host ::ng-deep .token.cdata {
+  color: var(--color-text-muted);
+}
+
+:host ::ng-deep .token.punctuation,
+:host ::ng-deep .token.operator {
+  color: var(--color-text-secondary);
+}
+
+:host ::ng-deep .token.keyword,
+:host ::ng-deep .token.atrule {
+  color: var(--color-primary-text);
+}
+
+:host ::ng-deep .token.string,
+:host ::ng-deep .token.attr-value {
+  color: var(--color-success-text);
+}
+
+:host ::ng-deep .token.function,
+:host ::ng-deep .token.selector {
+  color: var(--color-info-text);
+}
+
+:host ::ng-deep .token.class-name,
+:host ::ng-deep .token.tag {
+  color: var(--color-accent-text);
+}
+
+:host ::ng-deep .token.attr-name,
+:host ::ng-deep .token.property {
+  color: var(--color-warning-text);
+}
+
+:host ::ng-deep .token.number,
+:host ::ng-deep .token.boolean,
+:host ::ng-deep .token.constant {
+  color: var(--color-danger-text);
+}

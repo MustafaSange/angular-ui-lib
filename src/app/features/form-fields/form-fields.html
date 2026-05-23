@@ -10,214 +10,285 @@
 
   <section class="form-field-section">
     <h2>Examples</h2>
-    <div class="row gap-20 row-align-start">
-      <ms-signal-form-field class="col-4">
-        <label for="full-name">Full name</label>
-        <input id="full-name" type="text" placeholder="Ada Lovelace" />
-      </ms-signal-form-field>
+    <div class="showcase-pair-stack">
+      <article class="showcase-pair">
+        <div class="showcase-preview">
+          <ms-signal-form-field>
+            <label for="full-name">Full name</label>
+            <input id="full-name" type="text" placeholder="Ada Lovelace" />
+          </ms-signal-form-field>
+        </div>
+        <app-showcase-code [label]="basicTextSnippet.label" [code]="basicTextSnippet.code" />
+      </article>
 
-      <ms-signal-form-field class="col-4">
-        <label for="signal-email">Signal email</label>
-        <input id="signal-email" type="email" [formField]="emailField" />
+      <article class="showcase-pair">
+        <div class="showcase-preview">
+          <ms-signal-form-field>
+            <label for="signal-email">Signal email</label>
+            <input id="signal-email" type="email" [formField]="emailField" />
 
-        <ms-hint>
-          Enter your email.
-          <span slot="hint-extra">Required</span>
-        </ms-hint>
-        <ms-error>
-          This field is required.
-          <span slot="error-extra">Required</span>
-        </ms-error>
-      </ms-signal-form-field>
+            <ms-hint>
+              Enter your email.
+              <span slot="hint-extra">Required</span>
+            </ms-hint>
+            <ms-error>
+              This field is required.
+              <span slot="error-extra">Required</span>
+            </ms-error>
+          </ms-signal-form-field>
 
-      <ms-signal-form-field class="col-4">
-        <label for="email">Email address</label>
-        <input id="email" type="email" placeholder="ada@example.com" required />
-      </ms-signal-form-field>
+          <ms-signal-form-field>
+            <label for="signal-required-email">Work email</label>
+            <input id="signal-required-email" type="email" [formField]="requiredEmailField" />
 
-      <ms-signal-form-field class="col-4">
-        <label for="bio">Bio</label>
-        <span slot="label-extra">0 / 280</span>
-        <textarea id="bio" placeholder="Tell us a little about yourself"></textarea>
-      </ms-signal-form-field>
+            <ms-hint>
+              We will send project updates here.
+              <span slot="hint-extra">Private</span>
+            </ms-hint>
+            <ms-error>
+              This field is required.
+              <span slot="error-extra">Required</span>
+            </ms-error>
+          </ms-signal-form-field>
+        </div>
+        <app-showcase-code [label]="signalFormFieldSnippet.label" [code]="signalFormFieldSnippet.code" />
+      </article>
 
-      <ms-signal-form-field class="col-4">
-        <label for="role">Role</label>
-        <select id="role">
-          <option>Designer</option>
-          <option>Developer</option>
-          <option>Product manager</option>
-        </select>
-      </ms-signal-form-field>
+      <article class="showcase-pair">
+        <div class="showcase-preview">
+          <ms-signal-form-field>
+            <label for="email">Email address</label>
+            <input id="email" type="email" placeholder="ada@example.com" required />
+          </ms-signal-form-field>
+        </div>
+        <app-showcase-code [label]="requiredEmailSnippet.label" [code]="requiredEmailSnippet.code" />
+      </article>
 
-      <ms-signal-form-field class="col-4">
-        <label for="username">Username</label>
-        <input id="username" type="text" aria-describedby="username-hint" />
-        <ms-hint id="username-hint">
-          Use letters, numbers, or underscores.
-          <span slot="hint-extra">3 min</span>
-        </ms-hint>
-      </ms-signal-form-field>
+      <article class="showcase-pair">
+        <div class="showcase-preview">
+          <ms-signal-form-field>
+            <label for="role">Role</label>
+            <select id="role">
+              <option>Designer</option>
+              <option>Developer</option>
+              <option>Product manager</option>
+            </select>
+          </ms-signal-form-field>
+        </div>
+        <app-showcase-code [label]="selectFieldSnippet.label" [code]="selectFieldSnippet.code" />
+      </article>
 
-      <ms-signal-form-field class="col-4">
-        <label for="price">Price</label>
-        <span class="form-field-prefix" aria-hidden="true">$</span>
-        <input id="price" type="text" placeholder="0.00" />
-      </ms-signal-form-field>
+      <article class="showcase-pair">
+        <div class="showcase-preview">
+          <ms-signal-form-field>
+            <label for="username">Username</label>
+            <input id="username" type="text" aria-describedby="username-hint" />
+            <ms-hint id="username-hint">
+              Use letters, numbers, or underscores.
+              <span slot="hint-extra">3 min</span>
+            </ms-hint>
+          </ms-signal-form-field>
+        </div>
+        <app-showcase-code [label]="fieldWithHintSnippet.label" [code]="fieldWithHintSnippet.code" />
+      </article>
 
-      <ms-signal-form-field class="col-4">
-        <label for="weight">Weight</label>
-        <input id="weight" type="text" placeholder="12" />
-        <span class="form-field-suffix" aria-hidden="true">kg</span>
-      </ms-signal-form-field>
+      <article class="showcase-pair">
+        <div class="showcase-preview">
+          <ms-signal-form-field>
+            <label for="bio">Bio</label>
+            <span slot="label-extra">0 / 280</span>
+            <textarea id="bio" placeholder="Tell us a little about yourself"></textarea>
+          </ms-signal-form-field>
+        </div>
+        <app-showcase-code [label]="textareaSnippet.label" [code]="textareaSnippet.code" />
+      </article>
 
-      <ms-signal-form-field class="col-4">
-        <label for="search">Search</label>
-        <span class="form-field-prefix" aria-hidden="true">⌕</span>
-        <input id="search" type="search" placeholder="Search projects" />
-      </ms-signal-form-field>
+      <article class="showcase-pair">
+        <div class="showcase-preview">
+          <ms-signal-form-field>
+            <label for="price">Price</label>
+            <span class="form-field-prefix" aria-hidden="true">$</span>
+            <input id="price" type="text" placeholder="0.00" />
+          </ms-signal-form-field>
+        </div>
+        <app-showcase-code [label]="prefixFieldSnippet.label" [code]="prefixFieldSnippet.code" />
+      </article>
 
-      <ms-signal-form-field class="col-4">
-        <label for="secret">Password</label>
-        <button slot="label-action" type="button">Generate</button>
-        <input id="secret" type="password" value="lovelace" />
-        <button
-          class="form-field-suffix form-field-action"
-          type="button"
-          aria-label="Show password"
-        >
-          ◉
-        </button>
-      </ms-signal-form-field>
+      <article class="showcase-pair">
+        <div class="showcase-preview">
+          <ms-signal-form-field>
+            <label for="weight">Weight</label>
+            <input id="weight" type="text" placeholder="12" />
+            <span class="form-field-suffix" aria-hidden="true">kg</span>
+          </ms-signal-form-field>
+        </div>
+        <app-showcase-code [label]="suffixFieldSnippet.label" [code]="suffixFieldSnippet.code" />
+      </article>
 
-      <ms-signal-form-field class="col-4">
-        <label for="domain">Domain</label>
-        <input id="domain" type="text" placeholder="analytical-engines" />
-        <button class="form-field-suffix form-field-action is-segmented" type="button">.com</button>
-      </ms-signal-form-field>
+      <article class="showcase-pair">
+        <div class="showcase-preview">
+          <ms-signal-form-field>
+            <label for="search">Search</label>
+            <span class="form-field-prefix" aria-hidden="true">⌕</span>
+            <input id="search" type="search" placeholder="Search projects" />
+          </ms-signal-form-field>
+        </div>
+        <app-showcase-code [label]="searchFieldSnippet.label" [code]="searchFieldSnippet.code" />
+      </article>
 
-      <ms-signal-form-field class="col-4">
-        <label for="signal-required-email">Work email</label>
-        <input id="signal-required-email" type="email" [formField]="requiredEmailField" />
+      <article class="showcase-pair">
+        <div class="showcase-preview">
+          <ms-signal-form-field>
+            <label for="secret">Password</label>
+            <button slot="label-action" type="button">Generate</button>
+            <input id="secret" type="password" value="lovelace" />
+            <button
+              class="form-field-suffix form-field-action"
+              type="button"
+              aria-label="Show password"
+            >
+              ◉
+            </button>
+          </ms-signal-form-field>
+        </div>
+        <app-showcase-code [label]="fieldActionsSnippet.label" [code]="fieldActionsSnippet.code" />
+      </article>
 
-        <ms-hint>
-          We will send project updates here.
-          <span slot="hint-extra">Private</span>
-        </ms-hint>
-        <ms-error>
-          This field is required.
-          <span slot="error-extra">Required</span>
-        </ms-error>
-      </ms-signal-form-field>
+      <article class="showcase-pair">
+        <div class="showcase-preview">
+          <ms-signal-form-field>
+            <label for="domain">Domain</label>
+            <input id="domain" type="text" placeholder="analytical-engines" />
+            <button class="form-field-suffix form-field-action is-segmented" type="button">.com</button>
+          </ms-signal-form-field>
+        </div>
+        <app-showcase-code
+          [label]="segmentedSuffixActionSnippet.label"
+          [code]="segmentedSuffixActionSnippet.code"
+        />
+      </article>
 
-      <ms-signal-form-field class="col-4">
-        <label for="company">Company</label>
-        <input id="company" type="text" value="Analytical Engines" disabled />
-      </ms-signal-form-field>
+      <article class="showcase-pair">
+        <div class="showcase-preview">
+          <ms-signal-form-field>
+            <label for="company">Company</label>
+            <input id="company" type="text" value="Analytical Engines" disabled />
+          </ms-signal-form-field>
+        </div>
+        <app-showcase-code [label]="disabledFieldSnippet.label" [code]="disabledFieldSnippet.code" />
+      </article>
 
-      <ms-signal-form-field class="col-4">
-        <label for="account-id">Account ID</label>
-        <input id="account-id" type="text" value="ACC-1843" readonly />
-      </ms-signal-form-field>
-    </div>
-
-    <div class="snippet-stack">
-      @for (snippet of snippets; track snippet.label) {
-        <app-showcase-code [label]="snippet.label" [code]="snippet.code" />
-      }
+      <article class="showcase-pair">
+        <div class="showcase-preview">
+          <ms-signal-form-field>
+            <label for="account-id">Account ID</label>
+            <input id="account-id" type="text" value="ACC-1843" readonly />
+          </ms-signal-form-field>
+        </div>
+        <app-showcase-code [label]="readonlyFieldSnippet.label" [code]="readonlyFieldSnippet.code" />
+      </article>
     </div>
   </section>
 
   <section class="form-field-section">
     <h2>Selection controls</h2>
-    <div class="row gap-20 row-align-start">
-      <ms-checkbox-group class="col-4">
-        <legend>Checkboxes</legend>
-        <ms-checkbox-control>
-          <input type="checkbox" checked />
-          <label>Email updates</label>
-          <ms-choice-hint>Send product and release notes.</ms-choice-hint>
-        </ms-checkbox-control>
-        <ms-checkbox-control>
-          <input type="checkbox" />
-          <label>Weekly digest</label>
-          <ms-choice-hint>Group activity into one summary.</ms-choice-hint>
-        </ms-checkbox-control>
-        <ms-checkbox-control>
-          <input type="checkbox" disabled />
-          <label>Billing alerts</label>
-          <ms-choice-hint>Managed by account owners.</ms-choice-hint>
-        </ms-checkbox-control>
-        <ms-checkbox-control>
-          <input type="checkbox" />
-          <label>Terms agreement</label>
-          <ms-choice-error>Accept the terms before continuing.</ms-choice-error>
-        </ms-checkbox-control>
-        <ms-checkbox-control slot="label-before">
-          <input type="checkbox" />
-          <label>Label before</label>
-          <ms-choice-hint>Places text before the checkbox.</ms-choice-hint>
-        </ms-checkbox-control>
-      </ms-checkbox-group>
+    <div class="showcase-pair-stack">
+      <article class="showcase-pair">
+        <div class="showcase-preview">
+          <ms-checkbox-group>
+            <legend>Checkboxes</legend>
+            <ms-checkbox-control>
+              <input type="checkbox" checked />
+              <label>Email updates</label>
+              <ms-choice-hint>Send product and release notes.</ms-choice-hint>
+            </ms-checkbox-control>
+            <ms-checkbox-control>
+              <input type="checkbox" />
+              <label>Weekly digest</label>
+              <ms-choice-hint>Group activity into one summary.</ms-choice-hint>
+            </ms-checkbox-control>
+            <ms-checkbox-control>
+              <input type="checkbox" disabled />
+              <label>Billing alerts</label>
+              <ms-choice-hint>Managed by account owners.</ms-choice-hint>
+            </ms-checkbox-control>
+            <ms-checkbox-control>
+              <input type="checkbox" />
+              <label>Terms agreement</label>
+              <ms-choice-error>Accept the terms before continuing.</ms-choice-error>
+            </ms-checkbox-control>
+            <ms-checkbox-control slot="label-before">
+              <input type="checkbox" />
+              <label>Label before</label>
+              <ms-choice-hint>Places text before the checkbox.</ms-choice-hint>
+            </ms-checkbox-control>
+          </ms-checkbox-group>
+        </div>
+        <app-showcase-code [label]="checkboxGroupSnippet.label" [code]="checkboxGroupSnippet.code" />
+      </article>
 
-      <ms-radio-group class="col-4">
-        <legend>Radio group</legend>
-        <ms-radio-control>
-          <input type="radio" name="support-plan" value="starter" />
-          <label>Starter</label>
-          <ms-choice-hint>For small teams getting set up.</ms-choice-hint>
-        </ms-radio-control>
-        <ms-radio-control>
-          <input type="radio" name="support-plan" value="growth" checked />
-          <label>Growth</label>
-          <ms-choice-hint>Priority support for active teams.</ms-choice-hint>
-        </ms-radio-control>
-        <ms-radio-control>
-          <input type="radio" name="support-plan" value="enterprise" disabled />
-          <label>Enterprise</label>
-          <ms-choice-error>Contact sales to enable this plan.</ms-choice-error>
-        </ms-radio-control>
-        <ms-radio-control slot="label-before">
-          <input type="radio" name="support-plan" value="custom" />
-          <label>Label before</label>
-          <ms-choice-hint>Places text before the radio.</ms-choice-hint>
-        </ms-radio-control>
-      </ms-radio-group>
+      <article class="showcase-pair">
+        <div class="showcase-preview">
+          <ms-radio-group>
+            <legend>Radio group</legend>
+            <ms-radio-control>
+              <input type="radio" name="support-plan" value="starter" />
+              <label>Starter</label>
+              <ms-choice-hint>For small teams getting set up.</ms-choice-hint>
+            </ms-radio-control>
+            <ms-radio-control>
+              <input type="radio" name="support-plan" value="growth" checked />
+              <label>Growth</label>
+              <ms-choice-hint>Priority support for active teams.</ms-choice-hint>
+            </ms-radio-control>
+            <ms-radio-control>
+              <input type="radio" name="support-plan" value="enterprise" disabled />
+              <label>Enterprise</label>
+              <ms-choice-error>Contact sales to enable this plan.</ms-choice-error>
+            </ms-radio-control>
+            <ms-radio-control slot="label-before">
+              <input type="radio" name="support-plan" value="custom" />
+              <label>Label before</label>
+              <ms-choice-hint>Places text before the radio.</ms-choice-hint>
+            </ms-radio-control>
+          </ms-radio-group>
+        </div>
+        <app-showcase-code [label]="radioGroupSnippet.label" [code]="radioGroupSnippet.code" />
+      </article>
 
-      <ms-switch-group class="col-4">
-        <legend>Switches</legend>
-        <ms-switch-control>
-          <input type="checkbox" role="switch" checked />
-          <label>Notifications</label>
-          <ms-choice-hint>Push critical alerts immediately.</ms-choice-hint>
-        </ms-switch-control>
-        <ms-switch-control>
-          <input type="checkbox" role="switch" />
-          <label>Compact mode</label>
-          <ms-choice-hint>Reduce spacing in dense views.</ms-choice-hint>
-        </ms-switch-control>
-        <ms-switch-control>
-          <input type="checkbox" role="switch" disabled />
-          <label>Audit logging</label>
-          <ms-choice-hint>Available on enterprise plans.</ms-choice-hint>
-        </ms-switch-control>
-        <ms-switch-control>
-          <input type="checkbox" role="switch" />
-          <label>Public profile</label>
-          <ms-choice-error>Review visibility settings before enabling.</ms-choice-error>
-        </ms-switch-control>
-        <ms-switch-control slot="label-before">
-          <input type="checkbox" role="switch" />
-          <label>Label before</label>
-          <ms-choice-hint>Places text before the switch.</ms-choice-hint>
-        </ms-switch-control>
-      </ms-switch-group>
-    </div>
-
-    <div class="snippet-stack">
-      @for (snippet of selectionSnippets; track snippet.label) {
-        <app-showcase-code [label]="snippet.label" [code]="snippet.code" />
-      }
+      <article class="showcase-pair">
+        <div class="showcase-preview">
+          <ms-switch-group>
+            <legend>Switches</legend>
+            <ms-switch-control>
+              <input type="checkbox" role="switch" checked />
+              <label>Notifications</label>
+              <ms-choice-hint>Push critical alerts immediately.</ms-choice-hint>
+            </ms-switch-control>
+            <ms-switch-control>
+              <input type="checkbox" role="switch" />
+              <label>Compact mode</label>
+              <ms-choice-hint>Reduce spacing in dense views.</ms-choice-hint>
+            </ms-switch-control>
+            <ms-switch-control>
+              <input type="checkbox" role="switch" disabled />
+              <label>Audit logging</label>
+              <ms-choice-hint>Available on enterprise plans.</ms-choice-hint>
+            </ms-switch-control>
+            <ms-switch-control>
+              <input type="checkbox" role="switch" />
+              <label>Public profile</label>
+              <ms-choice-error>Review visibility settings before enabling.</ms-choice-error>
+            </ms-switch-control>
+            <ms-switch-control slot="label-before">
+              <input type="checkbox" role="switch" />
+              <label>Label before</label>
+              <ms-choice-hint>Places text before the switch.</ms-choice-hint>
+            </ms-switch-control>
+          </ms-switch-group>
+        </div>
+        <app-showcase-code [label]="switchControlsSnippet.label" [code]="switchControlsSnippet.code" />
+      </article>
     </div>
   </section>
 </main>

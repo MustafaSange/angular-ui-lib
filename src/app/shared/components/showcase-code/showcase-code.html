@@ -30,6 +30,6 @@
     </div>
   </header>
   @if (isExpanded()) {
-    <pre><code>{{ code() }}</code></pre>
+    <pre><code [class]="'language-' + language()" [innerHTML]="highlightedCode()"></code></pre>
   }
 </section>

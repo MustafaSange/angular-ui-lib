@@ -36,6 +36,7 @@ For repeated examples, store snippets as an array and render them with `@for`.
 - Prefer signals, signal forms, and native Angular control flow where relevant.
 - Keep snippets focused on the component or utility being showcased.
 - Place each snippet near the matching visual example.
+- For form-field variants, place the snippet directly below the matching visual field rather than beside it.
 
 ## Styling Rules
 
@@ -43,6 +44,7 @@ For repeated examples, store snippets as an array and render them with `@for`.
 - Add only local spacing/layout styles in the feature page when needed.
 - Keep code blocks readable on mobile with horizontal scrolling.
 - Do not create a new code viewer for each feature.
+- Prefer local vertical stacks when adjacent preview/code columns make the showcase harder to scan.
 
 ## Acceptance Criteria
 
