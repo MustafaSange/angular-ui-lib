@@ -1,9 +1,9 @@
 import { DOCUMENT } from '@angular/common';
 import { Injectable, Injector, Type, inject, signal } from '@angular/core';
 
-import { MODAL_CONFIG, ModalConfig, ModalOpenOptions } from './modal-config';
+import type { ModalConfig, ModalOpenOptions } from './modal-config';
 import { ModalRef } from './modal-ref';
-import { MODAL_DATA, MODAL_REF } from './modal-tokens';
+import { MODAL_CONFIG, MODAL_DATA, MODAL_REF } from './modal-tokens';
 
 export type ModalEntry = {
   id: number;

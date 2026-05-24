@@ -3,36 +3,10 @@
   <button
     class="btn btn-primary"
     type="button"
-    (click)="isOpen.set(true)"
+    (click)="openTypedModal()"
   >
     Open typed modal
   </button>
   <span class="result-note">{{ resultMessage() }}</span>
 </div>
 <app-showcase-code label="Footer actions" [code]="snippet" />
-
-@if (isOpen()) {
-  <ms-modal title="Review changes" (close)="closeModal()">
-    <button slot="headerActions" class="btn btn-outline-primary btn-sm" type="button">
-      Skip
-    </button>
-
-    <div class="modal-stack">
-      <p>Footer actions are projected by the parent component.</p>
-      <p>The parent records a typed result when an action is clicked.</p>
-    </div>
-
-    <div slot="footer">
-      <button class="btn btn-secondary" type="button" (click)="closeWithResult({ action: 'cancel' })">
-        Cancel
-      </button>
-      <button
-        class="btn btn-primary"
-        type="button"
-        (click)="closeWithResult({ action: 'save', payload: { name: 'Analytics workspace' } })"
-      >
-        Save
-      </button>
-    </div>
-  </ms-modal>
-}

@@ -1,24 +1,7 @@
-<h2>Declarative modal component</h2>
+<h2>Service modal component</h2>
 <div class="modal-demo-row">
-  <button class="btn btn-primary" type="button" (click)="isOpen.set(true)">
-    Open declarative modal
+  <button class="btn btn-primary" type="button" (click)="openModal()">
+    Open modal
   </button>
 </div>
-<app-showcase-code label="Declarative modal" [code]="snippet" />
-
-@if (isOpen()) {
-  <ms-modal title="Hello" (close)="isOpen.set(false)">
-    <button slot="headerActions" class="btn btn-outline-primary btn-sm" type="button">
-      Help
-    </button>
-
-    <p>Projected modal content.</p>
-
-    <div slot="footer">
-      <button class="btn btn-secondary" type="button" (click)="isOpen.set(false)">
-        Cancel
-      </button>
-      <button class="btn btn-primary" type="button">Save</button>
-    </div>
-  </ms-modal>
-}
+<app-showcase-code label="Service modal" [code]="snippet" />

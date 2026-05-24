@@ -1,7 +1,17 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 
-import { ModalComponent } from '../../../../shared/components/modal';
+import {
+  MODAL_DATA,
+  MODAL_REF,
+  ModalComponent,
+  ModalRef,
+  ModalService,
+} from '../../../../shared/components/modal';
 import { ShowcaseCode } from '../../../../shared/components/showcase-code';
+
+type TypedModalData = {
+  projectName: string;
+};
 
 type TypedModalResult =
   | {
@@ -27,8 +37,43 @@ type ModalResultState =
     };
 
 @Component({
+  selector: 'app-header-footer-modal-content',
+  imports: [ModalComponent],
+  template: `
+    <ms-modal title="Review changes" (close)="modalRef.close()">
+      <button slot="headerActions" class="btn btn-outline-primary btn-sm" type="button">
+        Skip
+      </button>
+
+      <div class="modal-stack">
+        <p>Review changes for {{ data.projectName }} before saving.</p>
+        <p>The opener records a typed result when an action is clicked.</p>
+      </div>
+
+      <div slot="footer">
+        <button class="btn btn-secondary" type="button" (click)="modalRef.close({ action: 'cancel' })">
+          Cancel
+        </button>
+        <button
+          class="btn btn-primary"
+          type="button"
+          (click)="modalRef.close({ action: 'save', payload: { name: data.projectName } })"
+        >
+          Save
+        </button>
+      </div>
+    </ms-modal>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+class HeaderFooterModalContent {
+  protected readonly data = inject(MODAL_DATA) as TypedModalData;
+  protected readonly modalRef = inject(MODAL_REF) as ModalRef<TypedModalResult>;
+}
+
+@Component({
   selector: 'app-header-footer-modal-showcase',
-  imports: [ModalComponent, ShowcaseCode],
+  imports: [ShowcaseCode],
   templateUrl: './header-footer-modal.html',
   styleUrl: './header-footer-modal.scss',
   host: {
@@ -37,7 +82,7 @@ type ModalResultState =
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderFooterModalShowcase {
-  protected readonly isOpen = signal(false);
+  private readonly modalService = inject(ModalService);
   protected readonly modalResult = signal<ModalResultState>({ status: 'idle' });
   protected readonly resultMessage = computed(() => {
     const state = this.modalResult();
@@ -57,11 +102,16 @@ export class HeaderFooterModalShowcase {
     return 'Last result: cancel';
   });
 
-  protected readonly snippet = `import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+  protected readonly snippet = `// review-changes-modal.ts
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { ModalComponent } from './shared/components/modal';
+import { MODAL_DATA, MODAL_REF, ModalComponent, ModalRef } from './shared/components/modal';
 
-type ProjectModalResult =
+export type ReviewChangesData = {
+  projectName: string;
+};
+
+export type ReviewChangesResult =
   | {
       action: 'save';
       payload: {
@@ -72,7 +122,45 @@ type ProjectModalResult =
       action: 'cancel';
     };
 
-type ModalResultState =
+@Component({
+  selector: 'app-review-changes-modal',
+  imports: [ModalComponent],
+  template: \`
+    <ms-modal title="Review changes" (close)="modalRef.close()">
+      <button slot="headerActions" class="btn btn-outline-primary btn-sm" type="button">
+        Skip
+      </button>
+
+      <p>Review changes for {{ data.projectName }} before saving.</p>
+
+      <div slot="footer">
+        <button class="btn btn-secondary" type="button" (click)="modalRef.close({ action: 'cancel' })">
+          Cancel
+        </button>
+        <button
+          class="btn btn-primary"
+          type="button"
+          (click)="modalRef.close({ action: 'save', payload: { name: data.projectName } })"
+        >
+          Save
+        </button>
+      </div>
+    </ms-modal>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class ReviewChangesModal {
+  protected readonly data = inject(MODAL_DATA) as ReviewChangesData;
+  protected readonly modalRef = inject(MODAL_REF) as ModalRef<ReviewChangesResult>;
+}
+
+// project-settings.ts
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+
+import { ModalService } from './shared/components/modal';
+import type { ReviewChangesData, ReviewChangesResult } from './review-changes-modal';
+
+type SaveState =
   | {
       status: 'idle';
     }
@@ -81,48 +169,24 @@ type ModalResultState =
     }
   | {
       status: 'result';
-      result: ProjectModalResult;
+      result: ReviewChangesResult;
     };
 
 @Component({
-  selector: 'app-header-footer-modal-example',
-  imports: [ModalComponent],
+  selector: 'app-project-settings',
   template: \`
-    <button class="btn btn-primary" type="button" (click)="isOpen.set(true)">
+    <button class="btn btn-primary" type="button" (click)="openReviewChanges()">
       Open modal with footer
     </button>
     <span>{{ resultMessage() }}</span>
-
-    @if (isOpen()) {
-      <ms-modal title="Review changes" (close)="closeModal()">
-        <button slot="headerActions" class="btn btn-outline-primary btn-sm" type="button">
-          Skip
-        </button>
-
-        <p>Footer actions are projected by the parent component.</p>
-
-        <div slot="footer">
-          <button class="btn btn-secondary" type="button" (click)="closeWithResult({ action: 'cancel' })">
-            Cancel
-          </button>
-          <button
-            class="btn btn-primary"
-            type="button"
-            (click)="closeWithResult({ action: 'save', payload: { name: 'Analytics workspace' } })"
-          >
-            Save
-          </button>
-        </div>
-      </ms-modal>
-    }
   \`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderFooterModalExample {
-  protected readonly isOpen = signal(false);
-  protected readonly modalResult = signal<ModalResultState>({ status: 'idle' });
+export class ProjectSettings {
+  private readonly modalService = inject(ModalService);
+  protected readonly saveState = signal<SaveState>({ status: 'idle' });
   protected readonly resultMessage = computed(() => {
-    const state = this.modalResult();
+    const state = this.saveState();
 
     if (state.status === 'idle') {
       return 'No modal result yet.';
@@ -139,24 +203,49 @@ export class HeaderFooterModalExample {
     return 'Last result: cancel';
   });
 
-  protected closeModal(): void {
-    this.isOpen.set(false);
-    this.modalResult.set({ status: 'closed' });
-  }
+  protected async openReviewChanges(): Promise<void> {
+    const { ReviewChangesModal } = await import('./review-changes-modal');
 
-  protected closeWithResult(result: ProjectModalResult): void {
-    this.isOpen.set(false);
-    this.modalResult.set({ status: 'result', result });
+    const modalRef = this.modalService.open<unknown, ReviewChangesData, ReviewChangesResult>(
+      ReviewChangesModal,
+      {
+        data: {
+          projectName: 'Analytics workspace',
+        },
+        width: '36rem',
+      },
+    );
+
+    modalRef.afterClosed().subscribe((result) => {
+      if (!result) {
+        this.saveState.set({ status: 'closed' });
+        return;
+      }
+
+      this.saveState.set({ status: 'result', result });
+    });
   }
 }`;
 
-  protected closeModal(): void {
-    this.isOpen.set(false);
-    this.modalResult.set({ status: 'closed' });
-  }
+  protected openTypedModal(): void {
+    const modalRef = this.modalService.open<
+      HeaderFooterModalContent,
+      TypedModalData,
+      TypedModalResult
+    >(HeaderFooterModalContent, {
+      data: {
+        projectName: 'Analytics workspace',
+      },
+      width: '36rem',
+    });
 
-  protected closeWithResult(result: TypedModalResult): void {
-    this.isOpen.set(false);
-    this.modalResult.set({ status: 'result', result });
+    modalRef.afterClosed().subscribe((result) => {
+      if (!result) {
+        this.modalResult.set({ status: 'closed' });
+        return;
+      }
+
+      this.modalResult.set({ status: 'result', result });
+    });
   }
 }

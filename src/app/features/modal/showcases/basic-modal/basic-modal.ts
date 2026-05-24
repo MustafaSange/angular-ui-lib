@@ -1,6 +1,12 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { ModalComponent } from '../../../../shared/components/modal';
+import {
+  MODAL_DATA,
+  MODAL_REF,
+  ModalComponent,
+  ModalRef,
+  ModalService,
+} from '../../../../shared/components/modal';
 import { ShowcaseCode } from '../../../../shared/components/showcase-code';
 
 type BasicModalData = {
@@ -9,8 +15,27 @@ type BasicModalData = {
 };
 
 @Component({
+  selector: 'app-basic-modal-content',
+  imports: [ModalComponent],
+  template: `
+    <ms-modal title="Project details" (close)="modalRef.close()">
+      <div class="modal-stack">
+        <p>
+          <strong>{{ data.name }}</strong> is owned by {{ data.owner }}.
+        </p>
+      </div>
+    </ms-modal>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+class BasicModalContent {
+  protected readonly data = inject(MODAL_DATA) as BasicModalData;
+  protected readonly modalRef = inject(MODAL_REF) as ModalRef<void>;
+}
+
+@Component({
   selector: 'app-basic-modal-showcase',
-  imports: [ModalComponent, ShowcaseCode],
+  imports: [ShowcaseCode],
   templateUrl: './basic-modal.html',
   styleUrl: './basic-modal.scss',
   host: {
@@ -19,54 +44,75 @@ type BasicModalData = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BasicModalShowcase {
-  protected readonly isOpen = signal(false);
-  protected readonly data: BasicModalData = {
-    name: 'Analytics workspace',
-    owner: 'Ada Lovelace',
-  };
+  private readonly modalService = inject(ModalService);
 
-  protected readonly snippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+  protected readonly snippet = `// project-details-modal.ts
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { ModalComponent } from './shared/components/modal';
+import { MODAL_DATA, MODAL_REF, ModalComponent, ModalRef } from './shared/components/modal';
 
-type ProjectData = {
+export type ProjectDetailsData = {
   name: string;
   owner: string;
 };
 
 @Component({
-  selector: 'app-project-modal-example',
+  selector: 'app-project-details-modal',
   imports: [ModalComponent],
   template: \`
-    <button class="btn btn-primary" type="button" (click)="openModal()">
-      Open modal
-    </button>
-
-    @if (isOpen()) {
-      <ms-modal title="Project details" (close)="isOpen.set(false)">
-        <div class="modal-stack">
-          <p>
-            <strong>{{ data.name }}</strong> is owned by {{ data.owner }}.
-          </p>
-        </div>
-      </ms-modal>
-    }
+    <ms-modal title="Project details" (close)="modalRef.close()">
+      <div class="modal-stack">
+        <p>
+          <strong>{{ data.name }}</strong> is owned by {{ data.owner }}.
+        </p>
+      </div>
+    </ms-modal>
   \`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProjectModalExample {
-  protected readonly isOpen = signal(false);
-  protected readonly data: ProjectData = {
-    name: 'Analytics workspace',
-    owner: 'Ada Lovelace',
-  };
+export class ProjectDetailsModal {
+  protected readonly data = inject(MODAL_DATA) as ProjectDetailsData;
+  protected readonly modalRef = inject(MODAL_REF) as ModalRef<void>;
+}
 
-  protected openModal(): void {
-    this.isOpen.set(true);
+// project-list.ts
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+
+import { ModalService } from './shared/components/modal';
+import type { ProjectDetailsData } from './project-details-modal';
+
+@Component({
+  selector: 'app-project-list',
+  template: \`
+    <button class="btn btn-primary" type="button" (click)="openProjectDetails()">
+      Open modal
+    </button>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class ProjectList {
+  private readonly modalService = inject(ModalService);
+
+  protected async openProjectDetails(): Promise<void> {
+    const { ProjectDetailsModal } = await import('./project-details-modal');
+
+    this.modalService.open(ProjectDetailsModal, {
+      data: {
+        name: 'Analytics workspace',
+        owner: 'Ada Lovelace',
+      } satisfies ProjectDetailsData,
+      width: '32rem',
+    });
   }
 }`;
 
   protected openBasicModal(): void {
-    this.isOpen.set(true);
+    this.modalService.open(BasicModalContent, {
+      data: {
+        name: 'Analytics workspace',
+        owner: 'Ada Lovelace',
+      } satisfies BasicModalData,
+      width: '32rem',
+    });
   }
 }

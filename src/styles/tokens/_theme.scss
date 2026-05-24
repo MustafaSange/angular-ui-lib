@@ -73,35 +73,35 @@
   color-scheme: dark;
 
   /* Reusable theme tokens */
-  --theme-background: var(--color-neutral-950);
-  --theme-surface: var(--color-neutral-900);
-  --theme-surface-alt: var(--color-neutral-800);
-  --theme-surface-raised: var(--color-neutral-900);
-  --theme-surface-overlay: var(--color-neutral-900);
-  --theme-text: var(--color-neutral-50);
-  --theme-text-secondary: var(--color-neutral-300);
-  --theme-text-muted: var(--color-neutral-400);
-  --theme-text-inverse: var(--color-neutral-900);
-  --theme-border: var(--color-neutral-700);
-  --theme-border-muted: var(--color-neutral-800);
-  --theme-border-strong: var(--color-neutral-600);
-  --theme-primary: var(--color-primary-400);
-  --theme-primary-hover: var(--color-primary-300);
+  --theme-background: #1e1e1e;
+  --theme-surface: #252526;
+  --theme-surface-alt: #2d2d30;
+  --theme-surface-raised: #333333;
+  --theme-surface-overlay: #252526;
+  --theme-text: #d4d4d4;
+  --theme-text-secondary: #cccccc;
+  --theme-text-muted: #858585;
+  --theme-text-inverse: #1e1e1e;
+  --theme-border: #3c3c3c;
+  --theme-border-muted: #2d2d30;
+  --theme-border-strong: #4b4b4b;
+  --theme-primary: #3794ff;
+  --theme-primary-hover: #5ba7ff;
   --theme-secondary: var(--color-secondary-400);
   --theme-success: var(--color-success-400);
   --theme-warning: var(--color-warning-400);
   --theme-danger: var(--color-danger-400);
   --theme-info: var(--color-info-400);
-  --theme-focus-ring: rgb(96 165 250 / 0.32);
-  --theme-link: var(--color-primary-300);
-  --theme-link-hover: var(--color-primary-200);
+  --theme-focus-ring: rgb(55 148 255 / 0.35);
+  --theme-link: #3794ff;
+  --theme-link-hover: #5ba7ff;
 
   /* Interactive and feedback semantics */
-  --color-primary-active: var(--color-primary-200);
-  --color-primary-subtle: var(--color-primary-900);
-  --color-primary-text: var(--color-primary-300);
-  --color-primary-border: var(--color-primary-600);
-  --color-primary-contrast: var(--color-neutral-900);
+  --color-primary-active: #75beff;
+  --color-primary-subtle: #06395f;
+  --color-primary-text: #75beff;
+  --color-primary-border: #007acc;
+  --color-primary-contrast: #1e1e1e;
   --color-accent-hover: var(--color-accent-300);
   --color-accent-active: var(--color-accent-200);
   --color-accent-subtle: var(--color-accent-900);

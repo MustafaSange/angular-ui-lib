@@ -1,15 +1,5 @@
-<h2>Basic declarative modal</h2>
+<h2>Basic service modal</h2>
 <div class="modal-demo-row">
   <button class="btn btn-primary" type="button" (click)="openBasicModal()">Open modal</button>
 </div>
 <app-showcase-code label="Basic modal" [code]="snippet" />
-
-@if (isOpen()) {
-  <ms-modal title="Project details" (close)="isOpen.set(false)">
-    <div class="modal-stack">
-      <p>
-        <strong>{{ data.name }}</strong> is owned by {{ data.owner }}.
-      </p>
-    </div>
-  </ms-modal>
-}

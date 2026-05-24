@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 
-import { MODAL_CONFIG } from './modal-config';
+import { MODAL_CONFIG } from './modal-tokens';
 
 let nextModalId = 0;
 
