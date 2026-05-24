@@ -35,6 +35,11 @@ Public pieces:
 - `MODAL_DATA` for business/content data injection
 - `MODAL_REF` for closing from opened modal content
 
+Implementation files:
+
+- `modal-config.ts` contains only the public config and open option types.
+- `modal-tokens.ts` owns `MODAL_CONFIG`, `MODAL_DATA`, and `MODAL_REF`.
+
 `ModalComponent` accepts only `title` as a public input. Shell options such as width, max height, close button visibility, backdrop close, and Escape close are configured through `MODAL_CONFIG` or `ModalService.open(..., options)`.
 
 Required reference API:

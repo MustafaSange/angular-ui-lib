@@ -14,6 +14,7 @@ Create the foundational design-token system for the Angular UI library.
 - Provide a neutral color scale for structural UI colors such as text, surfaces, and borders, including explicit `0` and `950` endpoints for pure light and deepest dark values.
 - Expose semantic color tokens for solid, subtle, text, border, and contrast use cases, with contrast values sourced from the palette instead of repeated raw literals.
 - Provide dedicated semantic link colors that are independent from the primary brand palette.
+- Keep the light theme palette-based, and tune the dark theme with explicit VS Code-inspired structural and primary values where the shared palette does not provide the desired editor-like contrast.
 - Provide reusable tokens for:
   - typography
   - value-based spacing
