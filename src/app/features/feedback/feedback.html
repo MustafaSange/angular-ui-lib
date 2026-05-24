@@ -1,0 +1,109 @@
+<main class="feedback-page">
+  <header class="feedback-header">
+    <a class="btn btn-ghost back-link" routerLink="/">← Back to home</a>
+    <p class="eyebrow">Components</p>
+    <h1>Alerts and toasts</h1>
+    <p class="description">
+      Inline status messages and global notifications with shared feedback variants.
+    </p>
+  </header>
+
+  <section class="feedback-section">
+    <h2>Alert variants</h2>
+    <div class="feedback-stack">
+      <ms-alert variant="info" title="Heads up">
+        Invite links expire after seven days.
+      </ms-alert>
+
+      <ms-alert variant="success" title="Saved">
+        Your workspace settings were updated.
+      </ms-alert>
+
+      <ms-alert variant="warning" title="Review required">
+        Two imported rows need attention before publishing.
+      </ms-alert>
+
+      <ms-alert variant="danger" title="Sync failed">
+        The billing export could not be completed.
+      </ms-alert>
+    </div>
+    <app-showcase-code label="Alert variants" [code]="alertVariantsSnippet" />
+  </section>
+
+  <section class="feedback-section">
+    <h2>Alert actions</h2>
+    <div class="feedback-stack">
+      <ms-alert variant="warning" title="Subscription needs attention">
+        Update the payment method before the next renewal.
+
+        <div slot="actions">
+          <button class="btn btn-primary btn-sm" type="button">Update payment</button>
+          <a href="/billing">View billing</a>
+        </div>
+      </ms-alert>
+    </div>
+    <app-showcase-code label="Alert actions" [code]="alertActionsSnippet" />
+  </section>
+
+  <section class="feedback-section">
+    <h2>Dismissible alert</h2>
+    <div class="feedback-stack">
+      @if (dismissibleAlertVisible()) {
+        <ms-alert
+          variant="success"
+          title="Invitation sent"
+          dismissible
+          (dismissed)="dismissibleAlertVisible.set(false)"
+        >
+          The teammate will receive setup instructions by email.
+        </ms-alert>
+      } @else {
+        <button class="btn btn-secondary" type="button" (click)="restoreDismissibleAlert()">
+          Restore alert
+        </button>
+      }
+    </div>
+    <app-showcase-code label="Dismissible alert" [code]="dismissibleAlertSnippet" />
+  </section>
+
+  <section class="feedback-section">
+    <h2>Toast variants</h2>
+    <div class="feedback-demo-row">
+      <button class="btn btn-primary" type="button" (click)="showToastVariants()">
+        Show toast variants
+      </button>
+    </div>
+    <app-showcase-code label="Toast variants" [code]="toastVariantsSnippet" />
+  </section>
+
+  <section class="feedback-section">
+    <h2>Persistent danger toast</h2>
+    <div class="feedback-demo-row">
+      <button class="btn btn-danger" type="button" (click)="showPersistentDangerToast()">
+        Show persistent toast
+      </button>
+    </div>
+    <app-showcase-code label="Persistent danger toast" [code]="persistentDangerSnippet" />
+  </section>
+
+  <section class="feedback-section">
+    <h2>Toast action</h2>
+    <div class="feedback-demo-row">
+      <button class="btn btn-primary" type="button" (click)="showActionToast()">
+        Archive project
+      </button>
+      <span class="result-note">{{ actionResult() }}</span>
+    </div>
+    <app-showcase-code label="Toast action" [code]="toastActionSnippet" />
+  </section>
+
+  <section class="feedback-section">
+    <h2>Stacked toasts</h2>
+    <div class="feedback-demo-row">
+      <button class="btn btn-primary" type="button" (click)="showStackedToasts()">
+        Show stacked toasts
+      </button>
+    </div>
+    <app-showcase-code label="Stacked toasts" [code]="stackedToastsSnippet" />
+  </section>
+</main>

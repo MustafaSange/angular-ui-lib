@@ -1,0 +1,50 @@
+@if (hasToasts()) {
+  <section class="ms-toast-region" aria-label="Notifications">
+    @for (entry of entries(); track entry.id) {
+      <article
+        class="ms-toast"
+        [class.ms-toast-info]="entry.variant === 'info'"
+        [class.ms-toast-success]="entry.variant === 'success'"
+        [class.ms-toast-warning]="entry.variant === 'warning'"
+        [class.ms-toast-danger]="entry.variant === 'danger'"
+        [attr.role]="getRole(entry.variant)"
+        [attr.aria-live]="getAriaLive(entry.variant)"
+        (mouseenter)="pauseHover(entry.id)"
+        (mouseleave)="resumeHover(entry.id)"
+        (focusin)="pauseFocus(entry.id)"
+        (focusout)="resumeFocus(entry.id, $event)"
+      >
+        @if (entry.showIcon) {
+          <span class="ms-toast-icon" aria-hidden="true">{{ getIcon(entry.variant) }}</span>
+        }
+
+        <div class="ms-toast-content">
+          @if (entry.title) {
+            <strong class="ms-toast-title">{{ entry.title }}</strong>
+          }
+          <p class="ms-toast-message">{{ entry.message }}</p>
+          @if (entry.action) {
+            <button
+              class="btn btn-ghost btn-sm ms-toast-action"
+              type="button"
+              (click)="runAction(entry.id)"
+            >
+              {{ entry.action.label }}
+            </button>
+          }
+        </div>
+
+        @if (entry.dismissible) {
+          <button
+            class="btn btn-ghost btn-icon btn-sm ms-toast-close"
+            type="button"
+            aria-label="Dismiss notification"
+            (click)="close(entry.id)"
+          >
+            <span aria-hidden="true">x</span>
+          </button>
+        }
+      </article>
+    }
+  </section>
+}

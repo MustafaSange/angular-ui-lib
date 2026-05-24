@@ -1,0 +1,223 @@
+@use 'sass:map';
+@use '../tokens/breakpoints';
+
+$feedback-variants: info, success, warning, danger;
+
+ms-alert {
+  display: block;
+}
+
+.ms-alert,
+.ms-toast {
+  --ms-feedback-color: var(--color-info);
+  --ms-feedback-border: var(--color-info-border);
+  --ms-feedback-surface: var(--color-info-subtle);
+  --ms-feedback-text: var(--color-info-text);
+  --ms-feedback-icon-background: var(--ms-feedback-color);
+
+  border: var(--border-width-sm) solid var(--ms-feedback-border);
+  border-inline-start-width: var(--border-width-lg);
+  border-inline-start-color: var(--ms-feedback-color);
+  border-radius: var(--radius-md);
+}
+
+@each $variant in $feedback-variants {
+  .ms-alert-#{$variant},
+  .ms-toast-#{$variant} {
+    --ms-feedback-color: var(--color-#{$variant});
+    --ms-feedback-border: var(--color-#{$variant}-border);
+    --ms-feedback-surface: var(--color-#{$variant}-subtle);
+    --ms-feedback-text: var(--color-#{$variant}-text);
+  }
+}
+
+.ms-alert {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--spacing-12);
+  padding: var(--spacing-12) var(--spacing-16);
+  border-inline-start-width: var(--border-width-md);
+  background-color: var(--ms-feedback-surface);
+  color: var(--color-text-primary);
+  overflow: hidden;
+}
+
+.ms-alert-icon,
+.ms-toast-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--spacing-24);
+  min-inline-size: var(--spacing-24);
+  block-size: var(--spacing-24);
+  border-radius: var(--radius-full);
+  background-color: var(--ms-feedback-icon-background);
+  color: var(--color-text-inverse);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-control);
+}
+
+.ms-alert-content,
+.ms-toast-content {
+  display: grid;
+  min-inline-size: 0;
+  gap: var(--spacing-4);
+}
+
+.ms-alert-title,
+.ms-toast-title {
+  color: var(--ms-feedback-text);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-heading);
+}
+
+.ms-alert-message,
+.ms-toast-message {
+  min-inline-size: 0;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-body);
+  overflow-wrap: anywhere;
+}
+
+.ms-alert-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-8);
+  margin-block-start: var(--spacing-8);
+
+  &:empty {
+    display: none;
+  }
+}
+
+.ms-alert-actions .btn-ghost,
+.ms-alert-actions .btn-outline,
+.ms-alert-close,
+.ms-toast-action,
+.ms-toast-close {
+  color: var(--ms-feedback-text);
+}
+
+.ms-alert-close,
+.ms-toast-close {
+  align-self: start;
+  inline-size: var(--control-height-md);
+  min-inline-size: var(--control-height-md);
+  block-size: var(--control-height-md);
+  min-block-size: var(--control-height-md);
+  padding-inline: 0;
+  border-radius: 0;
+
+  &:hover:not(:disabled):not([aria-disabled='true']),
+  &:focus-visible {
+    background-color: color-mix(in srgb, var(--ms-feedback-surface) 88%, black);
+  }
+
+  &:active:not(:disabled):not([aria-disabled='true']) {
+    background-color: color-mix(in srgb, var(--ms-feedback-surface) 80%, black);
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+}
+
+.ms-alert-close {
+  margin-block-start: calc(var(--spacing-12) * -1);
+  margin-inline-end: calc(var(--spacing-16) * -1);
+}
+
+.ms-toast-close {
+  margin-block-start: calc(var(--spacing-16) * -1);
+  margin-inline-end: calc(var(--spacing-16) * -1);
+}
+
+.ms-toast-region {
+  position: fixed;
+  z-index: var(--z-index-toast);
+  inset-block-start: var(--spacing-16);
+  inset-inline-end: var(--spacing-16);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  inline-size: min(24rem, calc(100vw - (var(--spacing-16) * 2)));
+  pointer-events: none;
+}
+
+.ms-toast {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--spacing-12);
+  padding: var(--spacing-16);
+  overflow: hidden;
+  background-color: var(--ms-feedback-surface);
+  box-shadow: var(--shadow-lg);
+  color: var(--color-text-primary);
+  pointer-events: auto;
+  animation: ms-toast-enter var(--transition-base);
+}
+
+.ms-toast-message {
+  margin: 0;
+}
+
+.ms-toast-action {
+  justify-self: start;
+  margin-block-start: var(--spacing-4);
+}
+
+@media #{map.get(breakpoints.$media-aliases, lt-sm)} {
+  .ms-toast-region {
+    inset-inline: var(--spacing-8);
+    inline-size: auto;
+  }
+
+  .ms-toast {
+    padding: var(--spacing-12);
+  }
+}
+
+@mixin dark-feedback-tones {
+  .ms-alert,
+  .ms-toast {
+    --ms-feedback-border: color-mix(in srgb, var(--color-border-strong) 55%, var(--ms-feedback-color));
+    --ms-feedback-surface: color-mix(in srgb, var(--color-surface) 84%, var(--ms-feedback-color));
+    --ms-feedback-text: color-mix(in srgb, var(--color-text-primary) 78%, var(--ms-feedback-color));
+    --ms-feedback-icon-background: color-mix(
+      in srgb,
+      var(--color-surface-raised) 28%,
+      var(--ms-feedback-color)
+    );
+  }
+}
+
+[data-theme='dark'] {
+  @include dark-feedback-tones;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]),
+  [data-theme='system'] {
+    @include dark-feedback-tones;
+  }
+}
+
+@keyframes ms-toast-enter {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--spacing-8) * -1));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

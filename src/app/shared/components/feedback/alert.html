@@ -1,0 +1,38 @@
+@if (isVisible()) {
+  <section
+    class="ms-alert"
+    [class.ms-alert-info]="variant() === 'info'"
+    [class.ms-alert-success]="variant() === 'success'"
+    [class.ms-alert-warning]="variant() === 'warning'"
+    [class.ms-alert-danger]="variant() === 'danger'"
+    [attr.role]="role()"
+    [attr.aria-live]="ariaLive()"
+  >
+    @if (showIcon()) {
+      <span class="ms-alert-icon" aria-hidden="true">{{ icon() }}</span>
+    }
+
+    <div class="ms-alert-content">
+      @if (title()) {
+        <strong class="ms-alert-title">{{ title() }}</strong>
+      }
+      <div class="ms-alert-message">
+        <ng-content />
+      </div>
+      <div class="ms-alert-actions">
+        <ng-content select="[slot='actions']" />
+      </div>
+    </div>
+
+    @if (dismissible()) {
+      <button
+        class="btn btn-ghost btn-icon btn-sm ms-alert-close"
+        type="button"
+        aria-label="Dismiss alert"
+        (click)="dismiss()"
+      >
+        <span aria-hidden="true">x</span>
+      </button>
+    }
+  </section>
+}

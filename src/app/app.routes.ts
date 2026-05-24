@@ -22,4 +22,8 @@ export const routes: Routes = [
     path: 'modal',
     loadComponent: () => import('./features/modal/modal').then((m) => m.Modal),
   },
+  {
+    path: 'feedback',
+    loadComponent: () => import('./features/feedback/feedback').then((m) => m.Feedback),
+  },
 ];
