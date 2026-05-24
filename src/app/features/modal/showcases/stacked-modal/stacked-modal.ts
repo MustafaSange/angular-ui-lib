@@ -61,17 +61,17 @@ class StackedModalContent {
 export class StackedModalShowcase {
   private readonly modalService = inject(ModalService);
 
-  protected readonly snippet = `import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+  protected readonly snippet = `// stacked-child-modal.ts
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import {
   MODAL_DATA,
   MODAL_REF,
   ModalComponent,
   ModalRef,
-  ModalService,
 } from './shared/components/modal';
 
-type StackedChildModalData = {
+export type StackedChildModalData = {
   name: string;
   owner: string;
 };
@@ -91,13 +91,19 @@ type StackedChildModalData = {
   \`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-class StackedChildModalContent {
+export class StackedChildModal {
   protected readonly data = inject(MODAL_DATA) as StackedChildModalData;
   protected readonly modalRef = inject(MODAL_REF) as ModalRef<void>;
 }
 
+// stacked-parent-modal.ts
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+
+import { MODAL_REF, ModalComponent, ModalRef, ModalService } from './shared/components/modal';
+import type { StackedChildModalData } from './stacked-child-modal';
+
 @Component({
-  selector: 'app-stacked-modal-content',
+  selector: 'app-stacked-parent-modal',
   imports: [ModalComponent],
   template: \`
     <ms-modal title="Parent modal" (close)="modalRef.close()">
@@ -111,25 +117,30 @@ class StackedChildModalContent {
   \`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-class StackedModalContent {
+export class StackedParentModal {
   private readonly modalService = inject(ModalService);
   protected readonly modalRef = inject(MODAL_REF) as ModalRef<void>;
 
-  protected openChild(): void {
-    this.modalService.open<StackedChildModalContent, StackedChildModalData>(
-      StackedChildModalContent,
-      {
-        data: {
-          name: 'Nested workflow',
-          owner: 'Product team',
-        },
-      },
-    );
+  protected async openChild(): Promise<void> {
+    const { StackedChildModal } = await import('./stacked-child-modal');
+
+    this.modalService.open(StackedChildModal, {
+      data: {
+        name: 'Nested workflow',
+        owner: 'Product team',
+      } satisfies StackedChildModalData,
+      width: '28rem',
+    });
   }
 }
 
+// workflows-page.ts
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+
+import { ModalService } from './shared/components/modal';
+
 @Component({
-  selector: 'app-stacked-modal-example',
+  selector: 'app-workflows-page',
   template: \`
     <button class="btn btn-primary" type="button" (click)="openStackedModal()">
       Open parent modal
@@ -137,11 +148,15 @@ class StackedModalContent {
   \`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StackedModalExample {
+export class WorkflowsPage {
   private readonly modalService = inject(ModalService);
 
-  protected openStackedModal(): void {
-    this.modalService.open(StackedModalContent);
+  protected async openStackedModal(): Promise<void> {
+    const { StackedParentModal } = await import('./stacked-parent-modal');
+
+    this.modalService.open(StackedParentModal, {
+      width: '34rem',
+    });
   }
 }`;
 

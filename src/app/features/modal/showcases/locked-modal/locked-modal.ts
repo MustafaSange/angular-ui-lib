@@ -31,13 +31,13 @@ class LockedModalContent {
 export class LockedModalShowcase {
   private readonly modalService = inject(ModalService);
 
-  protected readonly snippet = `import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+  protected readonly snippet = `// locked-modal-content.ts
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import {
   MODAL_REF,
   ModalComponent,
   ModalRef,
-  ModalService,
 } from './shared/components/modal';
 
 @Component({
@@ -56,12 +56,17 @@ import {
   \`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-class LockedModalContent {
+export class LockedModalContent {
   protected readonly modalRef = inject(MODAL_REF) as ModalRef<void>;
 }
 
+// settings-page.ts
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+
+import { ModalService } from './shared/components/modal';
+
 @Component({
-  selector: 'app-locked-modal-example',
+  selector: 'app-settings-page',
   template: \`
     <button class="btn btn-primary" type="button" (click)="openLockedModal()">
       Open locked modal
@@ -69,13 +74,16 @@ class LockedModalContent {
   \`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LockedModalExample {
+export class SettingsPage {
   private readonly modalService = inject(ModalService);
 
-  protected openLockedModal(): void {
-    this.modalService.open<LockedModalContent, unknown, void>(LockedModalContent, {
+  protected async openLockedModal(): Promise<void> {
+    const { LockedModalContent } = await import('./locked-modal-content');
+
+    this.modalService.open(LockedModalContent, {
       closeOnBackdrop: false,
       closeOnEscape: false,
+      width: '30rem',
     });
   }
 }`;
