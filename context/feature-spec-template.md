@@ -99,6 +99,7 @@ The styles are forwarded from:
 Styling rules:
 
 - use existing tokens for color, spacing, radius, shadow, border width, motion, and focus rings
+- name component-private CSS custom properties with a `--_feature-name-*` prefix, and reserve public `--color-*`, `--theme-*`, or feature-prefixed properties for intentional consumer APIs
 - keep styles reusable across future projects
 - include responsive behavior when relevant
 - avoid hardcoded values when tokens exist

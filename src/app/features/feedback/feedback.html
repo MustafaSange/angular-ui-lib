@@ -50,12 +50,12 @@
     <div class="feedback-stack">
       @if (dismissibleAlertVisible()) {
         <ms-alert
-          variant="success"
-          title="Invitation sent"
+          variant="danger"
+          title="Payment failed"
           dismissible
           (dismissed)="dismissibleAlertVisible.set(false)"
         >
-          The teammate will receive setup instructions by email.
+          Verify your payment method before retrying the renewal.
         </ms-alert>
       } @else {
         <button class="btn btn-secondary" type="button" (click)="restoreDismissibleAlert()">

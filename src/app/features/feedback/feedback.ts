@@ -76,12 +76,12 @@ import { AlertComponent } from './shared/components/feedback';
   template: \`
     @if (isVisible()) {
       <ms-alert
-        variant="success"
-        title="Invitation sent"
+        variant="danger"
+        title="Payment failed"
         dismissible
         (dismissed)="isVisible.set(false)"
       >
-        The teammate will receive setup instructions by email.
+        Verify your payment method before retrying the renewal.
       </ms-alert>
     }
   \`,
