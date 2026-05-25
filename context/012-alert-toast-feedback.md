@@ -93,8 +93,8 @@ Dismissible alert:
 
 ```html
 @if (isVisible()) {
-  <ms-alert variant="success" title="Invitation sent" dismissible (dismissed)="isVisible.set(false)">
-    The teammate will receive setup instructions by email.
+  <ms-alert variant="danger" title="Payment failed" dismissible (dismissed)="isVisible.set(false)">
+    Verify your payment method before retrying the renewal.
   </ms-alert>
 }
 ```
@@ -193,11 +193,14 @@ The styles are forwarded from:
 Styling rules:
 
 - use existing semantic feedback tokens for color, surface, border, and text
+- use component-private `--_feedback-*` custom properties for variant and theme-specific internal aliases; these are not consumer customization tokens
 - alert and toast surfaces use subtle variant backgrounds
 - light theme keeps the palette-backed subtle surfaces
 - dark theme blends variant colors with dark surface tokens to avoid fluorescent backgrounds
 - toast stack uses `--z-index-toast`
-- keep variant border, left accent bar, icon color, and title color aligned between alerts and toasts
+- alerts use a medium-width status accent; toasts keep the stronger large-width accent
+- close buttons stay inline with the title, use their compact icon-button geometry, and darken their own variant surface on hover/active
+- feedback surfaces clip close-button hover fills within the rounded border
 - do not override solid button contrast inside projected alert actions
 
 ## Accessibility
@@ -215,7 +218,7 @@ The feedback showcase lives under `/feedback` and demonstrates:
 
 - alert variants
 - alert with projected actions
-- dismissible alert
+- dismissible danger alert demonstrating the variant close-button state
 - toast variants
 - persistent danger toast
 - toast action

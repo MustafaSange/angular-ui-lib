@@ -9,25 +9,25 @@ ms-alert {
 
 .ms-alert,
 .ms-toast {
-  --ms-feedback-color: var(--color-info);
-  --ms-feedback-border: var(--color-info-border);
-  --ms-feedback-surface: var(--color-info-subtle);
-  --ms-feedback-text: var(--color-info-text);
-  --ms-feedback-icon-background: var(--ms-feedback-color);
+  --_feedback-color: var(--color-info);
+  --_feedback-border: var(--color-info-border);
+  --_feedback-surface: var(--color-info-subtle);
+  --_feedback-text: var(--color-info-text);
+  --_feedback-icon-background: var(--_feedback-color);
 
-  border: var(--border-width-sm) solid var(--ms-feedback-border);
+  border: var(--border-width-sm) solid var(--_feedback-border);
   border-inline-start-width: var(--border-width-lg);
-  border-inline-start-color: var(--ms-feedback-color);
+  border-inline-start-color: var(--_feedback-color);
   border-radius: var(--radius-md);
 }
 
 @each $variant in $feedback-variants {
   .ms-alert-#{$variant},
   .ms-toast-#{$variant} {
-    --ms-feedback-color: var(--color-#{$variant});
-    --ms-feedback-border: var(--color-#{$variant}-border);
-    --ms-feedback-surface: var(--color-#{$variant}-subtle);
-    --ms-feedback-text: var(--color-#{$variant}-text);
+    --_feedback-color: var(--color-#{$variant});
+    --_feedback-border: var(--color-#{$variant}-border);
+    --_feedback-surface: var(--color-#{$variant}-subtle);
+    --_feedback-text: var(--color-#{$variant}-text);
   }
 }
 
@@ -38,7 +38,7 @@ ms-alert {
   gap: var(--spacing-12);
   padding: var(--spacing-12) var(--spacing-16);
   border-inline-start-width: var(--border-width-md);
-  background-color: var(--ms-feedback-surface);
+  background-color: var(--_feedback-surface);
   color: var(--color-text-primary);
   overflow: hidden;
 }
@@ -52,7 +52,7 @@ ms-alert {
   min-inline-size: var(--spacing-24);
   block-size: var(--spacing-24);
   border-radius: var(--radius-full);
-  background-color: var(--ms-feedback-icon-background);
+  background-color: var(--_feedback-icon-background);
   color: var(--color-text-inverse);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
@@ -68,7 +68,7 @@ ms-alert {
 
 .ms-alert-title,
 .ms-toast-title {
-  color: var(--ms-feedback-text);
+  color: var(--_feedback-text);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-heading);
@@ -99,44 +99,31 @@ ms-alert {
 .ms-alert-close,
 .ms-toast-action,
 .ms-toast-close {
-  color: var(--ms-feedback-text);
+  color: var(--_feedback-text);
 }
 
 .ms-alert-close,
 .ms-toast-close {
   align-self: start;
-  inline-size: var(--control-height-md);
-  min-inline-size: var(--control-height-md);
-  block-size: var(--control-height-md);
-  min-block-size: var(--control-height-md);
-  padding-inline: 0;
-  border-radius: 0;
+  margin-block-start: calc(var(--spacing-2) * -2);
 
   &:hover:not(:disabled):not([aria-disabled='true']),
   &:focus-visible {
-    background-color: color-mix(in srgb, var(--ms-feedback-surface) 88%, black);
+    background-color: color-mix(in srgb, var(--_feedback-surface) 88%, black);
   }
 
   &:active:not(:disabled):not([aria-disabled='true']) {
-    background-color: color-mix(in srgb, var(--ms-feedback-surface) 80%, black);
+    background-color: color-mix(in srgb, var(--_feedback-surface) 80%, black);
   }
 
   span {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-semibold);
     line-height: 1;
   }
-}
-
-.ms-alert-close {
-  margin-block-start: calc(var(--spacing-12) * -1);
-  margin-inline-end: calc(var(--spacing-16) * -1);
-}
-
-.ms-toast-close {
-  margin-block-start: calc(var(--spacing-16) * -1);
-  margin-inline-end: calc(var(--spacing-16) * -1);
 }
 
 .ms-toast-region {
@@ -158,7 +145,7 @@ ms-alert {
   gap: var(--spacing-12);
   padding: var(--spacing-16);
   overflow: hidden;
-  background-color: var(--ms-feedback-surface);
+  background-color: var(--_feedback-surface);
   box-shadow: var(--shadow-lg);
   color: var(--color-text-primary);
   pointer-events: auto;
@@ -188,13 +175,13 @@ ms-alert {
 @mixin dark-feedback-tones {
   .ms-alert,
   .ms-toast {
-    --ms-feedback-border: color-mix(in srgb, var(--color-border-strong) 55%, var(--ms-feedback-color));
-    --ms-feedback-surface: color-mix(in srgb, var(--color-surface) 84%, var(--ms-feedback-color));
-    --ms-feedback-text: color-mix(in srgb, var(--color-text-primary) 78%, var(--ms-feedback-color));
-    --ms-feedback-icon-background: color-mix(
+    --_feedback-border: color-mix(in srgb, var(--color-border-strong) 55%, var(--_feedback-color));
+    --_feedback-surface: color-mix(in srgb, var(--color-surface) 84%, var(--_feedback-color));
+    --_feedback-text: color-mix(in srgb, var(--color-text-primary) 78%, var(--_feedback-color));
+    --_feedback-icon-background: color-mix(
       in srgb,
       var(--color-surface-raised) 28%,
-      var(--ms-feedback-color)
+      var(--_feedback-color)
     );
   }
 }
