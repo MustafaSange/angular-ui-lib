@@ -9,7 +9,7 @@ body.ms-modal-open {
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background-color: rgb(15 23 42 / 0.48);
+  background-color: var(--color-backdrop);
   pointer-events: auto;
 }
 
