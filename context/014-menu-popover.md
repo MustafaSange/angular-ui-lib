@@ -51,7 +51,15 @@ as `.ms-icon` and `.ms-icon-filled` stay namespaced.
 Required type:
 
 ```ts
-type AnchoredPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end';
+type AnchoredPlacement =
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'top-start'
+  | 'top-end'
+  | 'start-top'
+  | 'start-bottom'
+  | 'end-top'
+  | 'end-bottom';
 ```
 
 Required container APIs:
@@ -73,6 +81,17 @@ Defaults:
 - menu and popover `open` state is `false`
 - menu and popover `placement` is `bottom-start`
 - `bottom-start` places a panel below its trigger and aligns logical start edges
+- side placements are logical: `start-top` and `start-bottom` render at inline-start, while
+  `end-top` and `end-bottom` render at inline-end and therefore mirror in `dir="rtl"`
+
+Horizontal layout side placement mapping:
+
+| Placement      | LTR                   | RTL                   |
+| -------------- | --------------------- | --------------------- |
+| `start-top`    | left, top-aligned     | right, top-aligned    |
+| `start-bottom` | left, bottom-aligned  | right, bottom-aligned |
+| `end-top`      | right, top-aligned    | left, top-aligned     |
+| `end-bottom`   | right, bottom-aligned | left, bottom-aligned  |
 
 ## Desired Usage
 
@@ -166,6 +185,36 @@ export class FilterPopoverExample {
 }
 ```
 
+Side-positioned popover:
+
+```ts
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  PopoverClose,
+  PopoverComponent,
+  PopoverPanelComponent,
+  PopoverTrigger,
+} from './shared/components/menu-popover';
+
+@Component({
+  selector: 'app-side-popover-example',
+  imports: [PopoverClose, PopoverComponent, PopoverPanelComponent, PopoverTrigger],
+  template: `
+    <ms-popover placement="end-top">
+      <button class="btn btn-outline" type="button" msPopoverTrigger>View details</button>
+
+      <ms-popover-panel aria-label="Release details">
+        <h2>Release ready</h2>
+        <p>Checks passed and the package is ready to publish.</p>
+        <button class="btn btn-primary btn-sm" type="button" msPopoverClose>Done</button>
+      </ms-popover-panel>
+    </ms-popover>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class SidePopoverExample {}
+```
+
 ## Component Structure
 
 The implementation lives in:
@@ -211,15 +260,27 @@ Native anchor positioning behavior:
 - consumers do not set `anchor-name`, `position-anchor`, panel IDs, or geometry values
 - translate `placement` into panel `position-area` styles using logical block and inline edges
 - use `bottom-start` as the base position for both menus and popovers
-- preserve the requested block direction before flipping: `bottom-start` tries `bottom-end`,
-  `top-start`, then `top-end`; `bottom-end` tries `bottom-start`, `top-end`, then `top-start`;
-  `top-start` tries `top-end`, `bottom-start`, then `bottom-end`; and `top-end` tries `top-start`,
-  `bottom-end`, then `bottom-start`
 - express fallbacks with logical `start` and `end` edges through `position-try-fallbacks` or
   `position-try` so placement behavior works in both left-to-right and right-to-left layouts
 - constrain large panels to viewport-safe inline and block sizes and allow internal scrolling
 - do not implement JavaScript measurement, JavaScript collision detection, Angular CDK overlay, or
   a legacy positioning fallback
+
+Native position-area and fallback mapping:
+
+| Placement      | `position-area`                 | Ordered fallbacks                         |
+| -------------- | ------------------------------- | ----------------------------------------- |
+| `bottom-start` | `block-end span-inline-end`     | `bottom-end`, `top-start`, `top-end`      |
+| `bottom-end`   | `block-end span-inline-start`   | `bottom-start`, `top-end`, `top-start`    |
+| `top-start`    | `block-start span-inline-end`   | `top-end`, `bottom-start`, `bottom-end`   |
+| `top-end`      | `block-start span-inline-start` | `top-start`, `bottom-end`, `bottom-start` |
+| `start-top`    | `inline-start span-block-end`   | `start-bottom`, `end-top`, `end-bottom`   |
+| `start-bottom` | `inline-start span-block-start` | `start-top`, `end-bottom`, `end-top`      |
+| `end-top`      | `inline-end span-block-end`     | `end-bottom`, `start-top`, `start-bottom` |
+| `end-bottom`   | `inline-end span-block-start`   | `end-top`, `start-bottom`, `start-top`    |
+
+Top/bottom placements preserve the requested block direction first. Side placements preserve the
+requested logical inline side first.
 
 Menu behavior:
 
@@ -275,6 +336,8 @@ Styling rules:
 - style open panel surfaces through `:popover-open` and native popover state rather than parallel
   visibility classes
 - map `AnchoredPlacement` values to CSS Anchor Positioning `position-area` declarations
+- apply trigger spacing on the block axis for top/bottom surfaces and on the inline axis for
+  logical side surfaces
 - use logical block/inline sizing, spacing, and placement throughout so trigger-relative surfaces
   mirror correctly in `dir="rtl"`
 - provide viewport-safe panel maximum sizing and scroll overflow behavior
@@ -305,13 +368,14 @@ Styling rules:
 
 The Menu and Popover showcase lives under `/menu-popover`, with a matching card on the home page.
 
-The showcase should demonstrate:
+The showcase demonstrates:
 
 - a basic action menu
 - an icon-triggered menu with button actions, a navigation item, a disabled item, and a divider
 - an end-aligned overflow menu that demonstrates placement and CSS position fallback behavior
 - a controlled filters popover containing projected form fields, close actions, and a visible
   applied-filter result
+- a logical inline-end popover using `placement="end-top"` that demonstrates RTL mirroring
 
 Showcase snippets should use `ShowcaseCode` from `src/app/shared/components/showcase-code`.
 
@@ -349,6 +413,11 @@ Render snippets near the matching visual example with `<app-showcase-code>`.
 - Both panel types default to `bottom-start` placement and use CSS Anchor Positioning fallbacks
   that preserve the requested top/bottom direction before changing block direction for viewport
   overflow.
+- Both panel types support `start-top`, `start-bottom`, `end-top`, and `end-bottom`, with CSS
+  Anchor Positioning fallbacks that try alternate alignment on the same logical side before
+  switching sides.
+- Top/bottom surfaces apply trigger spacing on the logical block axis; side surfaces apply it on
+  the logical inline axis.
 - Logical start/end placement and fallback order mirror correctly in `dir="rtl"`.
 - Opening, light dismissal, Escape closing, and external `open` model synchronization work through
   native popover behavior.

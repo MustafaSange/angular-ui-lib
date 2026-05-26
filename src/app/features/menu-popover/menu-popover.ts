@@ -205,6 +205,33 @@ export class FilterPopoverExample {
   protected readonly filtersOpen = signal(false);
 }`;
 
+  protected readonly sidePopoverSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import {
+  PopoverClose,
+  PopoverComponent,
+  PopoverPanelComponent,
+  PopoverTrigger,
+} from './shared/components/menu-popover';
+
+@Component({
+  selector: 'app-side-popover-example',
+  imports: [PopoverClose, PopoverComponent, PopoverPanelComponent, PopoverTrigger],
+  template: \`
+    <ms-popover placement="end-top">
+      <button class="btn btn-outline" type="button" msPopoverTrigger>View details</button>
+
+      <ms-popover-panel aria-label="Release details">
+        <h2>Release ready</h2>
+        <p>Checks passed and the package is ready to publish.</p>
+        <button class="btn btn-primary btn-sm" type="button" msPopoverClose>Done</button>
+      </ms-popover-panel>
+    </ms-popover>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class SidePopoverExample {}`;
+
   protected chooseAction(action: string): void {
     this.selectedAction.set(action);
   }

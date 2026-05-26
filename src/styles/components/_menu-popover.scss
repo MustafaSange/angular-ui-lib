@@ -10,7 +10,7 @@ ms-popover {
   inset: auto;
   max-inline-size: calc(100dvi - (var(--spacing-16) * 2));
   max-block-size: calc(100dvb - (var(--spacing-16) * 2));
-  margin: var(--spacing-8) 0;
+  margin: 0;
   overflow: auto;
   border: var(--border-width-sm) solid var(--color-border);
   border-radius: var(--radius-md);
@@ -47,6 +47,28 @@ ms-popover {
 }
 
 .menu-panel[data-placement='bottom-start'],
+.popover-panel[data-placement='bottom-start'],
+.menu-panel[data-placement='bottom-end'],
+.popover-panel[data-placement='bottom-end'],
+.menu-panel[data-placement='top-start'],
+.popover-panel[data-placement='top-start'],
+.menu-panel[data-placement='top-end'],
+.popover-panel[data-placement='top-end'] {
+  margin-block: var(--spacing-8);
+}
+
+.menu-panel[data-placement='start-top'],
+.popover-panel[data-placement='start-top'],
+.menu-panel[data-placement='start-bottom'],
+.popover-panel[data-placement='start-bottom'],
+.menu-panel[data-placement='end-top'],
+.popover-panel[data-placement='end-top'],
+.menu-panel[data-placement='end-bottom'],
+.popover-panel[data-placement='end-bottom'] {
+  margin-inline: var(--spacing-8);
+}
+
+.menu-panel[data-placement='bottom-start'],
 .popover-panel[data-placement='bottom-start'] {
   position-area: block-end span-inline-end;
   position-try-fallbacks:
@@ -80,6 +102,42 @@ ms-popover {
     block-start span-inline-end,
     block-end span-inline-start,
     block-end span-inline-end;
+}
+
+.menu-panel[data-placement='start-top'],
+.popover-panel[data-placement='start-top'] {
+  position-area: inline-start span-block-end;
+  position-try-fallbacks:
+    inline-start span-block-start,
+    inline-end span-block-end,
+    inline-end span-block-start;
+}
+
+.menu-panel[data-placement='start-bottom'],
+.popover-panel[data-placement='start-bottom'] {
+  position-area: inline-start span-block-start;
+  position-try-fallbacks:
+    inline-start span-block-end,
+    inline-end span-block-start,
+    inline-end span-block-end;
+}
+
+.menu-panel[data-placement='end-top'],
+.popover-panel[data-placement='end-top'] {
+  position-area: inline-end span-block-end;
+  position-try-fallbacks:
+    inline-end span-block-start,
+    inline-start span-block-end,
+    inline-start span-block-start;
+}
+
+.menu-panel[data-placement='end-bottom'],
+.popover-panel[data-placement='end-bottom'] {
+  position-area: inline-end span-block-start;
+  position-try-fallbacks:
+    inline-end span-block-end,
+    inline-start span-block-start,
+    inline-start span-block-end;
 }
 
 .menu-item {
