@@ -57,6 +57,10 @@ ms-alert {
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-control);
+
+  .ms-icon {
+    font-size: var(--font-size-md);
+  }
 }
 
 .ms-alert-content,

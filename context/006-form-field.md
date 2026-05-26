@@ -1,14 +1,17 @@
 # Feature 006: Form Field Style Guide
 
 ## Goal
+
 Create a reusable SCSS style guide for form fields that aligns with the existing design system.
 
 ## Context
+
 The project already contains a `styles` folder with shared tokens, variables, mixins, typography, spacing, colors, radius values, and existing component styles.
 
 The new form field style guide should follow the same visual language and avoid duplicating values that already exist.
 
 ## Task
+
 Look into the existing SCSS style guide inside the `styles` folder and create a reusable form field style guide.
 
 The form field should support:
@@ -32,6 +35,7 @@ Selection controls are handled separately by projected choice components. Follow
 `context/010-choice-controls.md`
 
 ## Component Structure
+
 Create a form field layout with 3 rows:
 
 1. Label row
@@ -104,6 +108,7 @@ Rules:
 - `.form-field-control` owns the shared outer border and radius.
 - Prefix, center control, and suffix should read as one field with subtle internal separators rather than separate attached boxes.
 - Focus, error, disabled, and readonly styling should apply coherently to the full composed field.
+- Render passive visual icons such as search with `.ms-icon` as documented in `context/013-material-symbols.md`.
 
 ## Label Behavior
 

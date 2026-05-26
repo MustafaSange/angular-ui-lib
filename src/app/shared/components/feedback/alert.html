@@ -9,7 +9,9 @@
     [attr.aria-live]="ariaLive()"
   >
     @if (showIcon()) {
-      <span class="ms-alert-icon" aria-hidden="true">{{ icon() }}</span>
+      <span class="ms-alert-icon" aria-hidden="true">
+        <span class="ms-icon ms-icon-filled">{{ icon() }}</span>
+      </span>
     }
 
     <div class="ms-alert-content">
@@ -31,7 +33,7 @@
         aria-label="Dismiss alert"
         (click)="dismiss()"
       >
-        <span aria-hidden="true">x</span>
+        <span class="ms-icon" aria-hidden="true">close</span>
       </button>
     }
   </section>

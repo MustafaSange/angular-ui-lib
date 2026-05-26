@@ -108,6 +108,8 @@ Do not add state inputs, state classes, or `data-*` state attributes to `ms-sign
 
 The form-fields showcase should use `ms-signal-form-field` examples so the behavior is visible.
 
+Visual field adornment icons, such as the passive search prefix, use the `.ms-icon` Material Symbols utility documented in `context/013-material-symbols.md`.
+
 Each form-field variant should render as a small vertical showcase item:
 
 1. The live `ms-signal-form-field` visual example

@@ -84,18 +84,16 @@ Defaults:
 Inline alert:
 
 ```html
-<ms-alert variant="success" title="Saved">
-  Your changes were saved.
-</ms-alert>
+<ms-alert variant="success" title="Saved"> Your changes were saved. </ms-alert>
 ```
 
 Dismissible alert:
 
 ```html
 @if (isVisible()) {
-  <ms-alert variant="danger" title="Payment failed" dismissible (dismissed)="isVisible.set(false)">
-    Verify your payment method before retrying the renewal.
-  </ms-alert>
+<ms-alert variant="danger" title="Payment failed" dismissible (dismissed)="isVisible.set(false)">
+  Verify your payment method before retrying the renewal.
+</ms-alert>
 }
 ```
 
@@ -160,8 +158,8 @@ Alert behavior:
 - dismissible alerts hide themselves and emit `dismissed`
 - non-dismissible alerts do not render a close button
 - actions are consumer-projected content
-- success icons render a check mark
-- danger icons render `x`, warning icons render `!`, and info icons render `i`
+- status and dismiss controls render Material Symbols through `.ms-icon`
+- status symbols use filled rendering inside the existing visual marker: `check`, `close`, `priority_high`, and `info_i`
 
 `ToastService` behavior:
 
@@ -202,6 +200,7 @@ Styling rules:
 - close buttons stay inline with the title, use their compact icon-button geometry, and darken their own variant surface on hover/active
 - feedback surfaces clip close-button hover fills within the rounded border
 - do not override solid button contrast inside projected alert actions
+- render feedback pictograms with the Material Symbols utilities documented in `context/013-material-symbols.md`
 
 ## Accessibility
 

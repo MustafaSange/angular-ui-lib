@@ -33,9 +33,7 @@ Document required inputs, outputs, services, config objects, helper classes, exp
 Show the primary consumer usage as copyable code.
 
 ```html
-<ms-feature-name>
-  Feature content
-</ms-feature-name>
+<ms-feature-name> Feature content </ms-feature-name>
 ```
 
 For TypeScript APIs, include typed examples.
@@ -100,6 +98,7 @@ Styling rules:
 
 - use existing tokens for color, spacing, radius, shadow, border width, motion, and focus rings
 - name component-private CSS custom properties with a `--_feature-name-*` prefix, and reserve public `--color-*`, `--theme-*`, or feature-prefixed properties for intentional consumer APIs
+- render visual icons with `.ms-icon` or `.ms-icon-filled` as documented in `context/013-material-symbols.md`, and add every new Material Symbols ligature name to `MATERIAL_ICONS`
 - keep styles reusable across future projects
 - include responsive behavior when relevant
 - avoid hardcoded values when tokens exist
@@ -114,6 +113,7 @@ Document required accessibility behavior.
 - focus behavior
 - screen reader behavior
 - disabled or readonly behavior
+- ensure decorative icons are hidden from assistive technology and icon-only controls have an accessible name independent of the symbol
 
 Remove this section only when there are no meaningful accessibility requirements beyond native HTML semantics.
 

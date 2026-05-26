@@ -218,6 +218,7 @@ Close behavior:
 - backdrop click emits `close` only when `closeOnBackdrop` is enabled
 - Escape closes only the top modal when `closeOnEscape` is enabled
 - close button renders only when `showCloseButton` is enabled
+- close buttons render the decorative Material Symbols `close` icon with `.ms-icon`
 - service-opened content should call `modalRef.close(result?)`
 
 Accessibility:

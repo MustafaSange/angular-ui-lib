@@ -19,7 +19,14 @@ export class ButtonIconOnlyShowcase {
   selector: 'app-icon-button-example',
   template: \`
     <button class="btn btn-primary btn-icon" aria-label="Primary action">
-      <span aria-hidden="true">+</span>
+      <span class="ms-icon" aria-hidden="true">add</span>
+    </button>
+
+    <button class="btn btn-outline btn-icon" aria-label="Add to favorites">
+      <span class="ms-icon" aria-hidden="true">favorite</span>
+    </button>
+    <button class="btn btn-outline btn-icon" aria-label="Remove from favorites">
+      <span class="ms-icon ms-icon-filled" aria-hidden="true">favorite</span>
     </button>
   \`,
   changeDetection: ChangeDetectionStrategy.OnPush,

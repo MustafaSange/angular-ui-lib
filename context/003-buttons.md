@@ -1,9 +1,11 @@
 # Feature 003: Buttons
 
 ## Goal
+
 Create reusable button styles using the existing design tokens and utility system.
 
 ## Context
+
 The project already has:
 
 - `src/styles/colors/`
@@ -13,19 +15,21 @@ The project already has:
 Buttons must use existing CSS variables.
 
 Control sizing uses the shared control tokens:
+
 - heights: `xs`, `sm`, `md`, `lg`
 - horizontal padding: `xs`, `sm`, `md`, `lg`
 - base buttons use the medium control size
 
 ## Task
+
 Create a button styles folder:
 
 src/styles/components/
 
 Create these files:
 
-- _index.scss
-- _buttons.scss
+- \_index.scss
+- \_buttons.scss
 
 ## Button classes
 
@@ -68,6 +72,12 @@ Create icon button:
 
 - .btn-icon — square icon-only button using the matching control height for both inline and block size
 
+## Icon Usage
+
+- Render visual button symbols with `.ms-icon` as documented in `context/013-material-symbols.md`.
+- Use `.ms-icon-filled` when a symbol communicates an active or selected state.
+- Icon-only buttons must retain an accessible label independent of the decorative symbol.
+
 ## Demo page
 
 Create a Buttons feature page that showcases:
@@ -81,6 +91,7 @@ Create a Buttons feature page that showcases:
 - icon-only buttons for every visual variant
 - icon-only button sizes
 - disabled icon-only buttons for every visual variant
+- outlined and filled icon rendering
 
 ## Rules
 
@@ -96,7 +107,7 @@ Create a Buttons feature page that showcases:
 - Icon buttons should compose with the same visual variants as regular buttons.
 - Keep styles reusable across future projects.
 
-## _index.scss
+## \_index.scss
 
 Forward button styles:
 
