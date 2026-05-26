@@ -22,7 +22,9 @@ import { SignalFormField } from './shared/components/signal-form-field';
   template: \`
     <ms-signal-form-field>
       <label for="search">Search</label>
-      <span class="form-field-prefix" aria-hidden="true">⌕</span>
+      <span class="form-field-prefix" aria-hidden="true">
+        <span class="ms-icon">search</span>
+      </span>
       <input id="search" type="search" placeholder="Search projects" />
     </ms-signal-form-field>
   \`,

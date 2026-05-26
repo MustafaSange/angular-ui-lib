@@ -15,7 +15,9 @@
         (focusout)="resumeFocus(entry.id, $event)"
       >
         @if (entry.showIcon) {
-          <span class="ms-toast-icon" aria-hidden="true">{{ getIcon(entry.variant) }}</span>
+          <span class="ms-toast-icon" aria-hidden="true">
+            <span class="ms-icon ms-icon-filled">{{ getIcon(entry.variant) }}</span>
+          </span>
         }
 
         <div class="ms-toast-content">
@@ -41,7 +43,7 @@
             aria-label="Dismiss notification"
             (click)="close(entry.id)"
           >
-            <span aria-hidden="true">x</span>
+            <span class="ms-icon" aria-hidden="true">close</span>
           </button>
         }
       </article>

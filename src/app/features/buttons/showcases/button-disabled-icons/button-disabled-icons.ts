@@ -19,7 +19,7 @@ export class ButtonDisabledIconsShowcase {
   selector: 'app-disabled-icon-button-example',
   template: \`
     <button class="btn btn-primary btn-icon" aria-label="Primary disabled" disabled>
-      <span aria-hidden="true">+</span>
+      <span class="ms-icon" aria-hidden="true">add</span>
     </button>
   \`,
   changeDetection: ChangeDetectionStrategy.OnPush,

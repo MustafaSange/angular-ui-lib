@@ -19,16 +19,16 @@ export class ButtonIconSizesShowcase {
   selector: 'app-icon-button-sizes-example',
   template: \`
     <button class="btn btn-primary btn-icon btn-xs" aria-label="Add extra small">
-      <span aria-hidden="true">+</span>
+      <span class="ms-icon" aria-hidden="true">add</span>
     </button>
     <button class="btn btn-primary btn-icon btn-sm" aria-label="Add small">
-      <span aria-hidden="true">+</span>
+      <span class="ms-icon" aria-hidden="true">add</span>
     </button>
     <button class="btn btn-primary btn-icon" aria-label="Add medium">
-      <span aria-hidden="true">+</span>
+      <span class="ms-icon" aria-hidden="true">add</span>
     </button>
     <button class="btn btn-primary btn-icon btn-lg" aria-label="Add large">
-      <span aria-hidden="true">+</span>
+      <span class="ms-icon" aria-hidden="true">add</span>
     </button>
   \`,
   changeDetection: ChangeDetectionStrategy.OnPush,

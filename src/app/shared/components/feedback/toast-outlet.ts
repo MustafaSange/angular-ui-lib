@@ -60,14 +60,14 @@ export class ToastOutletComponent {
   protected getIcon(variant: FeedbackVariant): string {
     switch (variant) {
       case 'success':
-        return '✓';
+        return 'check';
       case 'warning':
-        return '!';
+        return 'priority_high';
       case 'danger':
-        return 'x';
+        return 'close';
       case 'info':
       default:
-        return 'i';
+        return 'info_i';
     }
   }
 }
