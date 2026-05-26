@@ -103,6 +103,8 @@ Adornment examples:
 Rules:
 
 - Use `.form-field-prefix` and `.form-field-suffix` for side content.
+- Prefix is the logical inline-start adornment and suffix is the logical inline-end adornment;
+  their visual placement and separators must mirror in `dir="rtl"`.
 - Use `.form-field-action` for clickable prefix or suffix elements.
 - Use `.is-segmented` when an action should appear as a more visually distinct segment.
 - `.form-field-control` owns the shared outer border and radius.
@@ -177,6 +179,8 @@ Include styles for:
 - Keep the implementation modular, reusable, and production-ready.
 - Keep text/select/textarea form-field styles in `_form-fields.scss`.
 - Keep checkbox, radio, and switch choice styles in `_choice-controls.scss`.
+- Use logical block/inline sizing, spacing, borders, and alignment so the composed field behaves
+  correctly in both `dir="ltr"` and `dir="rtl"`.
 
 ## Examples
 
@@ -231,6 +235,7 @@ After reviewing the existing style guide, suggest improvements if you find:
 - Prefix and suffix adornments are supported inside the shared control shell.
 - Interactive adornment actions support both integrated and segmented treatments.
 - The composed control uses one shared outer border with internal separators.
+- Prefix and suffix adornments, including segmented actions, mirror correctly in `dir="rtl"`.
 - Required fields show a red `*`.
 - Hint text is shown by default.
 - Error text replaces hint text when an error is active.

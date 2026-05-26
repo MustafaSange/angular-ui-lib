@@ -1,37 +1,42 @@
 # Feature 002: Utility Classes
 
 ## Goal
+
 Create reusable utility classes based on the existing design tokens.
 
 ## Context
+
 Theme tokens already exist under `src/styles/colors/` and `src/styles/tokens/`, and are exposed through `src/styles/_index.scss`.
 
 All utilities must use existing CSS custom properties where a design token exists.
 
 ## Task
+
 Create a utilities folder:
 
 src/styles/utilities/
 
 Create these files:
 
-- _index.scss
-- _display.scss
-- _flex.scss
-- _gaps.scss
-- _spacing.scss
-- _typography.scss
-- _colors.scss
-- _borders.scss
-- _shadows.scss
-- _sizing.scss
-- _position.scss
-- _states.scss
+- \_index.scss
+- \_display.scss
+- \_flex.scss
+- \_gaps.scss
+- \_spacing.scss
+- \_typography.scss
+- \_colors.scss
+- \_borders.scss
+- \_shadows.scss
+- \_sizing.scss
+- \_position.scss
+- \_states.scss
 
 ## File responsibilities
 
-### _display.scss
+### \_display.scss
+
 Create display utilities:
+
 - .d-block
 - .d-inline
 - .d-inline-block
@@ -41,8 +46,10 @@ Create display utilities:
 - .d-none
 - Generate alias-based responsive display variants with `.{alias}-d-{value}` class names, such as `.sm-d-flex`, `.lt-md-d-none`, and `.gt-lg-d-grid`
 
-### _flex.scss
+### \_flex.scss
+
 Create flex utilities:
+
 - .flex-row
 - .flex-column
 - .flex-wrap
@@ -63,16 +70,20 @@ Create flex utilities:
 - .align-end
 - .align-stretch
 
-### _gaps.scss
+### \_gaps.scss
+
 Create shared gap utilities:
+
 - `.gap-*`
 - `.row-gap-*`
 - `.column-gap-*`
 - Use the spacing scale: `0`, `2`, `4`, `8`, `12`, `16`, `20`, `24`, `28`, `32`, `36`, `40`, `48`
 - Generate alias-based responsive gap variants with `.{alias}-{utility}-{value}` class names.
 
-### _spacing.scss
+### \_spacing.scss
+
 Create margin and padding utilities:
+
 - `.m-*`, `.mt-*`, `.mr-*`, `.mb-*`, `.ml-*`, `.ms-*`, `.me-*`, `.mx-*`, `.my-*`
 - `.m-auto`, `.mt-auto`, `.mr-auto`, `.mb-auto`, `.ml-auto`, `.ms-auto`, `.me-auto`, `.mx-auto`, `.my-auto`
 - `.p-*`, `.pt-*`, `.pr-*`, `.pb-*`, `.pl-*`, `.ps-*`, `.pe-*`, `.px-*`, `.py-*`
@@ -80,9 +91,14 @@ Create margin and padding utilities:
 - Generate alias-based responsive spacing variants with `.{alias}-{utility}-{value}` class names, such as `.sm-p-12`, `.lt-lg-px-16`, and `.gt-md-my-auto`
 - Support exact-range aliases `xs`, `sm`, `md`, `lg`, `xl`; less-than aliases `lt-sm`, `lt-md`, `lt-lg`, `lt-xl`; and greater-than aliases `gt-xs`, `gt-sm`, `gt-md`, `gt-lg`
 - Reuse the same responsive alias set for display, gap, and spacing utilities.
+- Treat `.ms-*`, `.me-*`, `.ps-*`, and `.pe-*` as the preferred semantic utilities for
+  direction-aware component layout; `.ml-*`, `.mr-*`, `.pl-*`, and `.pr-*` remain intentionally
+  physical opt-in utilities.
 
-### _typography.scss
+### \_typography.scss
+
 Create typography utilities:
+
 - .text-xs
 - .text-sm
 - .text-md
@@ -102,17 +118,23 @@ Create typography utilities:
 - .text-uppercase
 - .text-lowercase
 - .text-capitalize
+- Prefer `.text-start` and `.text-end` in reusable component layout so alignment follows document
+  direction; `.text-left` and `.text-right` remain intentionally physical opt-in utilities.
 
-### _colors.scss
+### \_colors.scss
+
 Create color utilities:
+
 - text: `.text-primary`, `.text-secondary`, `.text-muted`, `.text-inverse`, `.text-accent`, `.text-success`, `.text-warning`, `.text-danger`, `.text-info`
 - solid backgrounds: `.bg-primary`, `.bg-secondary`, `.bg-accent`, `.bg-success`, `.bg-warning`, `.bg-danger`, `.bg-info`; each applies its matching contrast text color
 - subtle backgrounds: `.bg-*-subtle` for primary, secondary, accent, success, warning, danger, and info
 - surfaces: `.bg-background`, `.bg-surface`, `.bg-surface-muted`, `.bg-surface-raised`, `.bg-surface-overlay`
 - borders: `.border-default`, `.border-strong`, `.border-*` for primary, secondary, accent, success, warning, danger, and info
 
-### _borders.scss
+### \_borders.scss
+
 Create border utilities:
+
 - .border
 - .border-0
 - .rounded-sm
@@ -121,31 +143,40 @@ Create border utilities:
 - .rounded-xl
 - .rounded-full
 
-### _shadows.scss
+### \_shadows.scss
+
 Create shadow utilities:
+
 - .shadow-sm
 - .shadow-md
 - .shadow-lg
 
-### _sizing.scss
+### \_sizing.scss
+
 Create sizing utilities:
+
 - .w-full
 - .h-full
 - .min-h-vh
 - .min-h-svh
 
-### _position.scss
+### \_position.scss
+
 Create position utilities:
+
 - .position-relative
 - .position-absolute
 - .position-fixed
 
-### _states.scss
+### \_states.scss
+
 Create state utilities:
+
 - .opacity-muted
 - .opacity-disabled
 
-## _index.scss
+## \_index.scss
+
 Import all utility partials using @forward.
 
 Example:
@@ -155,6 +186,7 @@ Example:
 @forward './spacing';
 
 ## Global import
+
 Import utilities from the shared style entrypoint:
 
 @use './utilities';
@@ -162,6 +194,7 @@ Import utilities from the shared style entrypoint:
 Adjust the path if needed.
 
 ## Rules
+
 - Use SCSS partial files.
 - Use SCSS loops where helpful.
 - Do not hardcode design values.

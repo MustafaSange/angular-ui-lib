@@ -105,6 +105,8 @@ Create a Buttons feature page that showcases:
 - Button sizes must use matching control height and horizontal padding tokens.
 - Icon buttons should stay square and remove inline padding.
 - Icon buttons should compose with the same visual variants as regular buttons.
+- Button geometry and icon/text spacing must use logical sizing and spacing so button composition
+  behaves consistently in both `dir="ltr"` and `dir="rtl"`.
 - Keep styles reusable across future projects.
 
 ## \_index.scss

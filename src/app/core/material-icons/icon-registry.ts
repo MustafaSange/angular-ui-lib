@@ -1,9 +1,15 @@
 export const MATERIAL_ICONS = [
   'add',
+  'archive',
   'check',
   'close',
+  'delete',
+  'edit',
+  'expand_more',
   'favorite',
+  'filter_list',
   'info_i',
+  'more_vert',
   'priority_high',
   'search',
 ] as const;

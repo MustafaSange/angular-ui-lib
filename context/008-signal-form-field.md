@@ -78,10 +78,10 @@ The implementation is split into separate files:
 
 - Do not use inputs for label, hint, error, or field/control.
 - Label, control, hint, and error are all passed through content projection.
-- The label area projects the native `label` on the left.
-- Optional right-side label content uses `slot="label-extra"` or `slot="label-action"`.
-- Optional right-side hint content uses `slot="hint-extra"` inside `ms-hint`.
-- Optional right-side error content uses `slot="error-extra"` inside `ms-error`.
+- The label area projects the native `label` at inline-start.
+- Optional inline-end label content uses `slot="label-extra"` or `slot="label-action"`.
+- Optional inline-end hint content uses `slot="hint-extra"` inside `ms-hint`.
+- Optional inline-end error content uses `slot="error-extra"` inside `ms-error`.
 - The projected control remains fully owned by the consumer.
 - The wrapper detects projected `ms-hint`, `ms-error`, and Angular signal `FormField`.
 - The wrapper shows `ms-error` only when an error component exists and the projected signal field is invalid and touched or dirty.
@@ -101,6 +101,8 @@ The styles support both:
 - `ms-signal-form-field`, `ms-hint`, and `ms-error` element selectors
 - a 2-column `.form-field-label` area using `1fr auto`
 - 2-column `ms-hint` and `ms-error` message layouts using `1fr auto`
+- logical block/inline layout behavior so label extras, message extras, prefixes, and suffixes
+  mirror correctly in both `dir="ltr"` and `dir="rtl"`
 
 Do not add state inputs, state classes, or `data-*` state attributes to `ms-signal-form-field`.
 
@@ -144,4 +146,5 @@ Selection-control examples can stay grouped by control type, with each group fol
 - Hint and error are mutually exclusive.
 - Errors are gated by invalid plus touched or dirty state.
 - Existing `.form-field` examples and styling remain supported.
+- Projected inline-start and inline-end content mirrors correctly in `dir="rtl"`.
 - The showcase uses the signal form field component and renders each form-field variant with its snippet directly below the visual example.
