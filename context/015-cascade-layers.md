@@ -41,6 +41,7 @@ Use `sass:meta` with `meta.load-css()` so generated CSS is emitted inside the de
 `src/styles/base/_reset.scss` contains only low-level normalization:
 
 - remove default margin and padding and apply `border-box` sizing universally
+- use native thin scrollbars for scrollable elements without imposing custom colors
 - preserve browser text scaling behavior through `-webkit-text-size-adjust: 100%` on `html`
 - keep common media elements block-level and constrained to their container inline size
 - make native form controls inherit surrounding typography
@@ -75,13 +76,14 @@ discoverability, while the global entrypoint loads each partial into its intende
 - New design tokens
 - New component styles or public Angular APIs
 - New utility classes
-- Additional browser reset opinions beyond the existing reset rules
+- Custom scrollbar colors or vendor-specific scrollbar dimensions
 
 ## Acceptance Criteria
 
 - The global Sass entrypoint compiles using the explicit layer order.
 - Reset, token, base, layout, component, and utility output is emitted into its declared layer.
 - The reset partial contains normalization rules only.
+- Scrollable elements request native thin scrollbar presentation globally.
 - Token-backed `body` and native link defaults are emitted from the base element partial.
 - Native link focus and hover behavior remains consistent with the existing design tokens.
 - No Angular behavior or component API is changed by this styling organization.
