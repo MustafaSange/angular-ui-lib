@@ -236,6 +236,9 @@ Modal styles live in `src/styles/components/_modal.scss` and are forwarded from 
 
 Use existing tokens for color, spacing, radius, shadow, border width, motion, and z-index. The default modal uses `max-height: 90svh`, `max-width: 90%`, centered viewport layout, fixed header/footer, and scrollable body content.
 
+Modal header actions, close-button placement, content padding, and footer action alignment use
+logical inline/block layout so they mirror correctly in both `dir="ltr"` and `dir="rtl"`.
+
 ## Showcase
 
 The modal showcase should demonstrate:
@@ -281,4 +284,5 @@ Showcase snippets must use `ShowcaseCode`, be hand-authored in the feature compo
 - Focus is trapped while service modals are open and restored after close.
 - Dialog accessibility attributes are present and correctly associated.
 - Modal styles are reusable, responsive, token-based, and forwarded from the components style index.
+- Header and footer actions, including the close button, mirror correctly in `dir="rtl"`.
 - Showcase examples and snippets reflect the current API.

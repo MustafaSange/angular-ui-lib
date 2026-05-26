@@ -1,9 +1,11 @@
 # Feature 010: Choice Controls
 
 ## Goal
+
 Create reusable projected choice controls for checkbox, radio, and switch inputs while keeping consumers in control of the native input and label.
 
 ## Public API
+
 Import choice controls from the folder barrel:
 
 ```ts
@@ -93,6 +95,7 @@ Label-before layout:
 ```
 
 ## Component Structure
+
 The implementation lives in:
 
 `src/app/shared/components/choice-controls`
@@ -123,10 +126,13 @@ The top-level `index.ts` must export from the component folders so public import
 - If the consumer does not provide an input `id` or label `for`, the control component should generate/link them.
 - Default layout places the input or switch track before the label/support text.
 - Add `slot="label-before"` to `ms-checkbox-control`, `ms-radio-control`, or `ms-switch-control` to place label/support text before the input or switch track.
+- "Before" follows logical inline order: layouts mirror naturally when the nearest direction is
+  `dir="rtl"`.
 - Choice control components should apply the `is-label-before` class with `@Component` `host` metadata, not `@HostBinding`.
 - Do not implement `ControlValueAccessor` unless the project explicitly asks for forms integration.
 
 ## Styling
+
 Choice control styles live in:
 
 `src/styles/components/_choice-controls.scss`
@@ -146,8 +152,12 @@ Styling rules:
 - Disabled controls must use `cursor: not-allowed`.
 - The visible switch track must use `cursor: pointer` and remain clickable.
 - `.is-label-before` on the control host owns the reversed grid layout.
+- Checkbox, radio, switch, and label-before arrangements use logical inline layout in both
+  `dir="ltr"` and `dir="rtl"`.
+- A checked switch thumb moves toward inline-end rather than a fixed physical side.
 
 ## Showcase
+
 The Form Fields showcase should include a Selection Controls section with:
 
 - checkbox checked/default/disabled/error examples
@@ -177,4 +187,5 @@ Each selection-control group should keep its matching `<app-showcase-code>` snip
 - Checkbox, radio, and switch checked/default/disabled/error states are visible in the showcase.
 - `slot="label-before"` renders label/support text before the input or switch track.
 - The switch can be toggled by clicking either its text label or visual track.
+- Checked switches and label-before arrangements mirror correctly in `dir="rtl"`.
 - Choice-control SCSS remains separated from form-field SCSS.

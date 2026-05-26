@@ -85,6 +85,9 @@ Styling rules:
 - use inherited font size so symbol size composes with button, feedback, and field contexts
 - use component styles for context-specific icon sizing where required
 - do not create consumer theme tokens for the icon font; icons inherit their surrounding text color
+- keep `.ms-icon` text direction fixed to `ltr` so Material Symbols ligature names render
+  consistently inside both left-to-right and right-to-left component layouts; this is an
+  intentional exception to logical component layout direction
 
 ## Accessibility
 
@@ -128,4 +131,6 @@ Render snippets near the matching visual example with `<app-showcase-code>`.
 - Any migrated symbol name exists in `MATERIAL_ICONS`.
 - Close and icon-only buttons retain accessible labels.
 - Component dimensions, feedback variants, theme behavior, and focus states remain unchanged.
+- Material Symbols render correctly inside both `dir="ltr"` and `dir="rtl"` layouts while the
+  surrounding component layout follows its document direction.
 - Showcase examples and snippets reflect the icon utility convention.

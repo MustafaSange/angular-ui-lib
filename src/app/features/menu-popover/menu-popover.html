@@ -1,0 +1,156 @@
+<main class="menu-popover-page">
+  <header class="menu-popover-header">
+    <a class="btn btn-ghost back-link" routerLink="/">← Back to home</a>
+    <p class="eyebrow">Components</p>
+    <h1>Menu and popover</h1>
+    <p class="description">
+      Native anchored surfaces for command menus and projected floating content.
+    </p>
+  </header>
+
+  <section class="menu-popover-section">
+    <h2>Basic action menu</h2>
+    <div class="demo-row">
+      <ms-menu>
+        <button class="btn btn-outline" type="button" msMenuTrigger>
+          Workspace
+          <span class="ms-icon" aria-hidden="true">expand_more</span>
+        </button>
+
+        <ms-menu-panel aria-label="Workspace actions">
+          <button type="button" msMenuItem>Open dashboard</button>
+          <button type="button" msMenuItem>Invite members</button>
+          <button type="button" msMenuItem>Manage billing</button>
+        </ms-menu-panel>
+      </ms-menu>
+    </div>
+    <app-showcase-code label="Basic action menu" [code]="basicMenuSnippet" />
+  </section>
+
+  <section class="menu-popover-section">
+    <h2>Item variants</h2>
+    <div class="demo-row">
+      <ms-menu placement="bottom-end">
+        <button
+          class="btn btn-ghost btn-icon"
+          type="button"
+          msMenuTrigger
+          aria-label="Project actions"
+        >
+          <span class="ms-icon" aria-hidden="true">more_vert</span>
+        </button>
+
+        <ms-menu-panel aria-label="Project actions">
+          <button type="button" msMenuItem (click)="chooseAction('Renamed project.')">
+            <span class="ms-icon" aria-hidden="true">edit</span>
+            Rename
+          </button>
+          <a routerLink="/" msMenuItem>
+            <span class="ms-icon" aria-hidden="true">archive</span>
+            Archive project
+          </a>
+          <button type="button" msMenuItem disabled>Transfer ownership</button>
+          <ms-menu-divider />
+          <button type="button" msMenuItem (click)="chooseAction('Deleted project.')">
+            <span class="ms-icon" aria-hidden="true">delete</span>
+            Delete project
+          </button>
+        </ms-menu-panel>
+      </ms-menu>
+
+      <span class="result-note" aria-live="polite">{{ selectedAction() }}</span>
+    </div>
+    <app-showcase-code
+      label="Icon, link, disabled, and divider items"
+      [code]="variantsMenuSnippet"
+    />
+  </section>
+
+  <section class="menu-popover-section">
+    <h2>End-aligned overflow menu</h2>
+    <p class="section-copy">
+      The panel aligns with the trigger end edge and flips through native CSS anchor fallback
+      positions when space is constrained.
+    </p>
+    <div class="toolbar-demo">
+      <span>Release activity</span>
+
+      <ms-menu placement="bottom-end">
+        <button class="btn btn-ghost btn-icon" type="button" msMenuTrigger aria-label="More">
+          <span class="ms-icon" aria-hidden="true">more_vert</span>
+        </button>
+
+        <ms-menu-panel aria-label="Release actions">
+          <button type="button" msMenuItem>Download report</button>
+          <button type="button" msMenuItem>Share activity</button>
+        </ms-menu-panel>
+      </ms-menu>
+    </div>
+    <app-showcase-code label="End-aligned menu" [code]="placementMenuSnippet" />
+  </section>
+
+  <section class="menu-popover-section">
+    <h2>Controlled filters popover</h2>
+    <div class="demo-row">
+      <ms-popover [(open)]="filtersOpen">
+        <button class="btn btn-outline" type="button" msPopoverTrigger>
+          <span class="ms-icon" aria-hidden="true">filter_list</span>
+          Filters
+        </button>
+
+        <ms-popover-panel>
+          <form class="filter-form" aria-label="Project filters" (submit)="applyFilters($event)">
+            <h3>Filters</h3>
+
+            <ms-signal-form-field>
+              <label for="filter-status">Status</label>
+              <select id="filter-status">
+                <option>All projects</option>
+                <option>Active</option>
+                <option>Archived</option>
+              </select>
+            </ms-signal-form-field>
+
+            <ms-signal-form-field>
+              <label for="filter-owner">Owner</label>
+              <select id="filter-owner">
+                <option>Anyone</option>
+                <option>This team</option>
+                <option>Me</option>
+              </select>
+            </ms-signal-form-field>
+
+            <div class="filter-actions">
+              <button class="btn btn-ghost" type="button" msPopoverClose>Cancel</button>
+              <button class="btn btn-primary" type="submit" msPopoverClose>Apply</button>
+            </div>
+          </form>
+        </ms-popover-panel>
+      </ms-popover>
+
+      <span class="result-note" aria-live="polite">{{ appliedFilters() }}</span>
+    </div>
+    <app-showcase-code label="Filter popover" [code]="popoverSnippet" />
+  </section>
+
+  <section class="menu-popover-section">
+    <h2>Logical side-positioned popover</h2>
+    <p class="section-copy">
+      This panel opens at logical inline-end: on the right in LTR and on the left in RTL.
+    </p>
+    <div class="demo-row">
+      <ms-popover placement="end-top">
+        <button class="btn btn-outline" type="button" msPopoverTrigger>View details</button>
+
+        <ms-popover-panel aria-label="Release details">
+          <div class="detail-popover">
+            <h3>Release ready</h3>
+            <p>Checks passed and the package is ready to publish.</p>
+            <button class="btn btn-primary btn-sm" type="button" msPopoverClose>Done</button>
+          </div>
+        </ms-popover-panel>
+      </ms-popover>
+    </div>
+    <app-showcase-code label="Logical side placement" [code]="sidePopoverSnippet" />
+  </section>
+</main>

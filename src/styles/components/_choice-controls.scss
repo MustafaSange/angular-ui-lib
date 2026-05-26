@@ -267,6 +267,10 @@ ms-choice-error {
   transform: translateX(1.25rem);
 }
 
+.switch-input:checked + .switch-track:dir(rtl) .switch-thumb {
+  transform: translateX(-1.25rem);
+}
+
 .switch-input:disabled + .switch-track {
   border-color: var(--color-border);
   background-color: var(--color-surface-muted);

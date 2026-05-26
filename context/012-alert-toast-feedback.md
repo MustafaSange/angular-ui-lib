@@ -196,7 +196,11 @@ Styling rules:
 - light theme keeps the palette-backed subtle surfaces
 - dark theme blends variant colors with dark surface tokens to avoid fluorescent backgrounds
 - toast stack uses `--z-index-toast`
+- the desktop toast stack is anchored to logical top-end and therefore moves to the opposite
+  viewport edge in `dir="rtl"`
 - alerts use a medium-width status accent; toasts keep the stronger large-width accent
+- status accents, title/close layout, and projected action placement use logical inline/block
+  layout and mirror correctly in `dir="rtl"`
 - close buttons stay inline with the title, use their compact icon-button geometry, and darken their own variant surface on hover/active
 - feedback surfaces clip close-button hover fills within the rounded border
 - do not override solid button contrast inside projected alert actions
@@ -249,4 +253,5 @@ Showcase snippets must use `ShowcaseCode`, be hand-authored in the feature compo
 - Toast stack renders newest first and keeps at most five visible toasts.
 - Feedback accessibility roles, live regions, and close labels are present.
 - Alert and toast styles are token-based, theme-aware, and forwarded from the components style index.
+- Status accents and the desktop top-end toast stack mirror correctly in `dir="rtl"`.
 - The `/feedback` showcase demonstrates core variants and renders matching copyable snippets.

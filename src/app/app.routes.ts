@@ -15,8 +15,7 @@ export const routes: Routes = [
   },
   {
     path: 'form-fields',
-    loadComponent: () =>
-      import('./features/form-fields/form-fields').then((m) => m.FormFields),
+    loadComponent: () => import('./features/form-fields/form-fields').then((m) => m.FormFields),
   },
   {
     path: 'modal',
@@ -25,5 +24,9 @@ export const routes: Routes = [
   {
     path: 'feedback',
     loadComponent: () => import('./features/feedback/feedback').then((m) => m.Feedback),
+  },
+  {
+    path: 'menu-popover',
+    loadComponent: () => import('./features/menu-popover/menu-popover').then((m) => m.MenuPopover),
   },
 ];

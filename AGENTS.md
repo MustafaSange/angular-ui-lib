@@ -3,6 +3,7 @@
 This project uses Angular 21, Vitest, SCSS, and standalone bootstrap APIs.
 
 Use modern Angular patterns:
+
 - Standalone APIs only; do not create NgModules unless required.
 - Do not add `standalone: true`.
 - Prefer signals: `signal`, `computed`, `input`, `output`, `model`.
@@ -16,6 +17,13 @@ Use modern Angular patterns:
   - root component class is `App`
   - app template/style files are `app.html` and `app.scss`
   - routes are in `src/app/app.routes.ts`
+- For reusable components under `src/app/shared/`:
+  - Use the `ms-` prefix for public Angular element selectors, such as `ms-modal` or `ms-menu-panel`.
+  - Use concise unprefixed internal CSS class hooks, such as `.modal-header`, `.menu-panel`, or `.menu-item`; do not mirror the component prefix as `.ms-*` for new internal styling hooks.
+  - Keep established public utility classes such as `.ms-icon` and `.ms-icon-filled` unchanged.
+  - Use logical CSS properties and logical placement terms such as `inline-start`, `inline-end`, `block-start`, and `block-end` so component layouts mirror in both `dir="ltr"` and `dir="rtl"`.
+  - Treat intentionally physical utilities such as `.text-left`, `.text-right`, `.ml-*`, and `.mr-*` as explicit consumer choices; reusable component layout should prefer logical equivalents.
+  - Keep `.ms-icon { direction: ltr; }` as an intentional exception required for Material Symbols ligature rendering.
 - For new showcase pages under `src/app/features/`, include copyable examples using
   `ShowcaseCode` from `src/app/shared/components/showcase-code`.
   - Keep snippets hand-authored in the feature component `.ts` file.

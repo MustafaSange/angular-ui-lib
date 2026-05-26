@@ -26,6 +26,10 @@ Public pieces:
 
 Shared reusable components use the `ms-` selector prefix. Do not use `app-` for components under `src/app/shared`.
 
+Use concise unprefixed internal CSS class hooks for new shared components, such as
+`.feature-name-panel` or `.feature-name-item`; do not mirror the component prefix as `.ms-*`.
+Established public utility classes such as `.ms-icon` and `.ms-icon-filled` remain namespaced.
+
 Document required inputs, outputs, services, config objects, helper classes, exported types, and default values here.
 
 ## Desired Usage
@@ -97,6 +101,12 @@ The styles are forwarded from:
 Styling rules:
 
 - use existing tokens for color, spacing, radius, shadow, border width, motion, and focus rings
+- use concise unprefixed internal CSS class hooks for new shared components; reserve `.ms-*` for
+  established public utilities such as `.ms-icon` and `.ms-icon-filled`
+- use logical block/inline CSS properties and logical placement terms so reusable component
+  layouts mirror correctly in both `dir="ltr"` and `dir="rtl"`
+- document any deliberate direction exception, such as Material Symbols ligature rendering or an
+  explicitly physical consumer utility
 - name component-private CSS custom properties with a `--_feature-name-*` prefix, and reserve public `--color-*`, `--theme-*`, or feature-prefixed properties for intentional consumer APIs
 - render visual icons with `.ms-icon` or `.ms-icon-filled` as documented in `context/013-material-symbols.md`, and add every new Material Symbols ligature name to `MATERIAL_ICONS`
 - keep styles reusable across future projects
@@ -148,5 +158,6 @@ Render snippets near the matching visual example with `<app-showcase-code>`.
 - The primary usage example works as documented.
 - Required behavior and states are implemented.
 - Styling uses existing tokens and is forwarded from the components style index.
+- Reusable component layout behaves correctly in both `dir="ltr"` and `dir="rtl"`.
 - Accessibility requirements are implemented.
 - The showcase demonstrates core variants and renders matching copyable snippets.
