@@ -29,4 +29,8 @@ export const routes: Routes = [
     path: 'menu-popover',
     loadComponent: () => import('./features/menu-popover/menu-popover').then((m) => m.MenuPopover),
   },
+  {
+    path: 'tooltip',
+    loadComponent: () => import('./features/tooltip/tooltip').then((m) => m.Tooltip),
+  },
 ];

@@ -1,0 +1,117 @@
+<main class="tooltip-page">
+  <header class="tooltip-header">
+    <a class="btn btn-ghost back-link" routerLink="/">&larr; Back to home</a>
+    <p class="eyebrow">Components</p>
+    <h1>Tooltip</h1>
+    <p class="description">
+      Native hint popovers for brief, non-interactive descriptions anchored to a trigger.
+    </p>
+  </header>
+
+  <section class="tooltip-section">
+    <h2>Icon action description</h2>
+    <p class="section-copy">
+      Hover briefly or focus the button to show its description. Press Escape to dismiss it.
+    </p>
+    <div class="demo-row">
+      <ms-tooltip>
+        <button class="btn btn-ghost btn-icon" type="button" msTooltipTrigger aria-label="Details">
+          <span class="ms-icon" aria-hidden="true">info_i</span>
+        </button>
+
+        <ms-tooltip-panel>Invitees receive an email notification.</ms-tooltip-panel>
+      </ms-tooltip>
+    </div>
+    <app-showcase-code label="Icon action tooltip" [code]="basicSnippet" />
+  </section>
+
+  <section class="tooltip-section">
+    <h2>Logical placement</h2>
+    <p class="section-copy">
+      Top and bottom are centered; logical start and end mirror automatically in right-to-left
+      layouts.
+    </p>
+    <div class="placement-demo">
+      <ms-tooltip placement="top">
+        <button class="btn btn-outline" type="button" msTooltipTrigger>Top</button>
+        <ms-tooltip-panel>Appears above the action.</ms-tooltip-panel>
+      </ms-tooltip>
+
+      <ms-tooltip placement="bottom">
+        <button class="btn btn-outline" type="button" msTooltipTrigger>Bottom</button>
+        <ms-tooltip-panel>Appears below the action.</ms-tooltip-panel>
+      </ms-tooltip>
+
+      <ms-tooltip placement="start">
+        <button class="btn btn-outline" type="button" msTooltipTrigger>Start</button>
+        <ms-tooltip-panel>Appears at logical inline start.</ms-tooltip-panel>
+      </ms-tooltip>
+
+      <ms-tooltip placement="end">
+        <button class="btn btn-outline" type="button" msTooltipTrigger>End</button>
+        <ms-tooltip-panel>Appears at logical inline end.</ms-tooltip-panel>
+      </ms-tooltip>
+    </div>
+
+    <div class="rtl-demo" dir="rtl">
+      <span class="rtl-label">RTL context</span>
+      <ms-tooltip placement="start">
+        <button class="btn btn-outline" type="button" msTooltipTrigger>Start</button>
+        <ms-tooltip-panel>Inline start mirrors in RTL.</ms-tooltip-panel>
+      </ms-tooltip>
+      <ms-tooltip placement="end">
+        <button class="btn btn-outline" type="button" msTooltipTrigger>End</button>
+        <ms-tooltip-panel>Inline end mirrors in RTL.</ms-tooltip-panel>
+      </ms-tooltip>
+    </div>
+    <app-showcase-code label="Tooltip placements and RTL" [code]="placementSnippet" />
+  </section>
+
+  <section class="tooltip-section">
+    <h2>Trigger elements</h2>
+    <p class="section-copy">
+      Triggers must be keyboard focusable. Wrap a disabled control in a focusable disabled surrogate
+      because a native disabled button cannot receive focus.
+    </p>
+    <div class="trigger-demo">
+      <ms-tooltip placement="bottom">
+        <a class="btn btn-outline" routerLink="/" msTooltipTrigger>Release guide</a>
+        <ms-tooltip-panel>Read the publishing checklist.</ms-tooltip-panel>
+      </ms-tooltip>
+
+      <div class="input-example">
+        <label for="build-tag">Build tag</label>
+        <ms-tooltip placement="bottom">
+          <input
+            id="build-tag"
+            class="tooltip-input"
+            type="text"
+            value="release/tooltip"
+            aria-describedby="build-tag-help"
+            msTooltipTrigger
+          />
+          <ms-tooltip-panel>Tags are included in generated notes.</ms-tooltip-panel>
+        </ms-tooltip>
+        <span id="build-tag-help" class="support-note">
+          Use lowercase words separated by slashes.
+        </span>
+      </div>
+
+      <ms-tooltip>
+        <span
+          class="disabled-tooltip-trigger"
+          role="button"
+          tabindex="0"
+          aria-disabled="true"
+          msTooltipTrigger
+        >
+          <button class="btn btn-primary" type="button" disabled tabindex="-1" aria-hidden="true">
+            Publish
+          </button>
+        </span>
+        <ms-tooltip-panel>Finish required checks before publishing.</ms-tooltip-panel>
+      </ms-tooltip>
+    </div>
+    <app-showcase-code label="Focusable tooltip triggers" [code]="triggerSnippet" />
+  </section>
+</main>
