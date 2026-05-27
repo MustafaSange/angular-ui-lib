@@ -227,6 +227,19 @@ import {
         <button class="btn btn-primary btn-sm" type="button" msPopoverClose>Done</button>
       </ms-popover-panel>
     </ms-popover>
+
+    <div dir="rtl">
+      <span>Scoped RTL context</span>
+      <ms-popover placement="end-top">
+        <button class="btn btn-outline" type="button" msPopoverTrigger>View details</button>
+
+        <ms-popover-panel aria-label="Release details in RTL context">
+          <h2>Release ready</h2>
+          <p>Checks passed and the package is ready to publish.</p>
+          <button class="btn btn-primary btn-sm" type="button" msPopoverClose>Done</button>
+        </ms-popover-panel>
+      </ms-popover>
+    </div>
   \`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

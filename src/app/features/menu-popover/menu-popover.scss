@@ -81,6 +81,28 @@ h3 {
   }
 }
 
+.rtl-demo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-12);
+  margin-block-start: var(--spacing-16);
+  padding: var(--spacing-16);
+  border: var(--border-width-sm) solid var(--color-border-muted);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-muted);
+
+  & + app-showcase-code {
+    display: block;
+    margin-block-start: var(--spacing-16);
+  }
+}
+
+.rtl-label {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
 .toolbar-demo {
   display: flex;
   align-items: center;

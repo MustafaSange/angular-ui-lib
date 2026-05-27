@@ -2,7 +2,7 @@
   display: block;
 }
 
-.theme-switcher {
+.direction-switcher {
   display: inline-flex;
   gap: var(--spacing-4);
   padding: var(--spacing-4);
@@ -12,7 +12,7 @@
   box-shadow: var(--shadow-sm);
 }
 
-.theme-option {
+.direction-option {
   min-block-size: var(--control-height-sm);
   padding-inline: var(--control-padding-x-sm);
   border: 0;
