@@ -5,7 +5,7 @@
   --color-#{$name}-subtle: var(--color-#{$name}-50);
   --color-#{$name}-text: var(--color-#{$name}-800);
   --color-#{$name}-border: var(--color-#{$name}-300);
-  --color-#{$name}-contrast: var(--color-neutral-0);
+  --color-#{$name}-contrast: var(--color-neutral-50);
 }
 
 @mixin feedback-color($name) {
@@ -15,7 +15,7 @@
   --color-#{$name}-subtle: var(--color-#{$name}-50);
   --color-#{$name}-text: var(--color-#{$name}-800);
   --color-#{$name}-border: var(--color-#{$name}-300);
-  --color-#{$name}-contrast: var(--color-neutral-0);
+  --color-#{$name}-contrast: var(--color-neutral-50);
 }
 
 :root {

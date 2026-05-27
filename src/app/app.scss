@@ -1,0 +1,9 @@
+.preview-controls {
+  position: fixed;
+  z-index: var(--z-index-sticky);
+  inset-block-start: var(--spacing-16);
+  inset-inline-end: var(--spacing-16);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+}
