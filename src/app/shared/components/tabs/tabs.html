@@ -1,0 +1,36 @@
+<div class="tabs">
+  <div class="tab-list" role="tablist">
+    @for (tab of tabs(); track tab; let index = $index) {
+      <button
+        #tabButton
+        class="tab"
+        type="button"
+        role="tab"
+        [id]="tabId(index)"
+        [class.tab-active]="selectedIndex() === index"
+        [attr.aria-controls]="panelId(index)"
+        [attr.aria-selected]="selectedIndex() === index"
+        [attr.tabindex]="selectedIndex() === index ? 0 : -1"
+        (click)="select(index)"
+        (keydown)="handleKeydown($event, index)"
+      >
+        @if (tab.titleTemplate(); as titleTemplate) {
+          <ng-container [ngTemplateOutlet]="titleTemplate.template" />
+        } @else {
+          {{ tab.title() }}
+        }
+      </button>
+    }
+  </div>
+
+  @if (selectedTab(); as tab) {
+    <div
+      class="tab-panel"
+      role="tabpanel"
+      [id]="panelId(selectedIndex())"
+      [attr.aria-labelledby]="tabId(selectedIndex())"
+    >
+      <ng-container [ngTemplateOutlet]="tab.content()" />
+    </div>
+  }
+</div>

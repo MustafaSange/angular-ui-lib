@@ -33,4 +33,8 @@ export const routes: Routes = [
     path: 'tooltip',
     loadComponent: () => import('./features/tooltip/tooltip').then((m) => m.Tooltip),
   },
+  {
+    path: 'tabs',
+    loadComponent: () => import('./features/tabs/tabs').then((m) => m.Tabs),
+  },
 ];
