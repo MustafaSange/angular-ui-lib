@@ -48,6 +48,32 @@ import { AccordionComponent, AccordionItemComponent } from './shared/components/
 })
 export class BasicAccordionExample {}`;
 
+  protected readonly compactSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import { AccordionComponent, AccordionItemComponent } from './shared/components/accordion';
+
+@Component({
+  selector: 'app-compact-accordion-example',
+  imports: [AccordionComponent, AccordionItemComponent],
+  template: \`
+    <ms-accordion class="accordion-compact">
+      <ms-accordion-item title="Profile" [expanded]="true">
+        <p>Review account identity, language, and display settings.</p>
+      </ms-accordion-item>
+
+      <ms-accordion-item title="Security">
+        <p>Manage password, active sessions, and two-step verification.</p>
+      </ms-accordion-item>
+
+      <ms-accordion-item title="Notifications">
+        <p>Choose product, billing, and workspace email preferences.</p>
+      </ms-accordion-item>
+    </ms-accordion>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class CompactAccordionExample {}`;
+
   protected readonly multipleSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import {

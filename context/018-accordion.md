@@ -49,6 +49,11 @@ Shared reusable components use the `ms-` selector prefix. Internal styling hooks
 `.accordion-item`, `.accordion-heading`, `.accordion-trigger`, `.accordion-title`,
 `.accordion-icon`, and `.accordion-panel`.
 
+Public styling modifiers:
+
+- `.accordion-compact` reduces trigger height, spacing, icon size, and panel padding for denser
+  disclosure groups.
+
 ## Desired Usage
 
 ```ts
@@ -73,6 +78,12 @@ import {
         <ng-template msAccordionTitle> Billing <span class="badge">Updated</span> </ng-template>
 
         <p>Review invoices, payment methods, and renewal settings.</p>
+      </ms-accordion-item>
+    </ms-accordion>
+
+    <ms-accordion class="accordion-compact">
+      <ms-accordion-item title="Compact item">
+        <p>Use compact accordions for tighter disclosure groups.</p>
       </ms-accordion-item>
     </ms-accordion>
   `,
@@ -127,6 +138,7 @@ Feature styles live in `src/styles/components/_accordion.scss` and are forwarded
   `dir="rtl"`.
 - Visually distinguish expanded items with a token-based primary accent rail on the logical inline
   start edge, a subtle primary-tinted trigger surface, and primary-colored trigger text/icon.
+- Support `.accordion-compact` on `ms-accordion` as a CSS-only density modifier.
 - Render the disclosure icon with `.ms-icon`.
 - Keep styles reusable across future projects.
 
@@ -146,6 +158,7 @@ Feature styles live in `src/styles/components/_accordion.scss` and are forwarded
 Add a dedicated `/accordion` page and home card demonstrating:
 
 - single-open accordion behavior
+- compact accordion density
 - multiple-open behavior with projected rich titles
 - disabled item state
 - keyboard navigation, including a scoped RTL example
@@ -162,6 +175,7 @@ Each visual example renders a matching hand-authored, full standalone Angular ex
 - Generated ARIA relationships connect triggers and panels.
 - Styles are token-based, use logical properties, and are forwarded through the component styles
   index.
+- `.accordion-compact` provides a denser visual treatment without changing accordion behavior.
 - Expanded items have a visible active treatment that mirrors correctly in RTL layouts.
 - The `/accordion` route and home card expose copyable demonstrations of core behavior.
 - No tests are added or updated for this feature.

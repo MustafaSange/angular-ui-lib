@@ -33,6 +33,29 @@
   </section>
 
   <section class="accordion-section">
+    <h2>Compact accordion</h2>
+    <p class="section-copy">
+      Add `accordion-compact` when disclosure groups need tighter vertical rhythm.
+    </p>
+    <div class="accordion-demo">
+      <ms-accordion class="accordion-compact">
+        <ms-accordion-item title="Profile" [expanded]="true">
+          <p>Review account identity, language, and display settings.</p>
+        </ms-accordion-item>
+
+        <ms-accordion-item title="Security">
+          <p>Manage password, active sessions, and two-step verification.</p>
+        </ms-accordion-item>
+
+        <ms-accordion-item title="Notifications">
+          <p>Choose product, billing, and workspace email preferences.</p>
+        </ms-accordion-item>
+      </ms-accordion>
+    </div>
+    <app-showcase-code label="Compact accordion" [code]="compactSnippet" />
+  </section>
+
+  <section class="accordion-section">
     <h2>Multiple panels and rich titles</h2>
     <p class="section-copy">
       Enable `multiple` when sections can stay open together and use `msAccordionTitle` for compact
