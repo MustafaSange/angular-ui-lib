@@ -1,0 +1,71 @@
+<main class="badge-page">
+  <header class="badge-header">
+    <a class="btn btn-ghost back-link" routerLink="/">← Back to home</a>
+    <p class="eyebrow">Components</p>
+    <h1>Badge</h1>
+    <p class="description">
+      Compact status, category, and count metadata with token-backed variants.
+    </p>
+  </header>
+
+  <section class="badge-section">
+    <h2>Variants</h2>
+    <div class="badge-demo-row">
+      <ms-badge>Neutral</ms-badge>
+      <ms-badge variant="info">Info</ms-badge>
+      <ms-badge variant="success">Success</ms-badge>
+      <ms-badge variant="warning">Warning</ms-badge>
+      <ms-badge variant="danger">Danger</ms-badge>
+    </div>
+    <app-showcase-code label="Badge variants" [code]="variantsSnippet" />
+  </section>
+
+  <section class="badge-section">
+    <h2>Appearances</h2>
+    <div class="badge-demo-row">
+      <ms-badge variant="info" appearance="soft">Soft</ms-badge>
+      <ms-badge variant="info" appearance="solid">Solid</ms-badge>
+      <ms-badge variant="info" appearance="outline">Outline</ms-badge>
+    </div>
+    <app-showcase-code label="Badge appearances" [code]="appearancesSnippet" />
+  </section>
+
+  <section class="badge-section">
+    <h2>Dots and counts</h2>
+    <div class="badge-demo-row">
+      <ms-badge variant="success" dot>Online</ms-badge>
+      <ms-badge variant="warning" dot>Syncing</ms-badge>
+      <ms-badge variant="danger" aria-label="12 unread notifications">12</ms-badge>
+      <ms-badge variant="info" appearance="solid" aria-label="99 or more updates">99+</ms-badge>
+    </div>
+    <app-showcase-code label="Badge dots and counts" [code]="dotsCountsSnippet" />
+  </section>
+
+  <section class="badge-section">
+    <h2>Projected icons</h2>
+    <div class="badge-demo-row">
+      <ms-badge variant="success">
+        <span class="ms-icon" aria-hidden="true">check_circle</span>
+        Verified
+      </ms-badge>
+      <ms-badge variant="info" appearance="outline">
+        <span class="ms-icon" aria-hidden="true">filter_list</span>
+        Filtered
+      </ms-badge>
+    </div>
+    <app-showcase-code label="Badge icons" [code]="iconsSnippet" />
+  </section>
+
+  <section class="badge-section">
+    <h2>RTL mirroring</h2>
+    <div class="badge-demo-row rtl-demo" dir="rtl">
+      <span class="rtl-label">RTL context</span>
+      <ms-badge variant="success" dot>متصل</ms-badge>
+      <ms-badge variant="info" appearance="outline">
+        <span class="ms-icon" aria-hidden="true">check_circle</span>
+        موثق
+      </ms-badge>
+    </div>
+    <app-showcase-code label="Badge RTL" [code]="rtlSnippet" />
+  </section>
+</main>

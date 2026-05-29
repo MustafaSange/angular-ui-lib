@@ -1,0 +1,109 @@
+$badge-variants: info, success, warning, danger;
+
+ms-badge {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.badge {
+  --_badge-color: var(--color-text-secondary);
+  --_badge-border: var(--color-border-strong);
+  --_badge-surface: var(--color-surface-muted);
+  --_badge-text: var(--color-text-primary);
+  --_badge-fill: var(--color-text-primary);
+  --_badge-contrast: var(--color-text-inverse);
+  --_badge-dot: var(--color-text-secondary);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-4);
+  min-block-size: var(--control-height-xs);
+  max-inline-size: 100%;
+  padding-block: var(--spacing-2);
+  padding-inline: var(--spacing-8);
+  border: var(--border-width-sm) solid transparent;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-control);
+  white-space: nowrap;
+}
+
+.badge-neutral {
+  --_badge-color: var(--color-text-secondary);
+  --_badge-border: var(--color-border-strong);
+  --_badge-surface: var(--color-surface-muted);
+  --_badge-text: var(--color-text-primary);
+  --_badge-fill: var(--color-text-primary);
+  --_badge-contrast: var(--color-text-inverse);
+  --_badge-dot: var(--color-text-secondary);
+}
+
+@each $variant in $badge-variants {
+  .badge-#{$variant} {
+    --_badge-color: var(--color-#{$variant});
+    --_badge-border: var(--color-#{$variant}-border);
+    --_badge-surface: var(--color-#{$variant}-subtle);
+    --_badge-text: var(--color-#{$variant}-text);
+    --_badge-fill: color-mix(in srgb, var(--color-#{$variant}) 88%, var(--color-surface));
+    --_badge-contrast: var(--color-#{$variant}-contrast);
+    --_badge-dot: color-mix(in srgb, var(--color-#{$variant}) 88%, var(--color-text-primary));
+  }
+}
+
+.badge-soft {
+  border-color: transparent;
+  background-color: var(--_badge-surface);
+  color: var(--_badge-text);
+}
+
+.badge-solid {
+  border-color: var(--_badge-fill);
+  background-color: var(--_badge-fill);
+  color: var(--_badge-contrast);
+}
+
+.badge-outline {
+  border-color: var(--_badge-border);
+  background-color: transparent;
+  color: var(--_badge-text);
+}
+
+.badge-dot {
+  flex: 0 0 auto;
+  inline-size: var(--spacing-8);
+  block-size: var(--spacing-8);
+  border-radius: var(--radius-full);
+  background-color: var(--_badge-dot);
+}
+
+.badge > .ms-icon {
+  font-size: var(--font-size-sm);
+}
+
+@mixin dark-badge-tones {
+  .badge {
+    --_badge-border: color-mix(in srgb, var(--color-border-strong) 62%, var(--_badge-color));
+    --_badge-surface: color-mix(in srgb, var(--color-surface) 88%, var(--_badge-color));
+    --_badge-text: color-mix(in srgb, var(--color-text-primary) 78%, var(--_badge-color));
+    --_badge-fill: color-mix(in srgb, var(--color-surface-raised) 34%, var(--_badge-color));
+    --_badge-dot: color-mix(in srgb, var(--color-text-primary) 45%, var(--_badge-color));
+  }
+
+  .badge-neutral {
+    --_badge-text: var(--color-text-primary);
+    --_badge-dot: var(--color-text-secondary);
+  }
+}
+
+[data-theme='dark'] {
+  @include dark-badge-tones;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]),
+  [data-theme='system'] {
+    @include dark-badge-tones;
+  }
+}

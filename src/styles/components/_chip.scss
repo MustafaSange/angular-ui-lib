@@ -1,0 +1,165 @@
+$chip-variants: info, success, warning, danger;
+
+ms-chip {
+  display: inline-flex;
+  max-inline-size: 100%;
+  vertical-align: middle;
+}
+
+.chip {
+  --_chip-color: var(--color-text-secondary);
+  --_chip-border: var(--color-border);
+  --_chip-surface: var(--color-surface-muted);
+  --_chip-text: var(--color-text-primary);
+  --_chip-selected-surface: color-mix(in srgb, var(--color-primary) 9%, var(--color-surface));
+  --_chip-selected-border: var(--color-primary-border);
+  --_chip-selected-text: var(--color-primary-text);
+
+  display: inline-flex;
+  align-items: center;
+  max-inline-size: 100%;
+  min-block-size: var(--control-height-md);
+  border: var(--border-width-sm) solid transparent;
+  border-radius: var(--radius-full);
+  background-color: var(--_chip-surface);
+  color: var(--_chip-text);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-control);
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    opacity var(--transition-fast);
+}
+
+.chip-neutral {
+  --_chip-color: var(--color-text-secondary);
+  --_chip-border: var(--color-border);
+  --_chip-surface: var(--color-surface-muted);
+  --_chip-text: var(--color-text-primary);
+}
+
+@each $variant in $chip-variants {
+  .chip-#{$variant} {
+    --_chip-color: var(--color-#{$variant});
+    --_chip-border: var(--color-#{$variant}-border);
+    --_chip-surface: var(--color-#{$variant}-subtle);
+    --_chip-text: var(--color-#{$variant}-text);
+    --_chip-selected-surface: color-mix(
+      in srgb,
+      var(--color-#{$variant}) 10%,
+      var(--color-surface)
+    );
+    --_chip-selected-border: var(--color-#{$variant}-border);
+    --_chip-selected-text: var(--color-#{$variant}-text);
+  }
+}
+
+.chip-soft {
+  border-color: transparent;
+  background-color: var(--_chip-surface);
+  color: var(--_chip-text);
+}
+
+.chip-outline {
+  border-color: var(--_chip-border);
+  background-color: transparent;
+  color: var(--_chip-text);
+}
+
+.chip-selected {
+  border-color: var(--_chip-selected-border);
+  background-color: var(--_chip-selected-surface);
+  color: var(--_chip-selected-text);
+}
+
+.chip-disabled {
+  opacity: var(--opacity-disabled);
+  cursor: not-allowed;
+}
+
+.chip-content {
+  display: inline-flex;
+  align-items: center;
+  min-inline-size: 0;
+  gap: var(--spacing-8);
+  padding-block: var(--spacing-4);
+  padding-inline: var(--spacing-12);
+}
+
+.chip-removable .chip-content {
+  padding-inline-end: var(--spacing-4);
+}
+
+.chip-content > .ms-icon {
+  flex: 0 0 auto;
+  font-size: var(--font-size-md);
+}
+
+.chip-remove {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--control-height-sm);
+  block-size: var(--control-height-sm);
+  padding-block: 0;
+  padding-inline: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background-color: transparent;
+  color: currentColor;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+
+  &:hover:not(:disabled) {
+    background-color: color-mix(in srgb, currentColor 9%, transparent);
+  }
+
+  &:focus-visible {
+    outline: 0;
+    box-shadow: var(--control-focus-ring);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.chip-remove-icon {
+  font-size: var(--font-size-md);
+}
+
+@mixin dark-chip-tones {
+  .chip {
+    --_chip-border: color-mix(in srgb, var(--color-border-strong) 62%, var(--_chip-color));
+    --_chip-surface: color-mix(in srgb, var(--color-surface) 88%, var(--_chip-color));
+    --_chip-text: color-mix(in srgb, var(--color-text-primary) 78%, var(--_chip-color));
+    --_chip-selected-surface: color-mix(
+      in srgb,
+      var(--color-surface-raised) 78%,
+      var(--_chip-color)
+    );
+    --_chip-selected-border: color-mix(in srgb, var(--color-border-strong) 50%, var(--_chip-color));
+    --_chip-selected-text: color-mix(in srgb, var(--color-text-primary) 78%, var(--_chip-color));
+  }
+
+  .chip-neutral {
+    --_chip-text: var(--color-text-primary);
+    --_chip-selected-text: var(--color-primary-text);
+  }
+}
+
+[data-theme='dark'] {
+  @include dark-chip-tones;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]),
+  [data-theme='system'] {
+    @include dark-chip-tones;
+  }
+}
