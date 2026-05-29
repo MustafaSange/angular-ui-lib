@@ -42,7 +42,7 @@ Use filled rendering for selected or emphasized icon states:
 
 The loading infrastructure lives in:
 
-`src/app/core/material-icons`
+`src/app/shared/services/material-icons`
 
 It includes:
 

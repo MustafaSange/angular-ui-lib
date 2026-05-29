@@ -165,7 +165,7 @@ ms-alert {
   margin-block-start: var(--spacing-4);
 }
 
-@media #{map.get(breakpoints.$media-aliases, lt-sm)} {
+@media #{map.get(breakpoints.$media-aliases, xs)} {
   .ms-toast-region {
     inset-inline: var(--spacing-8);
     inline-size: auto;
