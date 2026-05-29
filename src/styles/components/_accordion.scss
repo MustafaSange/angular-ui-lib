@@ -8,7 +8,18 @@ ms-accordion {
 }
 
 .accordion-item {
+  position: relative;
   border-block-end: var(--border-width-sm) solid var(--color-border);
+
+  &::before {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    inline-size: var(--border-width-md);
+    background-color: transparent;
+    content: '';
+    transition: background-color var(--transition-fast);
+  }
 }
 
 .accordion-heading {
@@ -57,7 +68,24 @@ ms-accordion {
 .accordion-icon {
   flex: 0 0 auto;
   font-size: var(--font-size-xl);
-  transition: transform var(--transition-fast);
+  transition:
+    color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.accordion-item-expanded {
+  &::before {
+    background-color: var(--color-primary);
+  }
+
+  .accordion-trigger {
+    background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
+    color: var(--color-primary-text);
+
+    &:hover:not(:disabled) {
+      background-color: color-mix(in srgb, var(--color-primary) 14%, transparent);
+    }
+  }
 }
 
 .accordion-item-expanded .accordion-icon {

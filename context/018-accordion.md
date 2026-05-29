@@ -125,6 +125,8 @@ Feature styles live in `src/styles/components/_accordion.scss` and are forwarded
 - Use existing surface, text, border, spacing, typography, radius, motion, and focus-ring tokens.
 - Use logical block/inline properties so the accordion mirrors correctly in both `dir="ltr"` and
   `dir="rtl"`.
+- Visually distinguish expanded items with a token-based primary accent rail on the logical inline
+  start edge, a subtle primary-tinted trigger surface, and primary-colored trigger text/icon.
 - Render the disclosure icon with `.ms-icon`.
 - Keep styles reusable across future projects.
 
@@ -160,5 +162,6 @@ Each visual example renders a matching hand-authored, full standalone Angular ex
 - Generated ARIA relationships connect triggers and panels.
 - Styles are token-based, use logical properties, and are forwarded through the component styles
   index.
+- Expanded items have a visible active treatment that mirrors correctly in RTL layouts.
 - The `/accordion` route and home card expose copyable demonstrations of core behavior.
 - No tests are added or updated for this feature.
