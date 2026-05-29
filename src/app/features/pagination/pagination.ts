@@ -63,7 +63,6 @@ export class Pagination {
     totalItems: 84,
     pageSize: 12,
     ariaLabel: 'ترقيم الصفحات',
-    alignment: 'start',
   });
   protected readonly basicMeta = computed(() => getPaginationMeta(this.basicState()));
   protected readonly denseMeta = computed(() => getPaginationMeta(this.denseState()));
@@ -224,7 +223,6 @@ export class PaginationRtlExample {
     totalItems: 84,
     pageSize: 12,
     ariaLabel: 'ترقيم الصفحات',
-    alignment: 'start',
   });
 }`;
 }
