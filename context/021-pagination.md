@@ -157,6 +157,8 @@ Feature styles live in `src/styles/components/_pagination.scss` and are forwarde
   `dir="rtl"`.
 - Keep page controls stable in size so the layout does not shift between page ranges.
 - Use `.ms-icon` for previous and next symbols.
+- Flip previous and next icon glyphs in RTL while leaving alignment controlled by
+  `PaginationState.alignment`.
 - Keep styles reusable across future projects.
 
 ## Accessibility
@@ -179,7 +181,7 @@ Add a dedicated `/pagination` page and home card demonstrating:
 - disabled pagination
 - summary off
 - start, center, and end alignment
-- a scoped RTL example showing control mirroring
+- a scoped RTL layout example that uses the default alignment and Arabic accessible label
 - parent-derived metadata from `getPaginationMeta`
 
 Each visual example renders a matching hand-authored, full standalone Angular example through
@@ -209,6 +211,6 @@ Each visual example renders a matching hand-authored, full standalone Angular ex
   `getPaginationMeta`.
 - Styles are token-based, use logical properties, and are forwarded through the component styles
   index.
-- Previous and next controls mirror correctly in RTL layouts.
+- Previous and next icon glyphs mirror correctly in RTL layouts.
 - The `/pagination` route and home card expose copyable demonstrations of core behavior.
 - No tests are added or updated for this feature.
