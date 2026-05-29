@@ -3,8 +3,9 @@
 ## Goal
 
 Create a reusable tabs component for switching between related content panels. Tabs support simple
-string labels through an input and richer projected labels through a named title template while
-keeping panel content fully consumer-owned through projection.
+string labels through an input, richer projected labels through a named title template, and
+overflowing tab lists with horizontal scroll controls while keeping panel content fully
+consumer-owned through projection.
 
 ## Public API
 
@@ -35,7 +36,7 @@ Defaults:
 - tabs without a projected title or `title` input render an empty tab label
 
 Shared reusable components use the `ms-` selector prefix. Internal styling hooks are `.tabs`,
-`.tab-list`, `.tab`, and `.tab-panel`.
+`.tab-header`, `.tab-list`, `.tab`, `.tab-scroll-button`, and `.tab-panel`.
 
 ## Desired Usage
 
@@ -54,9 +55,7 @@ import { TabComponent, TabTitleDirective, TabsComponent } from './shared/compone
       </ms-tab>
 
       <ms-tab>
-        <ng-template msTabTitle>
-          Billing <span class="badge">3</span>
-        </ng-template>
+        <ng-template msTabTitle> Billing <span class="badge">3</span> </ng-template>
 
         <p>Billing content.</p>
       </ms-tab>
@@ -77,8 +76,9 @@ The implementation lives in `src/app/shared/components/tabs`:
 - `TabTitleDirective` marks a projected `ng-template` as the tab label template
 - `index.ts` exposes the public API
 
-`ms-tabs` renders a button-based tab list followed by the active tab panel. Projected `ms-tab`
-instances are queried as children and do not render their own wrapper markup.
+`ms-tabs` renders a button-based tab list followed by the active tab panel. When the tab list
+overflows its available inline space, previous/next scroll buttons render beside the tab list.
+Projected `ms-tab` instances are queried as children and do not render their own wrapper markup.
 
 ## Behavior
 
@@ -87,8 +87,17 @@ instances are queried as children and do not render their own wrapper markup.
 - If the projected tab list changes and the selected index no longer exists, reset selection to the
   first tab.
 - Render projected `msTabTitle` label content when present; otherwise render the `title` input.
+- Keep tab labels in a single horizontal row.
+- If the tab list overflows, allow native horizontal scrolling and render logical backward/forward
+  scroll buttons.
+- Hide the backward scroll button at the start of the scroll range and hide the forward scroll
+  button at the end of the scroll range.
+- Clicking a scroll button scrolls the tab list by a partial viewport width.
+- Selecting a tab by click or keyboard interaction scrolls the selected tab into view.
 - `ArrowRight` and `ArrowLeft` move selection and focus between tabs.
 - In right-to-left layout, left and right arrow behavior mirrors logical inline direction.
+- In right-to-left layout, scroll button icons mirror visually while scroll behavior follows logical
+  inline direction.
 - `Home` selects and focuses the first tab.
 - `End` selects and focuses the last tab.
 
@@ -109,6 +118,9 @@ Feature styles live in `src/styles/components/_tabs.scss` and are forwarded from
 - Use logical block/inline properties so the tab layout mirrors correctly in both `dir="ltr"` and
   `dir="rtl"`.
 - Keep the active indicator on the logical block end edge of the tab list.
+- Use `min-inline-size: 0` and constrained inline sizing so overflowing tab lists scroll within
+  their parent container rather than forcing the parent wider.
+- Hide native scrollbars for the tab list while preserving native horizontal scroll behavior.
 - Keep styles reusable across future projects.
 
 ## Accessibility
@@ -122,6 +134,8 @@ Feature styles live in `src/styles/components/_tabs.scss` and are forwarded from
 - Use roving `tabindex` so the selected tab is in the tab order and inactive tabs are reachable with
   arrow keys.
 - Move focus when selection changes through keyboard interaction.
+- Scroll buttons are native buttons with accessible labels and only render when that direction can
+  scroll.
 
 ## Showcase
 
@@ -129,6 +143,7 @@ Add a dedicated `/tabs` page and home card demonstrating:
 
 - simple title-input tabs
 - projected rich tab titles with `msTabTitle`
+- overflowing tabs with scroll controls and a constrained demo width
 - keyboard navigation, including a scoped RTL example
 
 Each visual example renders a matching hand-authored, full standalone Angular example through
@@ -140,6 +155,8 @@ Each visual example renders a matching hand-authored, full standalone Angular ex
 - The primary usage example works as documented.
 - Simple `title` labels and projected `msTabTitle` labels both render.
 - Clicking and keyboard navigation update the selected panel.
+- Overflowing tab lists remain single-row, scroll horizontally, and expose scroll controls only for
+  directions that can move.
 - Generated ARIA relationships connect tabs and panels.
 - Styles are token-based, use logical properties, and are forwarded through the component styles
   index.

@@ -71,6 +71,10 @@ h2 {
   background-color: var(--color-surface-muted);
 }
 
+.narrow-demo {
+  max-inline-size: 36rem;
+}
+
 .tabs-demo + app-showcase-code {
   display: block;
   margin-block-start: var(--spacing-16);

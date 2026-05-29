@@ -56,7 +56,8 @@ Icon font loading is non-critical presentation setup. The environment initialize
 stylesheet insertion without awaiting network completion, so initial application startup is not
 blocked by the Google Fonts request.
 
-The initial loaded icon subset supports shared feedback, modal controls, button showcases, and the search field showcase.
+The initial loaded icon subset supports shared feedback, modal controls, button showcases, tabs
+scroll controls, and the search field showcase.
 
 ## Behavior
 
@@ -103,6 +104,7 @@ Update existing component showcase pages rather than adding a standalone icon pa
 - buttons demonstrate symbol-based icon controls and outlined versus filled `favorite` rendering
 - feedback demonstrates Material Symbols inside alerts and toasts
 - modal close controls render the `close` symbol
+- tabs overflow scroll controls render the `chevron_left` and `chevron_right` symbols
 - the search field demonstrates a passive `search` symbol prefix
 
 Showcase snippets should use `ShowcaseCode` from `src/app/shared/components/showcase-code`.
