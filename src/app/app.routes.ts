@@ -53,4 +53,8 @@ export const routes: Routes = [
     path: 'pagination',
     loadComponent: () => import('./features/pagination/pagination').then((m) => m.Pagination),
   },
+  {
+    path: 'tables',
+    loadComponent: () => import('./features/tables/tables').then((m) => m.Tables),
+  },
 ];

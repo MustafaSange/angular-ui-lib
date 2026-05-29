@@ -1,0 +1,225 @@
+<main class="tables-page">
+  <header class="tables-header">
+    <a class="btn btn-ghost back-link" routerLink="/">← Back to home</a>
+    <p class="eyebrow">Components</p>
+    <h1>Tables</h1>
+    <p class="description">
+      Native table styling for structured data with responsive overflow, density, and state
+      patterns.
+    </p>
+  </header>
+
+  <section class="tables-section">
+    <h2>Basic table</h2>
+    <div class="table-wrapper">
+      <table class="table demo-wide-table">
+        <caption>
+          Recent invoices
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col" class="text-start">Invoice</th>
+            <th scope="col" class="text-start">Customer</th>
+            <th scope="col" class="text-start">Status</th>
+            <th scope="col" class="text-end">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-start">INV-2048</td>
+            <td class="text-start">Northwind Studio</td>
+            <td class="text-start">Paid</td>
+            <td class="text-end">$4,200.00</td>
+          </tr>
+          <tr>
+            <td class="text-start">INV-2049</td>
+            <td class="text-start">Acme Supply</td>
+            <td class="text-start">Pending</td>
+            <td class="text-end">$1,180.00</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <app-showcase-code label="Basic table" [code]="snippets.basic" />
+  </section>
+
+  <section class="tables-section">
+    <h2>Compact density</h2>
+    <div class="table-wrapper">
+      <table class="table table-compact">
+        <caption>
+          Compact queue
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col" class="text-start">Task</th>
+            <th scope="col" class="text-start">Owner</th>
+            <th scope="col" class="text-start">Due</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-start">Review copy</td>
+            <td class="text-start">Mina</td>
+            <td class="text-start">Today</td>
+          </tr>
+          <tr>
+            <td class="text-start">Publish notes</td>
+            <td class="text-start">Omar</td>
+            <td class="text-start">Tomorrow</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <app-showcase-code label="Compact table" [code]="snippets.compact" />
+  </section>
+
+  <section class="tables-section">
+    <h2>Striped and hover rows</h2>
+    <div class="table-wrapper">
+      <table class="table table-striped table-hover">
+        <caption>
+          Team availability
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col" class="text-start">Name</th>
+            <th scope="col" class="text-start">Role</th>
+            <th scope="col" class="text-start">Availability</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-start">Layla</td>
+            <td class="text-start">Design</td>
+            <td class="text-start">Available</td>
+          </tr>
+          <tr>
+            <td class="text-start">Samir</td>
+            <td class="text-start">Engineering</td>
+            <td class="text-start">In review</td>
+          </tr>
+          <tr>
+            <td class="text-start">Nadia</td>
+            <td class="text-start">Research</td>
+            <td class="text-start">Focused</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <app-showcase-code label="Striped hover table" [code]="snippets.stripedHover" />
+  </section>
+
+  <section class="tables-section">
+    <h2>Numeric alignment</h2>
+    <div class="table-wrapper">
+      <table class="table">
+        <caption>
+          Plan usage
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col" class="text-start">Plan</th>
+            <th scope="col" class="text-end">Seats</th>
+            <th scope="col" class="text-end">Usage</th>
+            <th scope="col" class="text-end">Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-start">Starter</td>
+            <td class="text-end">12</td>
+            <td class="text-end">68%</td>
+            <td class="text-end">$240</td>
+          </tr>
+          <tr>
+            <td class="text-start">Business</td>
+            <td class="text-end">48</td>
+            <td class="text-end">81%</td>
+            <td class="text-end">$1,920</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <app-showcase-code label="Numeric table" [code]="snippets.numeric" />
+  </section>
+
+  <section class="tables-section">
+    <h2>Empty state</h2>
+    <div class="table-wrapper">
+      <table class="table">
+        <caption>
+          Invitations
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col" class="text-start">Email</th>
+            <th scope="col" class="text-start">Role</th>
+            <th scope="col" class="text-start">Sent</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table-empty" colspan="3">No invitations have been sent.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <app-showcase-code label="Empty table" [code]="snippets.empty" />
+  </section>
+
+  <section class="tables-section">
+    <h2>Loading state</h2>
+    <div class="table-wrapper">
+      <table class="table">
+        <caption>
+          Sync history
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col" class="text-start">Source</th>
+            <th scope="col" class="text-start">Status</th>
+            <th scope="col" class="text-start">Updated</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table-loading" colspan="3">Loading sync history...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <app-showcase-code label="Loading table" [code]="snippets.loading" />
+  </section>
+
+  <section class="tables-section">
+    <h2>RTL table</h2>
+    <div class="table-wrapper" dir="rtl">
+      <table class="table">
+        <caption>
+          الفواتير الأخيرة
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col" class="text-start">الفاتورة</th>
+            <th scope="col" class="text-start">العميل</th>
+            <th scope="col" class="text-end">المبلغ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-start">INV-2050</td>
+            <td class="text-start">استوديو الدوحة</td>
+            <td class="text-end">ر.ق ٣٬٤٠٠</td>
+          </tr>
+          <tr>
+            <td class="text-start">INV-2051</td>
+            <td class="text-start">شركة الخليج</td>
+            <td class="text-end">ر.ق ١٬٢٥٠</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <app-showcase-code label="RTL table" [code]="snippets.rtl" />
+  </section>
+</main>
