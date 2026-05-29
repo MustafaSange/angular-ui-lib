@@ -24,6 +24,8 @@ Use modern Angular patterns:
   - Use logical CSS properties and logical placement terms such as `inline-start`, `inline-end`, `block-start`, and `block-end` so component layouts mirror in both `dir="ltr"` and `dir="rtl"`.
   - Treat intentionally physical utilities such as `.text-left`, `.text-right`, `.ml-*`, and `.mr-*` as explicit consumer choices; reusable component layout should prefer logical equivalents.
   - Keep `.ms-icon { direction: ltr; }` as an intentional exception required for Material Symbols ligature rendering.
+  - Keep public component and directive classes focused on Angular behavior. When a shared feature exposes reusable public types, config interfaces, state/meta interfaces, or helper functions, place them in dedicated sibling files such as `*-types.ts`, `*-config.ts`, `*-state.ts`, or `*-meta.ts`, and re-export them from the feature folder `index.ts`.
+  - Do not create extra type files for trivial components that only export a component/directive class and have no meaningful reusable public types or helpers.
 - For new showcase pages under `src/app/features/`, include copyable examples using
   `ShowcaseCode` from `src/app/shared/components/showcase-code`.
   - Keep snippets hand-authored in the feature component `.ts` file.

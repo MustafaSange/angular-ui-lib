@@ -87,6 +87,7 @@ The implementation lives in `src/app/shared/components/chip`:
   behavior
 - `ChipRemoveDirective` marks the projected remove button and coordinates remove activation with
   the nearest chip
+- `chip-types.ts` defines `ChipVariant` and `ChipAppearance`
 - `index.ts` exposes the public API
 
 `ms-chip` renders host-level inline markup. Consumers own the projected label text and any
