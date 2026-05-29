@@ -1,0 +1,17 @@
+<span
+  class="chip"
+  [class.chip-neutral]="variant() === 'neutral'"
+  [class.chip-info]="variant() === 'info'"
+  [class.chip-success]="variant() === 'success'"
+  [class.chip-warning]="variant() === 'warning'"
+  [class.chip-danger]="variant() === 'danger'"
+  [class.chip-soft]="appearance() === 'soft'"
+  [class.chip-outline]="appearance() === 'outline'"
+  [class.chip-selected]="selected()"
+  [class.chip-disabled]="disabled()"
+  [class.chip-removable]="removable()"
+>
+  <span class="chip-content">
+    <ng-content />
+  </span>
+</span>

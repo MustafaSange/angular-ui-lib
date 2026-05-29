@@ -2,6 +2,7 @@ export const MATERIAL_ICONS = [
   'add',
   'archive',
   'check',
+  'check_circle',
   'chevron_left',
   'chevron_right',
   'close',

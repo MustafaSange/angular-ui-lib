@@ -41,4 +41,12 @@ export const routes: Routes = [
     path: 'accordion',
     loadComponent: () => import('./features/accordion/accordion').then((m) => m.Accordion),
   },
+  {
+    path: 'badge',
+    loadComponent: () => import('./features/badge/badge').then((m) => m.Badge),
+  },
+  {
+    path: 'chip',
+    loadComponent: () => import('./features/chip/chip').then((m) => m.Chip),
+  },
 ];

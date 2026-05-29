@@ -1,0 +1,85 @@
+<main class="chip-page">
+  <header class="chip-header">
+    <a class="btn btn-ghost back-link" routerLink="/">← Back to home</a>
+    <p class="eyebrow">Components</p>
+    <h1>Chip</h1>
+    <p class="description">
+      Compact labels, selected tokens, and removable values with projected content.
+    </p>
+  </header>
+
+  <section class="chip-section">
+    <h2>Static chips</h2>
+    <div class="chip-demo-row">
+      <ms-chip>Design system</ms-chip>
+      <ms-chip variant="info">Documentation</ms-chip>
+      <ms-chip variant="success">
+        <span class="ms-icon" aria-hidden="true">check_circle</span>
+        Published
+      </ms-chip>
+    </div>
+    <app-showcase-code label="Static chips" [code]="staticSnippet" />
+  </section>
+
+  <section class="chip-section">
+    <h2>Variants</h2>
+    <div class="chip-demo-row">
+      <ms-chip>Neutral</ms-chip>
+      <ms-chip variant="info">Info</ms-chip>
+      <ms-chip variant="success">Success</ms-chip>
+      <ms-chip variant="warning">Warning</ms-chip>
+      <ms-chip variant="danger">Danger</ms-chip>
+    </div>
+    <app-showcase-code label="Chip variants" [code]="variantsSnippet" />
+  </section>
+
+  <section class="chip-section">
+    <h2>Appearances and states</h2>
+    <div class="chip-demo-row">
+      <ms-chip variant="info" selected>Selected</ms-chip>
+      <ms-chip variant="success" appearance="outline">Outline</ms-chip>
+      <ms-chip variant="warning" disabled>Disabled</ms-chip>
+    </div>
+    <app-showcase-code label="Chip states" [code]="statesSnippet" />
+  </section>
+
+  <section class="chip-section">
+    <h2>Removable chips</h2>
+    <div class="chip-demo-row">
+      @for (chip of removableChips(); track chip) {
+        <ms-chip removable (removed)="removeChip(chip)">
+          {{ chip }}
+          <button type="button" msChipRemove [attr.aria-label]="'Remove ' + chip"></button>
+        </ms-chip>
+      }
+
+      @if (!removableChips().length) {
+        <button class="btn btn-secondary btn-sm" type="button" (click)="restoreChips()">
+          Restore chips
+        </button>
+      }
+
+      <ms-chip removable disabled>
+        Locked
+        <button type="button" msChipRemove aria-label="Remove Locked"></button>
+      </ms-chip>
+    </div>
+    <app-showcase-code label="Removable chips" [code]="removableSnippet" />
+  </section>
+
+  <section class="chip-section">
+    <h2>RTL mirroring</h2>
+    <div class="chip-demo-row rtl-demo" dir="rtl">
+      <span class="rtl-label">RTL context</span>
+      <ms-chip variant="success">
+        <span class="ms-icon" aria-hidden="true">check_circle</span>
+        منشور
+      </ms-chip>
+      <ms-chip removable>
+        تصميم
+        <button type="button" msChipRemove aria-label="Remove تصميم"></button>
+      </ms-chip>
+    </div>
+    <app-showcase-code label="Chip RTL" [code]="rtlSnippet" />
+  </section>
+</main>
