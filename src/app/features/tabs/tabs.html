@@ -11,9 +11,7 @@
 
   <section class="tabs-section">
     <h2>Simple title tabs</h2>
-    <p class="section-copy">
-      Use the `title` input when each tab only needs a short text label.
-    </p>
+    <p class="section-copy">Use the `title` input when each tab only needs a short text label.</p>
     <div class="tabs-demo">
       <ms-tabs>
         <ms-tab title="Overview">
@@ -34,9 +32,7 @@
 
   <section class="tabs-section">
     <h2>Projected tab titles</h2>
-    <p class="section-copy">
-      Use `msTabTitle` when a tab label needs compact supporting markup.
-    </p>
+    <p class="section-copy">Use `msTabTitle` when a tab label needs compact supporting markup.</p>
     <div class="tabs-demo">
       <ms-tabs>
         <ms-tab title="Profile">
@@ -44,9 +40,7 @@
         </ms-tab>
 
         <ms-tab>
-          <ng-template msTabTitle>
-            Billing <span class="badge">3</span>
-          </ng-template>
+          <ng-template msTabTitle> Billing <span class="badge">3</span> </ng-template>
 
           <p>Three invoices need attention before the next renewal.</p>
         </ms-tab>
@@ -61,6 +55,45 @@
       </ms-tabs>
     </div>
     <app-showcase-code label="Projected title tabs" [code]="projectedTitleSnippet" />
+  </section>
+
+  <section class="tabs-section">
+    <h2>Overflow tabs</h2>
+    <p class="section-copy">
+      When labels exceed the available inline space, scroll controls appear beside the tab list.
+    </p>
+    <div class="tabs-demo narrow-demo">
+      <ms-tabs>
+        <ms-tab title="Overview">
+          <p>Track open work, recent decisions, and ownership in one place.</p>
+        </ms-tab>
+
+        <ms-tab title="Roadmap">
+          <p>Review planned milestones and upcoming delivery windows.</p>
+        </ms-tab>
+
+        <ms-tab title="Activity">
+          <p>Review imports, approvals, and release events from the last week.</p>
+        </ms-tab>
+
+        <ms-tab title="Approvals">
+          <p>Confirm pending approvals before sharing the release.</p>
+        </ms-tab>
+
+        <ms-tab title="Permissions">
+          <p>Audit access levels for editors, reviewers, and administrators.</p>
+        </ms-tab>
+
+        <ms-tab title="Billing">
+          <p>Check usage, invoices, and renewal details.</p>
+        </ms-tab>
+
+        <ms-tab title="Settings">
+          <p>Adjust notifications and workspace defaults for this project.</p>
+        </ms-tab>
+      </ms-tabs>
+    </div>
+    <app-showcase-code label="Overflow tabs" [code]="overflowSnippet" />
   </section>
 
   <section class="tabs-section">

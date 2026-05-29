@@ -72,6 +72,48 @@ import { TabComponent, TabTitleDirective, TabsComponent } from './shared/compone
 })
 export class ProjectedTitleTabsExample {}`;
 
+  protected readonly overflowSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import { TabComponent, TabsComponent } from './shared/components/tabs';
+
+@Component({
+  selector: 'app-overflow-tabs-example',
+  imports: [TabsComponent, TabComponent],
+  template: \`
+    <ms-tabs>
+      <ms-tab title="Overview">
+        <p>Track open work, recent decisions, and ownership in one place.</p>
+      </ms-tab>
+
+      <ms-tab title="Roadmap">
+        <p>Review planned milestones and upcoming delivery windows.</p>
+      </ms-tab>
+
+      <ms-tab title="Activity">
+        <p>Review imports, approvals, and release events from the last week.</p>
+      </ms-tab>
+
+      <ms-tab title="Approvals">
+        <p>Confirm pending approvals before sharing the release.</p>
+      </ms-tab>
+
+      <ms-tab title="Permissions">
+        <p>Audit access levels for editors, reviewers, and administrators.</p>
+      </ms-tab>
+
+      <ms-tab title="Billing">
+        <p>Check usage, invoices, and renewal details.</p>
+      </ms-tab>
+
+      <ms-tab title="Settings">
+        <p>Adjust notifications and workspace defaults for this project.</p>
+      </ms-tab>
+    </ms-tabs>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class OverflowTabsExample {}`;
+
   protected readonly keyboardSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { TabComponent, TabsComponent } from './shared/components/tabs';

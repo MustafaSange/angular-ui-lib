@@ -1,24 +1,48 @@
 <div class="tabs">
-  <div class="tab-list" role="tablist">
-    @for (tab of tabs(); track tab; let index = $index) {
+  <div class="tab-header">
+    @if (hasOverflow() && canScrollBackward()) {
       <button
-        #tabButton
-        class="tab"
+        class="tab-scroll-button"
         type="button"
-        role="tab"
-        [id]="tabId(index)"
-        [class.tab-active]="selectedIndex() === index"
-        [attr.aria-controls]="panelId(index)"
-        [attr.aria-selected]="selectedIndex() === index"
-        [attr.tabindex]="selectedIndex() === index ? 0 : -1"
-        (click)="select(index)"
-        (keydown)="handleKeydown($event, index)"
+        aria-label="Scroll tabs backward"
+        (click)="scrollTabs('backward')"
       >
-        @if (tab.titleTemplate(); as titleTemplate) {
-          <ng-container [ngTemplateOutlet]="titleTemplate.template" />
-        } @else {
-          {{ tab.title() }}
-        }
+        <span class="ms-icon" aria-hidden="true">chevron_left</span>
+      </button>
+    }
+
+    <div #tabList class="tab-list" role="tablist" (scroll)="updateScrollState()">
+      @for (tab of tabs(); track tab; let index = $index) {
+        <button
+          #tabButton
+          class="tab"
+          type="button"
+          role="tab"
+          [id]="tabId(index)"
+          [class.tab-active]="selectedIndex() === index"
+          [attr.aria-controls]="panelId(index)"
+          [attr.aria-selected]="selectedIndex() === index"
+          [attr.tabindex]="selectedIndex() === index ? 0 : -1"
+          (click)="select(index)"
+          (keydown)="handleKeydown($event, index)"
+        >
+          @if (tab.titleTemplate(); as titleTemplate) {
+            <ng-container [ngTemplateOutlet]="titleTemplate.template" />
+          } @else {
+            {{ tab.title() }}
+          }
+        </button>
+      }
+    </div>
+
+    @if (hasOverflow() && canScrollForward()) {
+      <button
+        class="tab-scroll-button"
+        type="button"
+        aria-label="Scroll tabs forward"
+        (click)="scrollTabs('forward')"
+      >
+        <span class="ms-icon" aria-hidden="true">chevron_right</span>
       </button>
     }
   </div>

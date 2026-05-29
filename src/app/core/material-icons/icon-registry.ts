@@ -2,6 +2,8 @@ export const MATERIAL_ICONS = [
   'add',
   'archive',
   'check',
+  'chevron_left',
+  'chevron_right',
   'close',
   'delete',
   'edit',

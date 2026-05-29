@@ -5,17 +5,35 @@ ms-tabs {
 .tabs {
   display: grid;
   gap: var(--spacing-16);
+  min-inline-size: 0;
+}
+
+.tab-header {
+  display: flex;
+  align-items: stretch;
+  inline-size: 100%;
+  min-inline-size: 0;
+  border-block-end: var(--border-width-sm) solid var(--color-border);
 }
 
 .tab-list {
   display: flex;
-  flex-wrap: wrap;
+  flex: 1 1 auto;
   gap: var(--spacing-4);
-  border-block-end: var(--border-width-sm) solid var(--color-border);
+  inline-size: 100%;
+  min-inline-size: 0;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .tab {
   display: inline-flex;
+  flex: 0 0 auto;
   align-items: center;
   justify-content: center;
   min-block-size: var(--control-height-md);
@@ -47,6 +65,38 @@ ms-tabs {
 .tab-active {
   border-block-end-color: var(--color-primary);
   color: var(--color-primary);
+}
+
+.tab-scroll-button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--control-height-md);
+  min-block-size: var(--control-height-md);
+  padding: 0;
+  border: 0;
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    opacity var(--transition-fast);
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-surface-muted);
+    color: var(--color-text-primary);
+  }
+
+  &:focus-visible {
+    outline: 0;
+    box-shadow: var(--control-focus-ring);
+  }
+}
+
+ms-tabs:dir(rtl) .tab-scroll-button .ms-icon {
+  transform: scaleX(-1);
 }
 
 .tab-panel {
