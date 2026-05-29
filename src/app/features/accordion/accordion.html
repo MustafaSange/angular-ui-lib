@@ -1,0 +1,88 @@
+<main class="accordion-page">
+  <header class="accordion-header">
+    <a class="btn btn-ghost back-link" routerLink="/">← Back to home</a>
+    <p class="eyebrow">Components</p>
+    <h1>Accordion</h1>
+    <p class="description">
+      Disclosure groups for related content with projected panels, optional rich titles, disabled
+      items, and keyboard navigation.
+    </p>
+  </header>
+
+  <section class="accordion-section">
+    <h2>Single-open accordion</h2>
+    <p class="section-copy">
+      Use the default mode when expanding one item should close the previously open item.
+    </p>
+    <div class="accordion-demo">
+      <ms-accordion>
+        <ms-accordion-item title="Account settings" [expanded]="true">
+          <p>Manage profile details, sign-in methods, and notification preferences.</p>
+        </ms-accordion-item>
+
+        <ms-accordion-item title="Workspace access">
+          <p>Review member roles, pending invites, and approval requirements.</p>
+        </ms-accordion-item>
+
+        <ms-accordion-item title="Billing">
+          <p>Update payment methods, invoices, and renewal settings.</p>
+        </ms-accordion-item>
+      </ms-accordion>
+    </div>
+    <app-showcase-code label="Single-open accordion" [code]="basicSnippet" />
+  </section>
+
+  <section class="accordion-section">
+    <h2>Multiple panels and rich titles</h2>
+    <p class="section-copy">
+      Enable `multiple` when sections can stay open together and use `msAccordionTitle` for compact
+      label markup.
+    </p>
+    <div class="accordion-demo">
+      <ms-accordion [multiple]="true">
+        <ms-accordion-item [expanded]="true">
+          <ng-template msAccordionTitle> Deployment <span class="badge">Ready</span> </ng-template>
+
+          <p>The release candidate passed validation and is ready to promote.</p>
+        </ms-accordion-item>
+
+        <ms-accordion-item [expanded]="true">
+          <ng-template msAccordionTitle>
+            Review <span class="status-dot" aria-hidden="true"></span>
+          </ng-template>
+
+          <p>Two reviewers have approved the latest design token updates.</p>
+        </ms-accordion-item>
+
+        <ms-accordion-item title="Archive" [disabled]="true">
+          <p>This section is unavailable until the active release is complete.</p>
+        </ms-accordion-item>
+      </ms-accordion>
+    </div>
+    <app-showcase-code label="Multiple accordion" [code]="multipleSnippet" />
+  </section>
+
+  <section class="accordion-section">
+    <h2>Keyboard and RTL behavior</h2>
+    <p class="section-copy">
+      Focus a header and use arrow keys, Home, or End. This example scopes direction to RTL.
+    </p>
+    <div class="accordion-demo rtl-demo" dir="rtl">
+      <span class="rtl-label">RTL context</span>
+      <ms-accordion>
+        <ms-accordion-item title="First">
+          <p>Use arrow keys to move between accordion headers in this RTL container.</p>
+        </ms-accordion-item>
+
+        <ms-accordion-item title="Second">
+          <p>Left and right arrows mirror logical inline direction.</p>
+        </ms-accordion-item>
+
+        <ms-accordion-item title="Third">
+          <p>Home focuses the first header and End focuses the last header.</p>
+        </ms-accordion-item>
+      </ms-accordion>
+    </div>
+    <app-showcase-code label="Keyboard accordion" [code]="keyboardSnippet" />
+  </section>
+</main>

@@ -37,4 +37,8 @@ export const routes: Routes = [
     path: 'tabs',
     loadComponent: () => import('./features/tabs/tabs').then((m) => m.Tabs),
   },
+  {
+    path: 'accordion',
+    loadComponent: () => import('./features/accordion/accordion').then((m) => m.Accordion),
+  },
 ];

@@ -1,0 +1,40 @@
+<div class="accordion">
+  @for (item of items(); track item; let index = $index) {
+    <section class="accordion-item" [class.accordion-item-expanded]="item.expanded()">
+      <h3 class="accordion-heading">
+        <button
+          #accordionButton
+          class="accordion-trigger"
+          type="button"
+          [id]="headerId(index)"
+          [disabled]="item.disabled()"
+          [attr.aria-controls]="panelId(index)"
+          [attr.aria-expanded]="item.expanded()"
+          (click)="toggle(index)"
+          (keydown)="handleKeydown($event, index)"
+        >
+          <span class="accordion-title">
+            @if (item.titleTemplate(); as titleTemplate) {
+              <ng-container [ngTemplateOutlet]="titleTemplate.template" />
+            } @else {
+              {{ item.title() }}
+            }
+          </span>
+
+          <span class="accordion-icon ms-icon" aria-hidden="true">expand_more</span>
+        </button>
+      </h3>
+
+      @if (item.expanded()) {
+        <div
+          class="accordion-panel"
+          role="region"
+          [id]="panelId(index)"
+          [attr.aria-labelledby]="headerId(index)"
+        >
+          <ng-container [ngTemplateOutlet]="item.content()" />
+        </div>
+      }
+    </section>
+  }
+</div>
