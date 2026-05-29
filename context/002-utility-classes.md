@@ -44,7 +44,7 @@ Create display utilities:
 - .d-inline-flex
 - .d-grid
 - .d-none
-- Generate alias-based responsive display variants with `.{alias}-d-{value}` class names, such as `.sm-d-flex`, `.lt-md-d-none`, and `.gt-lg-d-grid`
+- Generate alias-based responsive display variants with `.{alias}-d-{value}` class names, such as `.sm-d-flex`, `.md-d-none`, and `.xl-d-grid`
 
 ### \_flex.scss
 
@@ -88,8 +88,9 @@ Create margin and padding utilities:
 - `.m-auto`, `.mt-auto`, `.mr-auto`, `.mb-auto`, `.ml-auto`, `.ms-auto`, `.me-auto`, `.mx-auto`, `.my-auto`
 - `.p-*`, `.pt-*`, `.pr-*`, `.pb-*`, `.pl-*`, `.ps-*`, `.pe-*`, `.px-*`, `.py-*`
 - Use the spacing scale: `0`, `2`, `4`, `8`, `12`, `16`, `20`, `24`, `28`, `32`, `36`, `40`, `48`
-- Generate alias-based responsive spacing variants with `.{alias}-{utility}-{value}` class names, such as `.sm-p-12`, `.lt-lg-px-16`, and `.gt-md-my-auto`
-- Support exact-range aliases `xs`, `sm`, `md`, `lg`, `xl`; less-than aliases `lt-sm`, `lt-md`, `lt-lg`, `lt-xl`; and greater-than aliases `gt-xs`, `gt-sm`, `gt-md`, `gt-lg`
+- Generate alias-based responsive spacing variants with `.{alias}-{utility}-{value}` class names, such as `.sm-p-12`, `.lg-px-16`, and `.xl-my-auto`
+- Generate utility classes only for exact-range aliases `xs`, `sm`, `md`, `lg`, and `xl`.
+- Keep threshold aliases `lt-sm`, `lt-md`, `lt-lg`, `lt-xl`, `gt-xs`, `gt-sm`, `gt-md`, and `gt-lg` in a separate Sass map for future opt-in use; do not include them in utility generation by default.
 - Reuse the same responsive alias set for display, gap, and spacing utilities.
 - Treat `.ms-*`, `.me-*`, `.ps-*`, and `.pe-*` as the preferred semantic utilities for
   direction-aware component layout; `.ml-*`, `.mr-*`, `.pl-*`, and `.pr-*` remain intentionally
