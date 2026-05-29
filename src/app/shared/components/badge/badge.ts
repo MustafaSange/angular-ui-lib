@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, booleanAttribute, input } from '@angular/core';
 
-export type BadgeVariant = 'neutral' | 'info' | 'success' | 'warning' | 'danger';
-export type BadgeAppearance = 'soft' | 'solid' | 'outline';
+import type { BadgeAppearance, BadgeVariant } from './badge-types';
 
 @Component({
   selector: 'ms-badge',

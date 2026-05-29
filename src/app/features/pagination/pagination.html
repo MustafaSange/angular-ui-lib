@@ -1,0 +1,97 @@
+<main class="pagination-page">
+  <header class="pagination-header">
+    <a class="btn btn-ghost back-link" routerLink="/">← Back to home</a>
+    <p class="eyebrow">Components</p>
+    <h1>Pagination</h1>
+    <p class="description">
+      Controlled page navigation for result sets with accessible page buttons and ellipses.
+    </p>
+  </header>
+
+  <section class="pagination-section">
+    <h2>Basic pagination</h2>
+    <div class="pagination-demo-panel">
+      <ms-pagination [(state)]="basicState" />
+      <dl class="pagination-meta" aria-label="Parent pagination metadata">
+        <div>
+          <dt>Current page</dt>
+          <dd>{{ basicMeta().page }}</dd>
+        </div>
+        <div>
+          <dt>Total pages</dt>
+          <dd>{{ basicMeta().totalPages }}</dd>
+        </div>
+        <div>
+          <dt>Visible range</dt>
+          <dd>{{ basicMeta().itemStart }}-{{ basicMeta().itemEnd }}</dd>
+        </div>
+      </dl>
+    </div>
+    <app-showcase-code label="Pagination basic" [code]="basicSnippet" />
+  </section>
+
+  <section class="pagination-section">
+    <h2>Ellipsis window</h2>
+    <div class="pagination-demo-panel">
+      <ms-pagination [(state)]="denseState" />
+      <dl class="pagination-meta" aria-label="Parent pagination metadata">
+        <div>
+          <dt>Current page</dt>
+          <dd>{{ denseMeta().page }}</dd>
+        </div>
+        <div>
+          <dt>Total pages</dt>
+          <dd>{{ denseMeta().totalPages }}</dd>
+        </div>
+        <div>
+          <dt>Visible range</dt>
+          <dd>{{ denseMeta().itemStart }}-{{ denseMeta().itemEnd }}</dd>
+        </div>
+      </dl>
+    </div>
+    <app-showcase-code label="Pagination ellipsis" [code]="ellipsisSnippet" />
+  </section>
+
+  <section class="pagination-section">
+    <h2>Disabled</h2>
+    <div class="pagination-demo-panel">
+      <ms-pagination [(state)]="disabledState" />
+    </div>
+    <app-showcase-code label="Pagination disabled" [code]="disabledSnippet" />
+  </section>
+
+  <section class="pagination-section">
+    <h2>Summary off</h2>
+    <div class="pagination-demo-panel">
+      <ms-pagination [(state)]="summaryOffState" />
+    </div>
+    <app-showcase-code label="Pagination summary off" [code]="summaryOffSnippet" />
+  </section>
+
+  <section class="pagination-section">
+    <h2>Alignment</h2>
+    <div class="pagination-demo-stack">
+      <div class="pagination-demo-panel">
+        <span class="alignment-label">Start</span>
+        <ms-pagination [(state)]="startAlignedState" />
+      </div>
+      <div class="pagination-demo-panel">
+        <span class="alignment-label">Center</span>
+        <ms-pagination [(state)]="centerAlignedState" />
+      </div>
+      <div class="pagination-demo-panel">
+        <span class="alignment-label">End</span>
+        <ms-pagination [(state)]="endAlignedState" />
+      </div>
+    </div>
+    <app-showcase-code label="Pagination alignment" [code]="alignmentSnippet" />
+  </section>
+
+  <section class="pagination-section">
+    <h2>RTL mirroring</h2>
+    <div class="pagination-demo-panel rtl-demo" dir="rtl">
+      <ms-pagination [(state)]="rtlState" />
+    </div>
+    <app-showcase-code label="Pagination RTL" [code]="rtlSnippet" />
+  </section>
+</main>

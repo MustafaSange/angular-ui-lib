@@ -66,6 +66,7 @@ export class BadgeExample {}
 The implementation lives in `src/app/shared/components/badge`:
 
 - `BadgeComponent` renders projected compact text and an optional status dot
+- `badge-types.ts` defines `BadgeVariant` and `BadgeAppearance`
 - `index.ts` exposes the public API
 
 `ms-badge` renders host-level inline markup. Consumers own the projected label text.

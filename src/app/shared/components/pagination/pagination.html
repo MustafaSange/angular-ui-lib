@@ -1,0 +1,64 @@
+<nav
+  class="pagination"
+  [class.pagination-align-start]="alignment() === 'start'"
+  [class.pagination-align-center]="alignment() === 'center'"
+  [class.pagination-align-end]="alignment() === 'end'"
+  [class.pagination-summary-off]="!showSummary()"
+  [attr.aria-label]="ariaLabel()"
+>
+  @if (showSummary()) {
+    <p class="pagination-summary" aria-live="polite">
+      @if (totalItems() > 0) {
+        Showing {{ itemStart() }}-{{ itemEnd() }} of {{ totalItems() }}
+      } @else {
+        No items
+      }
+    </p>
+  }
+
+  <ul class="pagination-list">
+    <li class="pagination-item">
+      <button
+        class="pagination-button pagination-icon-button"
+        type="button"
+        aria-label="Go to previous page"
+        [disabled]="disabled() || !hasPrevious()"
+        (click)="goToPage(previousPage())"
+      >
+        <span class="ms-icon pagination-icon" aria-hidden="true">chevron_left</span>
+      </button>
+    </li>
+
+    @for (item of items(); track trackItem($index, item)) {
+      <li class="pagination-item">
+        @if (item.kind === 'page') {
+          <button
+            class="pagination-button pagination-page"
+            type="button"
+            [class.pagination-page-current]="item.page === currentPage()"
+            [attr.aria-label]="'Go to page ' + item.page"
+            [attr.aria-current]="item.page === currentPage() ? 'page' : null"
+            [disabled]="disabled()"
+            (click)="goToPage(item.page)"
+          >
+            {{ item.page }}
+          </button>
+        } @else {
+          <span class="pagination-ellipsis" aria-hidden="true">...</span>
+        }
+      </li>
+    }
+
+    <li class="pagination-item">
+      <button
+        class="pagination-button pagination-icon-button"
+        type="button"
+        aria-label="Go to next page"
+        [disabled]="disabled() || !hasNext()"
+        (click)="goToPage(nextPage())"
+      >
+        <span class="ms-icon pagination-icon" aria-hidden="true">chevron_right</span>
+      </button>
+    </li>
+  </ul>
+</nav>

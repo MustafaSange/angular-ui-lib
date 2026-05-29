@@ -49,4 +49,8 @@ export const routes: Routes = [
     path: 'chip',
     loadComponent: () => import('./features/chip/chip').then((m) => m.Chip),
   },
+  {
+    path: 'pagination',
+    loadComponent: () => import('./features/pagination/pagination').then((m) => m.Pagination),
+  },
 ];

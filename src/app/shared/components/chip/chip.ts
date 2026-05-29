@@ -6,8 +6,7 @@ import {
   output,
 } from '@angular/core';
 
-export type ChipVariant = 'neutral' | 'info' | 'success' | 'warning' | 'danger';
-export type ChipAppearance = 'soft' | 'outline';
+import type { ChipAppearance, ChipVariant } from './chip-types';
 
 @Component({
   selector: 'ms-chip',
