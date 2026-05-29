@@ -57,9 +57,9 @@ export class GridSpansExample {}`,
   selector: 'app-responsive-grid-example',
   template: \`
     <div class="row row-gap-12">
-      <div class="col-12 gt-xs-col-6 gt-sm-col-4">Responsive A</div>
-      <div class="col-12 gt-xs-col-6 gt-sm-col-4">Responsive B</div>
-      <div class="col-12 gt-xs-col-6 gt-sm-col-4">Responsive C</div>
+      <div class="col-12 sm-col-6 md-col-4 lg-col-4 xl-col-4">Responsive A</div>
+      <div class="col-12 sm-col-6 md-col-4 lg-col-4 xl-col-4">Responsive B</div>
+      <div class="col-12 sm-col-6 md-col-4 lg-col-4 xl-col-4">Responsive C</div>
     </div>
   \`,
   changeDetection: ChangeDetectionStrategy.OnPush,

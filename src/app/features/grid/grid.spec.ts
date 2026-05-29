@@ -16,8 +16,8 @@ describe('Grid', () => {
 
     expect(compiled.querySelectorAll('.col-1')).toHaveLength(12);
     expect(compiled.querySelector('.col-6')).toBeTruthy();
-    expect(compiled.querySelector('.gt-xs-col-6')).toBeTruthy();
-    expect(compiled.querySelector('.gt-sm-col-4')).toBeTruthy();
+    expect(compiled.querySelector('.sm-col-6')).toBeTruthy();
+    expect(compiled.querySelector('.md-col-4')).toBeTruthy();
   });
 
   it('renders named containers', () => {
