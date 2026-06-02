@@ -1,0 +1,115 @@
+<main class="side-nav-page">
+  <header class="side-nav-header">
+    <a class="btn btn-ghost back-link" routerLink="/">← Back to home</a>
+    <p class="eyebrow">Components</p>
+    <h1>Side navigation menu</h1>
+    <p class="description">
+      Icon-first navigation with expandable groups, flyouts, and route-aware active states.
+    </p>
+  </header>
+
+  <section class="side-nav-section-demo">
+    <h2>Expanded navigation</h2>
+    <div class="nav-demo-frame">
+      <ms-side-nav [(collapsed)]="expandedCollapsed" aria-label="Primary navigation">
+        <button type="button" msSideNavTrigger aria-label="Toggle navigation">
+          <span class="ms-icon" aria-hidden="true">menu</span>
+        </button>
+
+        <a msSideNavItem routerLink="/" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">
+          <span class="ms-icon" aria-hidden="true">dashboard</span>
+          <span class="side-nav-label">Dashboard</span>
+        </a>
+
+        <ms-side-nav-section label="Projects" icon="folder" [expanded]="true">
+          <a msSideNavItem routerLink="/drawer" routerLinkActive="is-active">Active projects</a>
+
+          <ms-side-nav-section label="Reports" icon="bar_chart">
+            <a msSideNavItem routerLink="/tables" routerLinkActive="is-active">Weekly</a>
+            <a msSideNavItem routerLink="/pagination" routerLinkActive="is-active">Monthly</a>
+          </ms-side-nav-section>
+        </ms-side-nav-section>
+
+        <button type="button" msSideNavItem [active]="true">
+          <span class="ms-icon" aria-hidden="true">settings</span>
+          <span class="side-nav-label">Settings</span>
+        </button>
+      </ms-side-nav>
+
+      <div class="demo-canvas">
+        <strong>Workspace overview</strong>
+        <p>First-level groups open downward while nested groups fly out horizontally.</p>
+      </div>
+    </div>
+    <app-showcase-code label="Expanded side navigation" [code]="expandedSnippet" />
+  </section>
+
+  <section class="side-nav-section-demo">
+    <h2>Collapsed rail and deep flyouts</h2>
+    <div class="nav-demo-frame">
+      <ms-side-nav [(collapsed)]="railCollapsed" aria-label="Collapsed primary navigation">
+        <button type="button" msSideNavTrigger aria-label="Toggle navigation">
+          <span class="ms-icon" aria-hidden="true">menu</span>
+        </button>
+
+        <a msSideNavItem routerLink="/buttons" routerLinkActive="is-active">
+          <span class="ms-icon" aria-hidden="true">dashboard</span>
+          <span class="side-nav-label">Dashboard</span>
+        </a>
+
+        <ms-side-nav-section label="Projects" icon="folder">
+          <a msSideNavItem routerLink="/accordion" routerLinkActive="is-active">Active projects</a>
+          <button type="button" msSideNavItem>New project</button>
+
+          <ms-side-nav-section label="Reports" icon="bar_chart">
+            <a msSideNavItem routerLink="/tables" routerLinkActive="is-active">Weekly</a>
+            <ms-side-nav-section label="Exports" icon="archive">
+              <button type="button" msSideNavItem>CSV export</button>
+              <button type="button" msSideNavItem>PDF export</button>
+            </ms-side-nav-section>
+          </ms-side-nav-section>
+        </ms-side-nav-section>
+
+        <button type="button" msSideNavItem>
+          <span class="ms-icon" aria-hidden="true">logout</span>
+          <span class="side-nav-label">Sign out</span>
+        </button>
+      </ms-side-nav>
+
+      <div class="demo-canvas">
+        <strong>Collapsed rail</strong>
+        <p>Hover, focus, or click a section icon to inspect horizontal flyouts.</p>
+      </div>
+    </div>
+    <app-showcase-code label="Collapsed rail flyout" [code]="collapsedSnippet" />
+  </section>
+
+  <section class="side-nav-section-demo">
+    <h2>RTL direction</h2>
+    <div class="nav-demo-frame" dir="rtl">
+      <ms-side-nav [(collapsed)]="rtlCollapsed" aria-label="RTL primary navigation">
+        <button type="button" msSideNavTrigger aria-label="Toggle navigation">
+          <span class="ms-icon" aria-hidden="true">menu</span>
+        </button>
+
+        <a msSideNavItem routerLink="/feedback" routerLinkActive="is-active">
+          <span class="ms-icon" aria-hidden="true">dashboard</span>
+          <span class="side-nav-label">Dashboard</span>
+        </a>
+
+        <ms-side-nav-section label="Projects" icon="folder">
+          <a msSideNavItem routerLink="/menu-popover" routerLinkActive="is-active">Active projects</a>
+          <ms-side-nav-section label="Reports" icon="bar_chart">
+            <button type="button" msSideNavItem [active]="true">Current report</button>
+          </ms-side-nav-section>
+        </ms-side-nav-section>
+      </ms-side-nav>
+
+      <div class="demo-canvas">
+        <strong>Logical placement</strong>
+        <p>Flyouts mirror to the logical inline side in right-to-left layouts.</p>
+      </div>
+    </div>
+    <app-showcase-code label="Manual active item" language="html" [code]="manualActiveSnippet" />
+  </section>
+</main>

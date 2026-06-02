@@ -61,4 +61,8 @@ export const routes: Routes = [
     path: 'drawer',
     loadComponent: () => import('./features/drawer/drawer').then((m) => m.Drawer),
   },
+  {
+    path: 'side-nav',
+    loadComponent: () => import('./features/side-nav/side-nav').then((m) => m.SideNav),
+  },
 ];

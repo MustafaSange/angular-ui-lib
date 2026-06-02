@@ -1,0 +1,65 @@
+.side-nav-page {
+  display: grid;
+  gap: var(--spacing-32);
+  padding-block: var(--spacing-32);
+}
+
+.side-nav-header,
+.side-nav-section-demo {
+  inline-size: min(100% - (var(--spacing-24) * 2), var(--container-lg));
+  margin-inline: auto;
+}
+
+.side-nav-header {
+  display: grid;
+  gap: var(--spacing-8);
+}
+
+.back-link {
+  justify-self: start;
+}
+
+.description {
+  max-inline-size: 42rem;
+  color: var(--color-text-secondary);
+}
+
+.side-nav-section-demo {
+  display: grid;
+  gap: var(--spacing-16);
+}
+
+.nav-demo-frame {
+  display: flex;
+  align-items: stretch;
+  gap: var(--spacing-20);
+  min-block-size: 22rem;
+  padding: var(--spacing-16);
+  overflow: visible;
+  border: var(--border-width-sm) solid var(--color-border-muted);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-alt);
+}
+
+.demo-canvas {
+  flex: 1 1 auto;
+  display: grid;
+  align-content: start;
+  gap: var(--spacing-8);
+  min-inline-size: 0;
+  padding: var(--spacing-20);
+  border: var(--border-width-sm) solid var(--color-border-muted);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  color: var(--color-text-secondary);
+}
+
+.demo-canvas strong {
+  color: var(--color-text-primary);
+}
+
+@media (max-width: 48rem) {
+  .nav-demo-frame {
+    flex-direction: column;
+  }
+}
