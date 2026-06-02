@@ -12,6 +12,8 @@ export const MATERIAL_ICONS = [
   'favorite',
   'filter_list',
   'info_i',
+  'menu',
+  'menu_open',
   'more_vert',
   'priority_high',
   'search',

@@ -1,0 +1,133 @@
+<main class="drawer-page">
+  <header class="drawer-page-header">
+    <a class="btn btn-ghost back-link" routerLink="/">← Back to home</a>
+    <p class="eyebrow">Components</p>
+    <h1>Navigation drawer</h1>
+    <p class="description">
+      Button-controlled slide navigation with logical placement, focus handling, and RTL mirroring.
+    </p>
+  </header>
+
+  <section class="drawer-section">
+    <h2>Start drawer</h2>
+    <p class="section-copy">
+      The default drawer opens from logical inline-start: left in LTR, right in RTL.
+    </p>
+
+    <div class="drawer-demo">
+      <button
+        class="btn btn-ghost btn-icon"
+        type="button"
+        [msDrawerTrigger]="startDrawer"
+        aria-label="Open navigation"
+      >
+        <span class="ms-icon" aria-hidden="true">menu</span>
+      </button>
+
+      <span class="demo-label">Open main navigation</span>
+
+      <ms-drawer #startDrawer="msDrawer" [(open)]="startOpen" aria-label="Main navigation">
+        <div class="drawer-header">
+          <strong>Navigation</strong>
+          <button
+            class="btn btn-ghost btn-icon"
+            type="button"
+            msDrawerClose
+            aria-label="Close navigation"
+          >
+            <span class="ms-icon" aria-hidden="true">close</span>
+          </button>
+        </div>
+
+        <nav class="drawer-content navigation-list" aria-label="Primary">
+          <a href="/buttons" msDrawerClose>Buttons</a>
+          <a href="/form-fields" msDrawerClose>Form fields</a>
+          <a href="/tables" msDrawerClose>Tables</a>
+        </nav>
+      </ms-drawer>
+    </div>
+
+    <app-showcase-code label="Start drawer" [code]="startSnippet" />
+  </section>
+
+  <section class="drawer-section">
+    <h2>RTL start drawer</h2>
+    <p class="section-copy">
+      The same `start` placement mirrors automatically inside a right-to-left context.
+    </p>
+
+    <div class="drawer-demo rtl-demo" dir="rtl">
+      <button class="btn btn-outline" type="button" [msDrawerTrigger]="rtlDrawer">
+        افتح التنقل
+        <span class="ms-icon" aria-hidden="true">menu</span>
+      </button>
+
+      <ms-drawer #rtlDrawer="msDrawer" [(open)]="rtlOpen" aria-label="التنقل الرئيسي">
+        <div class="drawer-header">
+          <strong>التنقل</strong>
+          <button
+            class="btn btn-ghost btn-icon"
+            type="button"
+            msDrawerClose
+            aria-label="إغلاق التنقل"
+          >
+            <span class="ms-icon" aria-hidden="true">close</span>
+          </button>
+        </div>
+
+        <nav class="drawer-content navigation-list" aria-label="رئيسي">
+          <a href="/buttons" msDrawerClose>الأزرار</a>
+          <a href="/form-fields" msDrawerClose>حقول النماذج</a>
+          <a href="/tables" msDrawerClose>الجداول</a>
+        </nav>
+      </ms-drawer>
+    </div>
+
+    <app-showcase-code label="RTL start drawer" [code]="rtlSnippet" />
+  </section>
+
+  <section class="drawer-section">
+    <h2>End drawer</h2>
+    <p class="section-copy">
+      Use `placement="end"` for account, utility, or secondary navigation drawers.
+    </p>
+
+    <div class="drawer-demo">
+      <button class="btn btn-outline" type="button" [msDrawerTrigger]="endDrawer">
+        Account menu
+        <span class="ms-icon" aria-hidden="true">menu_open</span>
+      </button>
+
+      <ms-drawer
+        #endDrawer="msDrawer"
+        [(open)]="endOpen"
+        placement="end"
+        aria-label="Account navigation"
+      >
+        <div class="drawer-header">
+          <strong>Account</strong>
+          <button
+            class="btn btn-ghost btn-icon"
+            type="button"
+            msDrawerClose
+            aria-label="Close account menu"
+          >
+            <span class="ms-icon" aria-hidden="true">close</span>
+          </button>
+        </div>
+
+        <nav class="drawer-content navigation-list" aria-label="Account">
+          <a href="/badge" msDrawerClose>Badge</a>
+          <a href="/chip" msDrawerClose>Chip</a>
+          <a href="/feedback" msDrawerClose>Feedback</a>
+        </nav>
+
+        <div class="drawer-footer">
+          <button class="btn btn-primary btn-full" type="button" msDrawerClose>Done</button>
+        </div>
+      </ms-drawer>
+    </div>
+
+    <app-showcase-code label="End drawer" [code]="endSnippet" />
+  </section>
+</main>
