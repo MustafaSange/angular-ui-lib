@@ -84,6 +84,8 @@ New feature showcase pages should include copyable full-component examples using
 
 - Use standalone Angular APIs.
 - Use `RouterLink` for navigation.
+- Keep showcase links on the Home page ordered alphabetically by their displayed component name.
+- Keep showcase routes after `/` in `src/app/app.routes.ts` in the same order as the Home page links.
 - Reuse existing tokens and button styles.
 - Keep layout and styling consistent with the existing feature pages.
 - Do not add or update tests for this behavior change.
@@ -92,6 +94,7 @@ New feature showcase pages should include copyable full-component examples using
 
 - Visiting `/` shows the Home page.
 - The Home page links to Buttons, Grid, Form Fields, Modal, Feedback, Menu and Popover, Tooltip, and Tabs.
+- Home page showcase links are ordered alphabetically by displayed component name.
 - The Home page includes a theme preview for the current structural color system.
 - Feature showcase pages provide a visible path back to Home.
 - Navigation works without a full page reload.
