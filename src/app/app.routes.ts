@@ -6,63 +6,63 @@ export const routes: Routes = [
     loadComponent: () => import('./features/home/home').then((m) => m.Home),
   },
   {
-    path: 'buttons',
-    loadComponent: () => import('./features/buttons/buttons').then((m) => m.Buttons),
-  },
-  {
-    path: 'grid',
-    loadComponent: () => import('./features/grid/grid').then((m) => m.Grid),
-  },
-  {
-    path: 'form-fields',
-    loadComponent: () => import('./features/form-fields/form-fields').then((m) => m.FormFields),
-  },
-  {
-    path: 'modal',
-    loadComponent: () => import('./features/modal/modal').then((m) => m.Modal),
+    path: 'accordion',
+    loadComponent: () => import('./features/accordion/accordion').then((m) => m.Accordion),
   },
   {
     path: 'feedback',
     loadComponent: () => import('./features/feedback/feedback').then((m) => m.Feedback),
   },
   {
-    path: 'menu-popover',
-    loadComponent: () => import('./features/menu-popover/menu-popover').then((m) => m.MenuPopover),
-  },
-  {
-    path: 'tooltip',
-    loadComponent: () => import('./features/tooltip/tooltip').then((m) => m.Tooltip),
-  },
-  {
-    path: 'tabs',
-    loadComponent: () => import('./features/tabs/tabs').then((m) => m.Tabs),
-  },
-  {
-    path: 'accordion',
-    loadComponent: () => import('./features/accordion/accordion').then((m) => m.Accordion),
-  },
-  {
     path: 'badge',
     loadComponent: () => import('./features/badge/badge').then((m) => m.Badge),
+  },
+  {
+    path: 'buttons',
+    loadComponent: () => import('./features/buttons/buttons').then((m) => m.Buttons),
   },
   {
     path: 'chip',
     loadComponent: () => import('./features/chip/chip').then((m) => m.Chip),
   },
   {
-    path: 'pagination',
-    loadComponent: () => import('./features/pagination/pagination').then((m) => m.Pagination),
+    path: 'form-fields',
+    loadComponent: () => import('./features/form-fields/form-fields').then((m) => m.FormFields),
   },
   {
-    path: 'tables',
-    loadComponent: () => import('./features/tables/tables').then((m) => m.Tables),
+    path: 'grid',
+    loadComponent: () => import('./features/grid/grid').then((m) => m.Grid),
+  },
+  {
+    path: 'menu-popover',
+    loadComponent: () => import('./features/menu-popover/menu-popover').then((m) => m.MenuPopover),
+  },
+  {
+    path: 'modal',
+    loadComponent: () => import('./features/modal/modal').then((m) => m.Modal),
   },
   {
     path: 'drawer',
     loadComponent: () => import('./features/drawer/drawer').then((m) => m.Drawer),
   },
   {
+    path: 'pagination',
+    loadComponent: () => import('./features/pagination/pagination').then((m) => m.Pagination),
+  },
+  {
     path: 'side-nav',
     loadComponent: () => import('./features/side-nav/side-nav').then((m) => m.SideNav),
+  },
+  {
+    path: 'tables',
+    loadComponent: () => import('./features/tables/tables').then((m) => m.Tables),
+  },
+  {
+    path: 'tabs',
+    loadComponent: () => import('./features/tabs/tabs').then((m) => m.Tabs),
+  },
+  {
+    path: 'tooltip',
+    loadComponent: () => import('./features/tooltip/tooltip').then((m) => m.Tooltip),
   },
 ];
