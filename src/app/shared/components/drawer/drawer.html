@@ -1,0 +1,30 @@
+@if (open()) {
+  <div class="drawer" animate.enter="drawer-enter" animate.leave="drawer-leave">
+    <button
+      class="drawer-backdrop"
+      animate.enter="drawer-backdrop-enter"
+      animate.leave="drawer-backdrop-leave"
+      type="button"
+      tabindex="-1"
+      aria-label="Close navigation"
+      (click)="handleBackdropClick()"
+    ></button>
+
+    <section
+      #panel
+      class="drawer-panel"
+      animate.enter="drawer-panel-enter"
+      animate.leave="drawer-panel-leave"
+      [ngClass]="panelClasses()"
+      [id]="panelId"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-label]="ariaLabel()"
+      [attr.aria-labelledby]="ariaLabelledby()"
+      tabindex="-1"
+      (keydown)="handlePanelKeydown($event)"
+    >
+      <ng-content />
+    </section>
+  </div>
+}

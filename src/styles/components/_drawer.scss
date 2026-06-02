@@ -1,0 +1,155 @@
+body.ms-drawer-open {
+  overflow: hidden;
+}
+
+.drawer {
+  position: fixed;
+  z-index: var(--z-index-modal);
+  inset: 0;
+  pointer-events: none;
+}
+
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  padding: 0;
+  border: 0;
+  background-color: var(--color-backdrop);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.drawer-panel {
+  --_drawer-translate-closed: -100%;
+
+  position: fixed;
+  inset-block: 0;
+  display: flex;
+  flex-direction: column;
+  inline-size: min(20rem, 85vw);
+  max-inline-size: 100%;
+  overflow: auto;
+  border: 0 solid var(--color-border);
+  background-color: var(--color-surface-overlay);
+  color: var(--color-text-primary);
+  box-shadow: var(--shadow-lg);
+  pointer-events: auto;
+  transform: translateX(0);
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.drawer-panel-start {
+  inset-inline-start: 0;
+  border-inline-end-width: var(--border-width-sm);
+}
+
+.drawer-panel-end {
+  inset-inline-end: 0;
+  border-inline-start-width: var(--border-width-sm);
+}
+
+:dir(rtl) .drawer-panel-start,
+:dir(ltr) .drawer-panel-end {
+  --_drawer-translate-closed: 100%;
+}
+
+.drawer-header,
+.drawer-footer {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-12);
+  padding: var(--spacing-16);
+}
+
+.drawer-header {
+  min-block-size: var(--spacing-56);
+  border-block-end: var(--border-width-sm) solid var(--color-border-muted);
+}
+
+.drawer-content {
+  flex: 1 1 auto;
+  min-block-size: 0;
+  padding: var(--spacing-12);
+  overflow: auto;
+}
+
+.drawer-footer {
+  border-block-start: var(--border-width-sm) solid var(--color-border-muted);
+
+  &:empty {
+    display: none;
+  }
+}
+
+.drawer-enter,
+.drawer-leave {
+  animation: drawer-presence var(--transition-base);
+}
+
+.drawer-backdrop-enter {
+  animation: drawer-backdrop-enter var(--transition-base);
+}
+
+.drawer-backdrop-leave {
+  animation: drawer-backdrop-leave var(--transition-base);
+}
+
+.drawer-panel-enter {
+  animation: drawer-panel-enter var(--transition-base);
+}
+
+.drawer-panel-leave {
+  animation: drawer-panel-leave var(--transition-base);
+}
+
+@keyframes drawer-presence {
+  from,
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes drawer-backdrop-enter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes drawer-backdrop-leave {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes drawer-panel-enter {
+  from {
+    transform: translateX(var(--_drawer-translate-closed));
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes drawer-panel-leave {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(var(--_drawer-translate-closed));
+  }
+}

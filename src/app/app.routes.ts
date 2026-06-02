@@ -57,4 +57,8 @@ export const routes: Routes = [
     path: 'tables',
     loadComponent: () => import('./features/tables/tables').then((m) => m.Tables),
   },
+  {
+    path: 'drawer',
+    loadComponent: () => import('./features/drawer/drawer').then((m) => m.Drawer),
+  },
 ];
