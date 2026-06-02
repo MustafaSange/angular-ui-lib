@@ -1,0 +1,267 @@
+ms-side-nav {
+  display: block;
+}
+
+.side-nav {
+  --_side-nav-width: 16rem;
+  --_side-nav-collapsed-width: 3.75rem;
+  --_side-nav-flyout-width: 15rem;
+  --_side-nav-item-block-size: var(--control-height-lg);
+  --_side-nav-flyout-enter-translate: calc(var(--spacing-4) * -1);
+
+  position: relative;
+  inline-size: var(--_side-nav-width);
+  min-inline-size: var(--_side-nav-width);
+  color: var(--color-text-primary);
+  transition:
+    inline-size var(--transition-base),
+    min-inline-size var(--transition-base);
+}
+
+.side-nav-collapsed {
+  inline-size: var(--_side-nav-collapsed-width);
+  min-inline-size: var(--_side-nav-collapsed-width);
+}
+
+.side-nav-list,
+.side-nav-panel {
+  display: grid;
+  gap: var(--spacing-4);
+}
+
+.side-nav-list {
+  padding: var(--spacing-8);
+  border: var(--border-width-sm) solid var(--color-border-muted);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+}
+
+.side-nav-section {
+  position: relative;
+  display: block;
+}
+
+.side-nav-item,
+.side-nav-section-trigger {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--spacing-8);
+  min-block-size: var(--_side-nav-item-block-size);
+  inline-size: 100%;
+  padding-block: var(--spacing-8);
+  padding-inline: var(--spacing-12);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background-color: transparent;
+  color: var(--color-text-primary);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-control);
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    box-shadow var(--transition-fast);
+
+  .ms-icon {
+    justify-self: center;
+    color: var(--color-text-muted);
+    transition:
+      color var(--transition-fast),
+      transform var(--transition-fast);
+  }
+
+  &:hover:not(:disabled):not([aria-disabled='true']),
+  &:focus-visible {
+    outline: 0;
+    background-color: var(--color-primary-subtle);
+    color: var(--color-primary-text);
+
+    .ms-icon {
+      color: inherit;
+    }
+  }
+
+  &:focus-visible {
+    box-shadow: var(--control-focus-ring);
+  }
+
+  &:disabled,
+  &[aria-disabled='true'] {
+    color: var(--color-text-muted);
+    opacity: var(--opacity-disabled);
+    cursor: not-allowed;
+  }
+}
+
+.side-nav-trigger {
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
+.side-nav-label {
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition:
+    opacity var(--transition-fast),
+    inline-size var(--transition-base);
+}
+
+.side-nav-arrow {
+  justify-self: end;
+}
+
+:dir(rtl) .side-nav-arrow {
+  transform: rotate(180deg);
+}
+
+.side-nav-section-open > .side-nav-section-trigger .side-nav-arrow {
+  transform: rotate(90deg);
+}
+
+.side-nav-item-active,
+.side-nav-item.is-active,
+.side-nav-section-active > .side-nav-section-trigger,
+.side-nav-section:has(.side-nav-item-active, .side-nav-item.is-active)
+  > .side-nav-section-trigger {
+  background-color: var(--color-primary-subtle);
+  color: var(--color-primary-text);
+  font-weight: var(--font-weight-semibold);
+
+  .ms-icon {
+    color: inherit;
+  }
+}
+
+.side-nav-panel {
+  display: none;
+  padding-block-start: var(--spacing-4);
+  padding-inline-start: var(--spacing-16);
+}
+
+.side-nav-section-open > .side-nav-panel {
+  display: grid;
+  animation: side-nav-panel-enter var(--transition-fast);
+}
+
+.side-nav-collapsed > .side-nav-list > .side-nav-item,
+.side-nav-collapsed > .side-nav-list > .side-nav-section > .side-nav-section-trigger {
+  grid-template-columns: 1fr;
+  place-items: center;
+  padding-inline: var(--spacing-8);
+}
+
+.side-nav-collapsed > .side-nav-list > .side-nav-item .side-nav-label,
+.side-nav-collapsed > .side-nav-list > .side-nav-section > .side-nav-section-trigger .side-nav-label {
+  display: none;
+}
+
+.side-nav-collapsed > .side-nav-list > .side-nav-section > .side-nav-section-trigger .side-nav-arrow {
+  position: absolute;
+  inset-block-start: 50%;
+  right: var(--spacing-2);
+  left: auto;
+  display: inline-flex;
+  font-size: var(--font-size-xs);
+  opacity: var(--opacity-muted);
+  transform: translateY(-50%);
+}
+
+:dir(rtl)
+  .side-nav-collapsed
+  > .side-nav-list
+  > .side-nav-section
+  > .side-nav-section-trigger
+  .side-nav-arrow {
+  right: auto;
+  left: var(--spacing-2);
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.side-nav-collapsed
+  > .side-nav-list
+  > .side-nav-section-open
+  > .side-nav-section-trigger
+  .side-nav-arrow {
+  transform: translateY(-50%) rotate(90deg);
+}
+
+.side-nav-flyout {
+  position: absolute;
+  box-sizing: border-box;
+  z-index: var(--z-index-dropdown);
+  inset-block-start: 0;
+  inset-inline-start: calc(100% + var(--spacing-8));
+  inset-inline-end: auto;
+  inline-size: var(--_side-nav-flyout-width);
+  padding: var(--spacing-8);
+  border: var(--border-width-sm) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-overlay);
+  box-shadow: var(--shadow-lg);
+}
+
+:dir(rtl) .side-nav-flyout,
+:where([dir='rtl'], [dir='rtl'] *) .side-nav-flyout {
+  --_side-nav-flyout-enter-translate: var(--spacing-4);
+}
+
+.side-nav-section-open > .side-nav-flyout {
+  display: grid;
+  animation: side-nav-flyout-enter var(--transition-fast);
+}
+
+.side-nav-flyout > .side-nav-item,
+.side-nav-flyout > .side-nav-section > .side-nav-section-trigger {
+  box-sizing: border-box;
+  inline-size: 100%;
+}
+
+.side-nav-flyout .side-nav-section-trigger {
+  min-block-size: var(--control-height-md);
+}
+
+.side-nav-flyout .side-nav-item {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: start;
+  min-block-size: var(--control-height-md);
+}
+
+.side-nav-flyout .side-nav-item:has(.ms-icon) {
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.side-nav-flyout .side-nav-panel:not(.side-nav-flyout) {
+  padding-block-start: 0;
+  padding-inline-start: 0;
+}
+
+@keyframes side-nav-panel-enter {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--spacing-4) * -1));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes side-nav-flyout-enter {
+  from {
+    opacity: 0;
+    transform: translateX(var(--_side-nav-flyout-enter-translate));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
