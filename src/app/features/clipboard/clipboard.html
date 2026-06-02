@@ -1,0 +1,65 @@
+<main class="clipboard-page">
+  <header class="clipboard-header">
+    <a class="btn btn-ghost back-link" routerLink="/">&larr; Back to home</a>
+    <p class="eyebrow">Components</p>
+    <h1>Clipboard copy</h1>
+    <p class="description">
+      Compact copy actions for explicit values, projected text, reveal-on-hover rows, and imperative
+      flows.
+    </p>
+  </header>
+
+  <section class="clipboard-section">
+    <h2>Copy explicit text</h2>
+    <div class="clipboard-row">
+      <code>INV-2026-0042</code>
+      <ms-copy-button text="INV-2026-0042" ariaLabel="Copy invoice number" />
+    </div>
+    <app-showcase-code label="Copy from text input" [code]="inputSnippet" />
+  </section>
+
+  <section class="clipboard-section">
+    <h2>Copy projected text</h2>
+    <div class="clipboard-row">
+      <ms-copy-button ariaLabel="Copy support email">
+        support@example.com
+      </ms-copy-button>
+    </div>
+    <app-showcase-code label="Copy projected text" [code]="projectedSnippet" />
+  </section>
+
+  <section class="clipboard-section">
+    <h2>Reveal copy action</h2>
+    <div class="clipboard-stack">
+      <ms-copy-reveal text="support@example.com" ariaLabel="Copy support email">
+        support@example.com
+      </ms-copy-reveal>
+      <ms-copy-reveal text="QA-BUILD-21.2" ariaLabel="Copy build tag">
+        <code>QA-BUILD-21.2</code>
+      </ms-copy-reveal>
+    </div>
+    <app-showcase-code label="Reveal on hover and focus" [code]="revealSnippet" />
+  </section>
+
+  <section class="clipboard-section">
+    <h2>Imperative helper</h2>
+    <div class="clipboard-row">
+      <button class="btn btn-outline" type="button" (click)="copyWithHelper()">
+        Copy reference
+      </button>
+      <span class="result-note">{{ helperResult() }}</span>
+    </div>
+    <app-showcase-code label="Copy helper function" [code]="helperSnippet" />
+  </section>
+
+  <section class="clipboard-section">
+    <h2>States and sizing</h2>
+    <div class="clipboard-row">
+      <ms-copy-button text="Primary action" variant="primary" ariaLabel="Copy primary value" />
+      <ms-copy-button text="Outline action" variant="outline" ariaLabel="Copy outline value" />
+      <ms-copy-button text="Small action" size="sm" ariaLabel="Copy small value" />
+      <ms-copy-button text="Unavailable" ariaLabel="Copy unavailable value" disabled />
+    </div>
+    <app-showcase-code label="Copy states and sizes" [code]="statesSnippet" />
+  </section>
+</main>

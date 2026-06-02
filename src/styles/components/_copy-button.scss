@@ -1,0 +1,52 @@
+ms-copy-button {
+  display: inline-flex;
+}
+
+.copy-content,
+.copy-status {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.copy-icon {
+  pointer-events: none;
+}
+
+ms-copy-reveal {
+  display: inline-flex;
+  max-inline-size: 100%;
+}
+
+.copy-reveal {
+  display: inline-grid;
+  grid-template-columns: minmax(0, auto) auto;
+  align-items: center;
+  gap: var(--spacing-4);
+  max-inline-size: 100%;
+  border-radius: var(--radius-sm);
+}
+
+.copy-reveal-content {
+  min-inline-size: 0;
+}
+
+.copy-reveal-action {
+  display: inline-flex;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--transition-fast),
+    visibility var(--transition-fast);
+}
+
+.copy-reveal:hover .copy-reveal-action,
+.copy-reveal:focus-within .copy-reveal-action,
+.copy-reveal:has(ms-copy-button[data-copy-state='copied']) .copy-reveal-action,
+.copy-reveal:has(ms-copy-button[data-copy-state='failed']) .copy-reveal-action {
+  opacity: 1;
+  visibility: visible;
+}
