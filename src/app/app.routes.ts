@@ -26,6 +26,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/chip/chip').then((m) => m.Chip),
   },
   {
+    path: 'clipboard',
+    loadComponent: () => import('./features/clipboard/clipboard').then((m) => m.Clipboard),
+  },
+  {
     path: 'form-fields',
     loadComponent: () => import('./features/form-fields/form-fields').then((m) => m.FormFields),
   },
