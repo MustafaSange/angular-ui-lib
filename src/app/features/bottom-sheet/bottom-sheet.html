@@ -1,0 +1,211 @@
+<main class="bottom-sheet-page">
+  <header class="bottom-sheet-page-header">
+    <a class="btn btn-ghost back-link" routerLink="/">← Back to home</a>
+    <p class="eyebrow">Components</p>
+    <h1>Bottom sheet</h1>
+    <p class="description">
+      Mobile-friendly overlays for action lists, short forms, and focused contextual workflows.
+    </p>
+  </header>
+
+  <section class="bottom-sheet-section">
+    <h2>Action list</h2>
+    <p class="section-copy">A declarative sheet can be opened with a trigger and closed from projected actions.</p>
+
+    <div class="bottom-sheet-demo">
+      <button class="btn btn-primary" type="button" [msBottomSheetTrigger]="actionsSheet">
+        Open actions
+      </button>
+
+      <ms-bottom-sheet
+        #actionsSheet="msBottomSheet"
+        [(open)]="actionsOpen"
+        title="Project actions"
+      >
+        <div class="action-list">
+          <button class="btn btn-ghost btn-full" type="button" msBottomSheetClose>
+            Rename project
+          </button>
+          <button class="btn btn-ghost btn-full" type="button" msBottomSheetClose>
+            Duplicate project
+          </button>
+          <button class="btn btn-ghost btn-full" type="button" msBottomSheetClose>
+            Archive project
+          </button>
+        </div>
+
+        <div slot="footer">
+          <button class="btn btn-secondary btn-full" type="button" msBottomSheetClose>
+            Cancel
+          </button>
+        </div>
+      </ms-bottom-sheet>
+    </div>
+
+    <app-showcase-code label="Action list sheet" [code]="actionsSnippet" />
+  </section>
+
+  <section class="bottom-sheet-section">
+    <h2>Compact sheet</h2>
+    <p class="section-copy">Compact sheets keep short confirmations close to the block end of the viewport.</p>
+
+    <div class="bottom-sheet-demo">
+      <button class="btn btn-outline" type="button" [msBottomSheetTrigger]="compactSheet">
+        Open compact sheet
+      </button>
+
+      <ms-bottom-sheet
+        #compactSheet="msBottomSheet"
+        [(open)]="compactOpen"
+        title="Quick note"
+        size="compact"
+      >
+        <p>Compact sheets fit short confirmations and action groups.</p>
+        <div slot="footer">
+          <button class="btn btn-primary btn-full" type="button" msBottomSheetClose>
+            Done
+          </button>
+        </div>
+      </ms-bottom-sheet>
+    </div>
+
+    <app-showcase-code label="Compact sheet" [code]="compactSnippet" />
+  </section>
+
+  <section class="bottom-sheet-section">
+    <h2>Form sheet</h2>
+    <p class="section-copy">Medium sheets work well for brief forms with validation and sticky actions.</p>
+
+    <div class="bottom-sheet-demo">
+      <button class="btn btn-outline" type="button" [msBottomSheetTrigger]="formSheet">
+        Rename project
+      </button>
+
+      <ms-bottom-sheet #formSheet="msBottomSheet" [(open)]="formOpen" title="Rename project">
+        <label class="form-field">
+          <span class="form-label">Project name</span>
+          <input class="input" type="text" [formControl]="projectName" />
+        </label>
+
+        @if (projectName.invalid && projectName.dirty) {
+          <p class="field-error">Use at least 3 characters.</p>
+        }
+
+        <div slot="footer" class="form-actions">
+          <button class="btn btn-secondary" type="button" msBottomSheetClose>Cancel</button>
+          <button
+            class="btn btn-primary"
+            type="button"
+            [disabled]="projectName.invalid"
+            msBottomSheetClose
+          >
+            Save
+          </button>
+        </div>
+      </ms-bottom-sheet>
+    </div>
+
+    <app-showcase-code label="Form sheet" [code]="formSnippet" />
+  </section>
+
+  <section class="bottom-sheet-section">
+    <h2>Full-height workflow</h2>
+    <p class="section-copy">Full sheets can host mobile-style review flows while preserving safe-area spacing.</p>
+
+    <div class="bottom-sheet-demo">
+      <button class="btn btn-outline" type="button" [msBottomSheetTrigger]="fullSheet">
+        Open mobile workflow
+      </button>
+
+      <ms-bottom-sheet #fullSheet="msBottomSheet" [(open)]="fullOpen" title="Review changes" size="full">
+        <div class="review-list">
+          <article>
+            <strong>Profile details</strong>
+            <span>Name, avatar, and public contact fields</span>
+          </article>
+          <article>
+            <strong>Notification settings</strong>
+            <span>Email summaries and product update preferences</span>
+          </article>
+          <article>
+            <strong>Team permissions</strong>
+            <span>Workspace roles and guest access</span>
+          </article>
+        </div>
+
+        <div slot="footer">
+          <button class="btn btn-primary btn-full" type="button" msBottomSheetClose>
+            Confirm
+          </button>
+        </div>
+      </ms-bottom-sheet>
+    </div>
+
+    <app-showcase-code label="Full-height sheet" [code]="fullSnippet" />
+  </section>
+
+  <section class="bottom-sheet-section">
+    <h2>Backdrop lock</h2>
+    <p class="section-copy">Disable backdrop close when a workflow needs an explicit decision.</p>
+
+    <div class="bottom-sheet-demo">
+      <button class="btn btn-outline" type="button" [msBottomSheetTrigger]="lockedSheet">
+        Open required choice
+      </button>
+
+      <ms-bottom-sheet
+        #lockedSheet="msBottomSheet"
+        [(open)]="lockedOpen"
+        title="Required choice"
+        [closeOnBackdrop]="false"
+      >
+        <p>Backdrop clicks stay inside the workflow. Use an explicit action to close.</p>
+        <div slot="footer">
+          <button class="btn btn-primary btn-full" type="button" msBottomSheetClose>
+            I understand
+          </button>
+        </div>
+      </ms-bottom-sheet>
+    </div>
+
+    <app-showcase-code label="Disabled backdrop close" [code]="lockedSnippet" />
+  </section>
+
+  <section class="bottom-sheet-section">
+    <h2>Service opened</h2>
+    <p class="section-copy">Use the service for typed data, typed close results, and globally rendered sheets.</p>
+
+    <div class="bottom-sheet-demo result-demo">
+      <button class="btn btn-primary" type="button" (click)="openServiceSheet()">
+        Open share sheet
+      </button>
+      <span class="demo-result">{{ serviceResult() }}</span>
+    </div>
+
+    <app-showcase-code label="Service opened sheet" [code]="serviceSnippet" />
+  </section>
+
+  <section class="bottom-sheet-section">
+    <h2>RTL layout</h2>
+    <p class="section-copy">The panel stays centered on the logical inline axis in right-to-left contexts.</p>
+
+    <div class="bottom-sheet-demo rtl-demo" dir="rtl">
+      <button class="btn btn-outline" type="button" [msBottomSheetTrigger]="rtlSheet">
+        افتح الإجراءات
+      </button>
+
+      <ms-bottom-sheet #rtlSheet="msBottomSheet" [(open)]="rtlOpen" title="إجراءات المشروع">
+        <div class="action-list">
+          <button class="btn btn-ghost btn-full" type="button" msBottomSheetClose>
+            إعادة تسمية المشروع
+          </button>
+          <button class="btn btn-ghost btn-full" type="button" msBottomSheetClose>
+            نسخ المشروع
+          </button>
+        </div>
+      </ms-bottom-sheet>
+    </div>
+
+    <app-showcase-code label="RTL sheet" [code]="rtlSnippet" />
+  </section>
+</main>
