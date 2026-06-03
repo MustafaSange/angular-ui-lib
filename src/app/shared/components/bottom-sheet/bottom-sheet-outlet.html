@@ -1,0 +1,8 @@
+@for (entry of entries(); track entry.id) {
+  <div
+    [attr.data-bottom-sheet-entry-id]="entry.id"
+    [style.--ms-bottom-sheet-stack-offset]="entry.stackOffset"
+  >
+    <ng-container *ngComponentOutlet="entry.component; injector: entry.injector" />
+  </div>
+}

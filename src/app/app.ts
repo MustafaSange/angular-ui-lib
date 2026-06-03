@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { ToastOutletComponent } from './shared/components/feedback';
+import { BottomSheetOutletComponent } from './shared/components/bottom-sheet';
 import { DirectionSwitcher } from './shared/components/direction-switcher';
 import { ModalOutletComponent } from './shared/components/modal';
 import { ThemeSwitcher } from './shared/components/theme-switcher';
@@ -12,6 +13,7 @@ import { ThemeSwitcher } from './shared/components/theme-switcher';
     RouterOutlet,
     DirectionSwitcher,
     ThemeSwitcher,
+    BottomSheetOutletComponent,
     ModalOutletComponent,
     ToastOutletComponent,
   ],

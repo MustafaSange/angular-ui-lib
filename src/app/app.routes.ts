@@ -18,6 +18,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/badge/badge').then((m) => m.Badge),
   },
   {
+    path: 'bottom-sheet',
+    loadComponent: () => import('./features/bottom-sheet/bottom-sheet').then((m) => m.BottomSheet),
+  },
+  {
     path: 'buttons',
     loadComponent: () => import('./features/buttons/buttons').then((m) => m.Buttons),
   },
