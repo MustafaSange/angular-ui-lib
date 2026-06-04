@@ -1,0 +1,102 @@
+<main class="button-toggle-page">
+  <header class="button-toggle-header">
+    <a class="btn btn-ghost back-link" routerLink="/">← Back to home</a>
+    <p class="eyebrow">Components</p>
+    <h1>Button toggle</h1>
+    <p class="description">
+      Single-select segmented button groups with projected native controls.
+    </p>
+  </header>
+
+  <section class="button-toggle-section">
+    <h2>Basic toggles</h2>
+    <p class="section-copy">Use a selected value when only one option in the group can be active.</p>
+    <div class="toggle-demo">
+      <ms-button-toggle-group [(value)]="view" aria-label="View mode">
+        <button type="button" msButtonToggleValue="list">List</button>
+        <button type="button" msButtonToggleValue="grid">Grid</button>
+        <button type="button" msButtonToggleValue="table">Table</button>
+      </ms-button-toggle-group>
+      <span class="selected-value">Selected: {{ view() }}</span>
+    </div>
+    <app-showcase-code label="Basic button toggle" [code]="basicSnippet" />
+  </section>
+
+  <section class="button-toggle-section">
+    <h2>Icon and text toggles</h2>
+    <p class="section-copy">Projected button content can include icons, labels, or compact metadata.</p>
+    <div class="toggle-demo">
+      <ms-button-toggle-group [(value)]="density" aria-label="Dashboard density">
+        <button type="button" msButtonToggleValue="compact">
+          <span class="ms-icon" aria-hidden="true">dashboard</span>
+          Compact
+        </button>
+        <button type="button" msButtonToggleValue="comfortable">
+          <span class="ms-icon" aria-hidden="true">filter_list</span>
+          Comfortable
+        </button>
+        <button type="button" msButtonToggleValue="spacious">
+          <span class="ms-icon" aria-hidden="true">settings</span>
+          Spacious
+        </button>
+      </ms-button-toggle-group>
+      <span class="selected-value">Selected: {{ density() }}</span>
+    </div>
+    <app-showcase-code label="Icon button toggle" [code]="iconSnippet" />
+  </section>
+
+  <section class="button-toggle-section">
+    <h2>Disabled states</h2>
+    <p class="section-copy">Disabled items and disabled groups keep their current selection.</p>
+    <div class="toggle-demo stacked-demo">
+      <ms-button-toggle-group [(value)]="status" aria-label="Issue status">
+        <button type="button" msButtonToggleValue="open">Open</button>
+        <button type="button" msButtonToggleValue="pending" disabled>Pending</button>
+        <button type="button" msButtonToggleValue="closed">Closed</button>
+      </ms-button-toggle-group>
+
+      <ms-button-toggle-group value="monthly" disabled aria-label="Billing cycle">
+        <button type="button" msButtonToggleValue="monthly">Monthly</button>
+        <button type="button" msButtonToggleValue="annual">Annual</button>
+      </ms-button-toggle-group>
+    </div>
+    <app-showcase-code label="Disabled button toggle" [code]="disabledSnippet" />
+  </section>
+
+  <section class="button-toggle-section">
+    <h2>Signal form-field layout</h2>
+    <p class="section-copy">
+      Place the group inside `ms-signal-form-field` when it should share the form-field label and
+      hint layout.
+    </p>
+    <div class="toggle-demo form-field-demo">
+      <ms-signal-form-field>
+        <label id="view-mode-label">View mode</label>
+
+        <ms-button-toggle-group [(value)]="formView" aria-labelledby="view-mode-label">
+          <button type="button" msButtonToggleValue="list">List</button>
+          <button type="button" msButtonToggleValue="grid">Grid</button>
+        </ms-button-toggle-group>
+
+        <ms-hint>Choose how results are displayed.</ms-hint>
+      </ms-signal-form-field>
+    </div>
+    <app-showcase-code label="Signal form-field button toggle" [code]="signalFormFieldSnippet" />
+  </section>
+
+  <section class="button-toggle-section">
+    <h2>Keyboard and RTL behavior</h2>
+    <p class="section-copy">
+      Focus a toggle and use arrow keys, Home, or End. Arrow direction mirrors in RTL.
+    </p>
+    <div class="toggle-demo rtl-demo" dir="rtl">
+      <span class="rtl-label">RTL context</span>
+      <ms-button-toggle-group [(value)]="rtlValue" aria-label="RTL position">
+        <button type="button" msButtonToggleValue="start">Start</button>
+        <button type="button" msButtonToggleValue="middle">Middle</button>
+        <button type="button" msButtonToggleValue="end">End</button>
+      </ms-button-toggle-group>
+    </div>
+    <app-showcase-code label="RTL button toggle" [code]="rtlSnippet" />
+  </section>
+</main>
