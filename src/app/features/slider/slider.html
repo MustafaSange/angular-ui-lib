@@ -1,0 +1,88 @@
+<main class="slider-page">
+  <header class="slider-header">
+    <a class="btn btn-ghost back-link" routerLink="/">← Back to home</a>
+    <p class="eyebrow">Components</p>
+    <h1>Slider</h1>
+    <p class="description">
+      Native range controls with signal-friendly value binding and token-based styling.
+    </p>
+  </header>
+
+  <section class="slider-section">
+    <h2>Basic slider</h2>
+    <p class="section-copy">Use a bounded numeric value when a setting can be adjusted continuously.</p>
+    <div class="slider-demo">
+      <ms-slider
+        [(value)]="volume"
+        min="0"
+        max="100"
+        step="5"
+        aria-label="Volume"
+        showValue
+      />
+    </div>
+    <app-showcase-code label="Basic slider" [code]="basicSnippet" />
+  </section>
+
+  <section class="slider-section">
+    <h2>Configured range</h2>
+    <p class="section-copy">Set minimum, maximum, and step values to match the numeric scale.</p>
+    <div class="slider-demo">
+      <ms-slider
+        [(value)]="quality"
+        min="1"
+        max="10"
+        step="1"
+        aria-label="Render quality"
+        showValue
+      />
+    </div>
+    <app-showcase-code label="Configured slider" [code]="rangeSnippet" />
+  </section>
+
+  <section class="slider-section">
+    <h2>Disabled state</h2>
+    <p class="section-copy">Disabled sliders keep their value visible and prevent user changes.</p>
+    <div class="slider-demo">
+      <ms-slider [value]="40" aria-label="Storage used" disabled showValue />
+    </div>
+    <app-showcase-code label="Disabled slider" [code]="disabledSnippet" />
+  </section>
+
+  <section class="slider-section">
+    <h2>Signal form-field layout</h2>
+    <p class="section-copy">Place sliders inside `ms-signal-form-field` for shared label and hint layout.</p>
+    <div class="slider-demo form-field-demo">
+      <ms-signal-form-field>
+        <label id="budget-label">Monthly budget</label>
+
+      <ms-slider
+        [formField]="budgetField"
+        step="250"
+        aria-labelledby="budget-label"
+        showValue
+        />
+
+        <ms-hint>Choose a budget range for the campaign.</ms-hint>
+      </ms-signal-form-field>
+    </div>
+    <app-showcase-code label="Signal form-field slider" [code]="signalFormFieldSnippet" />
+  </section>
+
+  <section class="slider-section">
+    <h2>RTL fill placement</h2>
+    <p class="section-copy">The decorative fill follows logical inline placement in RTL containers.</p>
+    <div class="slider-demo rtl-demo" dir="rtl">
+      <span class="rtl-label">RTL context</span>
+      <ms-slider
+        [(value)]="rtlValue"
+        min="0"
+        max="100"
+        step="10"
+        aria-label="RTL priority"
+        showValue
+      />
+    </div>
+    <app-showcase-code label="RTL slider" [code]="rtlSnippet" />
+  </section>
+</main>
