@@ -1,0 +1,118 @@
+.card {
+  --_card-padding: var(--spacing-20);
+  --_card-gap: var(--spacing-16);
+  --_card-border: var(--color-border);
+  --_card-surface: var(--color-surface);
+  --_card-shadow: none;
+
+  display: block;
+  min-inline-size: 0;
+  overflow: hidden;
+  border: var(--border-width-sm) solid var(--_card-border);
+  border-radius: var(--radius-md);
+  background-color: var(--_card-surface);
+  color: var(--color-text-primary);
+  box-shadow: var(--_card-shadow);
+}
+
+.card-outlined {
+  --_card-border: var(--color-border);
+  --_card-surface: var(--color-surface);
+}
+
+.card-elevated {
+  --_card-border: transparent;
+  --_card-surface: var(--color-surface-raised);
+  --_card-shadow: var(--shadow-md);
+}
+
+.card-filled {
+  --_card-border: transparent;
+  --_card-surface: var(--color-surface-muted);
+}
+
+.card-padding-none {
+  --_card-padding: var(--spacing-0);
+  --_card-gap: var(--spacing-0);
+}
+
+.card-padding-sm {
+  --_card-padding: var(--spacing-16);
+  --_card-gap: var(--spacing-12);
+}
+
+.card-padding-md {
+  --_card-padding: var(--spacing-20);
+  --_card-gap: var(--spacing-16);
+}
+
+.card-padding-lg {
+  --_card-padding: var(--spacing-24);
+  --_card-gap: var(--spacing-20);
+}
+
+.card-header,
+.card-content,
+.card-footer {
+  padding-inline: var(--_card-padding);
+}
+
+.card-header {
+  display: grid;
+  gap: var(--spacing-4);
+  padding-block-start: var(--_card-padding);
+}
+
+.card-content {
+  padding-block: var(--_card-gap);
+  color: var(--color-text-secondary);
+}
+
+.card-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-8);
+  padding-block-end: var(--_card-padding);
+}
+
+.card-title,
+.card-subtitle,
+.card-content > :first-child,
+.card-content > :last-child {
+  margin: 0;
+}
+
+.card-title {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-heading);
+}
+
+.card-subtitle {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.card-media {
+  display: block;
+  inline-size: 100%;
+  max-inline-size: 100%;
+}
+
+.card-media:first-child {
+  border-start-start-radius: inherit;
+  border-start-end-radius: inherit;
+}
+
+.card-media:last-child {
+  border-end-start-radius: inherit;
+  border-end-end-radius: inherit;
+}
+
+.card-header + .card-footer,
+.card-content + .card-footer,
+.card-media + .card-footer {
+  padding-block-start: var(--spacing-0);
+}

@@ -1,0 +1,107 @@
+<main class="card-page">
+  <header class="card-page-header">
+    <a class="btn btn-ghost back-link" routerLink="/">← Back to home</a>
+    <p class="eyebrow">Components</p>
+    <h1>Card</h1>
+    <p class="description">
+      Flexible content containers with semantic sections, projected content, and token-backed
+      surfaces.
+    </p>
+  </header>
+
+  <section class="card-section">
+    <h2>Basic container</h2>
+    <div class="card-demo-grid">
+      <ms-card>
+        <header msCardHeader>
+          <h3 msCardTitle>Quarterly planning</h3>
+          <p msCardSubtitle>Shared team workspace</p>
+        </header>
+
+        <section msCardContent>
+          <p>Review goals, owners, and deadlines before the next planning session.</p>
+        </section>
+      </ms-card>
+    </div>
+    <app-showcase-code label="Basic card" [code]="basicSnippet" />
+  </section>
+
+  <section class="card-section">
+    <h2>Appearances</h2>
+    <div class="card-demo-grid card-demo-grid-three">
+      <ms-card appearance="outlined">
+        <header msCardHeader>
+          <h3 msCardTitle>Outlined</h3>
+        </header>
+        <section msCardContent>
+          <p>Default card treatment for ordinary content groups.</p>
+        </section>
+      </ms-card>
+
+      <ms-card appearance="elevated">
+        <header msCardHeader>
+          <h3 msCardTitle>Elevated</h3>
+        </header>
+        <section msCardContent>
+          <p>Raised treatment for surfaces that need a little more separation.</p>
+        </section>
+      </ms-card>
+
+      <ms-card appearance="filled">
+        <header msCardHeader>
+          <h3 msCardTitle>Filled</h3>
+        </header>
+        <section msCardContent>
+          <p>Muted treatment for grouped supporting information.</p>
+        </section>
+      </ms-card>
+    </div>
+    <app-showcase-code label="Card appearances" [code]="appearanceSnippet" />
+  </section>
+
+  <section class="card-section">
+    <h2>Media and actions</h2>
+    <div class="card-demo-grid">
+      <ms-card>
+        <div msCardMedia class="summary-media" aria-hidden="true"></div>
+
+        <header msCardHeader>
+          <h3 msCardTitle>Release summary</h3>
+          <p msCardSubtitle>Version 2.4 readiness</p>
+        </header>
+
+        <section msCardContent>
+          <p>Track launch checks, documentation updates, and stakeholder sign-off.</p>
+        </section>
+
+        <footer msCardFooter>
+          <button class="btn btn-primary btn-sm" type="button">Review</button>
+          <button class="btn btn-ghost btn-sm" type="button">Archive</button>
+        </footer>
+      </ms-card>
+    </div>
+    <app-showcase-code label="Card with media" [code]="mediaSnippet" />
+  </section>
+
+  <section class="card-section">
+    <h2>RTL mirroring</h2>
+    <div class="card-demo-grid rtl-demo" dir="rtl">
+      <ms-card>
+        <header msCardHeader>
+          <h3 msCardTitle>مراجعة المشروع</h3>
+          <p msCardSubtitle>تحديث أسبوعي</p>
+        </header>
+
+        <section msCardContent>
+          <p>تتبع الأولويات والمخاطر والخطوات التالية للفريق.</p>
+        </section>
+
+        <footer msCardFooter>
+          <button class="btn btn-primary btn-sm" type="button">فتح</button>
+          <button class="btn btn-ghost btn-sm" type="button">تأجيل</button>
+        </footer>
+      </ms-card>
+    </div>
+    <app-showcase-code label="Card RTL" [code]="rtlSnippet" />
+  </section>
+</main>
