@@ -31,6 +31,10 @@ export const routes: Routes = [
       import('./features/button-toggle/button-toggle').then((m) => m.ButtonToggle),
   },
   {
+    path: 'card',
+    loadComponent: () => import('./features/card/card').then((m) => m.Card),
+  },
+  {
     path: 'chip',
     loadComponent: () => import('./features/chip/chip').then((m) => m.Chip),
   },
