@@ -67,6 +67,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/side-nav/side-nav').then((m) => m.SideNav),
   },
   {
+    path: 'stepper',
+    loadComponent: () => import('./features/stepper/stepper').then((m) => m.Stepper),
+  },
+  {
     path: 'tables',
     loadComponent: () => import('./features/tables/tables').then((m) => m.Tables),
   },

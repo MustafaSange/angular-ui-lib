@@ -1,0 +1,152 @@
+<main class="stepper-page">
+  <header class="stepper-header">
+    <a class="btn btn-ghost back-link" routerLink="/">← Back to home</a>
+    <p class="eyebrow">Components</p>
+    <h1>Stepper</h1>
+    <p class="description">
+      Ordered workflow panels with horizontal and vertical layouts, projected titles, disabled
+      steps, and optional linear progression.
+    </p>
+  </header>
+
+  <section class="stepper-section">
+    <h2>Horizontal stepper</h2>
+    <p class="section-copy">Use the default orientation for compact multi-step flows.</p>
+    <div class="stepper-demo">
+      <ms-stepper>
+        <ms-step title="Account" [completed]="true">
+          <p>Collect account details and contact preferences.</p>
+        </ms-step>
+
+        <ms-step title="Billing">
+          <p>Capture billing address and payment details.</p>
+        </ms-step>
+
+        <ms-step title="Review">
+          <p>Review details before submitting the workflow.</p>
+        </ms-step>
+      </ms-stepper>
+    </div>
+    <app-showcase-code label="Horizontal stepper" [code]="horizontalSnippet" />
+  </section>
+
+  <section class="stepper-section">
+    <h2>Vertical stepper</h2>
+    <p class="section-copy">Switch to vertical orientation when labels need more room.</p>
+    <div class="stepper-demo">
+      <ms-stepper orientation="vertical" [selectedIndex]="1">
+        <ms-step title="Profile" [completed]="true">
+          <p>Profile details are complete.</p>
+        </ms-step>
+
+        <ms-step title="Plan">
+          <p>Select the plan that matches the workspace.</p>
+        </ms-step>
+
+        <ms-step title="Confirm">
+          <p>Confirm the selected workspace options.</p>
+        </ms-step>
+      </ms-stepper>
+    </div>
+    <app-showcase-code label="Vertical stepper" [code]="verticalSnippet" />
+  </section>
+
+  <section class="stepper-section">
+    <h2>Linear progression</h2>
+    <p class="section-copy">
+      Enable `linear` to block future steps until every enabled prior step is complete.
+    </p>
+    <div class="stepper-demo">
+      <ms-stepper [linear]="true" [(selectedIndex)]="controlledIndex">
+        <ms-step title="Profile" [completed]="true">
+          <p>Profile details are complete.</p>
+          <button class="btn btn-primary" type="button" (click)="controlledIndex.set(1)">
+            Continue
+          </button>
+        </ms-step>
+
+        <ms-step title="Plan">
+          <p>The review step remains blocked until this step is completed.</p>
+        </ms-step>
+
+        <ms-step title="Review">
+          <p>Review is available after every prior enabled step is complete.</p>
+        </ms-step>
+      </ms-stepper>
+    </div>
+    <app-showcase-code label="Linear stepper" [code]="linearSnippet" />
+  </section>
+
+  <section class="stepper-section">
+    <h2>Projected titles</h2>
+    <p class="section-copy">Use `msStepTitle` when a step label needs compact supporting markup.</p>
+    <div class="stepper-demo">
+      <ms-stepper>
+        <ms-step [completed]="true">
+          <ng-template msStepTitle> Account <span class="badge">Done</span> </ng-template>
+
+          <p>Account details passed review.</p>
+        </ms-step>
+
+        <ms-step>
+          <ng-template msStepTitle>
+            Billing <span class="status-dot" aria-hidden="true"></span>
+          </ng-template>
+
+          <p>Billing details are being edited.</p>
+        </ms-step>
+
+        <ms-step title="Review">
+          <p>Review all entered information.</p>
+        </ms-step>
+      </ms-stepper>
+    </div>
+    <app-showcase-code label="Projected title stepper" [code]="richTitleSnippet" />
+  </section>
+
+  <section class="stepper-section">
+    <h2>Disabled step</h2>
+    <p class="section-copy">Disabled steps cannot be clicked or reached with stepper navigation.</p>
+    <div class="stepper-demo">
+      <ms-stepper orientation="vertical">
+        <ms-step title="Workspace" [completed]="true">
+          <p>Workspace setup is complete.</p>
+        </ms-step>
+
+        <ms-step title="Invite team">
+          <p>Invite editors and reviewers before launch.</p>
+        </ms-step>
+
+        <ms-step title="Launch" [disabled]="true">
+          <p>Launch is unavailable until team invites are sent.</p>
+        </ms-step>
+      </ms-stepper>
+    </div>
+    <app-showcase-code label="Disabled stepper" [code]="disabledSnippet" />
+  </section>
+
+  <section class="stepper-section">
+    <h2>Keyboard and RTL behavior</h2>
+    <p class="section-copy">
+      Focus a step and use arrow keys, Home, End, Enter, or Space. This example scopes direction to
+      RTL.
+    </p>
+    <div class="stepper-demo rtl-demo" dir="rtl">
+      <span class="rtl-label">RTL context</span>
+      <ms-stepper>
+        <ms-step title="First">
+          <p>Use left and right arrow keys to move through steps in this RTL container.</p>
+        </ms-step>
+
+        <ms-step title="Second">
+          <p>Inline arrow navigation mirrors the surrounding direction.</p>
+        </ms-step>
+
+        <ms-step title="Third">
+          <p>Home focuses the first step and End focuses the last step.</p>
+        </ms-step>
+      </ms-stepper>
+    </div>
+    <app-showcase-code label="Keyboard stepper" [code]="keyboardSnippet" />
+  </section>
+</main>
