@@ -20,6 +20,7 @@ export const MATERIAL_ICONS = [
   'logout',
   'menu',
   'menu_open',
+  'more_horiz',
   'more_vert',
   'priority_high',
   'settings',

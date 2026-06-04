@@ -1,0 +1,15 @@
+<h2>Collapsed middle path</h2>
+<div class="breadcrumb-demo-row">
+  <ms-breadcrumb label="Project location">
+    <a msBreadcrumbItem href="/">Home</a>
+    <span class="ms-icon" msBreadcrumbSeparator aria-hidden="true">chevron_right</span>
+    <button class="btn btn-ghost btn-icon btn-sm" type="button" aria-label="Show parent pages">
+      <span class="ms-icon" aria-hidden="true">more_horiz</span>
+    </button>
+    <span class="ms-icon" msBreadcrumbSeparator aria-hidden="true">chevron_right</span>
+    <a msBreadcrumbItem href="/projects/design-system">Design system</a>
+    <span class="ms-icon" msBreadcrumbSeparator aria-hidden="true">chevron_right</span>
+    <span msBreadcrumbItem current>Components</span>
+  </ms-breadcrumb>
+</div>
+<app-showcase-code label="Collapsed breadcrumb" [code]="snippet" />

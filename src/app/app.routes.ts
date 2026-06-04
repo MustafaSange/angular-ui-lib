@@ -22,6 +22,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/bottom-sheet/bottom-sheet').then((m) => m.BottomSheet),
   },
   {
+    path: 'breadcrumb',
+    loadComponent: () => import('./features/breadcrumb/breadcrumb').then((m) => m.Breadcrumb),
+  },
+  {
     path: 'buttons',
     loadComponent: () => import('./features/buttons/buttons').then((m) => m.Buttons),
   },

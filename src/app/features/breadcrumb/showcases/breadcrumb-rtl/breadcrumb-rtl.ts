@@ -1,0 +1,36 @@
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import { BreadcrumbComponent, BreadcrumbItemDirective } from '../../../../shared/components/breadcrumb';
+import { ShowcaseCode } from '../../../../shared/components/showcase-code';
+
+@Component({
+  selector: 'app-breadcrumb-rtl-showcase',
+  imports: [BreadcrumbComponent, BreadcrumbItemDirective, ShowcaseCode],
+  templateUrl: './breadcrumb-rtl.html',
+  styleUrl: '../breadcrumb-showcase.scss',
+  host: {
+    class: 'breadcrumb-section',
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class BreadcrumbRtlShowcase {
+  protected readonly snippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import { BreadcrumbComponent, BreadcrumbItemDirective } from './shared/components/breadcrumb';
+
+@Component({
+  selector: 'app-breadcrumb-rtl-example',
+  imports: [BreadcrumbComponent, BreadcrumbItemDirective],
+  template: \`
+    <div dir="rtl">
+      <ms-breadcrumb label="مسار الصفحة">
+        <a msBreadcrumbItem href="/">الرئيسية</a>
+        <a msBreadcrumbItem href="/components">المكونات</a>
+        <span msBreadcrumbItem current>مسار التنقل</span>
+      </ms-breadcrumb>
+    </div>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class BreadcrumbRtlExample {}`;
+}

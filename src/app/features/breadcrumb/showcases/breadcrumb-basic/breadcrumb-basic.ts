@@ -1,0 +1,36 @@
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+
+import { BreadcrumbComponent, BreadcrumbItemDirective } from '../../../../shared/components/breadcrumb';
+import { ShowcaseCode } from '../../../../shared/components/showcase-code';
+
+@Component({
+  selector: 'app-breadcrumb-basic-showcase',
+  imports: [RouterLink, BreadcrumbComponent, BreadcrumbItemDirective, ShowcaseCode],
+  templateUrl: './breadcrumb-basic.html',
+  styleUrl: '../breadcrumb-showcase.scss',
+  host: {
+    class: 'breadcrumb-section',
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class BreadcrumbBasicShowcase {
+  protected readonly snippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+
+import { BreadcrumbComponent, BreadcrumbItemDirective } from './shared/components/breadcrumb';
+
+@Component({
+  selector: 'app-basic-breadcrumb-example',
+  imports: [RouterLink, BreadcrumbComponent, BreadcrumbItemDirective],
+  template: \`
+    <ms-breadcrumb>
+      <a msBreadcrumbItem routerLink="/">Home</a>
+      <a msBreadcrumbItem routerLink="/components">Components</a>
+      <span msBreadcrumbItem current>Breadcrumb</span>
+    </ms-breadcrumb>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class BasicBreadcrumbExample {}`;
+}
