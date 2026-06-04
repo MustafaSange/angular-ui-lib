@@ -75,6 +75,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/side-nav/side-nav').then((m) => m.SideNav),
   },
   {
+    path: 'slider',
+    loadComponent: () => import('./features/slider/slider').then((m) => m.Slider),
+  },
+  {
     path: 'stepper',
     loadComponent: () => import('./features/stepper/stepper').then((m) => m.Stepper),
   },
