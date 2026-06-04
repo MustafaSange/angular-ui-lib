@@ -1,7 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { BreadcrumbComponent, BreadcrumbItemDirective } from '../../../../shared/components/breadcrumb';
-import { ShowcaseCode } from '../../../../shared/components/showcase-code';
+import {
+  BreadcrumbComponent,
+  BreadcrumbItemDirective,
+} from '../../../../shared/ui-lib/components/breadcrumb';
+import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
 
 @Component({
   selector: 'app-breadcrumb-rtl-showcase',
@@ -16,7 +19,7 @@ import { ShowcaseCode } from '../../../../shared/components/showcase-code';
 export class BreadcrumbRtlShowcase {
   protected readonly snippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { BreadcrumbComponent, BreadcrumbItemDirective } from './shared/components/breadcrumb';
+import { BreadcrumbComponent, BreadcrumbItemDirective } from './shared/ui-lib';
 
 @Component({
   selector: 'app-breadcrumb-rtl-example',

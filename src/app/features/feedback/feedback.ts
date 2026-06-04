@@ -1,8 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { AlertComponent, ToastService } from '../../shared/components/feedback';
-import { ShowcaseCode } from '../../shared/components/showcase-code';
+import {
+  AlertComponent,
+  ToastService,
+} from '../../shared/ui-lib/components/feedback';
+import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 
 @Component({
   selector: 'app-feedback',
@@ -19,7 +22,7 @@ export class Feedback {
 
   protected readonly alertVariantsSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { AlertComponent } from './shared/components/feedback';
+import { AlertComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-alert-variants-example',
@@ -47,7 +50,7 @@ export class AlertVariantsExample {}`;
 
   protected readonly alertActionsSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { AlertComponent } from './shared/components/feedback';
+import { AlertComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-alert-actions-example',
@@ -68,7 +71,7 @@ export class AlertActionsExample {}`;
 
   protected readonly dismissibleAlertSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
-import { AlertComponent } from './shared/components/feedback';
+import { AlertComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-dismissible-alert-example',
@@ -93,7 +96,7 @@ export class DismissibleAlertExample {
 
   protected readonly toastVariantsSnippet = `import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { ToastOutletComponent, ToastService } from './shared/components/feedback';
+import { ToastOutletComponent, ToastService } from './shared/ui-lib';
 
 @Component({
   selector: 'app-toast-variants-example',
@@ -120,7 +123,7 @@ export class ToastVariantsExample {
 
   protected readonly persistentDangerSnippet = `import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { ToastOutletComponent, ToastService } from './shared/components/feedback';
+import { ToastOutletComponent, ToastService } from './shared/ui-lib';
 
 @Component({
   selector: 'app-persistent-danger-toast-example',
@@ -146,7 +149,7 @@ export class PersistentDangerToastExample {
 
   protected readonly toastActionSnippet = `import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 
-import { ToastOutletComponent, ToastService } from './shared/components/feedback';
+import { ToastOutletComponent, ToastService } from './shared/ui-lib';
 
 @Component({
   selector: 'app-toast-action-example',
@@ -177,7 +180,7 @@ export class ToastActionExample {
 
   protected readonly stackedToastsSnippet = `import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { ToastOutletComponent, ToastService } from './shared/components/feedback';
+import { ToastOutletComponent, ToastService } from './shared/ui-lib';
 
 @Component({
   selector: 'app-stacked-toasts-example',

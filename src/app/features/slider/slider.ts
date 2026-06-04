@@ -2,12 +2,12 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormField, form, max, min, schema } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
 
-import { ShowcaseCode } from '../../shared/components/showcase-code';
+import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 import {
   SignalFormField,
   SignalFormHint,
-} from '../../shared/components/signal-form-field';
-import { SliderComponent } from '../../shared/components/slider';
+} from '../../shared/ui-lib/components/signal-form-field';
+import { SliderComponent } from '../../shared/ui-lib/components/slider';
 
 @Component({
   selector: 'app-slider',
@@ -36,7 +36,7 @@ export class Slider {
 
   protected readonly basicSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
-import { SliderComponent } from './shared/components/slider';
+import { SliderComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-basic-slider-example',
@@ -59,7 +59,7 @@ export class BasicSliderExample {
 
   protected readonly rangeSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
-import { SliderComponent } from './shared/components/slider';
+import { SliderComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-configured-slider-example',
@@ -82,7 +82,7 @@ export class ConfiguredSliderExample {
 
   protected readonly disabledSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { SliderComponent } from './shared/components/slider';
+import { SliderComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-disabled-slider-example',
@@ -97,8 +97,8 @@ export class DisabledSliderExample {}`;
   protected readonly signalFormFieldSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormField, form, max, min, schema } from '@angular/forms/signals';
 
-import { SignalFormField, SignalFormHint } from './shared/components/signal-form-field';
-import { SliderComponent } from './shared/components/slider';
+import { SignalFormField, SignalFormHint } from './shared/ui-lib';
+import { SliderComponent } from '../../shared/ui-lib/components/slider';
 
 type BudgetForm = {
   budget: number;
@@ -141,7 +141,7 @@ export class FormFieldSliderExample {
 
   protected readonly rtlSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
-import { SliderComponent } from './shared/components/slider';
+import { SliderComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-rtl-slider-example',

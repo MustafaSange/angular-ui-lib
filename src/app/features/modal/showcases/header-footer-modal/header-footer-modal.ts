@@ -6,8 +6,8 @@ import {
   ModalComponent,
   ModalRef,
   ModalService,
-} from '../../../../shared/components/modal';
-import { ShowcaseCode } from '../../../../shared/components/showcase-code';
+} from '../../../../shared/ui-lib/components/modal';
+import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
 
 type TypedModalData = {
   projectName: string;
@@ -114,7 +114,7 @@ export class HeaderFooterModalShowcase {
   protected readonly snippet = `// review-changes-modal.ts
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { MODAL_DATA, MODAL_REF, ModalComponent, ModalRef } from './shared/components/modal';
+import { MODAL_DATA, MODAL_REF, ModalComponent, ModalRef } from './shared/ui-lib';
 
 export type ReviewChangesData = {
   projectName: string;
@@ -175,7 +175,7 @@ export class ReviewChangesModal {
 // project-settings.ts
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 
-import { ModalService } from './shared/components/modal';
+import { ModalService } from './shared/ui-lib';
 import type { ReviewChangesData, ReviewChangesResult } from './review-changes-modal';
 
 type SaveState =

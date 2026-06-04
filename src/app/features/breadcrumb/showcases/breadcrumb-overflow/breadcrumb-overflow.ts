@@ -4,8 +4,8 @@ import {
   BreadcrumbComponent,
   BreadcrumbItemDirective,
   BreadcrumbSeparatorDirective,
-} from '../../../../shared/components/breadcrumb';
-import { ShowcaseCode } from '../../../../shared/components/showcase-code';
+} from '../../../../shared/ui-lib/components/breadcrumb';
+import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
 
 @Component({
   selector: 'app-breadcrumb-overflow-showcase',
@@ -24,7 +24,7 @@ import {
   BreadcrumbComponent,
   BreadcrumbItemDirective,
   BreadcrumbSeparatorDirective,
-} from './shared/components/breadcrumb';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-overflow-breadcrumb-example',

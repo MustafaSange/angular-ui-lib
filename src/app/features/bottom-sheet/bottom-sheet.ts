@@ -10,8 +10,8 @@ import {
   BottomSheetRef,
   BottomSheetService,
   BottomSheetTrigger,
-} from '../../shared/components/bottom-sheet';
-import { ShowcaseCode } from '../../shared/components/showcase-code';
+} from '../../shared/ui-lib/components/bottom-sheet';
+import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 
 type ShareSheetData = {
   projectId: string;
@@ -92,7 +92,7 @@ import {
   BottomSheetClose,
   BottomSheetComponent,
   BottomSheetTrigger,
-} from './shared/components/bottom-sheet';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-bottom-sheet-actions-example',
@@ -130,7 +130,7 @@ export class BottomSheetActionsExample {
 
   protected readonly compactSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
-import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './shared/components/bottom-sheet';
+import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './shared/ui-lib';
 
 @Component({
   selector: 'app-compact-bottom-sheet-example',
@@ -158,7 +158,7 @@ export class CompactBottomSheetExample {
   protected readonly formSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './shared/components/bottom-sheet';
+import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './shared/ui-lib';
 
 @Component({
   selector: 'app-form-bottom-sheet-example',
@@ -194,7 +194,7 @@ export class FormBottomSheetExample {
 
   protected readonly fullSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
-import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './shared/components/bottom-sheet';
+import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './shared/ui-lib';
 
 @Component({
   selector: 'app-full-bottom-sheet-example',
@@ -226,7 +226,7 @@ export class FullBottomSheetExample {
 
   protected readonly lockedSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
-import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './shared/components/bottom-sheet';
+import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './shared/ui-lib';
 
 @Component({
   selector: 'app-locked-bottom-sheet-example',
@@ -264,7 +264,7 @@ import {
   BottomSheetComponent,
   BottomSheetRef,
   BottomSheetService,
-} from './shared/components/bottom-sheet';
+} from './shared/ui-lib';
 
 type ShareSheetData = {
   projectId: string;
@@ -337,7 +337,7 @@ export class ShareSheetLauncher {
 
   protected readonly rtlSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
-import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './shared/components/bottom-sheet';
+import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './shared/ui-lib';
 
 @Component({
   selector: 'app-rtl-bottom-sheet-example',

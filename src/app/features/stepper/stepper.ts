@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { ShowcaseCode } from '../../shared/components/showcase-code';
+import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 import {
   StepComponent,
   StepperComponent,
   StepTitleDirective,
-} from '../../shared/components/stepper';
+} from '../../shared/ui-lib/components/stepper';
 
 @Component({
   selector: 'app-stepper',
@@ -20,7 +20,7 @@ export class Stepper {
 
   protected readonly horizontalSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { StepComponent, StepperComponent } from './shared/components/stepper';
+import { StepComponent, StepperComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-horizontal-stepper-example',
@@ -46,7 +46,7 @@ export class HorizontalStepperExample {}`;
 
   protected readonly verticalSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { StepComponent, StepperComponent } from './shared/components/stepper';
+import { StepComponent, StepperComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-vertical-stepper-example',
@@ -72,7 +72,7 @@ export class VerticalStepperExample {}`;
 
   protected readonly linearSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
-import { StepComponent, StepperComponent } from './shared/components/stepper';
+import { StepComponent, StepperComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-linear-stepper-example',
@@ -107,7 +107,7 @@ import {
   StepComponent,
   StepperComponent,
   StepTitleDirective,
-} from './shared/components/stepper';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-rich-title-stepper-example',
@@ -141,7 +141,7 @@ export class RichTitleStepperExample {}`;
 
   protected readonly disabledSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { StepComponent, StepperComponent } from './shared/components/stepper';
+import { StepComponent, StepperComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-disabled-stepper-example',
@@ -167,7 +167,7 @@ export class DisabledStepperExample {}`;
 
   protected readonly keyboardSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { StepComponent, StepperComponent } from './shared/components/stepper';
+import { StepComponent, StepperComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-keyboard-stepper-example',

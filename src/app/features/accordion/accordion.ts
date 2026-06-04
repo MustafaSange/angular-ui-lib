@@ -5,8 +5,8 @@ import {
   AccordionComponent,
   AccordionItemComponent,
   AccordionTitleDirective,
-} from '../../shared/components/accordion';
-import { ShowcaseCode } from '../../shared/components/showcase-code';
+} from '../../shared/ui-lib/components/accordion';
+import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 
 @Component({
   selector: 'app-accordion',
@@ -24,7 +24,7 @@ import { ShowcaseCode } from '../../shared/components/showcase-code';
 export class Accordion {
   protected readonly basicSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { AccordionComponent, AccordionItemComponent } from './shared/components/accordion';
+import { AccordionComponent, AccordionItemComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-basic-accordion-example',
@@ -50,7 +50,7 @@ export class BasicAccordionExample {}`;
 
   protected readonly compactSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { AccordionComponent, AccordionItemComponent } from './shared/components/accordion';
+import { AccordionComponent, AccordionItemComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-compact-accordion-example',
@@ -80,7 +80,7 @@ import {
   AccordionComponent,
   AccordionItemComponent,
   AccordionTitleDirective,
-} from './shared/components/accordion';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-multiple-accordion-example',
@@ -114,7 +114,7 @@ export class MultipleAccordionExample {}`;
 
   protected readonly keyboardSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { AccordionComponent, AccordionItemComponent } from './shared/components/accordion';
+import { AccordionComponent, AccordionItemComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-keyboard-accordion-example',

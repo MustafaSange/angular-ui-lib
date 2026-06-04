@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { ShowcaseCode } from '../../shared/components/showcase-code';
+import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 import {
   TooltipComponent,
   TooltipPanelComponent,
   TooltipTrigger,
-} from '../../shared/components/tooltip';
+} from '../../shared/ui-lib/components/tooltip';
 
 @Component({
   selector: 'app-tooltip',
@@ -22,7 +22,7 @@ import {
   TooltipComponent,
   TooltipPanelComponent,
   TooltipTrigger,
-} from './shared/components/tooltip';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-icon-tooltip-example',
@@ -46,7 +46,7 @@ import {
   TooltipComponent,
   TooltipPanelComponent,
   TooltipTrigger,
-} from './shared/components/tooltip';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-tooltip-placement-example',
@@ -84,7 +84,7 @@ import {
   TooltipComponent,
   TooltipPanelComponent,
   TooltipTrigger,
-} from './shared/components/tooltip';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-tooltip-trigger-example',

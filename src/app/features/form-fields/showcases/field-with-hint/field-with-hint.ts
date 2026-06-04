@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { ShowcaseCode } from '../../../../shared/components/showcase-code';
+import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
 import {
   SignalFormField,
   SignalFormHint,
-} from '../../../../shared/components/signal-form-field';
+} from '../../../../shared/ui-lib/components/signal-form-field';
 
 @Component({
   selector: 'app-field-with-hint-showcase',
@@ -20,7 +20,7 @@ export class FieldWithHintShowcase {
 import {
   SignalFormField,
   SignalFormHint,
-} from './shared/components/signal-form-field';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-field-with-hint-example',

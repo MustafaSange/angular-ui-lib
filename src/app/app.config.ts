@@ -7,7 +7,7 @@ import {
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { MaterialIconsService } from './shared/services/material-icons/material-icons.service';
+import { MaterialIconsService } from './shared/ui-lib/services/material-icons/material-icons.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [

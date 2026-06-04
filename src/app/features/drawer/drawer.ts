@@ -1,8 +1,12 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { DrawerClose, DrawerComponent, DrawerTrigger } from '../../shared/components/drawer';
-import { ShowcaseCode } from '../../shared/components/showcase-code';
+import {
+  DrawerClose,
+  DrawerComponent,
+  DrawerTrigger,
+} from '../../shared/ui-lib/components/drawer';
+import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 
 @Component({
   selector: 'app-drawer',
@@ -18,7 +22,7 @@ export class Drawer {
 
   protected readonly startSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
-import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/components/drawer';
+import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/ui-lib';
 
 @Component({
   selector: 'app-navigation-drawer-example',
@@ -56,7 +60,7 @@ export class NavigationDrawerExample {
 
   protected readonly rtlSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
-import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/components/drawer';
+import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/ui-lib';
 
 @Component({
   selector: 'app-rtl-navigation-drawer-example',
@@ -92,7 +96,7 @@ export class RtlNavigationDrawerExample {
 
   protected readonly endSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
-import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/components/drawer';
+import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/ui-lib';
 
 @Component({
   selector: 'app-end-drawer-example',

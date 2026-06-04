@@ -5,8 +5,8 @@ import {
   PaginationComponent,
   PaginationState,
   getPaginationMeta,
-} from '../../shared/components/pagination';
-import { ShowcaseCode } from '../../shared/components/showcase-code';
+} from '../../shared/ui-lib/components/pagination';
+import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 
 @Component({
   selector: 'app-pagination',
@@ -73,7 +73,7 @@ import {
   PaginationComponent,
   PaginationState,
   getPaginationMeta,
-} from './shared/components/pagination';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-pagination-basic-example',
@@ -101,7 +101,7 @@ import {
   PaginationComponent,
   PaginationState,
   getPaginationMeta,
-} from './shared/components/pagination';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-pagination-ellipsis-example',
@@ -127,7 +127,7 @@ export class PaginationEllipsisExample {
 
   protected readonly summaryOffSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
-import { PaginationComponent, PaginationState } from './shared/components/pagination';
+import { PaginationComponent, PaginationState } from './shared/ui-lib';
 
 @Component({
   selector: 'app-pagination-summary-off-example',
@@ -149,7 +149,7 @@ export class PaginationSummaryOffExample {
 
   protected readonly alignmentSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
-import { PaginationComponent, PaginationState } from './shared/components/pagination';
+import { PaginationComponent, PaginationState } from './shared/ui-lib';
 
 @Component({
   selector: 'app-pagination-alignment-example',
@@ -184,7 +184,7 @@ export class PaginationAlignmentExample {
 
   protected readonly disabledSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
-import { PaginationComponent, PaginationState } from './shared/components/pagination';
+import { PaginationComponent, PaginationState } from './shared/ui-lib';
 
 @Component({
   selector: 'app-pagination-disabled-example',
@@ -205,7 +205,7 @@ export class PaginationDisabledExample {
 
   protected readonly rtlSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
-import { PaginationComponent, PaginationState } from './shared/components/pagination';
+import { PaginationComponent, PaginationState } from './shared/ui-lib';
 
 @Component({
   selector: 'app-pagination-rtl-example',

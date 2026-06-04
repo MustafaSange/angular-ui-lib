@@ -5,8 +5,8 @@ import {
   CopyButtonComponent,
   CopyRevealComponent,
   copyTextToClipboard,
-} from '../../shared/components/copy-button';
-import { ShowcaseCode } from '../../shared/components/showcase-code';
+} from '../../shared/ui-lib/components/copy-button';
+import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 
 @Component({
   selector: 'app-clipboard',
@@ -20,7 +20,7 @@ export class Clipboard {
 
   protected readonly inputSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { CopyButtonComponent } from './shared/components/copy-button';
+import { CopyButtonComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-copy-input-example',
@@ -35,7 +35,7 @@ export class CopyInputExample {}`;
 
   protected readonly projectedSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { CopyButtonComponent } from './shared/components/copy-button';
+import { CopyButtonComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-copy-projected-example',
@@ -51,7 +51,7 @@ export class CopyProjectedExample {}`;
 
   protected readonly revealSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { CopyRevealComponent } from './shared/components/copy-button';
+import { CopyRevealComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-copy-reveal-example',
@@ -67,7 +67,7 @@ export class CopyRevealExample {}`;
 
   protected readonly helperSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
-import { copyTextToClipboard } from './shared/components/copy-button';
+import { copyTextToClipboard } from './shared/ui-lib';
 
 @Component({
   selector: 'app-copy-helper-example',
@@ -90,7 +90,7 @@ export class CopyHelperExample {
 
   protected readonly statesSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { CopyButtonComponent } from './shared/components/copy-button';
+import { CopyButtonComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-copy-states-example',

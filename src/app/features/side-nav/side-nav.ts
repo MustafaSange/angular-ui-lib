@@ -6,8 +6,8 @@ import {
   SideNavItem,
   SideNavSectionComponent,
   SideNavTrigger,
-} from '../../shared/components/side-nav';
-import { ShowcaseCode } from '../../shared/components/showcase-code';
+} from '../../shared/ui-lib/components/side-nav';
+import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 
 @Component({
   selector: 'app-side-nav',
@@ -36,7 +36,7 @@ import {
   SideNavItem,
   SideNavSectionComponent,
   SideNavTrigger,
-} from './shared/components/side-nav';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-side-nav-example',
@@ -88,7 +88,7 @@ import {
   SideNavItem,
   SideNavSectionComponent,
   SideNavTrigger,
-} from './shared/components/side-nav';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-collapsed-side-nav-example',

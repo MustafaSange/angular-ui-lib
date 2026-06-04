@@ -11,9 +11,9 @@ import {
   PopoverComponent,
   PopoverPanelComponent,
   PopoverTrigger,
-} from '../../shared/components/menu-popover';
-import { ShowcaseCode } from '../../shared/components/showcase-code';
-import { SignalFormField } from '../../shared/components/signal-form-field';
+} from '../../shared/ui-lib/components/menu-popover';
+import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
+import { SignalFormField } from '../../shared/ui-lib/components/signal-form-field';
 
 @Component({
   selector: 'app-menu-popover',
@@ -47,7 +47,7 @@ import {
   MenuItem,
   MenuPanelComponent,
   MenuTrigger,
-} from './shared/components/menu-popover';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-action-menu-example',
@@ -78,7 +78,7 @@ import {
   MenuItem,
   MenuPanelComponent,
   MenuTrigger,
-} from './shared/components/menu-popover';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-project-actions-example',
@@ -127,7 +127,7 @@ import {
   MenuItem,
   MenuPanelComponent,
   MenuTrigger,
-} from './shared/components/menu-popover';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-overflow-menu-example',
@@ -159,8 +159,8 @@ import {
   PopoverComponent,
   PopoverPanelComponent,
   PopoverTrigger,
-} from './shared/components/menu-popover';
-import { SignalFormField } from './shared/components/signal-form-field';
+} from './shared/ui-lib';
+import { SignalFormField } from '../../shared/ui-lib/components/signal-form-field';
 
 @Component({
   selector: 'app-filter-popover-example',
@@ -212,7 +212,7 @@ import {
   PopoverComponent,
   PopoverPanelComponent,
   PopoverTrigger,
-} from './shared/components/menu-popover';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-side-popover-example',
