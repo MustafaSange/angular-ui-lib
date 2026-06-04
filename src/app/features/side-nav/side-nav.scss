@@ -1,13 +1,9 @@
 .side-nav-page {
   display: grid;
   gap: var(--spacing-32);
-  padding-block: var(--spacing-32);
-}
-
-.side-nav-header,
-.side-nav-section-demo {
-  inline-size: min(100% - (var(--spacing-24) * 2), var(--container-lg));
+  max-inline-size: var(--container-page);
   margin-inline: auto;
+  padding: var(--spacing-32) var(--spacing-16);
 }
 
 .side-nav-header {
