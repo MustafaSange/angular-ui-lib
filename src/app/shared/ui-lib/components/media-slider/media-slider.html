@@ -1,0 +1,31 @@
+<div class="media-slider-shell">
+  <button
+    class="media-slider-button media-slider-button-previous"
+    type="button"
+    [attr.aria-label]="previousLabel()"
+    [disabled]="!canScrollPrevious()"
+    (click)="scrollPrevious()"
+  >
+    <span class="ms-icon media-slider-icon" aria-hidden="true">chevron_left</span>
+  </button>
+
+  <div
+    #track
+    class="media-slider-track"
+    role="region"
+    tabindex="0"
+    [attr.aria-label]="ariaLabel()"
+  >
+    <ng-content select="ms-media-slide" />
+  </div>
+
+  <button
+    class="media-slider-button media-slider-button-next"
+    type="button"
+    [attr.aria-label]="nextLabel()"
+    [disabled]="!canScrollNext()"
+    (click)="scrollNext()"
+  >
+    <span class="ms-icon media-slider-icon" aria-hidden="true">chevron_right</span>
+  </button>
+</div>
