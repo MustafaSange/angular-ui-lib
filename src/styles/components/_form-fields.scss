@@ -98,9 +98,16 @@ ms-signal-form-field {
 
   input,
   textarea,
-  select {
+  select,
+  ms-button-toggle-group {
     flex: 1 1 auto;
     inline-size: 100%;
+    min-inline-size: 0;
+  }
+
+  input,
+  textarea,
+  select {
     min-inline-size: 0;
     min-height: var(--control-height-md);
     padding-inline: var(--control-padding-x-xs);
