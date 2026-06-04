@@ -1,0 +1,27 @@
+:host {
+  display: block;
+}
+
+h2 {
+  margin-block-end: var(--spacing-16);
+  font-size: var(--font-size-lg);
+}
+
+.breadcrumb-demo-row {
+  display: grid;
+  min-inline-size: 0;
+  gap: var(--spacing-12);
+
+  & + app-showcase-code {
+    display: block;
+    margin-block-start: var(--spacing-16);
+  }
+}
+
+.breadcrumb-demo-constrained {
+  max-inline-size: 34rem;
+}
+
+.rtl-demo {
+  justify-content: flex-start;
+}
