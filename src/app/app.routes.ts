@@ -63,6 +63,11 @@ export const routes: Routes = [
     loadComponent: () => import('./features/modal/modal').then((m) => m.Modal),
   },
   {
+    path: 'media-slider',
+    loadComponent: () =>
+      import('./features/media-slider/media-slider').then((m) => m.MediaSlider),
+  },
+  {
     path: 'drawer',
     loadComponent: () => import('./features/drawer/drawer').then((m) => m.Drawer),
   },

@@ -1,0 +1,161 @@
+<main class="media-slider-page">
+  <header class="media-slider-header">
+    <a class="btn btn-ghost back-link" routerLink="/">← Back to home</a>
+    <p class="eyebrow">Components</p>
+    <h1>Media slider</h1>
+    <p class="description">
+      Native horizontal scrolling with mandatory snap positions, smooth controls, and optional
+      captions.
+    </p>
+  </header>
+
+  <section class="media-slider-section">
+    <h2>Centered photo slider</h2>
+    <p class="section-copy">The default snap alignment centers the active slide in the viewport.</p>
+    <div class="media-slider-demo">
+      <ms-media-slider aria-label="Featured photos">
+        <ms-media-slide>
+          <div class="photo photo-coast" role="img" aria-label="Rocky coast at sunrise"></div>
+        </ms-media-slide>
+
+        <ms-media-slide>
+          <div class="photo photo-city" role="img" aria-label="City street at dusk"></div>
+        </ms-media-slide>
+
+        <ms-media-slide>
+          <div class="photo photo-studio" role="img" aria-label="Studio desk with sketches"></div>
+        </ms-media-slide>
+
+        <ms-media-slide>
+          <div class="photo photo-garden" role="img" aria-label="Garden path after rain"></div>
+        </ms-media-slide>
+      </ms-media-slider>
+    </div>
+    <app-showcase-code label="Basic media slider" [code]="basicSnippet" />
+  </section>
+
+  <section class="media-slider-section">
+    <h2>Large single-slide view</h2>
+    <p class="section-copy">Use `slideSize="90%"` when one large slide should dominate the track.</p>
+    <div class="media-slider-demo">
+      <ms-media-slider slideSize="90%" aria-label="Large feature slides">
+        <ms-media-slide>
+          <div class="feature-frame feature-frame-primary">Launch story</div>
+          <p msMediaCaption>Each slide takes 90% of the slider track.</p>
+        </ms-media-slide>
+
+        <ms-media-slide>
+          <div class="feature-frame feature-frame-success">Product detail</div>
+          <p msMediaCaption>Center snapping keeps one large slide in focus.</p>
+        </ms-media-slide>
+
+        <ms-media-slide>
+          <div class="feature-frame feature-frame-danger">Editorial crop</div>
+        </ms-media-slide>
+      </ms-media-slider>
+    </div>
+    <app-showcase-code label="Large media slider" [code]="fullPageSnippet" />
+  </section>
+
+  <section class="media-slider-section">
+    <h2>Optional captions</h2>
+    <p class="section-copy">Caption space appears only on slides that project `[msMediaCaption]`.</p>
+    <div class="media-slider-demo">
+      <ms-media-slider aria-label="Gallery with captions">
+        <ms-media-slide>
+          <div class="photo photo-market" role="img" aria-label="Open-air market tables"></div>
+          <p msMediaCaption>Morning market, natural light, editorial crop.</p>
+        </ms-media-slide>
+
+        <ms-media-slide>
+          <div class="photo photo-interior" role="img" aria-label="Warm modern interior"></div>
+        </ms-media-slide>
+
+        <ms-media-slide>
+          <div class="photo photo-trail" role="img" aria-label="Green hillside trail"></div>
+          <p msMediaCaption>Trail study for outdoor campaign imagery.</p>
+        </ms-media-slide>
+      </ms-media-slider>
+    </div>
+    <app-showcase-code label="Media slider captions" [code]="captionSnippet" />
+  </section>
+
+  <section class="media-slider-section">
+    <h2>Start and end snap alignment</h2>
+    <p class="section-copy">Set `snapAlign` when a layout should snap to an edge instead of center.</p>
+    <div class="media-slider-demo alignment-demo">
+      <ms-media-slider snapAlign="start" aria-label="Start aligned photos">
+        <ms-media-slide>
+          <div class="alignment-tile tile-blue">Start</div>
+        </ms-media-slide>
+        <ms-media-slide>
+          <div class="alignment-tile tile-green">Middle</div>
+        </ms-media-slide>
+        <ms-media-slide>
+          <div class="alignment-tile tile-coral">End</div>
+        </ms-media-slide>
+      </ms-media-slider>
+
+      <ms-media-slider snapAlign="end" aria-label="End aligned photos">
+        <ms-media-slide>
+          <div class="alignment-tile tile-coral">Start</div>
+        </ms-media-slide>
+        <ms-media-slide>
+          <div class="alignment-tile tile-blue">Middle</div>
+        </ms-media-slide>
+        <ms-media-slide>
+          <div class="alignment-tile tile-green">End</div>
+        </ms-media-slide>
+      </ms-media-slider>
+    </div>
+    <app-showcase-code label="Media slider alignment" [code]="alignmentSnippet" />
+  </section>
+
+  <section class="media-slider-section">
+    <h2>Mixed projected content</h2>
+    <p class="section-copy">Slides can contain cards, media previews, or other reusable content.</p>
+    <div class="media-slider-demo">
+      <ms-media-slider aria-label="Mixed media cards">
+        <ms-media-slide>
+          <div class="mixed-card">
+            <strong>Campaign frame</strong>
+            <span>Use any projected content as a snapped slide.</span>
+          </div>
+          <p msMediaCaption>Projected card content.</p>
+        </ms-media-slide>
+
+        <ms-media-slide>
+          <div class="alignment-tile tile-green">Video preview</div>
+        </ms-media-slide>
+
+        <ms-media-slide>
+          <div class="alignment-tile tile-blue">Product crop</div>
+          <p msMediaCaption>Caption text stays optional per slide.</p>
+        </ms-media-slide>
+      </ms-media-slider>
+    </div>
+    <app-showcase-code label="Mixed content media slider" [code]="mixedSnippet" />
+  </section>
+
+  <section class="media-slider-section">
+    <h2>RTL mirroring</h2>
+    <p class="section-copy">Controls and scroll behavior remain usable in right-to-left containers.</p>
+    <div class="media-slider-demo rtl-demo" dir="rtl">
+      <ms-media-slider aria-label="معرض الصور">
+        <ms-media-slide>
+          <div class="alignment-tile tile-blue">الأول</div>
+          <p msMediaCaption>تعليق اختياري أسفل الشريحة.</p>
+        </ms-media-slide>
+
+        <ms-media-slide>
+          <div class="alignment-tile tile-green">الثاني</div>
+        </ms-media-slide>
+
+        <ms-media-slide>
+          <div class="alignment-tile tile-coral">الثالث</div>
+        </ms-media-slide>
+      </ms-media-slider>
+    </div>
+    <app-showcase-code label="Media slider RTL" [code]="rtlSnippet" />
+  </section>
+</main>

@@ -1,0 +1,205 @@
+:host {
+  display: block;
+  min-block-size: 100svh;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+}
+
+.media-slider-page {
+  max-inline-size: var(--container-page);
+  margin-inline: auto;
+  padding: var(--spacing-32) var(--spacing-16);
+}
+
+.media-slider-header {
+  margin-block-end: var(--spacing-32);
+}
+
+.back-link {
+  margin-block-end: var(--spacing-16);
+}
+
+.eyebrow {
+  margin: 0 0 var(--spacing-8);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-heading);
+}
+
+h2 {
+  margin-block-end: var(--spacing-8);
+  font-size: var(--font-size-lg);
+}
+
+.description,
+.section-copy {
+  color: var(--color-text-secondary);
+}
+
+.description {
+  margin-block-start: var(--spacing-8);
+}
+
+.section-copy {
+  margin-block-end: var(--spacing-16);
+}
+
+.media-slider-section {
+  padding: var(--spacing-20);
+  border: var(--border-width-sm) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+
+  & + & {
+    margin-block-start: var(--spacing-16);
+  }
+}
+
+.media-slider-demo + app-showcase-code {
+  display: block;
+  margin-block-start: var(--spacing-16);
+}
+
+.alignment-demo {
+  display: grid;
+  gap: var(--spacing-20);
+}
+
+.photo,
+.alignment-tile,
+.mixed-card,
+.feature-frame {
+  display: grid;
+  aspect-ratio: 4 / 3;
+  place-items: center;
+}
+
+.photo,
+.alignment-tile,
+.mixed-card {
+  min-block-size: 16rem;
+}
+
+.feature-frame {
+  min-block-size: min(34rem, 62vh);
+}
+
+.photo {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--photo-a) 54%, transparent), transparent 62%),
+    linear-gradient(45deg, color-mix(in srgb, var(--photo-b) 48%, transparent), transparent 58%),
+    var(--photo-base);
+}
+
+.photo-coast {
+  --photo-a: var(--color-primary);
+  --photo-b: var(--color-info);
+  --photo-base: var(--color-surface-muted);
+}
+
+.photo-city {
+  --photo-a: var(--color-danger);
+  --photo-b: var(--color-warning);
+  --photo-base: var(--color-surface-raised);
+}
+
+.photo-studio {
+  --photo-a: var(--color-success);
+  --photo-b: var(--color-primary);
+  --photo-base: var(--color-surface-muted);
+}
+
+.photo-garden,
+.photo-market,
+.photo-interior,
+.photo-trail {
+  --photo-base: var(--color-surface-muted);
+}
+
+.photo-garden {
+  --photo-a: var(--color-success);
+  --photo-b: var(--color-info);
+}
+
+.photo-market {
+  --photo-a: var(--color-warning);
+  --photo-b: var(--color-danger);
+}
+
+.photo-interior {
+  --photo-a: var(--color-primary);
+  --photo-b: var(--color-success);
+}
+
+.photo-trail {
+  --photo-a: var(--color-success);
+  --photo-b: var(--color-warning);
+}
+
+.alignment-tile,
+.mixed-card,
+.feature-frame {
+  padding: var(--spacing-20);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+  text-align: center;
+}
+
+.tile-blue {
+  background-color: color-mix(in srgb, var(--color-info) 18%, var(--color-surface-muted));
+}
+
+.tile-green {
+  background-color: color-mix(in srgb, var(--color-success) 20%, var(--color-surface-muted));
+}
+
+.tile-coral {
+  background-color: color-mix(in srgb, var(--color-danger) 16%, var(--color-surface-muted));
+}
+
+.feature-frame-primary {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 34%, transparent), transparent),
+    var(--color-surface-muted);
+}
+
+.feature-frame-success {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--color-success) 30%, transparent), transparent),
+    var(--color-surface-muted);
+}
+
+.feature-frame-danger {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--color-danger) 24%, transparent), transparent),
+    var(--color-surface-muted);
+}
+
+.mixed-card {
+  align-content: center;
+  gap: var(--spacing-8);
+  border: var(--border-width-sm) solid var(--color-border);
+  background-color: var(--color-surface-raised);
+
+  span {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-regular);
+  }
+}
+
+.rtl-demo {
+  text-align: start;
+}
