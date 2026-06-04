@@ -19,11 +19,20 @@ import { ShowcaseCode } from '../../../../shared/components/showcase-code';
 
       <p>Projected modal content.</p>
 
-      <div slot="footer">
+      <div class="modal-actions" slot="footer">
         <button class="btn btn-secondary" type="button" (click)="modalRef.close()">Cancel</button>
         <button class="btn btn-primary" type="button" (click)="modalRef.close()">Save</button>
       </div>
     </ms-modal>
+  `,
+  styles: `
+    .modal-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: var(--spacing-8);
+    }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -60,11 +69,20 @@ import { MODAL_REF, ModalComponent, ModalRef } from './shared/components/modal';
 
       <p>Projected modal content.</p>
 
-      <div slot="footer">
+      <div class="modal-actions" slot="footer">
         <button class="btn btn-secondary" type="button" (click)="modalRef.close()">Cancel</button>
         <button class="btn btn-primary" type="button" (click)="modalRef.close()">Save</button>
       </div>
     </ms-modal>
+  \`,
+  styles: \`
+    .modal-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: var(--spacing-8);
+    }
   \`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

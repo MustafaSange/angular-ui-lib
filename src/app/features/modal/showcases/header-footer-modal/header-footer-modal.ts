@@ -50,7 +50,7 @@ type ModalResultState =
         <p>The opener records a typed result when an action is clicked.</p>
       </div>
 
-      <div slot="footer">
+      <div class="modal-actions" slot="footer">
         <button class="btn btn-secondary" type="button" (click)="modalRef.close({ action: 'cancel' })">
           Cancel
         </button>
@@ -63,6 +63,15 @@ type ModalResultState =
         </button>
       </div>
     </ms-modal>
+  `,
+  styles: `
+    .modal-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: var(--spacing-8);
+    }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -133,7 +142,7 @@ export type ReviewChangesResult =
 
       <p>Review changes for {{ data.projectName }} before saving.</p>
 
-      <div slot="footer">
+      <div class="modal-actions" slot="footer">
         <button class="btn btn-secondary" type="button" (click)="modalRef.close({ action: 'cancel' })">
           Cancel
         </button>
@@ -146,6 +155,15 @@ export type ReviewChangesResult =
         </button>
       </div>
     </ms-modal>
+  \`,
+  styles: \`
+    .modal-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: var(--spacing-8);
+    }
   \`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
