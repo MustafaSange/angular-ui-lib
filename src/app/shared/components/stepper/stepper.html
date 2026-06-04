@@ -1,0 +1,64 @@
+<div
+  class="stepper"
+  [class.stepper-horizontal]="orientation() === 'horizontal'"
+  [class.stepper-vertical]="orientation() === 'vertical'"
+>
+  <div class="step-list" role="tablist" [attr.aria-orientation]="orientation()">
+    @for (step of steps(); track step; let index = $index; let last = $last) {
+      <div
+        class="step-item"
+        [class.step-item-current]="selectedIndex() === index"
+        [class.step-item-completed]="step.completed()"
+        [class.step-item-disabled]="step.disabled()"
+        [class.step-item-blocked]="isBlocked(index)"
+      >
+        <button
+          #stepButton
+          class="step"
+          type="button"
+          role="tab"
+          [id]="stepId(index)"
+          [disabled]="step.disabled() || isBlocked(index)"
+          [attr.aria-controls]="panelId(index)"
+          [attr.aria-current]="selectedIndex() === index ? 'step' : null"
+          [attr.aria-disabled]="step.disabled() || isBlocked(index) ? 'true' : null"
+          [attr.aria-selected]="selectedIndex() === index"
+          [attr.tabindex]="selectedIndex() === index ? 0 : -1"
+          (click)="select(index)"
+          (keydown)="handleKeydown($event, index)"
+        >
+          <span class="step-marker">
+            @if (step.completed()) {
+              <span class="ms-icon" aria-hidden="true">check</span>
+            } @else {
+              {{ index + 1 }}
+            }
+          </span>
+
+          <span class="step-label">
+            @if (step.titleTemplate(); as titleTemplate) {
+              <ng-container [ngTemplateOutlet]="titleTemplate.template" />
+            } @else {
+              {{ step.title() }}
+            }
+          </span>
+        </button>
+
+        @if (!last) {
+          <span class="step-connector" aria-hidden="true"></span>
+        }
+      </div>
+    }
+  </div>
+
+  @if (selectedStep(); as step) {
+    <div
+      class="step-panel"
+      role="tabpanel"
+      [id]="panelId(selectedIndex())"
+      [attr.aria-labelledby]="stepId(selectedIndex())"
+    >
+      <ng-container [ngTemplateOutlet]="step.content()" />
+    </div>
+  }
+</div>
