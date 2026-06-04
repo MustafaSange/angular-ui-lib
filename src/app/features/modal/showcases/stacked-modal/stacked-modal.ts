@@ -6,8 +6,8 @@ import {
   ModalComponent,
   ModalRef,
   ModalService,
-} from '../../../../shared/components/modal';
-import { ShowcaseCode } from '../../../../shared/components/showcase-code';
+} from '../../../../shared/ui-lib/components/modal';
+import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
 
 type StackedChildModalData = {
   name: string;
@@ -69,7 +69,7 @@ import {
   MODAL_REF,
   ModalComponent,
   ModalRef,
-} from './shared/components/modal';
+} from './shared/ui-lib';
 
 export type StackedChildModalData = {
   name: string;
@@ -99,7 +99,7 @@ export class StackedChildModal {
 // stacked-parent-modal.ts
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { MODAL_REF, ModalComponent, ModalRef, ModalService } from './shared/components/modal';
+import { MODAL_REF, ModalComponent, ModalRef, ModalService } from './shared/ui-lib';
 import type { StackedChildModalData } from './stacked-child-modal';
 
 @Component({
@@ -137,7 +137,7 @@ export class StackedParentModal {
 // workflows-page.ts
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { ModalService } from './shared/components/modal';
+import { ModalService } from './shared/ui-lib';
 
 @Component({
   selector: 'app-workflows-page',

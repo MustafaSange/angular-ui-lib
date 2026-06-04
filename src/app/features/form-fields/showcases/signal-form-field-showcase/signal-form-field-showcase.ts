@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormField, form, required, schema } from '@angular/forms/signals';
 
-import { ShowcaseCode } from '../../../../shared/components/showcase-code';
+import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
 import {
   SignalFormError,
   SignalFormField,
   SignalFormHint,
-} from '../../../../shared/components/signal-form-field';
+} from '../../../../shared/ui-lib/components/signal-form-field';
 
 type SignalFormExample = {
   email: string;
@@ -45,7 +45,7 @@ import {
   SignalFormError,
   SignalFormField,
   SignalFormHint,
-} from './shared/components/signal-form-field';
+} from './shared/ui-lib';
 
 type EmailForm = {
   email: string;

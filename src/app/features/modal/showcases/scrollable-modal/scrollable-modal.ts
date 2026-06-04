@@ -6,8 +6,8 @@ import {
   ModalComponent,
   ModalRef,
   ModalService,
-} from '../../../../shared/components/modal';
-import { ShowcaseCode } from '../../../../shared/components/showcase-code';
+} from '../../../../shared/ui-lib/components/modal';
+import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
 
 type ScrollableModalData = {
   itemCount: number;
@@ -56,7 +56,7 @@ export class ScrollableModalShowcase {
   protected readonly snippet = `// activity-log-modal.ts
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { MODAL_DATA, MODAL_REF, ModalComponent, ModalRef } from './shared/components/modal';
+import { MODAL_DATA, MODAL_REF, ModalComponent, ModalRef } from './shared/ui-lib';
 
 export type ActivityLogModalData = {
   itemCount: number;
@@ -92,7 +92,7 @@ export class ActivityLogModal {
 // audit-page.ts
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { ModalService } from './shared/components/modal';
+import { ModalService } from './shared/ui-lib';
 import type { ActivityLogModalData } from './activity-log-modal';
 
 @Component({

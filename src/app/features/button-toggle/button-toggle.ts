@@ -5,12 +5,12 @@ import {
   ButtonToggleDirective,
   ButtonToggleGroup,
   type ButtonToggleValue,
-} from '../../shared/components/button-toggle';
-import { ShowcaseCode } from '../../shared/components/showcase-code';
+} from '../../shared/ui-lib/components/button-toggle';
+import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 import {
   SignalFormField,
   SignalFormHint,
-} from '../../shared/components/signal-form-field';
+} from '../../shared/ui-lib/components/signal-form-field';
 
 @Component({
   selector: 'app-button-toggle',
@@ -39,7 +39,7 @@ import {
   ButtonToggleDirective,
   ButtonToggleGroup,
   type ButtonToggleValue,
-} from './shared/components/button-toggle';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-basic-button-toggle-example',
@@ -63,7 +63,7 @@ import {
   ButtonToggleDirective,
   ButtonToggleGroup,
   type ButtonToggleValue,
-} from './shared/components/button-toggle';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-icon-button-toggle-example',
@@ -96,7 +96,7 @@ import {
   ButtonToggleDirective,
   ButtonToggleGroup,
   type ButtonToggleValue,
-} from './shared/components/button-toggle';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-disabled-button-toggle-example',
@@ -125,11 +125,11 @@ import {
   ButtonToggleDirective,
   ButtonToggleGroup,
   type ButtonToggleValue,
-} from './shared/components/button-toggle';
+} from './shared/ui-lib';
 import {
   SignalFormField,
   SignalFormHint,
-} from './shared/components/signal-form-field';
+} from '../../shared/ui-lib/components/signal-form-field';
 
 @Component({
   selector: 'app-form-field-button-toggle-example',
@@ -158,7 +158,7 @@ import {
   ButtonToggleDirective,
   ButtonToggleGroup,
   type ButtonToggleValue,
-} from './shared/components/button-toggle';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-rtl-button-toggle-example',

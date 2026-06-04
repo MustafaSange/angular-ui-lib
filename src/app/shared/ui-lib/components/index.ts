@@ -13,6 +13,7 @@ export * from './feedback';
 export * from './menu-popover';
 export * from './modal';
 export * from './pagination';
+export * from './showcase-code';
 export * from './side-nav';
 export * from './signal-form-field';
 export * from './slider';

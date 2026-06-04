@@ -5,8 +5,8 @@ import {
   ChoiceHint,
   RadioControl,
   RadioGroup,
-} from '../../../../shared/components/choice-controls';
-import { ShowcaseCode } from '../../../../shared/components/showcase-code';
+} from '../../../../shared/ui-lib/components/choice-controls';
+import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
 
 @Component({
   selector: 'app-radio-group-showcase',
@@ -24,7 +24,7 @@ import {
   ChoiceHint,
   RadioControl,
   RadioGroup,
-} from './shared/components/choice-controls';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-radio-group-example',

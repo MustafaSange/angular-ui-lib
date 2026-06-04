@@ -1,8 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { BreadcrumbComponent, BreadcrumbItemDirective } from '../../../../shared/components/breadcrumb';
-import { ShowcaseCode } from '../../../../shared/components/showcase-code';
+import {
+  BreadcrumbComponent,
+  BreadcrumbItemDirective,
+} from '../../../../shared/ui-lib/components/breadcrumb';
+import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
 
 @Component({
   selector: 'app-breadcrumb-basic-showcase',
@@ -18,7 +21,7 @@ export class BreadcrumbBasicShowcase {
   protected readonly snippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { BreadcrumbComponent, BreadcrumbItemDirective } from './shared/components/breadcrumb';
+import { BreadcrumbComponent, BreadcrumbItemDirective } from './shared/ui-lib';
 
 @Component({
   selector: 'app-basic-breadcrumb-example',

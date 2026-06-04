@@ -1,8 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { ShowcaseCode } from '../../shared/components/showcase-code';
-import { TabComponent, TabTitleDirective, TabsComponent } from '../../shared/components/tabs';
+import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
+import {
+  TabComponent,
+  TabTitleDirective,
+  TabsComponent,
+} from '../../shared/ui-lib/components/tabs';
 
 @Component({
   selector: 'app-tabs',
@@ -14,7 +18,7 @@ import { TabComponent, TabTitleDirective, TabsComponent } from '../../shared/com
 export class Tabs {
   protected readonly simpleSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { TabComponent, TabsComponent } from './shared/components/tabs';
+import { TabComponent, TabsComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-simple-tabs-example',
@@ -40,7 +44,7 @@ export class SimpleTabsExample {}`;
 
   protected readonly projectedTitleSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { TabComponent, TabTitleDirective, TabsComponent } from './shared/components/tabs';
+import { TabComponent, TabTitleDirective, TabsComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-projected-title-tabs-example',
@@ -74,7 +78,7 @@ export class ProjectedTitleTabsExample {}`;
 
   protected readonly overflowSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { TabComponent, TabsComponent } from './shared/components/tabs';
+import { TabComponent, TabsComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-overflow-tabs-example',
@@ -116,7 +120,7 @@ export class OverflowTabsExample {}`;
 
   protected readonly keyboardSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { TabComponent, TabsComponent } from './shared/components/tabs';
+import { TabComponent, TabsComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-keyboard-tabs-example',

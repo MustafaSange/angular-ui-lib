@@ -6,8 +6,8 @@ import {
   ModalComponent,
   ModalRef,
   ModalService,
-} from '../../../../shared/components/modal';
-import { ShowcaseCode } from '../../../../shared/components/showcase-code';
+} from '../../../../shared/ui-lib/components/modal';
+import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
 
 type BasicModalData = {
   name: string;
@@ -49,7 +49,7 @@ export class BasicModalShowcase {
   protected readonly snippet = `// project-details-modal.ts
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { MODAL_DATA, MODAL_REF, ModalComponent, ModalRef } from './shared/components/modal';
+import { MODAL_DATA, MODAL_REF, ModalComponent, ModalRef } from './shared/ui-lib';
 
 export type ProjectDetailsData = {
   name: string;
@@ -78,7 +78,7 @@ export class ProjectDetailsModal {
 // project-list.ts
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { ModalService } from './shared/components/modal';
+import { ModalService } from './shared/ui-lib';
 import type { ProjectDetailsData } from './project-details-modal';
 
 @Component({

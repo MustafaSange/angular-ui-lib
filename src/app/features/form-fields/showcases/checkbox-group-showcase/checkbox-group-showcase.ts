@@ -5,8 +5,8 @@ import {
   CheckboxGroup,
   ChoiceError,
   ChoiceHint,
-} from '../../../../shared/components/choice-controls';
-import { ShowcaseCode } from '../../../../shared/components/showcase-code';
+} from '../../../../shared/ui-lib/components/choice-controls';
+import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
 
 @Component({
   selector: 'app-checkbox-group-showcase',
@@ -24,7 +24,7 @@ import {
   CheckboxGroup,
   ChoiceError,
   ChoiceHint,
-} from './shared/components/choice-controls';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-checkbox-group-example',

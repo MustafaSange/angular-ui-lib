@@ -1,8 +1,11 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { ChipComponent, ChipRemoveDirective } from '../../shared/components/chip';
-import { ShowcaseCode } from '../../shared/components/showcase-code';
+import {
+  ChipComponent,
+  ChipRemoveDirective,
+} from '../../shared/ui-lib/components/chip';
+import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 
 @Component({
   selector: 'app-chip',
@@ -16,7 +19,7 @@ export class Chip {
 
   protected readonly staticSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { ChipComponent } from './shared/components/chip';
+import { ChipComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-static-chip-example',
@@ -35,7 +38,7 @@ export class StaticChipExample {}`;
 
   protected readonly variantsSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { ChipComponent } from './shared/components/chip';
+import { ChipComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-chip-variants-example',
@@ -53,7 +56,7 @@ export class ChipVariantsExample {}`;
 
   protected readonly statesSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { ChipComponent } from './shared/components/chip';
+import { ChipComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-chip-states-example',
@@ -69,7 +72,7 @@ export class ChipStatesExample {}`;
 
   protected readonly removableSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
-import { ChipComponent, ChipRemoveDirective } from './shared/components/chip';
+import { ChipComponent, ChipRemoveDirective } from './shared/ui-lib';
 
 @Component({
   selector: 'app-removable-chip-example',
@@ -99,7 +102,7 @@ export class RemovableChipExample {
 
   protected readonly rtlSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { ChipComponent, ChipRemoveDirective } from './shared/components/chip';
+import { ChipComponent, ChipRemoveDirective } from './shared/ui-lib';
 
 @Component({
   selector: 'app-chip-rtl-example',

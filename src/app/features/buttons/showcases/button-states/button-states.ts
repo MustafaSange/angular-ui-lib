@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { ShowcaseCode } from '../../../../shared/components/showcase-code';
+import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
 
 @Component({
   selector: 'app-button-states-showcase',

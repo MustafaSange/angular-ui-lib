@@ -5,8 +5,8 @@ import {
   ModalComponent,
   ModalRef,
   ModalService,
-} from '../../../../shared/components/modal';
-import { ShowcaseCode } from '../../../../shared/components/showcase-code';
+} from '../../../../shared/ui-lib/components/modal';
+import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
 
 @Component({
   selector: 'app-simple-modal-content',
@@ -56,7 +56,7 @@ export class DeclarativeModalShowcase {
   protected readonly snippet = `// simple-modal-content.ts
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { MODAL_REF, ModalComponent, ModalRef } from './shared/components/modal';
+import { MODAL_REF, ModalComponent, ModalRef } from './shared/ui-lib';
 
 @Component({
   selector: 'app-simple-modal-content',
@@ -93,7 +93,7 @@ export class SimpleModalContent {
 // dashboard-page.ts
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { ModalService } from './shared/components/modal';
+import { ModalService } from './shared/ui-lib';
 
 @Component({
   selector: 'app-dashboard-page',

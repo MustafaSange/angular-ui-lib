@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { BadgeComponent } from '../../shared/components/badge';
-import { ShowcaseCode } from '../../shared/components/showcase-code';
+import { BadgeComponent } from '../../shared/ui-lib/components/badge';
+import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 
 @Component({
   selector: 'app-badge',
@@ -14,7 +14,7 @@ import { ShowcaseCode } from '../../shared/components/showcase-code';
 export class Badge {
   protected readonly variantsSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { BadgeComponent } from './shared/components/badge';
+import { BadgeComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-badge-variants-example',
@@ -32,7 +32,7 @@ export class BadgeVariantsExample {}`;
 
   protected readonly appearancesSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { BadgeComponent } from './shared/components/badge';
+import { BadgeComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-badge-appearances-example',
@@ -48,7 +48,7 @@ export class BadgeAppearancesExample {}`;
 
   protected readonly dotsCountsSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { BadgeComponent } from './shared/components/badge';
+import { BadgeComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-badge-dots-counts-example',
@@ -65,7 +65,7 @@ export class BadgeDotsCountsExample {}`;
 
   protected readonly iconsSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { BadgeComponent } from './shared/components/badge';
+import { BadgeComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-badge-icons-example',
@@ -86,7 +86,7 @@ export class BadgeIconsExample {}`;
 
   protected readonly rtlSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { BadgeComponent } from './shared/components/badge';
+import { BadgeComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-badge-rtl-example',

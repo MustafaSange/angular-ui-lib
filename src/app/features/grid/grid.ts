@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { ShowcaseCode } from '../../shared/components/showcase-code';
+import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 
 @Component({
   selector: 'app-grid',

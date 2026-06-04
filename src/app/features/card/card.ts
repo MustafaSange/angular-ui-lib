@@ -9,8 +9,8 @@ import {
   CardMediaDirective,
   CardSubtitleDirective,
   CardTitleDirective,
-} from '../../shared/components/card';
-import { ShowcaseCode } from '../../shared/components/showcase-code';
+} from '../../shared/ui-lib/components/card';
+import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 
 @Component({
   selector: 'app-card',
@@ -38,7 +38,7 @@ import {
   CardHeaderDirective,
   CardSubtitleDirective,
   CardTitleDirective,
-} from './shared/components/card';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-basic-card-example',
@@ -72,7 +72,7 @@ import {
   CardContentDirective,
   CardHeaderDirective,
   CardTitleDirective,
-} from './shared/components/card';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-card-appearance-example',
@@ -119,7 +119,7 @@ import {
   CardMediaDirective,
   CardSubtitleDirective,
   CardTitleDirective,
-} from './shared/components/card';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-card-media-example',
@@ -173,7 +173,7 @@ import {
   CardHeaderDirective,
   CardSubtitleDirective,
   CardTitleDirective,
-} from './shared/components/card';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-card-rtl-example',

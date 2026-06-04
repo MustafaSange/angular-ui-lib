@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { ShowcaseCode } from '../../../../shared/components/showcase-code';
-import { SignalFormField } from '../../../../shared/components/signal-form-field';
+import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
+import { SignalFormField } from '../../../../shared/ui-lib/components/signal-form-field';
 
 @Component({
   selector: 'app-field-actions-showcase',
@@ -14,7 +14,7 @@ import { SignalFormField } from '../../../../shared/components/signal-form-field
 export class FieldActionsShowcase {
   protected readonly snippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { SignalFormField } from './shared/components/signal-form-field';
+import { SignalFormField } from './shared/ui-lib';
 
 @Component({
   selector: 'app-field-actions-example',
