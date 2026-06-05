@@ -77,12 +77,17 @@ h2 {
   gap: var(--spacing-20);
 }
 
+.aspect-ratio-demo {
+  display: grid;
+  gap: var(--spacing-20);
+}
+
 .photo,
 .alignment-tile,
 .mixed-card,
-.feature-frame {
+.feature-frame,
+.aspect-frame {
   display: grid;
-  aspect-ratio: 4 / 3;
   place-items: center;
 }
 
@@ -150,7 +155,8 @@ h2 {
 
 .alignment-tile,
 .mixed-card,
-.feature-frame {
+.feature-frame,
+.aspect-frame {
   padding: var(--spacing-20);
   color: var(--color-text-primary);
   font-weight: var(--font-weight-semibold);

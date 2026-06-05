@@ -58,6 +58,45 @@
   </section>
 
   <section class="media-slider-section">
+    <h2>Aspect ratios</h2>
+    <p class="section-copy">Set `aspectRatio` to control the media frame shape for every slide.</p>
+    <div class="media-slider-demo aspect-ratio-demo">
+      <ms-media-slider aspectRatio="16 / 9" aria-label="Widescreen media">
+        <ms-media-slide>
+          <div class="aspect-frame tile-blue">16:9</div>
+        </ms-media-slide>
+
+        <ms-media-slide>
+          <div class="aspect-frame tile-green">Widescreen</div>
+        </ms-media-slide>
+
+        <ms-media-slide>
+          <div class="aspect-frame tile-coral">Landscape crop</div>
+        </ms-media-slide>
+      </ms-media-slider>
+
+      <ms-media-slider
+        aspectRatio="9 / 16"
+        slideSize="min(72vw, 16rem)"
+        aria-label="Portrait media"
+      >
+        <ms-media-slide>
+          <div class="aspect-frame tile-coral">9:16</div>
+        </ms-media-slide>
+
+        <ms-media-slide>
+          <div class="aspect-frame tile-blue">Portrait crop</div>
+        </ms-media-slide>
+
+        <ms-media-slide>
+          <div class="aspect-frame tile-green">Vertical story</div>
+        </ms-media-slide>
+      </ms-media-slider>
+    </div>
+    <app-showcase-code label="Media slider aspect ratios" [code]="aspectRatioSnippet" />
+  </section>
+
+  <section class="media-slider-section">
     <h2>Optional captions</h2>
     <p class="section-copy">Caption space appears only on slides that project `[msMediaCaption]`.</p>
     <div class="media-slider-demo">
