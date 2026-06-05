@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import {
@@ -19,17 +19,14 @@ import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
   ],
   templateUrl: './media-slider.html',
   styleUrl: './media-slider.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MediaSlider {
-  protected readonly basicSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly basicSnippet = `import { Component } from '@angular/core';
 
 import { MediaSlideComponent, MediaSliderComponent } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-basic-media-slider-example',
-  imports: [MediaSliderComponent, MediaSlideComponent],
-  template: \`
+  selector: 'app-basic-media-slider-example', imports: [MediaSliderComponent, MediaSlideComponent], template: \`
     <ms-media-slider aria-label="Featured photos">
       <ms-media-slide>
         <img src="/assets/media-slider/coast.jpg" alt="Rocky coast at sunrise" />
@@ -43,23 +40,15 @@ import { MediaSlideComponent, MediaSliderComponent } from './shared/ui-lib';
         <img src="/assets/media-slider/studio.jpg" alt="Studio desk with product sketches" />
       </ms-media-slide>
     </ms-media-slider>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class BasicMediaSliderExample {}`;
 
-  protected readonly fullPageSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly fullPageSnippet = `import { Component } from '@angular/core';
 
-import {
-  MediaCaptionDirective,
-  MediaSlideComponent,
-  MediaSliderComponent,
-} from './shared/ui-lib';
+import { MediaCaptionDirective, MediaSlideComponent, MediaSliderComponent, } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-large-media-slider-example',
-  imports: [MediaSliderComponent, MediaSlideComponent, MediaCaptionDirective],
-  template: \`
+  selector: 'app-large-media-slider-example', imports: [MediaSliderComponent, MediaSlideComponent, MediaCaptionDirective], template: \`
     <ms-media-slider
       slideSize="90%"
       aria-label="Large feature slides"
@@ -78,8 +67,7 @@ import {
         <div class="feature-frame">Editorial crop</div>
       </ms-media-slide>
     </ms-media-slider>
-  \`,
-  styles: [\`
+  \`, styles: [\`
     .feature-frame {
       display: grid;
       min-block-size: min(34rem, 62vh);
@@ -88,19 +76,15 @@ import {
       color: var(--color-text-primary);
       font-weight: var(--font-weight-semibold);
     }
-  \`],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`], })
 export class LargeMediaSliderExample {}`;
 
-  protected readonly aspectRatioSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly aspectRatioSnippet = `import { Component } from '@angular/core';
 
 import { MediaSlideComponent, MediaSliderComponent } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-aspect-ratio-media-slider-example',
-  imports: [MediaSliderComponent, MediaSlideComponent],
-  template: \`
+  selector: 'app-aspect-ratio-media-slider-example', imports: [MediaSliderComponent, MediaSlideComponent], template: \`
     <ms-media-slider
       aspectRatio="16 / 9"
       aria-label="Widescreen media"
@@ -127,8 +111,7 @@ import { MediaSlideComponent, MediaSliderComponent } from './shared/ui-lib';
         <div class="media-frame">Portrait</div>
       </ms-media-slide>
     </ms-media-slider>
-  \`,
-  styles: [\`
+  \`, styles: [\`
     ms-media-slider + ms-media-slider {
       display: block;
       margin-block-start: 1rem;
@@ -141,23 +124,15 @@ import { MediaSlideComponent, MediaSliderComponent } from './shared/ui-lib';
       color: var(--color-text-secondary);
       font-weight: var(--font-weight-semibold);
     }
-  \`],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`], })
 export class AspectRatioMediaSliderExample {}`;
 
-  protected readonly captionSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly captionSnippet = `import { Component } from '@angular/core';
 
-import {
-  MediaCaptionDirective,
-  MediaSlideComponent,
-  MediaSliderComponent,
-} from './shared/ui-lib';
+import { MediaCaptionDirective, MediaSlideComponent, MediaSliderComponent, } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-caption-media-slider-example',
-  imports: [MediaSliderComponent, MediaSlideComponent, MediaCaptionDirective],
-  template: \`
+  selector: 'app-caption-media-slider-example', imports: [MediaSliderComponent, MediaSlideComponent, MediaCaptionDirective], template: \`
     <ms-media-slider aria-label="Gallery with captions">
       <ms-media-slide>
         <img src="/assets/media-slider/market.jpg" alt="Open-air market tables" />
@@ -173,19 +148,15 @@ import {
         <p msMediaCaption>Trail study for outdoor campaign imagery.</p>
       </ms-media-slide>
     </ms-media-slider>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class CaptionMediaSliderExample {}`;
 
-  protected readonly alignmentSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly alignmentSnippet = `import { Component } from '@angular/core';
 
 import { MediaSlideComponent, MediaSliderComponent } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-aligned-media-slider-example',
-  imports: [MediaSliderComponent, MediaSlideComponent],
-  template: \`
+  selector: 'app-aligned-media-slider-example', imports: [MediaSliderComponent, MediaSlideComponent], template: \`
     <ms-media-slider snapAlign="start" aria-label="Start aligned photos">
       <ms-media-slide>
         <div class="media-tile">Start</div>
@@ -209,8 +180,7 @@ import { MediaSlideComponent, MediaSliderComponent } from './shared/ui-lib';
         <div class="media-tile">End</div>
       </ms-media-slide>
     </ms-media-slider>
-  \`,
-  styles: [\`
+  \`, styles: [\`
     ms-media-slider + ms-media-slider {
       display: block;
       margin-block-start: 1rem;
@@ -224,35 +194,16 @@ import { MediaSlideComponent, MediaSliderComponent } from './shared/ui-lib';
       color: var(--color-text-secondary);
       font-weight: var(--font-weight-semibold);
     }
-  \`],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`], })
 export class AlignedMediaSliderExample {}`;
 
-  protected readonly mixedSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly mixedSnippet = `import { Component } from '@angular/core';
 
-import {
-  CardComponent,
-  CardContentDirective,
-  CardHeaderDirective,
-  CardTitleDirective,
-  MediaCaptionDirective,
-  MediaSlideComponent,
-  MediaSliderComponent,
-} from './shared/ui-lib';
+import { CardComponent, CardContentDirective, CardHeaderDirective, CardTitleDirective, MediaCaptionDirective, MediaSlideComponent, MediaSliderComponent, } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-mixed-media-slider-example',
-  imports: [
-    MediaSliderComponent,
-    MediaSlideComponent,
-    MediaCaptionDirective,
-    CardComponent,
-    CardHeaderDirective,
-    CardTitleDirective,
-    CardContentDirective,
-  ],
-  template: \`
+  selector: 'app-mixed-media-slider-example', imports: [
+    MediaSliderComponent, MediaSlideComponent, MediaCaptionDirective, CardComponent, CardHeaderDirective, CardTitleDirective, CardContentDirective, ], template: \`
     <ms-media-slider aria-label="Mixed media cards">
       <ms-media-slide>
         <ms-card>
@@ -275,8 +226,7 @@ import {
         <p msMediaCaption>Caption text stays optional per slide.</p>
       </ms-media-slide>
     </ms-media-slider>
-  \`,
-  styles: [\`
+  \`, styles: [\`
     .media-panel {
       display: grid;
       place-items: center;
@@ -285,12 +235,10 @@ import {
       color: var(--color-text-secondary);
       font-weight: var(--font-weight-semibold);
     }
-  \`],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`], })
 export class MixedMediaSliderExample {}`;
 
-  protected readonly rtlSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly rtlSnippet = `import { Component } from '@angular/core';
 
 import {
   MediaCaptionDirective,
@@ -329,7 +277,6 @@ import {
       font-weight: var(--font-weight-semibold);
     }
   \`],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RtlMediaSliderExample {}`;
 }

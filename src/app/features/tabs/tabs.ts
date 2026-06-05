@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
@@ -13,17 +13,14 @@ import {
   imports: [RouterLink, ShowcaseCode, TabsComponent, TabComponent, TabTitleDirective],
   templateUrl: './tabs.html',
   styleUrl: './tabs.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Tabs {
-  protected readonly simpleSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly simpleSnippet = `import { Component } from '@angular/core';
 
 import { TabComponent, TabsComponent } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-simple-tabs-example',
-  imports: [TabsComponent, TabComponent],
-  template: \`
+  selector: 'app-simple-tabs-example', imports: [TabsComponent, TabComponent], template: \`
     <ms-tabs>
       <ms-tab title="Overview">
         <p>Track open work, recent decisions, and ownership in one place.</p>
@@ -37,19 +34,15 @@ import { TabComponent, TabsComponent } from './shared/ui-lib';
         <p>Adjust notifications and workspace defaults for this project.</p>
       </ms-tab>
     </ms-tabs>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class SimpleTabsExample {}`;
 
-  protected readonly projectedTitleSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly projectedTitleSnippet = `import { Component } from '@angular/core';
 
 import { TabComponent, TabTitleDirective, TabsComponent } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-projected-title-tabs-example',
-  imports: [TabsComponent, TabComponent, TabTitleDirective],
-  template: \`
+  selector: 'app-projected-title-tabs-example', imports: [TabsComponent, TabComponent, TabTitleDirective], template: \`
     <ms-tabs>
       <ms-tab title="Profile">
         <p>Profile details are ready for review.</p>
@@ -71,19 +64,15 @@ import { TabComponent, TabTitleDirective, TabsComponent } from './shared/ui-lib'
         <p>Two-factor authentication is enabled for all administrators.</p>
       </ms-tab>
     </ms-tabs>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class ProjectedTitleTabsExample {}`;
 
-  protected readonly overflowSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly overflowSnippet = `import { Component } from '@angular/core';
 
 import { TabComponent, TabsComponent } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-overflow-tabs-example',
-  imports: [TabsComponent, TabComponent],
-  template: \`
+  selector: 'app-overflow-tabs-example', imports: [TabsComponent, TabComponent], template: \`
     <ms-tabs>
       <ms-tab title="Overview">
         <p>Track open work, recent decisions, and ownership in one place.</p>
@@ -113,12 +102,10 @@ import { TabComponent, TabsComponent } from './shared/ui-lib';
         <p>Adjust notifications and workspace defaults for this project.</p>
       </ms-tab>
     </ms-tabs>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class OverflowTabsExample {}`;
 
-  protected readonly keyboardSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly keyboardSnippet = `import { Component } from '@angular/core';
 
 import { TabComponent, TabsComponent } from './shared/ui-lib';
 
@@ -142,7 +129,6 @@ import { TabComponent, TabsComponent } from './shared/ui-lib';
       </ms-tabs>
     </div>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KeyboardTabsExample {}`;
 }

@@ -1,5 +1,4 @@
 import {
-  ChangeDetectionStrategy,
   Component,
   computed,
   DestroyRef,
@@ -22,7 +21,6 @@ let openDrawerCount = 0;
   exportAs: 'msDrawer',
   imports: [NgClass],
   templateUrl: './drawer.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DrawerComponent {
   private readonly destroyRef = inject(DestroyRef);

@@ -1,6 +1,6 @@
 # Angular Agent Instructions
 
-This project uses Angular 21, Vitest, SCSS, and standalone bootstrap APIs.
+This project uses Angular 22, Vitest, SCSS, and standalone bootstrap APIs.
 
 Use modern Angular patterns:
 
@@ -8,8 +8,9 @@ Use modern Angular patterns:
 - Do not add `standalone: true`.
 - Prefer signals: `signal`, `computed`, `input`, `output`, `model`.
 - Prefer `inject()` over constructor injection.
+- Prefer `@Service()` for root-provided services instead of `@Injectable({ providedIn: 'root' })`.
 - Prefer `host` metadata in `@Component` over `@HostBinding` and `@HostListener`.
-- Use `ChangeDetectionStrategy.OnPush`.
+- Rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`.
 - Use native template control flow: `@if`, `@for`, `@switch`.
 - Prefer reactive forms for non-trivial forms.
 - Keep strict TypeScript; avoid `any`.

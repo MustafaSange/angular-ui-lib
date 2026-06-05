@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import {
   MODAL_DATA,
@@ -26,7 +26,6 @@ type BasicModalData = {
       </div>
     </ms-modal>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class BasicModalContent {
   protected readonly data = inject(MODAL_DATA) as BasicModalData;
@@ -41,13 +40,12 @@ class BasicModalContent {
   host: {
     class: 'modal-section',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BasicModalShowcase {
   private readonly modalService = inject(ModalService);
 
   protected readonly snippet = `// project-details-modal.ts
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { MODAL_DATA, MODAL_REF, ModalComponent, ModalRef } from './shared/ui-lib';
 
@@ -57,9 +55,7 @@ export type ProjectDetailsData = {
 };
 
 @Component({
-  selector: 'app-project-details-modal',
-  imports: [ModalComponent],
-  template: \`
+  selector: 'app-project-details-modal', imports: [ModalComponent], template: \`
     <ms-modal title="Project details" (close)="modalRef.close()">
       <div class="modal-stack">
         <p>
@@ -67,16 +63,14 @@ export type ProjectDetailsData = {
         </p>
       </div>
     </ms-modal>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class ProjectDetailsModal {
   protected readonly data = inject(MODAL_DATA) as ProjectDetailsData;
   protected readonly modalRef = inject(MODAL_REF) as ModalRef<void>;
 }
 
 // project-list.ts
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { ModalService } from './shared/ui-lib';
 import type { ProjectDetailsData } from './project-details-modal';
@@ -88,7 +82,6 @@ import type { ProjectDetailsData } from './project-details-modal';
       Open modal
     </button>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectList {
   private readonly modalService = inject(ModalService);

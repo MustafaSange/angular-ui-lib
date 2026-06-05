@@ -1,7 +1,6 @@
 import { DOCUMENT, NgTemplateOutlet } from '@angular/common';
 import {
   afterNextRender,
-  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   ElementRef,
@@ -22,7 +21,6 @@ let nextTabsId = 0;
   selector: 'ms-tabs',
   imports: [NgTemplateOutlet],
   templateUrl: './tabs.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabsComponent {
   private readonly document = inject(DOCUMENT);

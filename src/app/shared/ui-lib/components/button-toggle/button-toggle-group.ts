@@ -1,6 +1,5 @@
 import { DOCUMENT } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   booleanAttribute,
@@ -35,7 +34,6 @@ import {
     '[class.is-disabled]': 'disabled()',
     '[attr.aria-disabled]': "disabled() ? 'true' : null",
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonToggleGroup implements ButtonToggleController {
   private readonly document = inject(DOCUMENT);

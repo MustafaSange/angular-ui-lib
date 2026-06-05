@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import {
@@ -22,33 +22,20 @@ import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
   ],
   templateUrl: './side-nav.html',
   styleUrl: './side-nav.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SideNav {
   protected readonly expandedCollapsed = signal(false);
   protected readonly railCollapsed = signal(true);
   protected readonly rtlCollapsed = signal(true);
 
-  protected readonly expandedSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+  protected readonly expandedSnippet = `import { Component, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import {
-  SideNavComponent,
-  SideNavItem,
-  SideNavSectionComponent,
-  SideNavTrigger,
-} from './shared/ui-lib';
+  SideNavComponent, SideNavItem, SideNavSectionComponent, SideNavTrigger, } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-side-nav-example',
-  imports: [
-    RouterLink,
-    RouterLinkActive,
-    SideNavComponent,
-    SideNavItem,
-    SideNavSectionComponent,
-    SideNavTrigger,
-  ],
-  template: \`
+  selector: 'app-side-nav-example', imports: [
+    RouterLink, RouterLinkActive, SideNavComponent, SideNavItem, SideNavSectionComponent, SideNavTrigger, ], template: \`
     <ms-side-nav [(collapsed)]="collapsed" aria-label="Primary navigation">
       <button type="button" msSideNavTrigger aria-label="Toggle navigation">
         <span class="ms-icon" aria-hidden="true">menu</span>
@@ -73,15 +60,13 @@ import {
         </ms-side-nav-section>
       </ms-side-nav-section>
     </ms-side-nav>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class SideNavExample {
   protected readonly collapsed = signal(false);
   protected readonly projectsOpen = signal(true);
 }`;
 
-  protected readonly collapsedSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+  protected readonly collapsedSnippet = `import { Component, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import {
   SideNavComponent,
@@ -119,7 +104,6 @@ import {
       </ms-side-nav-section>
     </ms-side-nav>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CollapsedSideNavExample {
   protected readonly collapsed = signal(true);

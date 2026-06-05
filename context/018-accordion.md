@@ -45,9 +45,7 @@ Defaults:
 - projected `msAccordionTitle` content takes precedence over the `title` input
 - disabled items cannot be toggled or focused through accordion keyboard navigation
 
-Shared reusable components use the `ms-` selector prefix. Internal styling hooks are `.accordion`,
-`.accordion-item`, `.accordion-heading`, `.accordion-trigger`, `.accordion-title`,
-`.accordion-icon`, and `.accordion-panel`.
+Shared reusable components use the `ms-` selector prefix. Internal styling hooks are `.accordion`, `.accordion-item`, `.accordion-heading`, `.accordion-trigger`, `.accordion-title`, `.accordion-icon`, and `.accordion-panel`.
 
 Public styling modifiers:
 
@@ -57,7 +55,7 @@ Public styling modifiers:
 ## Desired Usage
 
 ```ts
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import {
   AccordionComponent,
@@ -87,7 +85,6 @@ import {
       </ms-accordion-item>
     </ms-accordion>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccordionExample {}
 ```

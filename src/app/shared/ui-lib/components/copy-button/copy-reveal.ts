@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  booleanAttribute,
-  input,
-  viewChild,
-} from '@angular/core';
+import { Component, ElementRef, booleanAttribute, input, viewChild } from '@angular/core';
 
 import { CopyButtonComponent } from './copy-button';
 import type { CopyButtonSize, CopyButtonVariant } from './copy-button-types';
@@ -14,7 +7,6 @@ import type { CopyButtonSize, CopyButtonVariant } from './copy-button-types';
   selector: 'ms-copy-reveal',
   imports: [CopyButtonComponent],
   templateUrl: './copy-reveal.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CopyRevealComponent {
   readonly text = input<string | undefined>(undefined);

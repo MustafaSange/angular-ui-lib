@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { BasicModalShowcase } from './showcases/basic-modal/basic-modal';
@@ -21,6 +21,5 @@ import { StackedModalShowcase } from './showcases/stacked-modal/stacked-modal';
   ],
   templateUrl: './modal.html',
   styleUrl: './modal.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Modal {}

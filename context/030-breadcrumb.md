@@ -51,8 +51,7 @@ Defaults:
   separator is projected anywhere in the breadcrumb
 - custom projected separators opt the breadcrumb out of automatic separators
 
-Shared reusable components use the `ms-` selector prefix. Internal styling hooks are `.breadcrumb`,
-`.breadcrumb-list`, `.breadcrumb-item`, `.breadcrumb-link`, `.breadcrumb-current`, and
+Shared reusable components use the `ms-` selector prefix. Internal styling hooks are `.breadcrumb`, `.breadcrumb-list`, `.breadcrumb-item`, `.breadcrumb-link`, `.breadcrumb-current`, and
 `.breadcrumb-separator`. Established public utility classes such as `.ms-icon` and
 `.ms-icon-filled` remain namespaced.
 
@@ -61,7 +60,7 @@ Shared reusable components use the `ms-` selector prefix. Internal styling hooks
 Basic breadcrumb with router links:
 
 ```ts
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { BreadcrumbComponent, BreadcrumbItemDirective } from './shared/components/breadcrumb';
@@ -76,7 +75,6 @@ import { BreadcrumbComponent, BreadcrumbItemDirective } from './shared/component
       <span msBreadcrumbItem current>Breadcrumb</span>
     </ms-breadcrumb>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BreadcrumbExample {}
 ```
@@ -84,7 +82,7 @@ export class BreadcrumbExample {}
 Custom label and separator:
 
 ```ts
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import {
   BreadcrumbComponent,
@@ -104,7 +102,6 @@ import {
       <span msBreadcrumbItem current>Breadcrumb</span>
     </ms-breadcrumb>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CustomBreadcrumbExample {}
 ```
@@ -260,7 +257,7 @@ Shared showcase section styles live in
 
 - Use standalone Angular APIs.
 - Do not add `standalone: true`.
-- Use `ChangeDetectionStrategy.OnPush`.
+- Rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`.
 - Prefer signals: `signal`, `computed`, `input`, `output`, `model`.
 - Prefer `inject()` over constructor injection.
 - Prefer `host` metadata in `@Component` over `@HostBinding` and `@HostListener`.

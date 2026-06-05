@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  booleanAttribute,
-  input,
-  output,
-} from '@angular/core';
+import { Component, booleanAttribute, input, output } from '@angular/core';
 
 import type { ChipAppearance, ChipVariant } from './chip-types';
 
@@ -14,7 +8,6 @@ import type { ChipAppearance, ChipVariant } from './chip-types';
   host: {
     '[attr.aria-disabled]': "disabled() ? 'true' : null",
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChipComponent {
   readonly variant = input<ChipVariant>('neutral');

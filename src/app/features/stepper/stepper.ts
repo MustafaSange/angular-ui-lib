@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
@@ -13,19 +13,16 @@ import {
   imports: [RouterLink, ShowcaseCode, StepperComponent, StepComponent, StepTitleDirective],
   templateUrl: './stepper.html',
   styleUrl: './stepper.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Stepper {
   protected readonly controlledIndex = signal(0);
 
-  protected readonly horizontalSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly horizontalSnippet = `import { Component } from '@angular/core';
 
 import { StepComponent, StepperComponent } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-horizontal-stepper-example',
-  imports: [StepperComponent, StepComponent],
-  template: \`
+  selector: 'app-horizontal-stepper-example', imports: [StepperComponent, StepComponent], template: \`
     <ms-stepper>
       <ms-step title="Account" [completed]="true">
         <p>Collect account details and contact preferences.</p>
@@ -39,19 +36,15 @@ import { StepComponent, StepperComponent } from './shared/ui-lib';
         <p>Review details before submitting the workflow.</p>
       </ms-step>
     </ms-stepper>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class HorizontalStepperExample {}`;
 
-  protected readonly verticalSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly verticalSnippet = `import { Component } from '@angular/core';
 
 import { StepComponent, StepperComponent } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-vertical-stepper-example',
-  imports: [StepperComponent, StepComponent],
-  template: \`
+  selector: 'app-vertical-stepper-example', imports: [StepperComponent, StepComponent], template: \`
     <ms-stepper orientation="vertical" [selectedIndex]="1">
       <ms-step title="Profile" [completed]="true">
         <p>Profile details are complete.</p>
@@ -65,19 +58,15 @@ import { StepComponent, StepperComponent } from './shared/ui-lib';
         <p>Confirm the selected workspace options.</p>
       </ms-step>
     </ms-stepper>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class VerticalStepperExample {}`;
 
-  protected readonly linearSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+  protected readonly linearSnippet = `import { Component, signal } from '@angular/core';
 
 import { StepComponent, StepperComponent } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-linear-stepper-example',
-  imports: [StepperComponent, StepComponent],
-  template: \`
+  selector: 'app-linear-stepper-example', imports: [StepperComponent, StepComponent], template: \`
     <ms-stepper [linear]="true" [(selectedIndex)]="selectedIndex">
       <ms-step title="Profile" [completed]="true">
         <p>Profile details are complete.</p>
@@ -94,25 +83,17 @@ import { StepComponent, StepperComponent } from './shared/ui-lib';
         <p>Review is available after every prior enabled step is complete.</p>
       </ms-step>
     </ms-stepper>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class LinearStepperExample {
   readonly selectedIndex = signal(0);
 }`;
 
-  protected readonly richTitleSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly richTitleSnippet = `import { Component } from '@angular/core';
 
-import {
-  StepComponent,
-  StepperComponent,
-  StepTitleDirective,
-} from './shared/ui-lib';
+import { StepComponent, StepperComponent, StepTitleDirective, } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-rich-title-stepper-example',
-  imports: [StepperComponent, StepComponent, StepTitleDirective],
-  template: \`
+  selector: 'app-rich-title-stepper-example', imports: [StepperComponent, StepComponent, StepTitleDirective], template: \`
     <ms-stepper>
       <ms-step [completed]="true">
         <ng-template msStepTitle>
@@ -134,19 +115,15 @@ import {
         <p>Review all entered information.</p>
       </ms-step>
     </ms-stepper>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class RichTitleStepperExample {}`;
 
-  protected readonly disabledSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly disabledSnippet = `import { Component } from '@angular/core';
 
 import { StepComponent, StepperComponent } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-disabled-stepper-example',
-  imports: [StepperComponent, StepComponent],
-  template: \`
+  selector: 'app-disabled-stepper-example', imports: [StepperComponent, StepComponent], template: \`
     <ms-stepper orientation="vertical">
       <ms-step title="Workspace" [completed]="true">
         <p>Workspace setup is complete.</p>
@@ -160,12 +137,10 @@ import { StepComponent, StepperComponent } from './shared/ui-lib';
         <p>Launch is unavailable until team invites are sent.</p>
       </ms-step>
     </ms-stepper>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class DisabledStepperExample {}`;
 
-  protected readonly keyboardSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly keyboardSnippet = `import { Component } from '@angular/core';
 
 import { StepComponent, StepperComponent } from './shared/ui-lib';
 
@@ -189,7 +164,6 @@ import { StepComponent, StepperComponent } from './shared/ui-lib';
       </ms-stepper>
     </div>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KeyboardStepperExample {}`;
 }

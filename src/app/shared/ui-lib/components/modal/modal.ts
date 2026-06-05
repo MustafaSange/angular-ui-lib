@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
+import { Component, computed, inject, input, output } from '@angular/core';
 
 import { MODAL_CONFIG } from './modal-tokens';
 
@@ -7,7 +7,6 @@ let nextModalId = 0;
 @Component({
   selector: 'ms-modal',
   templateUrl: './modal.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalComponent<TResult = unknown> {
   private readonly config = inject(MODAL_CONFIG, {

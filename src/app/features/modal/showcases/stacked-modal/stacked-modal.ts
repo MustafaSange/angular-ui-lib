@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import {
   MODAL_DATA,
@@ -18,7 +18,6 @@ type StackedChildModalData = {
   selector: 'app-stacked-child-modal-content',
   imports: [ModalComponent],
   templateUrl: './stacked-child-modal-content.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class StackedChildModalContent {
   protected readonly data = inject(MODAL_DATA) as StackedChildModalData;
@@ -29,7 +28,6 @@ class StackedChildModalContent {
   selector: 'app-stacked-modal-content',
   imports: [ModalComponent],
   templateUrl: './stacked-modal-content.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class StackedModalContent {
   private readonly modalService = inject(ModalService);
@@ -56,20 +54,14 @@ class StackedModalContent {
   host: {
     class: 'modal-section',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StackedModalShowcase {
   private readonly modalService = inject(ModalService);
 
   protected readonly snippet = `// stacked-child-modal.ts
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
-import {
-  MODAL_DATA,
-  MODAL_REF,
-  ModalComponent,
-  ModalRef,
-} from './shared/ui-lib';
+import { MODAL_DATA, MODAL_REF, ModalComponent, ModalRef, } from './shared/ui-lib';
 
 export type StackedChildModalData = {
   name: string;
@@ -77,9 +69,7 @@ export type StackedChildModalData = {
 };
 
 @Component({
-  selector: 'app-stacked-child-modal-content',
-  imports: [ModalComponent],
-  template: \`
+  selector: 'app-stacked-child-modal-content', imports: [ModalComponent], template: \`
     <ms-modal title="Stacked child modal" (close)="modalRef.close()">
       <div class="modal-stack">
         <p>
@@ -88,24 +78,20 @@ export type StackedChildModalData = {
         <p>Closing it should preserve the underlying modal state.</p>
       </div>
     </ms-modal>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class StackedChildModal {
   protected readonly data = inject(MODAL_DATA) as StackedChildModalData;
   protected readonly modalRef = inject(MODAL_REF) as ModalRef<void>;
 }
 
 // stacked-parent-modal.ts
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { MODAL_REF, ModalComponent, ModalRef, ModalService } from './shared/ui-lib';
 import type { StackedChildModalData } from './stacked-child-modal';
 
 @Component({
-  selector: 'app-stacked-parent-modal',
-  imports: [ModalComponent],
-  template: \`
+  selector: 'app-stacked-parent-modal', imports: [ModalComponent], template: \`
     <ms-modal title="Parent modal" (close)="modalRef.close()">
       <div class="modal-stack">
         <p>Open another modal on top of this one to verify stacking and focus behavior.</p>
@@ -114,9 +100,7 @@ import type { StackedChildModalData } from './stacked-child-modal';
         </button>
       </div>
     </ms-modal>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class StackedParentModal {
   private readonly modalService = inject(ModalService);
   protected readonly modalRef = inject(MODAL_REF) as ModalRef<void>;
@@ -126,16 +110,12 @@ export class StackedParentModal {
 
     this.modalService.open(StackedChildModal, {
       data: {
-        name: 'Nested workflow',
-        owner: 'Product team',
-      } satisfies StackedChildModalData,
-      width: '28rem',
-    });
+        name: 'Nested workflow', owner: 'Product team', } satisfies StackedChildModalData, width: '28rem', });
   }
 }
 
 // workflows-page.ts
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { ModalService } from './shared/ui-lib';
 
@@ -146,7 +126,6 @@ import { ModalService } from './shared/ui-lib';
       Open parent modal
     </button>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WorkflowsPage {
   private readonly modalService = inject(ModalService);

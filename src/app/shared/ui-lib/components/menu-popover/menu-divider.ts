@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'ms-menu-divider',
@@ -6,6 +6,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   host: {
     role: 'separator',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuDividerComponent {}

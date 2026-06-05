@@ -1,5 +1,5 @@
 import { NgComponentOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { BottomSheetService } from './bottom-sheet.service';
 
@@ -7,7 +7,6 @@ import { BottomSheetService } from './bottom-sheet.service';
   selector: 'ms-bottom-sheet-outlet',
   imports: [NgComponentOutlet],
   templateUrl: './bottom-sheet-outlet.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BottomSheetOutletComponent {
   private readonly bottomSheetService = inject(BottomSheetService);

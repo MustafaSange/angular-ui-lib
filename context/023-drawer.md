@@ -40,8 +40,7 @@ Public pieces:
 Shared reusable components use the `ms-` selector prefix. Do not use `app-` for components under
 `src/app/shared`.
 
-Internal styling hooks remain concise and unprefixed. Use `.drawer`, `.drawer-panel`,
-`.drawer-backdrop`, `.drawer-header`, `.drawer-content`, and `.drawer-footer`; do not mirror the
+Internal styling hooks remain concise and unprefixed. Use `.drawer`, `.drawer-panel`, `.drawer-backdrop`, `.drawer-header`, `.drawer-content`, and `.drawer-footer`; do not mirror the
 public component selector as `.ms-drawer`. Established public utility classes such as `.ms-icon`
 and `.ms-icon-filled` remain namespaced.
 
@@ -87,7 +86,7 @@ Logical placement mapping:
 Basic navigation drawer:
 
 ```ts
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/components/drawer';
 
 @Component({
@@ -106,7 +105,12 @@ import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/components
     <ms-drawer #drawer="msDrawer" [(open)]="drawerOpen" aria-label="Main navigation">
       <div class="drawer-header">
         <strong>Navigation</strong>
-        <button class="btn btn-ghost btn-icon" type="button" msDrawerClose aria-label="Close navigation">
+        <button
+          class="btn btn-ghost btn-icon"
+          type="button"
+          msDrawerClose
+          aria-label="Close navigation"
+        >
           <span class="ms-icon" aria-hidden="true">close</span>
         </button>
       </div>
@@ -118,7 +122,6 @@ import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/components
       </nav>
     </ms-drawer>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationDrawerExample {
   protected readonly drawerOpen = signal(false);
@@ -128,7 +131,7 @@ export class NavigationDrawerExample {
 End placement drawer:
 
 ```ts
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/components/drawer';
 
 @Component({
@@ -143,7 +146,12 @@ import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/components
     <ms-drawer #drawer="msDrawer" [(open)]="open" placement="end" aria-label="Account navigation">
       <div class="drawer-header">
         <strong>Account</strong>
-        <button class="btn btn-ghost btn-icon" type="button" msDrawerClose aria-label="Close account menu">
+        <button
+          class="btn btn-ghost btn-icon"
+          type="button"
+          msDrawerClose
+          aria-label="Close account menu"
+        >
           <span class="ms-icon" aria-hidden="true">close</span>
         </button>
       </div>
@@ -155,7 +163,6 @@ import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/components
       </nav>
     </ms-drawer>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EndDrawerExample {
   protected readonly open = signal(false);
@@ -281,7 +288,7 @@ copy/paste, and render snippets near the matching visual example with `<app-show
 
 - Use standalone Angular APIs.
 - Do not add `standalone: true`.
-- Use `ChangeDetectionStrategy.OnPush`.
+- Rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`.
 - Prefer signals: `signal`, `computed`, `input`, `output`, `model`.
 - Prefer `inject()` over constructor injection.
 - Prefer `host` metadata in `@Component` over `@HostBinding` and `@HostListener`.

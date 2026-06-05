@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
+import { Component, computed, input, signal } from '@angular/core';
 import * as Prism from 'prismjs';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-markup';
@@ -8,7 +8,6 @@ import 'prismjs/components/prism-typescript';
   selector: 'app-showcase-code',
   templateUrl: './showcase-code.html',
   styleUrl: './showcase-code.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShowcaseCode {
   readonly code = input.required<string>();

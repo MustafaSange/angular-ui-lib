@@ -1,10 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import {
-  AlertComponent,
-  ToastService,
-} from '../../shared/ui-lib/components/feedback';
+import { AlertComponent, ToastService } from '../../shared/ui-lib/components/feedback';
 import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 
 @Component({
@@ -12,7 +9,6 @@ import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
   imports: [RouterLink, AlertComponent, ShowcaseCode],
   templateUrl: './feedback.html',
   styleUrl: './feedback.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Feedback {
   private readonly toast = inject(ToastService);
@@ -20,14 +16,12 @@ export class Feedback {
   protected readonly dismissibleAlertVisible = signal(true);
   protected readonly actionResult = signal('No toast action has run yet.');
 
-  protected readonly alertVariantsSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly alertVariantsSnippet = `import { Component } from '@angular/core';
 
 import { AlertComponent } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-alert-variants-example',
-  imports: [AlertComponent],
-  template: \`
+  selector: 'app-alert-variants-example', imports: [AlertComponent], template: \`
     <ms-alert variant="info" title="Heads up">
       Invite links expire after seven days.
     </ms-alert>
@@ -43,19 +37,15 @@ import { AlertComponent } from './shared/ui-lib';
     <ms-alert variant="danger" title="Sync failed">
       The billing export could not be completed.
     </ms-alert>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class AlertVariantsExample {}`;
 
-  protected readonly alertActionsSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly alertActionsSnippet = `import { Component } from '@angular/core';
 
 import { AlertComponent } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-alert-actions-example',
-  imports: [AlertComponent],
-  template: \`
+  selector: 'app-alert-actions-example', imports: [AlertComponent], template: \`
     <ms-alert variant="warning" title="Subscription needs attention">
       Update the payment method before the next renewal.
 
@@ -64,19 +54,15 @@ import { AlertComponent } from './shared/ui-lib';
         <a href="/billing">View billing</a>
       </div>
     </ms-alert>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class AlertActionsExample {}`;
 
-  protected readonly dismissibleAlertSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+  protected readonly dismissibleAlertSnippet = `import { Component, signal } from '@angular/core';
 
 import { AlertComponent } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-dismissible-alert-example',
-  imports: [AlertComponent],
-  template: \`
+  selector: 'app-dismissible-alert-example', imports: [AlertComponent], template: \`
     @if (isVisible()) {
       <ms-alert
         variant="danger"
@@ -87,28 +73,22 @@ import { AlertComponent } from './shared/ui-lib';
         Verify your payment method before retrying the renewal.
       </ms-alert>
     }
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class DismissibleAlertExample {
   protected readonly isVisible = signal(true);
 }`;
 
-  protected readonly toastVariantsSnippet = `import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+  protected readonly toastVariantsSnippet = `import { Component, inject } from '@angular/core';
 
 import { ToastOutletComponent, ToastService } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-toast-variants-example',
-  imports: [ToastOutletComponent],
-  template: \`
+  selector: 'app-toast-variants-example', imports: [ToastOutletComponent], template: \`
     <button class="btn btn-primary" type="button" (click)="showToasts()">
       Show toast variants
     </button>
     <ms-toast-outlet />
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class ToastVariantsExample {
   private readonly toast = inject(ToastService);
 
@@ -121,48 +101,38 @@ export class ToastVariantsExample {
   }
 }`;
 
-  protected readonly persistentDangerSnippet = `import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+  protected readonly persistentDangerSnippet = `import { Component, inject } from '@angular/core';
 
 import { ToastOutletComponent, ToastService } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-persistent-danger-toast-example',
-  imports: [ToastOutletComponent],
-  template: \`
+  selector: 'app-persistent-danger-toast-example', imports: [ToastOutletComponent], template: \`
     <button class="btn btn-danger" type="button" (click)="showPersistentToast()">
       Show persistent toast
     </button>
     <ms-toast-outlet />
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class PersistentDangerToastExample {
   private readonly toast = inject(ToastService);
 
   protected showPersistentToast(): void {
     this.toast.danger('Reconnect the account before running another sync.', {
-      title: 'Sync failed',
-      duration: false,
-    });
+      title: 'Sync failed', duration: false, });
   }
 }`;
 
-  protected readonly toastActionSnippet = `import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+  protected readonly toastActionSnippet = `import { Component, inject, signal } from '@angular/core';
 
 import { ToastOutletComponent, ToastService } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-toast-action-example',
-  imports: [ToastOutletComponent],
-  template: \`
+  selector: 'app-toast-action-example', imports: [ToastOutletComponent], template: \`
     <button class="btn btn-primary" type="button" (click)="archiveProject()">
       Archive project
     </button>
     <p>{{ result() }}</p>
     <ms-toast-outlet />
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class ToastActionExample {
   private readonly toast = inject(ToastService);
   protected readonly result = signal('No action yet.');
@@ -171,14 +141,11 @@ export class ToastActionExample {
     this.result.set('Project archived.');
     this.toast.success('Project archived', {
       action: {
-        label: 'Undo',
-        run: () => this.result.set('Archive undone.'),
-      },
-    });
+        label: 'Undo', run: () => this.result.set('Archive undone.'), }, });
   }
 }`;
 
-  protected readonly stackedToastsSnippet = `import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+  protected readonly stackedToastsSnippet = `import { Component, inject } from '@angular/core';
 
 import { ToastOutletComponent, ToastService } from './shared/ui-lib';
 
@@ -191,7 +158,6 @@ import { ToastOutletComponent, ToastService } from './shared/ui-lib';
     </button>
     <ms-toast-outlet />
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StackedToastsExample {
   private readonly toast = inject(ToastService);

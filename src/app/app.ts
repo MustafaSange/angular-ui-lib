@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { ToastOutletComponent } from './shared/ui-lib/components/feedback';
@@ -19,7 +19,6 @@ import { ThemeSwitcher } from './shared/ui-lib/components/theme-switcher';
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
   protected readonly title = signal('ui-lib');

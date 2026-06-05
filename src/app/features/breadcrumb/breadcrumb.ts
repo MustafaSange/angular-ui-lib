@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { BreadcrumbBasicShowcase } from './showcases/breadcrumb-basic/breadcrumb-basic';
@@ -21,6 +21,5 @@ import { BreadcrumbSeparatorsShowcase } from './showcases/breadcrumb-separators/
   ],
   templateUrl: './breadcrumb.html',
   styleUrl: './breadcrumb.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Breadcrumb {}

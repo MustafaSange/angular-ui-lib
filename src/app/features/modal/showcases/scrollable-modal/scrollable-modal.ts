@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import {
   MODAL_DATA,
@@ -32,7 +32,6 @@ type ScrollableModalData = {
       </div>
     </ms-modal>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class ScrollableModalContent {
   private readonly data = inject(MODAL_DATA) as ScrollableModalData;
@@ -48,13 +47,12 @@ class ScrollableModalContent {
   host: {
     class: 'modal-section',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ScrollableModalShowcase {
   private readonly modalService = inject(ModalService);
 
   protected readonly snippet = `// activity-log-modal.ts
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { MODAL_DATA, MODAL_REF, ModalComponent, ModalRef } from './shared/ui-lib';
 
@@ -63,9 +61,7 @@ export type ActivityLogModalData = {
 };
 
 @Component({
-  selector: 'app-activity-log-modal',
-  imports: [ModalComponent],
-  template: \`
+  selector: 'app-activity-log-modal', imports: [ModalComponent], template: \`
     <ms-modal title="Activity log" (close)="modalRef.close()">
       <div class="modal-stack">
         @for (item of items; track item) {
@@ -80,9 +76,7 @@ export type ActivityLogModalData = {
         <button class="btn btn-primary" type="button" (click)="modalRef.close()">Close</button>
       </div>
     </ms-modal>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class ActivityLogModal {
   private readonly data = inject(MODAL_DATA) as ActivityLogModalData;
   protected readonly modalRef = inject(MODAL_REF) as ModalRef<void>;
@@ -90,7 +84,7 @@ export class ActivityLogModal {
 }
 
 // audit-page.ts
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { ModalService } from './shared/ui-lib';
 import type { ActivityLogModalData } from './activity-log-modal';
@@ -102,7 +96,6 @@ import type { ActivityLogModalData } from './activity-log-modal';
       Open activity log
     </button>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuditPage {
   private readonly modalService = inject(ModalService);

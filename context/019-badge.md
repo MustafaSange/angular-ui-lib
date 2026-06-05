@@ -42,7 +42,7 @@ Shared reusable components use the `ms-` selector prefix. Internal styling hooks
 ## Desired Usage
 
 ```ts
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { BadgeComponent } from './shared/components/badge';
 
@@ -56,7 +56,6 @@ import { BadgeComponent } from './shared/components/badge';
     <ms-badge variant="danger" appearance="outline" [dot]="true">Incident</ms-badge>
     <ms-badge aria-label="12 unread notifications">12</ms-badge>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BadgeExample {}
 ```
@@ -129,7 +128,7 @@ Each visual example renders a matching hand-authored, full standalone Angular ex
 
 - Use standalone Angular APIs.
 - Do not add `standalone: true`.
-- Use `ChangeDetectionStrategy.OnPush`.
+- Rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`.
 - Prefer signals: `signal`, `computed`, `input`, `output`, `model`.
 - Prefer `inject()` over constructor injection.
 - Prefer `host` metadata in `@Component` over `@HostBinding` and `@HostListener`.

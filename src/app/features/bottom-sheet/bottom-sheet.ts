@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
@@ -37,7 +37,11 @@ type ShareSheetResult =
       <p class="service-sheet-copy">Share {{ data.projectId }} with your team.</p>
 
       <div slot="footer" class="bottom-sheet-footer">
-        <button class="btn btn-secondary btn-full" type="button" (click)="sheetRef.close({ action: 'cancel' })">
+        <button
+          class="btn btn-secondary btn-full"
+          type="button"
+          (click)="sheetRef.close({ action: 'cancel' })"
+        >
           Cancel
         </button>
         <button class="btn btn-primary btn-full" type="button" (click)="copyLink()">
@@ -46,7 +50,6 @@ type ShareSheetResult =
       </div>
     </ms-bottom-sheet>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShareBottomSheet {
   protected readonly data = inject(BOTTOM_SHEET_DATA) as ShareSheetData;
@@ -69,7 +72,6 @@ export class ShareBottomSheet {
   ],
   templateUrl: './bottom-sheet.html',
   styleUrl: './bottom-sheet.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BottomSheet {
   private readonly bottomSheetService = inject(BottomSheetService);
@@ -86,18 +88,12 @@ export class BottomSheet {
     validators: [Validators.required, Validators.minLength(3)],
   });
 
-  protected readonly actionsSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+  protected readonly actionsSnippet = `import { Component, signal } from '@angular/core';
 
-import {
-  BottomSheetClose,
-  BottomSheetComponent,
-  BottomSheetTrigger,
-} from './shared/ui-lib';
+import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger, } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-bottom-sheet-actions-example',
-  imports: [BottomSheetClose, BottomSheetComponent, BottomSheetTrigger],
-  template: \`
+  selector: 'app-bottom-sheet-actions-example', imports: [BottomSheetClose, BottomSheetComponent, BottomSheetTrigger], template: \`
     <button class="btn btn-primary" type="button" [msBottomSheetTrigger]="sheet">
       Open actions
     </button>
@@ -121,21 +117,17 @@ import {
         </button>
       </div>
     </ms-bottom-sheet>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class BottomSheetActionsExample {
   protected readonly isOpen = signal(false);
 }`;
 
-  protected readonly compactSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+  protected readonly compactSnippet = `import { Component, signal } from '@angular/core';
 
 import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-compact-bottom-sheet-example',
-  imports: [BottomSheetClose, BottomSheetComponent, BottomSheetTrigger],
-  template: \`
+  selector: 'app-compact-bottom-sheet-example', imports: [BottomSheetClose, BottomSheetComponent, BottomSheetTrigger], template: \`
     <button class="btn btn-outline" type="button" [msBottomSheetTrigger]="sheet">
       Open compact sheet
     </button>
@@ -148,22 +140,18 @@ import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './sh
         </button>
       </div>
     </ms-bottom-sheet>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class CompactBottomSheetExample {
   protected readonly open = signal(false);
 }`;
 
-  protected readonly formSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+  protected readonly formSnippet = `import { Component, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-form-bottom-sheet-example',
-  imports: [BottomSheetClose, BottomSheetComponent, BottomSheetTrigger, ReactiveFormsModule],
-  template: \`
+  selector: 'app-form-bottom-sheet-example', imports: [BottomSheetClose, BottomSheetComponent, BottomSheetTrigger, ReactiveFormsModule], template: \`
     <button class="btn btn-outline" type="button" [msBottomSheetTrigger]="sheet">
       Rename project
     </button>
@@ -181,25 +169,19 @@ import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './sh
         </button>
       </div>
     </ms-bottom-sheet>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class FormBottomSheetExample {
   protected readonly open = signal(false);
   protected readonly name = new FormControl('', {
-    nonNullable: true,
-    validators: [Validators.required, Validators.minLength(3)],
-  });
+    nonNullable: true, validators: [Validators.required, Validators.minLength(3)], });
 }`;
 
-  protected readonly fullSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+  protected readonly fullSnippet = `import { Component, signal } from '@angular/core';
 
 import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-full-bottom-sheet-example',
-  imports: [BottomSheetClose, BottomSheetComponent, BottomSheetTrigger],
-  template: \`
+  selector: 'app-full-bottom-sheet-example', imports: [BottomSheetClose, BottomSheetComponent, BottomSheetTrigger], template: \`
     <button class="btn btn-outline" type="button" [msBottomSheetTrigger]="sheet">
       Open mobile workflow
     </button>
@@ -217,21 +199,17 @@ import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './sh
         </button>
       </div>
     </ms-bottom-sheet>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class FullBottomSheetExample {
   protected readonly open = signal(false);
 }`;
 
-  protected readonly lockedSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+  protected readonly lockedSnippet = `import { Component, signal } from '@angular/core';
 
 import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-locked-bottom-sheet-example',
-  imports: [BottomSheetClose, BottomSheetComponent, BottomSheetTrigger],
-  template: \`
+  selector: 'app-locked-bottom-sheet-example', imports: [BottomSheetClose, BottomSheetComponent, BottomSheetTrigger], template: \`
     <button class="btn btn-outline" type="button" [msBottomSheetTrigger]="sheet">
       Open required choice
     </button>
@@ -249,22 +227,14 @@ import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './sh
         </button>
       </div>
     </ms-bottom-sheet>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class LockedBottomSheetExample {
   protected readonly open = signal(false);
 }`;
 
-  protected readonly serviceSnippet = `import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+  protected readonly serviceSnippet = `import { Component, inject } from '@angular/core';
 
-import {
-  BOTTOM_SHEET_DATA,
-  BOTTOM_SHEET_REF,
-  BottomSheetComponent,
-  BottomSheetRef,
-  BottomSheetService,
-} from './shared/ui-lib';
+import { BOTTOM_SHEET_DATA, BOTTOM_SHEET_REF, BottomSheetComponent, BottomSheetRef, BottomSheetService, } from './shared/ui-lib';
 
 type ShareSheetData = {
   projectId: string;
@@ -279,9 +249,7 @@ type ShareSheetResult =
     };
 
 @Component({
-  selector: 'app-share-sheet',
-  imports: [BottomSheetComponent],
-  template: \`
+  selector: 'app-share-sheet', imports: [BottomSheetComponent], template: \`
     <ms-bottom-sheet title="Share project" (close)="sheetRef.close({ action: 'cancel' })">
       <p>Share {{ data.projectId }} with your team.</p>
 
@@ -291,9 +259,7 @@ type ShareSheetResult =
         </button>
       </div>
     </ms-bottom-sheet>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class ShareSheetComponent {
   protected readonly data = inject(BOTTOM_SHEET_DATA) as ShareSheetData;
   protected readonly sheetRef = inject(BOTTOM_SHEET_REF) as BottomSheetRef<ShareSheetResult>;
@@ -304,28 +270,20 @@ export class ShareSheetComponent {
 }
 
 @Component({
-  selector: 'app-share-sheet-launcher',
-  template: \`
+  selector: 'app-share-sheet-launcher', template: \`
     <button class="btn btn-primary" type="button" (click)="openShareSheet()">
       Open share sheet
     </button>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class ShareSheetLauncher {
   private readonly bottomSheetService = inject(BottomSheetService);
 
   protected openShareSheet(): void {
     const sheetRef = this.bottomSheetService.open<
-      ShareSheetComponent,
-      ShareSheetData,
-      ShareSheetResult
+      ShareSheetComponent, ShareSheetData, ShareSheetResult
     >(ShareSheetComponent, {
-      size: 'compact',
-      data: {
-        projectId: 'project-1',
-      },
-    });
+      size: 'compact', data: {
+        projectId: 'project-1', }, });
 
     sheetRef.afterClosed().subscribe((result) => {
       if (result?.action === 'copy-link') {
@@ -335,7 +293,7 @@ export class ShareSheetLauncher {
   }
 }`;
 
-  protected readonly rtlSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+  protected readonly rtlSnippet = `import { Component, signal } from '@angular/core';
 
 import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './shared/ui-lib';
 
@@ -360,22 +318,22 @@ import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './sh
       </ms-bottom-sheet>
     </div>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RtlBottomSheetExample {
   protected readonly open = signal(false);
 }`;
 
   protected openServiceSheet(): void {
-    const sheetRef = this.bottomSheetService.open<ShareBottomSheet, ShareSheetData, ShareSheetResult>(
+    const sheetRef = this.bottomSheetService.open<
       ShareBottomSheet,
-      {
-        size: 'compact',
-        data: {
-          projectId: 'project-1',
-        },
+      ShareSheetData,
+      ShareSheetResult
+    >(ShareBottomSheet, {
+      size: 'compact',
+      data: {
+        projectId: 'project-1',
       },
-    );
+    });
 
     sheetRef.afterClosed().subscribe((result) => {
       this.serviceResult.set(result ? `Closed with ${result.action}` : 'Closed without a result');

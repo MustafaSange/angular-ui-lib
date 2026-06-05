@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
 import {
@@ -12,10 +12,9 @@ import {
   templateUrl: './field-with-hint.html',
   styleUrl: './field-with-hint.scss',
   host: { class: 'showcase-pair' },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldWithHintShowcase {
-  protected readonly snippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly snippet = `import { Component } from '@angular/core';
 
 import {
   SignalFormField,
@@ -35,7 +34,6 @@ import {
       </ms-hint>
     </ms-signal-form-field>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldWithHintExample {}`;
 }

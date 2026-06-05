@@ -1,10 +1,7 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import {
-  ChipComponent,
-  ChipRemoveDirective,
-} from '../../shared/ui-lib/components/chip';
+import { ChipComponent, ChipRemoveDirective } from '../../shared/ui-lib/components/chip';
 import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 
 @Component({
@@ -12,72 +9,57 @@ import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
   imports: [RouterLink, ChipComponent, ChipRemoveDirective, ShowcaseCode],
   templateUrl: './chip.html',
   styleUrl: './chip.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Chip {
   protected readonly removableChips = signal(['Angular', 'Signals', 'RTL']);
 
-  protected readonly staticSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly staticSnippet = `import { Component } from '@angular/core';
 
 import { ChipComponent } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-static-chip-example',
-  imports: [ChipComponent],
-  template: \`
+  selector: 'app-static-chip-example', imports: [ChipComponent], template: \`
     <ms-chip>Design system</ms-chip>
     <ms-chip variant="info">Documentation</ms-chip>
     <ms-chip variant="success">
       <span class="ms-icon" aria-hidden="true">check_circle</span>
       Published
     </ms-chip>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class StaticChipExample {}`;
 
-  protected readonly variantsSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly variantsSnippet = `import { Component } from '@angular/core';
 
 import { ChipComponent } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-chip-variants-example',
-  imports: [ChipComponent],
-  template: \`
+  selector: 'app-chip-variants-example', imports: [ChipComponent], template: \`
     <ms-chip>Neutral</ms-chip>
     <ms-chip variant="info">Info</ms-chip>
     <ms-chip variant="success">Success</ms-chip>
     <ms-chip variant="warning">Warning</ms-chip>
     <ms-chip variant="danger">Danger</ms-chip>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class ChipVariantsExample {}`;
 
-  protected readonly statesSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly statesSnippet = `import { Component } from '@angular/core';
 
 import { ChipComponent } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-chip-states-example',
-  imports: [ChipComponent],
-  template: \`
+  selector: 'app-chip-states-example', imports: [ChipComponent], template: \`
     <ms-chip variant="info" selected>Selected</ms-chip>
     <ms-chip variant="success" appearance="outline">Outline</ms-chip>
     <ms-chip variant="warning" disabled>Disabled</ms-chip>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class ChipStatesExample {}`;
 
-  protected readonly removableSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+  protected readonly removableSnippet = `import { Component, signal } from '@angular/core';
 
 import { ChipComponent, ChipRemoveDirective } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-removable-chip-example',
-  imports: [ChipComponent, ChipRemoveDirective],
-  template: \`
+  selector: 'app-removable-chip-example', imports: [ChipComponent, ChipRemoveDirective], template: \`
     @for (chip of chips(); track chip) {
       <ms-chip removable (removed)="removeChip(chip)">
         {{ chip }}
@@ -89,9 +71,7 @@ import { ChipComponent, ChipRemoveDirective } from './shared/ui-lib';
       Locked
       <button type="button" msChipRemove aria-label="Remove Locked"></button>
     </ms-chip>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class RemovableChipExample {
   protected readonly chips = signal(['Angular', 'Signals', 'RTL']);
 
@@ -100,7 +80,7 @@ export class RemovableChipExample {
   }
 }`;
 
-  protected readonly rtlSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly rtlSnippet = `import { Component } from '@angular/core';
 
 import { ChipComponent, ChipRemoveDirective } from './shared/ui-lib';
 
@@ -119,7 +99,6 @@ import { ChipComponent, ChipRemoveDirective } from './shared/ui-lib';
       </ms-chip>
     </div>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChipRtlExample {}`;
 

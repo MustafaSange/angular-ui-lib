@@ -83,13 +83,12 @@ Defaults:
 - omitted `state.alignment` defaults to `end`
 
 Shared reusable components use the `ms-` selector prefix. Internal styling hooks are
-`.pagination`, `.pagination-list`, `.pagination-item`, `.pagination-button`,
-`.pagination-page`, `.pagination-ellipsis`, `.pagination-icon`, and `.pagination-summary`.
+`.pagination`, `.pagination-list`, `.pagination-item`, `.pagination-button`, `.pagination-page`, `.pagination-ellipsis`, `.pagination-icon`, and `.pagination-summary`.
 
 ## Desired Usage
 
 ```ts
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 
 import {
   PaginationComponent,
@@ -104,7 +103,6 @@ import {
     <ms-pagination [(state)]="pagination" />
     <p>Page {{ paginationMeta().page }} of {{ paginationMeta().totalPages }}</p>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaginationExample {
   readonly pagination = signal<PaginationState>({
@@ -191,7 +189,7 @@ Each visual example renders a matching hand-authored, full standalone Angular ex
 
 - Use standalone Angular APIs.
 - Do not add `standalone: true`.
-- Use `ChangeDetectionStrategy.OnPush`.
+- Rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`.
 - Prefer signals: `signal`, `computed`, `input`, `output`, `model`.
 - Prefer `inject()` over constructor injection.
 - Prefer `host` metadata in `@Component` over `@HostBinding` and `@HostListener`.

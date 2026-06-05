@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { ButtonDisabledIconsShowcase } from './showcases/button-disabled-icons/button-disabled-icons';
@@ -27,6 +27,5 @@ import { ButtonVariantsShowcase } from './showcases/button-variants/button-varia
   ],
   templateUrl: './buttons.html',
   styleUrl: './buttons.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Buttons {}

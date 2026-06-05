@@ -1,6 +1,5 @@
 import { DOCUMENT, NgTemplateOutlet } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   computed,
@@ -21,7 +20,6 @@ let nextStepperId = 0;
   selector: 'ms-stepper',
   imports: [NgTemplateOutlet],
   templateUrl: './stepper.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StepperComponent {
   private readonly document = inject(DOCUMENT);

@@ -30,10 +30,8 @@ Public pieces:
 - `CopyButtonVariant = 'ghost' | 'outline' | 'primary' | 'secondary'`
 - `CopyButtonSize = 'xs' | 'sm' | 'md' | 'lg'`
 
-Internal styling hooks remain concise and unprefixed: `.copy-button`, `.copy-icon`,
-`.copy-content`, `.copy-status`, `.copy-reveal`, `.copy-reveal-content`, and
-`.copy-reveal-action`. Established public utility classes such as `.btn`, `.btn-icon`,
-`.ms-icon`, and `.ms-icon-filled` remain unchanged.
+Internal styling hooks remain concise and unprefixed: `.copy-button`, `.copy-icon`, `.copy-content`, `.copy-status`, `.copy-reveal`, `.copy-reveal-content`, and
+`.copy-reveal-action`. Established public utility classes such as `.btn`, `.btn-icon`, `.ms-icon`, and `.ms-icon-filled` remain unchanged.
 
 Required component API:
 
@@ -80,7 +78,7 @@ Defaults:
 Copy from an explicit input:
 
 ```ts
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { CopyButtonComponent } from './shared/components/copy-button';
 
@@ -91,7 +89,6 @@ import { CopyButtonComponent } from './shared/components/copy-button';
     <code>INV-2026-0042</code>
     <ms-copy-button text="INV-2026-0042" ariaLabel="Copy invoice number" />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CopyInputExample {}
 ```
@@ -99,7 +96,7 @@ export class CopyInputExample {}
 Copy from projected fallback text:
 
 ```ts
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { CopyButtonComponent } from './shared/components/copy-button';
 
@@ -107,11 +104,8 @@ import { CopyButtonComponent } from './shared/components/copy-button';
   selector: 'app-copy-projected-example',
   imports: [CopyButtonComponent],
   template: `
-    <ms-copy-button ariaLabel="Copy support email">
-      support@example.com
-    </ms-copy-button>
+    <ms-copy-button ariaLabel="Copy support email"> support@example.com </ms-copy-button>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CopyProjectedExample {}
 ```
@@ -125,7 +119,7 @@ Disabled copy button:
 Reveal copy button on hover or focus:
 
 ```ts
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { CopyRevealComponent } from './shared/components/copy-button';
 
@@ -137,7 +131,6 @@ import { CopyRevealComponent } from './shared/components/copy-button';
       support@example.com
     </ms-copy-reveal>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CopyRevealExample {}
 ```
@@ -273,7 +266,7 @@ Add a home showcase card that links to `/clipboard`.
 
 - Use standalone Angular APIs.
 - Do not add `standalone: true`.
-- Use `ChangeDetectionStrategy.OnPush`.
+- Rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`.
 - Prefer signals: `signal`, `computed`, `input`, `output`, `model`.
 - Prefer `inject()` over constructor injection.
 - Prefer `host` metadata in `@Component` over `@HostBinding` and `@HostListener`.

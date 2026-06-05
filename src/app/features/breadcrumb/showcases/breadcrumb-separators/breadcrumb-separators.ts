@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import {
   BreadcrumbComponent,
@@ -9,16 +9,20 @@ import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code
 
 @Component({
   selector: 'app-breadcrumb-separators-showcase',
-  imports: [BreadcrumbComponent, BreadcrumbItemDirective, BreadcrumbSeparatorDirective, ShowcaseCode],
+  imports: [
+    BreadcrumbComponent,
+    BreadcrumbItemDirective,
+    BreadcrumbSeparatorDirective,
+    ShowcaseCode,
+  ],
   templateUrl: './breadcrumb-separators.html',
   styleUrl: '../breadcrumb-showcase.scss',
   host: {
     class: 'breadcrumb-section',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BreadcrumbSeparatorsShowcase {
-  protected readonly snippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly snippet = `import { Component } from '@angular/core';
 
 import {
   BreadcrumbComponent,
@@ -38,7 +42,6 @@ import {
       <span msBreadcrumbItem current>Breadcrumb</span>
     </ms-breadcrumb>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CustomBreadcrumbSeparatorExample {}`;
 }

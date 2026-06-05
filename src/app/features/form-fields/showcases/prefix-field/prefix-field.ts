@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
 import { SignalFormField } from '../../../../shared/ui-lib/components/signal-form-field';
@@ -9,10 +9,9 @@ import { SignalFormField } from '../../../../shared/ui-lib/components/signal-for
   templateUrl: './prefix-field.html',
   styleUrl: './prefix-field.scss',
   host: { class: 'showcase-pair' },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PrefixFieldShowcase {
-  protected readonly snippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly snippet = `import { Component } from '@angular/core';
 
 import { SignalFormField } from './shared/ui-lib';
 
@@ -26,7 +25,6 @@ import { SignalFormField } from './shared/ui-lib';
       <input id="price" type="text" placeholder="0.00" />
     </ms-signal-form-field>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PrefixFieldExample {}`;
 }

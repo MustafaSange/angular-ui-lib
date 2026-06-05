@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import {
@@ -27,29 +27,15 @@ import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
   ],
   templateUrl: './card.html',
   styleUrl: './card.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Card {
-  protected readonly basicSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly basicSnippet = `import { Component } from '@angular/core';
 
-import {
-  CardComponent,
-  CardContentDirective,
-  CardHeaderDirective,
-  CardSubtitleDirective,
-  CardTitleDirective,
-} from './shared/ui-lib';
+import { CardComponent, CardContentDirective, CardHeaderDirective, CardSubtitleDirective, CardTitleDirective, } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-basic-card-example',
-  imports: [
-    CardComponent,
-    CardHeaderDirective,
-    CardTitleDirective,
-    CardSubtitleDirective,
-    CardContentDirective,
-  ],
-  template: \`
+  selector: 'app-basic-card-example', imports: [
+    CardComponent, CardHeaderDirective, CardTitleDirective, CardSubtitleDirective, CardContentDirective, ], template: \`
     <ms-card>
       <header msCardHeader>
         <h2 msCardTitle>Quarterly planning</h2>
@@ -60,24 +46,15 @@ import {
         <p>Review goals, owners, and deadlines before the next planning session.</p>
       </section>
     </ms-card>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class BasicCardExample {}`;
 
-  protected readonly appearanceSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly appearanceSnippet = `import { Component } from '@angular/core';
 
-import {
-  CardComponent,
-  CardContentDirective,
-  CardHeaderDirective,
-  CardTitleDirective,
-} from './shared/ui-lib';
+import { CardComponent, CardContentDirective, CardHeaderDirective, CardTitleDirective, } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-card-appearance-example',
-  imports: [CardComponent, CardHeaderDirective, CardTitleDirective, CardContentDirective],
-  template: \`
+  selector: 'app-card-appearance-example', imports: [CardComponent, CardHeaderDirective, CardTitleDirective, CardContentDirective], template: \`
     <ms-card appearance="outlined">
       <header msCardHeader>
         <h2 msCardTitle>Outlined</h2>
@@ -104,35 +81,16 @@ import {
         <p>Muted treatment for grouped supporting information.</p>
       </section>
     </ms-card>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class CardAppearanceExample {}`;
 
-  protected readonly mediaSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly mediaSnippet = `import { Component } from '@angular/core';
 
-import {
-  CardComponent,
-  CardContentDirective,
-  CardFooterDirective,
-  CardHeaderDirective,
-  CardMediaDirective,
-  CardSubtitleDirective,
-  CardTitleDirective,
-} from './shared/ui-lib';
+import { CardComponent, CardContentDirective, CardFooterDirective, CardHeaderDirective, CardMediaDirective, CardSubtitleDirective, CardTitleDirective, } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-card-media-example',
-  imports: [
-    CardComponent,
-    CardMediaDirective,
-    CardHeaderDirective,
-    CardTitleDirective,
-    CardSubtitleDirective,
-    CardContentDirective,
-    CardFooterDirective,
-  ],
-  template: \`
+  selector: 'app-card-media-example', imports: [
+    CardComponent, CardMediaDirective, CardHeaderDirective, CardTitleDirective, CardSubtitleDirective, CardContentDirective, CardFooterDirective, ], template: \`
     <ms-card>
       <div msCardMedia class="summary-media" aria-hidden="true"></div>
 
@@ -150,21 +108,16 @@ import {
         <button class="btn btn-ghost btn-sm" type="button">Archive</button>
       </footer>
     </ms-card>
-  \`,
-  styles: [\`
+  \`, styles: [\`
     .summary-media {
       block-size: 8rem;
       background:
-        linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 24%, transparent), transparent 58%),
-        linear-gradient(45deg, color-mix(in srgb, var(--color-success) 20%, transparent), transparent 62%),
-        var(--color-surface-muted);
+        linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 24%, transparent), transparent 58%), linear-gradient(45deg, color-mix(in srgb, var(--color-success) 20%, transparent), transparent 62%), var(--color-surface-muted);
     }
-  \`],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`], })
 export class CardMediaExample {}`;
 
-  protected readonly rtlSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly rtlSnippet = `import { Component } from '@angular/core';
 
 import {
   CardComponent,
@@ -204,7 +157,6 @@ import {
       </ms-card>
     </div>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardRtlExample {}`;
 }

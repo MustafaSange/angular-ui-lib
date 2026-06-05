@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 import type { CardAppearance, CardPadding } from './card-types';
 
@@ -15,7 +15,6 @@ import type { CardAppearance, CardPadding } from './card-types';
     '[class.card-padding-md]': "padding() === 'md'",
     '[class.card-padding-lg]': "padding() === 'lg'",
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardComponent {
   readonly appearance = input<CardAppearance>('outlined');

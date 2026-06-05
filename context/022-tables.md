@@ -98,7 +98,7 @@ Each visual example renders a matching hand-authored, full standalone Angular ex
 
 - Use standalone Angular APIs.
 - Do not add `standalone: true`.
-- Use `ChangeDetectionStrategy.OnPush`.
+- Rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`.
 - Keep strict TypeScript.
 - Avoid `any`.
 - Do not add or update tests for this behavior.

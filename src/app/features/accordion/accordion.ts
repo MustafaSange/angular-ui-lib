@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import {
@@ -19,17 +19,14 @@ import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
   ],
   templateUrl: './accordion.html',
   styleUrl: './accordion.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Accordion {
-  protected readonly basicSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly basicSnippet = `import { Component } from '@angular/core';
 
 import { AccordionComponent, AccordionItemComponent } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-basic-accordion-example',
-  imports: [AccordionComponent, AccordionItemComponent],
-  template: \`
+  selector: 'app-basic-accordion-example', imports: [AccordionComponent, AccordionItemComponent], template: \`
     <ms-accordion>
       <ms-accordion-item title="Account settings" [expanded]="true">
         <p>Manage profile details, sign-in methods, and notification preferences.</p>
@@ -43,19 +40,15 @@ import { AccordionComponent, AccordionItemComponent } from './shared/ui-lib';
         <p>Update payment methods, invoices, and renewal settings.</p>
       </ms-accordion-item>
     </ms-accordion>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class BasicAccordionExample {}`;
 
-  protected readonly compactSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly compactSnippet = `import { Component } from '@angular/core';
 
 import { AccordionComponent, AccordionItemComponent } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-compact-accordion-example',
-  imports: [AccordionComponent, AccordionItemComponent],
-  template: \`
+  selector: 'app-compact-accordion-example', imports: [AccordionComponent, AccordionItemComponent], template: \`
     <ms-accordion class="accordion-compact">
       <ms-accordion-item title="Profile" [expanded]="true">
         <p>Review account identity, language, and display settings.</p>
@@ -69,23 +62,15 @@ import { AccordionComponent, AccordionItemComponent } from './shared/ui-lib';
         <p>Choose product, billing, and workspace email preferences.</p>
       </ms-accordion-item>
     </ms-accordion>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class CompactAccordionExample {}`;
 
-  protected readonly multipleSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly multipleSnippet = `import { Component } from '@angular/core';
 
-import {
-  AccordionComponent,
-  AccordionItemComponent,
-  AccordionTitleDirective,
-} from './shared/ui-lib';
+import { AccordionComponent, AccordionItemComponent, AccordionTitleDirective, } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-multiple-accordion-example',
-  imports: [AccordionComponent, AccordionItemComponent, AccordionTitleDirective],
-  template: \`
+  selector: 'app-multiple-accordion-example', imports: [AccordionComponent, AccordionItemComponent, AccordionTitleDirective], template: \`
     <ms-accordion [multiple]="true">
       <ms-accordion-item [expanded]="true">
         <ng-template msAccordionTitle>
@@ -107,12 +92,10 @@ import {
         <p>This section is unavailable until the active release is complete.</p>
       </ms-accordion-item>
     </ms-accordion>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class MultipleAccordionExample {}`;
 
-  protected readonly keyboardSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly keyboardSnippet = `import { Component } from '@angular/core';
 
 import { AccordionComponent, AccordionItemComponent } from './shared/ui-lib';
 
@@ -136,7 +119,6 @@ import { AccordionComponent, AccordionItemComponent } from './shared/ui-lib';
       </ms-accordion>
     </div>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KeyboardAccordionExample {}`;
 }

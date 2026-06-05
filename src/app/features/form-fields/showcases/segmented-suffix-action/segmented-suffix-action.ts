@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
 import { SignalFormField } from '../../../../shared/ui-lib/components/signal-form-field';
@@ -9,10 +9,9 @@ import { SignalFormField } from '../../../../shared/ui-lib/components/signal-for
   templateUrl: './segmented-suffix-action.html',
   styleUrl: './segmented-suffix-action.scss',
   host: { class: 'showcase-pair' },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SegmentedSuffixActionShowcase {
-  protected readonly snippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly snippet = `import { Component } from '@angular/core';
 
 import { SignalFormField } from './shared/ui-lib';
 
@@ -26,7 +25,6 @@ import { SignalFormField } from './shared/ui-lib';
       <button class="form-field-suffix form-field-action is-segmented" type="button">.com</button>
     </ms-signal-form-field>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SegmentedSuffixActionExample {}`;
 }

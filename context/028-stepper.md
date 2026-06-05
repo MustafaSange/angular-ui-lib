@@ -60,13 +60,12 @@ Defaults:
 - steps without a projected title or `title` input render an empty step label
 - disabled steps cannot be selected or focused through stepper keyboard navigation
 
-Shared reusable components use the `ms-` selector prefix. Internal styling hooks are `.stepper`,
-`.step-list`, `.step`, `.step-marker`, `.step-label`, `.step-connector`, and `.step-panel`.
+Shared reusable components use the `ms-` selector prefix. Internal styling hooks are `.stepper`, `.step-list`, `.step`, `.step-marker`, `.step-label`, `.step-connector`, and `.step-panel`.
 
 ## Desired Usage
 
 ```ts
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { StepComponent, StepperComponent, StepTitleDirective } from './shared/components/stepper';
 
@@ -104,7 +103,6 @@ import { StepComponent, StepperComponent, StepTitleDirective } from './shared/co
       </ms-step>
     </ms-stepper>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StepperExample {}
 ```
@@ -222,7 +220,7 @@ Each visual example renders a matching hand-authored, full standalone Angular ex
 
 - Use standalone Angular APIs.
 - Do not add `standalone: true`.
-- Use `ChangeDetectionStrategy.OnPush`.
+- Rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`.
 - Prefer signals: `signal`, `computed`, `input`, `output`, `model`.
 - Prefer `inject()` over constructor injection.
 - Prefer `host` metadata in `@Component` over `@HostBinding` and `@HostListener`.

@@ -1,5 +1,4 @@
 import {
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   OnDestroy,
@@ -21,7 +20,6 @@ type CopyState = 'idle' | CopyClipboardResult;
   host: {
     '[attr.data-copy-state]': 'copyState()',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CopyButtonComponent implements OnDestroy {
   readonly text = input<string | undefined>(undefined);

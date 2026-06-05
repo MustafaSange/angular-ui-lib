@@ -1,5 +1,4 @@
 import {
-  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   ElementRef,
@@ -30,7 +29,6 @@ let nextSideNavSectionId = 0;
     '(mouseleave)': 'scheduleCloseTransient()',
     '(keydown)': 'handleKeydown($event)',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SideNavSectionComponent {
   private readonly destroyRef = inject(DestroyRef);

@@ -98,7 +98,7 @@ Horizontal layout side placement mapping:
 Overflow action menu:
 
 ```ts
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   MenuComponent,
   MenuDividerComponent,
@@ -133,7 +133,6 @@ import {
       </ms-menu-panel>
     </ms-menu>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectActionsExample {}
 ```
@@ -141,7 +140,7 @@ export class ProjectActionsExample {}
 Filter/settings popover:
 
 ```ts
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {
   PopoverClose,
   PopoverComponent,
@@ -178,7 +177,6 @@ import {
       </ms-popover-panel>
     </ms-popover>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilterPopoverExample {
   protected readonly filtersOpen = signal(false);
@@ -188,7 +186,7 @@ export class FilterPopoverExample {
 Side-positioned popover:
 
 ```ts
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   PopoverClose,
   PopoverComponent,
@@ -210,7 +208,6 @@ import {
       </ms-popover-panel>
     </ms-popover>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidePopoverExample {}
 ```
@@ -388,7 +385,7 @@ Render snippets near the matching visual example with `<app-showcase-code>`.
 
 - Use standalone Angular APIs.
 - Do not add `standalone: true`.
-- Use `ChangeDetectionStrategy.OnPush`.
+- Rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`.
 - Prefer signals: `signal`, `computed`, `input`, `output`, `model`.
 - Prefer `inject()` over constructor injection.
 - Prefer `host` metadata in `@Component` over `@HostBinding` and `@HostListener`.

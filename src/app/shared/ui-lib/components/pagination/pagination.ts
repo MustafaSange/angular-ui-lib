@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, model } from '@angular/core';
+import { Component, computed, model } from '@angular/core';
 
 import { getPaginationMeta } from './pagination-meta';
 import type { PaginationState } from './pagination-state';
@@ -16,7 +16,6 @@ type PaginationItem =
 @Component({
   selector: 'ms-pagination',
   templateUrl: './pagination.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaginationComponent {
   readonly state = model<PaginationState>({});
@@ -31,7 +30,9 @@ export class PaginationComponent {
   protected readonly totalPages = computed(() => this.meta().totalPages);
   protected readonly currentPage = computed(() => this.meta().page);
   protected readonly previousPage = computed(() => Math.max(1, this.meta().page - 1));
-  protected readonly nextPage = computed(() => Math.min(this.meta().totalPages, this.meta().page + 1));
+  protected readonly nextPage = computed(() =>
+    Math.min(this.meta().totalPages, this.meta().page + 1),
+  );
   protected readonly hasPrevious = computed(() => this.meta().hasPrevious);
   protected readonly hasNext = computed(() => this.meta().hasNext);
   protected readonly itemStart = computed(() => this.meta().itemStart);

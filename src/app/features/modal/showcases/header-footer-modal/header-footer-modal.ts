@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 
 import {
   MODAL_DATA,
@@ -51,7 +51,11 @@ type ModalResultState =
       </div>
 
       <div class="modal-actions" slot="footer">
-        <button class="btn btn-secondary" type="button" (click)="modalRef.close({ action: 'cancel' })">
+        <button
+          class="btn btn-secondary"
+          type="button"
+          (click)="modalRef.close({ action: 'cancel' })"
+        >
           Cancel
         </button>
         <button
@@ -73,7 +77,6 @@ type ModalResultState =
       gap: var(--spacing-8);
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class HeaderFooterModalContent {
   protected readonly data = inject(MODAL_DATA) as TypedModalData;
@@ -88,7 +91,6 @@ class HeaderFooterModalContent {
   host: {
     class: 'modal-section',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderFooterModalShowcase {
   private readonly modalService = inject(ModalService);
@@ -112,7 +114,7 @@ export class HeaderFooterModalShowcase {
   });
 
   protected readonly snippet = `// review-changes-modal.ts
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { MODAL_DATA, MODAL_REF, ModalComponent, ModalRef } from './shared/ui-lib';
 
@@ -132,9 +134,7 @@ export type ReviewChangesResult =
     };
 
 @Component({
-  selector: 'app-review-changes-modal',
-  imports: [ModalComponent],
-  template: \`
+  selector: 'app-review-changes-modal', imports: [ModalComponent], template: \`
     <ms-modal title="Review changes" (close)="modalRef.close()">
       <button slot="headerActions" class="btn btn-outline-primary btn-sm" type="button">
         Skip
@@ -155,8 +155,7 @@ export type ReviewChangesResult =
         </button>
       </div>
     </ms-modal>
-  \`,
-  styles: \`
+  \`, styles: \`
     .modal-actions {
       display: flex;
       flex-wrap: wrap;
@@ -164,16 +163,14 @@ export type ReviewChangesResult =
       justify-content: flex-end;
       gap: var(--spacing-8);
     }
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class ReviewChangesModal {
   protected readonly data = inject(MODAL_DATA) as ReviewChangesData;
   protected readonly modalRef = inject(MODAL_REF) as ModalRef<ReviewChangesResult>;
 }
 
 // project-settings.ts
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 
 import { ModalService } from './shared/ui-lib';
 import type { ReviewChangesData, ReviewChangesResult } from './review-changes-modal';
@@ -198,7 +195,6 @@ type SaveState =
     </button>
     <span>{{ resultMessage() }}</span>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectSettings {
   private readonly modalService = inject(ModalService);

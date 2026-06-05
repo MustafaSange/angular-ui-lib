@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, contentChild } from '@angular/core';
+import { Component, computed, contentChild } from '@angular/core';
 import { FormField } from '@angular/forms/signals';
 
 import { SignalFormError } from './signal-form-error/signal-form-error';
@@ -7,7 +7,6 @@ import { SignalFormHint } from './signal-form-hint/signal-form-hint';
 @Component({
   selector: 'ms-signal-form-field',
   templateUrl: './signal-form-field.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignalFormField {
   private readonly field = contentChild<FormField<unknown>>(FormField);

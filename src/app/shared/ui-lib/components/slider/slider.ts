@@ -1,5 +1,4 @@
 import {
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   booleanAttribute,
@@ -21,7 +20,6 @@ import type { FormValueControl } from '@angular/forms/signals';
     '[class.is-disabled]': 'disabled()',
     '[style.--_slider-percent]': 'sliderPercent()',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SliderComponent implements FormValueControl<number> {
   private readonly rangeInput = viewChild<ElementRef<HTMLInputElement>>('range');
@@ -41,8 +39,12 @@ export class SliderComponent implements FormValueControl<number> {
   readonly ariaLabelledby = input<string | null>(null, { alias: 'aria-labelledby' });
   readonly ariaDescribedby = input<string | null>(null, { alias: 'aria-describedby' });
 
-  protected readonly effectiveMin = computed(() => Math.min(this.normalizedMin(), this.normalizedMax()));
-  protected readonly effectiveMax = computed(() => Math.max(this.normalizedMin(), this.normalizedMax()));
+  protected readonly effectiveMin = computed(() =>
+    Math.min(this.normalizedMin(), this.normalizedMax()),
+  );
+  protected readonly effectiveMax = computed(() =>
+    Math.max(this.normalizedMin(), this.normalizedMax()),
+  );
   protected readonly effectiveStep = computed(() => {
     const step = this.step();
 
