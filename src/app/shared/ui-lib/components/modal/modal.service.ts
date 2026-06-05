@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Injectable, Injector, Type, inject, signal } from '@angular/core';
+import { Injector, Service, Type, inject, signal } from '@angular/core';
 
 import type { ModalConfig, ModalOpenOptions } from './modal-config';
 import { ModalRef } from './modal-ref';
@@ -26,9 +26,7 @@ const FOCUSABLE_SELECTOR = [
 
 let nextModalEntryId = 0;
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class ModalService {
   private readonly injector = inject(Injector);
   private readonly document = inject(DOCUMENT);

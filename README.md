@@ -118,7 +118,7 @@ npm test
 
 - Use standalone Angular APIs.
 - Prefer signals and `inject()`.
-- Prefer `@Service()` for root-provided services.
+- Prefer `@Service()` for root-provided services instead of `@Injectable({ providedIn: 'root' })`.
 - Rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`.
 - Use native Angular template control flow.
 - Keep shared component selectors on the `ms-` prefix.

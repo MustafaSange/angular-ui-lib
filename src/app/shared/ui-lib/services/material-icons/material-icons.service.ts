@@ -1,14 +1,12 @@
 import { DOCUMENT } from '@angular/common';
-import { Injectable, inject } from '@angular/core';
+import { Service, inject } from '@angular/core';
 
 import { MATERIAL_ICONS } from './icon-registry';
 
 const MATERIAL_SYMBOLS_LINK_ID = 'ms-material-symbols-font';
 const MATERIAL_SYMBOLS_FAMILY = 'Material Symbols Outlined:opsz,wght,FILL,GRAD@20,500,0..1,0';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class MaterialIconsService {
   private readonly document = inject(DOCUMENT);
 

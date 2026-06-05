@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Service, signal } from '@angular/core';
 
 import type { FeedbackVariant, ToastConfig, ToastEntry } from './feedback-types';
 import { ToastRef } from './toast-ref';
@@ -18,9 +18,7 @@ const MAX_VISIBLE_TOASTS = 5;
 
 let nextToastId = 0;
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class ToastService {
   private readonly records = new Map<string, ToastRecord>();
   private readonly toastEntries = signal<ToastEntry[]>([]);

@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Injectable, Injector, Type, inject, signal } from '@angular/core';
+import { Injector, Service, Type, inject, signal } from '@angular/core';
 
 import type { BottomSheetConfig, BottomSheetOpenOptions } from './bottom-sheet-config';
 import { BottomSheetRef } from './bottom-sheet-ref';
@@ -16,9 +16,7 @@ export type BottomSheetEntry = {
 
 let nextBottomSheetEntryId = 0;
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class BottomSheetService {
   private readonly injector = inject(Injector);
   private readonly document = inject(DOCUMENT);
