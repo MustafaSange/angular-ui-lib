@@ -11,10 +11,7 @@ label and leading content.
 Import chip primitives from the folder barrel:
 
 ```ts
-import {
-  ChipComponent,
-  ChipRemoveDirective,
-} from '../../shared/components/chip';
+import { ChipComponent, ChipRemoveDirective } from '../../shared/components/chip';
 ```
 
 Public pieces:
@@ -44,13 +41,12 @@ Defaults:
 - chips are not selected, disabled, or removable unless configured
 - removable chips emit `removed` when their remove button is activated
 
-Shared reusable components use the `ms-` selector prefix. Internal styling hooks are `.chip`,
-`.chip-content`, `.chip-leading`, `.chip-remove`, and `.chip-remove-icon`.
+Shared reusable components use the `ms-` selector prefix. Internal styling hooks are `.chip`, `.chip-content`, `.chip-leading`, `.chip-remove`, and `.chip-remove-icon`.
 
 ## Desired Usage
 
 ```ts
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { ChipComponent, ChipRemoveDirective } from './shared/components/chip';
 
@@ -72,7 +68,6 @@ import { ChipComponent, ChipRemoveDirective } from './shared/components/chip';
       </ms-chip>
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChipExample {
   readonly showRemovable = signal(true);
@@ -167,7 +162,7 @@ Each visual example renders a matching hand-authored, full standalone Angular ex
 
 - Use standalone Angular APIs.
 - Do not add `standalone: true`.
-- Use `ChangeDetectionStrategy.OnPush`.
+- Rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`.
 - Prefer signals: `signal`, `computed`, `input`, `output`, `model`.
 - Prefer `inject()` over constructor injection.
 - Prefer `host` metadata in `@Component` over `@HostBinding` and `@HostListener`.

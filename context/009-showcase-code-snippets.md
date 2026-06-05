@@ -1,9 +1,11 @@
 # Feature 009: Showcase Code Snippets
 
 ## Goal
+
 Every feature showcase should pair visual examples with copyable code snippets so users can quickly paste working examples into another Angular app.
 
 ## Shared Component
+
 Use the shared snippet viewer:
 
 `src/app/shared/components/showcase-code`
@@ -31,7 +33,7 @@ For repeated examples, store snippets as an array and render them with `@for`.
 - Keep snippets hand-authored in the feature component `.ts` file.
 - Snippets should be full standalone Angular component examples.
 - Include all imports needed for the example.
-- Use `ChangeDetectionStrategy.OnPush`.
+- Rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`.
 - Do not add `standalone: true`.
 - Prefer signals, signal forms, and native Angular control flow where relevant.
 - Keep snippets focused on the component or utility being showcased.

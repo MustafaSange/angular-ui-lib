@@ -1,19 +1,10 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  booleanAttribute,
-  computed,
-  input,
-  output,
-  signal,
-} from '@angular/core';
+import { Component, booleanAttribute, computed, input, output, signal } from '@angular/core';
 
 import type { FeedbackVariant } from './feedback-types';
 
 @Component({
   selector: 'ms-alert',
   templateUrl: './alert.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AlertComponent {
   readonly variant = input<FeedbackVariant>('info');

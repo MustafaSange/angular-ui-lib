@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormField, form, required, schema } from '@angular/forms/signals';
 
 import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
@@ -19,7 +19,6 @@ type SignalFormExample = {
   templateUrl: './signal-form-field-showcase.html',
   styleUrl: './signal-form-field-showcase.scss',
   host: { class: 'showcase-pair' },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignalFormFieldShowcase {
   private readonly signalFormModel = signal<SignalFormExample>({
@@ -38,7 +37,7 @@ export class SignalFormFieldShowcase {
   protected readonly emailField = this.signalForm.email;
   protected readonly requiredEmailField = this.signalForm.requiredEmail;
 
-  protected readonly snippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+  protected readonly snippet = `import { Component, signal } from '@angular/core';
 import { FormField, form, required, schema } from '@angular/forms/signals';
 
 import {
@@ -69,7 +68,6 @@ type EmailForm = {
       </ms-error>
     </ms-signal-form-field>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignalFormFieldExample {
   private readonly model = signal<EmailForm>({

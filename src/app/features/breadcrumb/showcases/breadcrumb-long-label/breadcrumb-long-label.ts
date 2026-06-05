@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import {
   BreadcrumbComponent,
@@ -14,10 +14,9 @@ import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code
   host: {
     class: 'breadcrumb-section',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BreadcrumbLongLabelShowcase {
-  protected readonly snippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly snippet = `import { Component } from '@angular/core';
 
 import { BreadcrumbComponent, BreadcrumbItemDirective } from './shared/ui-lib';
 
@@ -32,7 +31,6 @@ import { BreadcrumbComponent, BreadcrumbItemDirective } from './shared/ui-lib';
       <span msBreadcrumbItem current>Breadcrumb implementation guidance</span>
     </ms-breadcrumb>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LongLabelBreadcrumbExample {}`;
 }

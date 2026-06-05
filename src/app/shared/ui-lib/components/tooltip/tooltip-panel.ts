@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  inject,
-  output,
-  signal,
-} from '@angular/core';
+import { Component, ElementRef, inject, output, signal } from '@angular/core';
 
 import type { TooltipPlacement } from './tooltip-placement';
 
@@ -28,7 +21,6 @@ let nextTooltipPanelId = 0;
     '(pointerleave)': 'handlePointerLeave()',
     '(toggle)': 'handleToggle($event)',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TooltipPanelComponent {
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);

@@ -50,14 +50,13 @@ Defaults:
 - cards use medium padding
 - section directives only add styling hooks and do not change native semantics
 
-Shared reusable components use the `ms-` selector prefix. Internal styling hooks are `.card`,
-`.card-header`, `.card-title`, `.card-subtitle`, `.card-content`, `.card-footer`, and
+Shared reusable components use the `ms-` selector prefix. Internal styling hooks are `.card`, `.card-header`, `.card-title`, `.card-subtitle`, `.card-content`, `.card-footer`, and
 `.card-media`.
 
 ## Desired Usage
 
 ```ts
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import {
   CardComponent,
@@ -94,7 +93,6 @@ import {
       </footer>
     </ms-card>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardExample {}
 ```
@@ -172,7 +170,7 @@ Each visual example renders a matching hand-authored, full standalone Angular ex
 
 - Use standalone Angular APIs.
 - Do not add `standalone: true`.
-- Use `ChangeDetectionStrategy.OnPush`.
+- Rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`.
 - Prefer signals: `signal`, `computed`, `input`, `output`, `model`.
 - Prefer `inject()` over constructor injection.
 - Prefer `host` metadata in `@Component` over `@HostBinding` and `@HostListener`.

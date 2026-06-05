@@ -1,13 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  contentChild,
-  effect,
-  inject,
-  input,
-} from '@angular/core';
+import { Component, OnDestroy, contentChild, effect, inject, input } from '@angular/core';
 
 import { TooltipPanelComponent } from './tooltip-panel';
 import type { TooltipPlacement } from './tooltip-placement';
@@ -21,7 +13,6 @@ let activeTooltip: TooltipComponent | undefined;
 @Component({
   selector: 'ms-tooltip',
   templateUrl: './tooltip.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TooltipComponent implements OnDestroy {
   private readonly document = inject(DOCUMENT);

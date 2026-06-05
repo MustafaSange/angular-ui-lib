@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { BasicTextFieldShowcase } from './showcases/basic-text-field/basic-text-field';
@@ -41,6 +41,5 @@ import { TextareaFieldShowcase } from './showcases/textarea-field/textarea-field
   ],
   templateUrl: './form-fields.html',
   styleUrl: './form-fields.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormFields {}

@@ -74,17 +74,14 @@ Fonts stylesheet for the icons listed in `src/app/shared/services/material-icons
 ## Example
 
 ```ts
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { BadgeComponent } from './shared';
 
 @Component({
   selector: 'app-status-example',
   imports: [BadgeComponent],
-  template: `
-    <ms-badge variant="success">Active</ms-badge>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: ` <ms-badge variant="success">Active</ms-badge> `,
 })
 export class StatusExample {}
 ```
@@ -121,7 +118,8 @@ npm test
 
 - Use standalone Angular APIs.
 - Prefer signals and `inject()`.
-- Use `ChangeDetectionStrategy.OnPush`.
+- Prefer `@Service()` for root-provided services.
+- Rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`.
 - Use native Angular template control flow.
 - Keep shared component selectors on the `ms-` prefix.
 - Keep shared component styles RTL-safe with logical CSS properties.

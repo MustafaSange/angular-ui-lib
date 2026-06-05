@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  contentChild,
-  effect,
-  input,
-  model,
-} from '@angular/core';
+import { Component, contentChild, effect, input, model } from '@angular/core';
 
 import type { AnchoredPlacement } from './anchored-placement';
 import { PopoverPanelComponent } from './popover-panel';
@@ -14,7 +7,6 @@ import { PopoverTrigger } from './popover-trigger';
 @Component({
   selector: 'ms-popover',
   templateUrl: './popover.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PopoverComponent {
   readonly open = model(false);

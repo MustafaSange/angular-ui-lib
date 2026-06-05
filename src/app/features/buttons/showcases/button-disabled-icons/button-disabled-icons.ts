@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
 
@@ -10,10 +10,9 @@ import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code
   host: {
     class: 'button-section',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonDisabledIconsShowcase {
-  protected readonly snippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly snippet = `import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-disabled-icon-button-example',
@@ -22,7 +21,6 @@ export class ButtonDisabledIconsShowcase {
       <span class="ms-icon" aria-hidden="true">add</span>
     </button>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DisabledIconButtonExample {}`;
 }

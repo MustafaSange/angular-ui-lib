@@ -32,9 +32,7 @@ Public pieces:
 Shared reusable components use the `ms-` selector prefix. Do not use `app-` for components under
 `src/app/shared`.
 
-Internal styling hooks remain concise and unprefixed: `.side-nav`, `.side-nav-list`,
-`.side-nav-item`, `.side-nav-section`, `.side-nav-section-trigger`, `.side-nav-panel`,
-`.side-nav-flyout`, `.side-nav-arrow`, and `.side-nav-label`. Established public utility classes
+Internal styling hooks remain concise and unprefixed: `.side-nav`, `.side-nav-list`, `.side-nav-item`, `.side-nav-section`, `.side-nav-section-trigger`, `.side-nav-panel`, `.side-nav-flyout`, `.side-nav-arrow`, and `.side-nav-label`. Established public utility classes
 such as `.ms-icon` and `.ms-icon-filled` remain namespaced.
 
 Required component APIs:
@@ -77,7 +75,7 @@ Defaults:
 Expanded navigation with anchors, buttons, and nested sections:
 
 ```ts
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import {
   SideNavComponent,
@@ -128,7 +126,6 @@ import {
       </button>
     </ms-side-nav>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SideNavExample {
   protected readonly collapsed = signal(false);
@@ -275,7 +272,7 @@ examples with `<app-showcase-code>`.
 
 - Use standalone Angular APIs.
 - Do not add `standalone: true`.
-- Use `ChangeDetectionStrategy.OnPush`.
+- Rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`.
 - Prefer signals: `signal`, `computed`, `input`, `output`, `model`.
 - Prefer `inject()` over constructor injection.
 - Prefer `host` metadata in `@Component` over `@HostBinding` and `@HostListener`.

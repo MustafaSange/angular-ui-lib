@@ -173,7 +173,7 @@ Each selection-control group should keep its matching `<app-showcase-code>` snip
 
 - Use standalone Angular APIs.
 - Do not add `standalone: true`.
-- Use `ChangeDetectionStrategy.OnPush`.
+- Rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`.
 - Prefer `inject()` over constructor injection.
 - Prefer `host` metadata in `@Component` over `@HostBinding` and `@HostListener`.
 - Keep strict TypeScript.

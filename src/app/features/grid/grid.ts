@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
@@ -8,13 +8,12 @@ import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
   imports: [RouterLink, ShowcaseCode],
   templateUrl: './grid.html',
   styleUrl: './grid.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Grid {
   protected readonly columns = Array.from({ length: 12 }, (_, index) => index + 1);
 
   protected readonly snippets = {
-    columns: `import { ChangeDetectionStrategy, Component } from '@angular/core';
+    columns: `import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-twelve-column-grid-example',
@@ -25,12 +24,11 @@ export class Grid {
       }
     </div>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TwelveColumnGridExample {
   protected readonly columns = Array.from({ length: 12 }, (_, index) => index + 1);
 }`,
-    spans: `import { ChangeDetectionStrategy, Component } from '@angular/core';
+    spans: `import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-grid-spans-example',
@@ -48,10 +46,9 @@ export class TwelveColumnGridExample {
       <div class="col-3">col-3</div>
     </div>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GridSpansExample {}`,
-    responsive: `import { ChangeDetectionStrategy, Component } from '@angular/core';
+    responsive: `import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-responsive-grid-example',
@@ -62,10 +59,9 @@ export class GridSpansExample {}`,
       <div class="col-12 sm-col-6 md-col-4 lg-col-4 xl-col-4">Responsive C</div>
     </div>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResponsiveGridExample {}`,
-    containers: `import { ChangeDetectionStrategy, Component } from '@angular/core';
+    containers: `import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-containers-example',
@@ -76,7 +72,6 @@ export class ResponsiveGridExample {}`,
     <div class="container-wide">container-wide</div>
     <div class="container-full">container-full</div>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContainersExample {}`,
   };

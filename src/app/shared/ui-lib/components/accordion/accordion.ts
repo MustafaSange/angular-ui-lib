@@ -1,13 +1,5 @@
 import { DOCUMENT, NgTemplateOutlet } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  contentChildren,
-  inject,
-  input,
-  viewChildren,
-} from '@angular/core';
+import { Component, ElementRef, contentChildren, inject, input, viewChildren } from '@angular/core';
 
 import { AccordionItemComponent } from './accordion-item';
 
@@ -17,7 +9,6 @@ let nextAccordionId = 0;
   selector: 'ms-accordion',
   imports: [NgTemplateOutlet],
   templateUrl: './accordion.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccordionComponent {
   private readonly document = inject(DOCUMENT);

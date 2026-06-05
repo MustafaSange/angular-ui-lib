@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import {
   MODAL_REF,
@@ -12,7 +12,6 @@ import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code
   selector: 'app-locked-modal-content',
   imports: [ModalComponent],
   templateUrl: './locked-modal-content.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class LockedModalContent {
   protected readonly modalRef = inject(MODAL_REF) as ModalRef<void>;
@@ -26,24 +25,17 @@ class LockedModalContent {
   host: {
     class: 'modal-section',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LockedModalShowcase {
   private readonly modalService = inject(ModalService);
 
   protected readonly snippet = `// locked-modal-content.ts
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
-import {
-  MODAL_REF,
-  ModalComponent,
-  ModalRef,
-} from './shared/ui-lib';
+import { MODAL_REF, ModalComponent, ModalRef, } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-locked-modal-content',
-  imports: [ModalComponent],
-  template: \`
+  selector: 'app-locked-modal-content', imports: [ModalComponent], template: \`
     <ms-modal title="Explicit close required" (close)="modalRef.close()">
       <div class="modal-stack">
         <p>Backdrop and Escape closing are disabled for this modal.</p>
@@ -53,15 +45,13 @@ import {
         </button>
       </div>
     </ms-modal>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class LockedModalContent {
   protected readonly modalRef = inject(MODAL_REF) as ModalRef<void>;
 }
 
 // settings-page.ts
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { ModalService } from './shared/ui-lib';
 
@@ -72,7 +62,6 @@ import { ModalService } from './shared/ui-lib';
       Open locked modal
     </button>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingsPage {
   private readonly modalService = inject(ModalService);

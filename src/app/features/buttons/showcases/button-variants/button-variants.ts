@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
 
@@ -10,10 +10,9 @@ import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code
   host: {
     class: 'button-section',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonVariantsShowcase {
-  protected readonly snippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly snippet = `import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-button-variants-example',
@@ -25,7 +24,6 @@ export class ButtonVariantsShowcase {
     <button class="btn btn-danger">Danger</button>
     <button class="btn btn-success">Success</button>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonVariantsExample {}`;
 }

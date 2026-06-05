@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import {
@@ -7,10 +7,7 @@ import {
   type ButtonToggleValue,
 } from '../../shared/ui-lib/components/button-toggle';
 import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
-import {
-  SignalFormField,
-  SignalFormHint,
-} from '../../shared/ui-lib/components/signal-form-field';
+import { SignalFormField, SignalFormHint } from '../../shared/ui-lib/components/signal-form-field';
 
 @Component({
   selector: 'app-button-toggle',
@@ -24,7 +21,6 @@ import {
   ],
   templateUrl: './button-toggle.html',
   styleUrl: './button-toggle.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonToggle {
   protected readonly view = signal<ButtonToggleValue>('list');
@@ -33,42 +29,28 @@ export class ButtonToggle {
   protected readonly formView = signal<ButtonToggleValue>('grid');
   protected readonly rtlValue = signal<ButtonToggleValue>('middle');
 
-  protected readonly basicSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+  protected readonly basicSnippet = `import { Component, signal } from '@angular/core';
 
-import {
-  ButtonToggleDirective,
-  ButtonToggleGroup,
-  type ButtonToggleValue,
-} from './shared/ui-lib';
+import { ButtonToggleDirective, ButtonToggleGroup, type ButtonToggleValue, } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-basic-button-toggle-example',
-  imports: [ButtonToggleGroup, ButtonToggleDirective],
-  template: \`
+  selector: 'app-basic-button-toggle-example', imports: [ButtonToggleGroup, ButtonToggleDirective], template: \`
     <ms-button-toggle-group [(value)]="view" aria-label="View mode">
       <button type="button" msButtonToggleValue="list">List</button>
       <button type="button" msButtonToggleValue="grid">Grid</button>
       <button type="button" msButtonToggleValue="table">Table</button>
     </ms-button-toggle-group>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class BasicButtonToggleExample {
   protected readonly view = signal<ButtonToggleValue>('list');
 }`;
 
-  protected readonly iconSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+  protected readonly iconSnippet = `import { Component, signal } from '@angular/core';
 
-import {
-  ButtonToggleDirective,
-  ButtonToggleGroup,
-  type ButtonToggleValue,
-} from './shared/ui-lib';
+import { ButtonToggleDirective, ButtonToggleGroup, type ButtonToggleValue, } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-icon-button-toggle-example',
-  imports: [ButtonToggleGroup, ButtonToggleDirective],
-  template: \`
+  selector: 'app-icon-button-toggle-example', imports: [ButtonToggleGroup, ButtonToggleDirective], template: \`
     <ms-button-toggle-group [(value)]="density" aria-label="Dashboard density">
       <button type="button" msButtonToggleValue="compact">
         <span class="ms-icon" aria-hidden="true">dashboard</span>
@@ -83,25 +65,17 @@ import {
         Spacious
       </button>
     </ms-button-toggle-group>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class IconButtonToggleExample {
   protected readonly density = signal<ButtonToggleValue>('comfortable');
 }`;
 
-  protected readonly disabledSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+  protected readonly disabledSnippet = `import { Component, signal } from '@angular/core';
 
-import {
-  ButtonToggleDirective,
-  ButtonToggleGroup,
-  type ButtonToggleValue,
-} from './shared/ui-lib';
+import { ButtonToggleDirective, ButtonToggleGroup, type ButtonToggleValue, } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-disabled-button-toggle-example',
-  imports: [ButtonToggleGroup, ButtonToggleDirective],
-  template: \`
+  selector: 'app-disabled-button-toggle-example', imports: [ButtonToggleGroup, ButtonToggleDirective], template: \`
     <ms-button-toggle-group [(value)]="status" aria-label="Issue status">
       <button type="button" msButtonToggleValue="open">Open</button>
       <button type="button" msButtonToggleValue="pending" disabled>Pending</button>
@@ -112,29 +86,19 @@ import {
       <button type="button" msButtonToggleValue="monthly">Monthly</button>
       <button type="button" msButtonToggleValue="annual">Annual</button>
     </ms-button-toggle-group>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class DisabledButtonToggleExample {
   protected readonly status = signal<ButtonToggleValue>('open');
 }`;
 
-  protected readonly signalFormFieldSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+  protected readonly signalFormFieldSnippet = `import { Component, signal } from '@angular/core';
 
+import { ButtonToggleDirective, ButtonToggleGroup, type ButtonToggleValue, } from './shared/ui-lib';
 import {
-  ButtonToggleDirective,
-  ButtonToggleGroup,
-  type ButtonToggleValue,
-} from './shared/ui-lib';
-import {
-  SignalFormField,
-  SignalFormHint,
-} from '../../shared/ui-lib/components/signal-form-field';
+  SignalFormField, SignalFormHint, } from '../../shared/ui-lib/components/signal-form-field';
 
 @Component({
-  selector: 'app-form-field-button-toggle-example',
-  imports: [ButtonToggleGroup, ButtonToggleDirective, SignalFormField, SignalFormHint],
-  template: \`
+  selector: 'app-form-field-button-toggle-example', imports: [ButtonToggleGroup, ButtonToggleDirective, SignalFormField, SignalFormHint], template: \`
     <ms-signal-form-field>
       <label id="view-mode-label">View mode</label>
 
@@ -145,14 +109,12 @@ import {
 
       <ms-hint>Choose how results are displayed.</ms-hint>
     </ms-signal-form-field>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class FormFieldButtonToggleExample {
   protected readonly view = signal<ButtonToggleValue>('grid');
 }`;
 
-  protected readonly rtlSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+  protected readonly rtlSnippet = `import { Component, signal } from '@angular/core';
 
 import {
   ButtonToggleDirective,
@@ -172,7 +134,6 @@ import {
       </ms-button-toggle-group>
     </div>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RtlButtonToggleExample {
   protected readonly position = signal<ButtonToggleValue>('middle');

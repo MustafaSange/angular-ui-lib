@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 import type { BreadcrumbSize } from './breadcrumb-types';
 
@@ -9,7 +9,6 @@ import type { BreadcrumbSize } from './breadcrumb-types';
     '[class.breadcrumb-size-sm]': "size() === 'sm'",
     '[class.breadcrumb-size-md]': "size() === 'md'",
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BreadcrumbComponent {
   readonly label = input('Breadcrumb');

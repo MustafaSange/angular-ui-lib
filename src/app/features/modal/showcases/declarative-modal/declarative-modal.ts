@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import {
   MODAL_REF,
@@ -34,7 +34,6 @@ import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code
       gap: var(--spacing-8);
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class SimpleModalContent {
   protected readonly modalRef = inject(MODAL_REF) as ModalRef<void>;
@@ -48,20 +47,17 @@ class SimpleModalContent {
   host: {
     class: 'modal-section',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DeclarativeModalShowcase {
   private readonly modalService = inject(ModalService);
 
   protected readonly snippet = `// simple-modal-content.ts
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { MODAL_REF, ModalComponent, ModalRef } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-simple-modal-content',
-  imports: [ModalComponent],
-  template: \`
+  selector: 'app-simple-modal-content', imports: [ModalComponent], template: \`
     <ms-modal title="Hello" (close)="modalRef.close()">
       <button slot="headerActions" class="btn btn-outline-primary btn-sm" type="button">
         Help
@@ -74,8 +70,7 @@ import { MODAL_REF, ModalComponent, ModalRef } from './shared/ui-lib';
         <button class="btn btn-primary" type="button" (click)="modalRef.close()">Save</button>
       </div>
     </ms-modal>
-  \`,
-  styles: \`
+  \`, styles: \`
     .modal-actions {
       display: flex;
       flex-wrap: wrap;
@@ -83,15 +78,13 @@ import { MODAL_REF, ModalComponent, ModalRef } from './shared/ui-lib';
       justify-content: flex-end;
       gap: var(--spacing-8);
     }
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class SimpleModalContent {
   protected readonly modalRef = inject(MODAL_REF) as ModalRef<void>;
 }
 
 // dashboard-page.ts
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { ModalService } from './shared/ui-lib';
 
@@ -102,7 +95,6 @@ import { ModalService } from './shared/ui-lib';
       Open modal
     </button>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardPage {
   private readonly modalService = inject(ModalService);

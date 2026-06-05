@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { DirectionService, LayoutDirection } from '../../services/direction.service';
 
@@ -6,7 +6,6 @@ import { DirectionService, LayoutDirection } from '../../services/direction.serv
   selector: 'ms-direction-switcher',
   templateUrl: './direction-switcher.html',
   styleUrl: './direction-switcher.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DirectionSwitcher {
   private readonly directionService = inject(DirectionService);

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import {
   BreadcrumbComponent,
@@ -9,16 +9,20 @@ import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code
 
 @Component({
   selector: 'app-breadcrumb-overflow-showcase',
-  imports: [BreadcrumbComponent, BreadcrumbItemDirective, BreadcrumbSeparatorDirective, ShowcaseCode],
+  imports: [
+    BreadcrumbComponent,
+    BreadcrumbItemDirective,
+    BreadcrumbSeparatorDirective,
+    ShowcaseCode,
+  ],
   templateUrl: './breadcrumb-overflow.html',
   styleUrl: '../breadcrumb-showcase.scss',
   host: {
     class: 'breadcrumb-section',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BreadcrumbOverflowShowcase {
-  protected readonly snippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly snippet = `import { Component } from '@angular/core';
 
 import {
   BreadcrumbComponent,
@@ -42,7 +46,6 @@ import {
       <span msBreadcrumbItem current>Components</span>
     </ms-breadcrumb>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OverflowBreadcrumbExample {}`;
 }

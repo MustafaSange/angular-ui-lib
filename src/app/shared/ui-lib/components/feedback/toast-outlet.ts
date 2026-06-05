@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 
 import type { FeedbackVariant } from './feedback-types';
 import { ToastService } from './toast.service';
@@ -6,7 +6,6 @@ import { ToastService } from './toast.service';
 @Component({
   selector: 'ms-toast-outlet',
   templateUrl: './toast-outlet.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToastOutletComponent {
   private readonly toastService = inject(ToastService);

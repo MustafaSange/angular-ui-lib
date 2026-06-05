@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, model, signal } from '@angular/core';
+import { Component, computed, input, model, signal } from '@angular/core';
 
 let nextSideNavId = 0;
 
@@ -15,7 +15,6 @@ let nextSideNavId = 0;
     '[class.side-nav-collapsed]': 'collapsed()',
     '(keydown)': 'handleKeydown($event)',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SideNavComponent {
   readonly collapsed = model(false);

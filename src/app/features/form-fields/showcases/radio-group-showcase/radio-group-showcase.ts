@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import {
   ChoiceError,
@@ -14,10 +14,9 @@ import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code
   templateUrl: './radio-group-showcase.html',
   styleUrl: './radio-group-showcase.scss',
   host: { class: 'showcase-pair' },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RadioGroupShowcase {
-  protected readonly snippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly snippet = `import { Component } from '@angular/core';
 
 import {
   ChoiceError,
@@ -58,7 +57,6 @@ import {
       </ms-radio-control>
     </ms-radio-group>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RadioGroupExample {}`;
 }

@@ -152,7 +152,7 @@ Showcase snippets use `ShowcaseCode` and are hand-authored full standalone Angul
 
 - Use standalone Angular APIs.
 - Do not add `standalone: true`.
-- Use `ChangeDetectionStrategy.OnPush`.
+- Rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`.
 - Prefer signals: `signal`, `computed`, `input`, `output`, `model`.
 - Prefer `inject()` over constructor injection.
 - Prefer `host` metadata in `@Component` over `@HostBinding` and `@HostListener`.

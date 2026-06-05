@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
 
@@ -10,10 +10,9 @@ import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code
   host: {
     class: 'button-section',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonSizesShowcase {
-  protected readonly snippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly snippet = `import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-button-sizes-example',
@@ -23,7 +22,6 @@ export class ButtonSizesShowcase {
     <button class="btn btn-primary btn-md">Medium</button>
     <button class="btn btn-primary btn-lg">Large</button>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonSizesExample {}`;
 }

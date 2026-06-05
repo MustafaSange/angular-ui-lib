@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
@@ -8,11 +8,10 @@ import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
   imports: [RouterLink, ShowcaseCode],
   templateUrl: './tables.html',
   styleUrl: './tables.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Tables {
   protected readonly snippets = {
-    basic: `import { ChangeDetectionStrategy, Component } from '@angular/core';
+    basic: `import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-basic-table-example',
@@ -45,10 +44,9 @@ export class Tables {
       </table>
     </div>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BasicTableExample {}`,
-    compact: `import { ChangeDetectionStrategy, Component } from '@angular/core';
+    compact: `import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-compact-table-example',
@@ -78,10 +76,9 @@ export class BasicTableExample {}`,
       </table>
     </div>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CompactTableExample {}`,
-    stripedHover: `import { ChangeDetectionStrategy, Component } from '@angular/core';
+    stripedHover: `import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-striped-hover-table-example',
@@ -116,10 +113,9 @@ export class CompactTableExample {}`,
       </table>
     </div>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StripedHoverTableExample {}`,
-    numeric: `import { ChangeDetectionStrategy, Component } from '@angular/core';
+    numeric: `import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-numeric-table-example',
@@ -152,10 +148,9 @@ export class StripedHoverTableExample {}`,
       </table>
     </div>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NumericTableExample {}`,
-    empty: `import { ChangeDetectionStrategy, Component } from '@angular/core';
+    empty: `import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-empty-table-example',
@@ -178,10 +173,9 @@ export class NumericTableExample {}`,
       </table>
     </div>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EmptyTableExample {}`,
-    loading: `import { ChangeDetectionStrategy, Component } from '@angular/core';
+    loading: `import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-loading-table-example',
@@ -204,10 +198,9 @@ export class EmptyTableExample {}`,
       </table>
     </div>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoadingTableExample {}`,
-    rtl: `import { ChangeDetectionStrategy, Component } from '@angular/core';
+    rtl: `import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-rtl-table-example',
@@ -237,7 +230,6 @@ export class LoadingTableExample {}`,
       </table>
     </div>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RtlTableExample {}`,
   };

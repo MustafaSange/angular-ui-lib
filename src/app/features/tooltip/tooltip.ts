@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
@@ -13,21 +13,14 @@ import {
   imports: [RouterLink, ShowcaseCode, TooltipComponent, TooltipPanelComponent, TooltipTrigger],
   templateUrl: './tooltip.html',
   styleUrl: './tooltip.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Tooltip {
-  protected readonly basicSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly basicSnippet = `import { Component } from '@angular/core';
 
-import {
-  TooltipComponent,
-  TooltipPanelComponent,
-  TooltipTrigger,
-} from './shared/ui-lib';
+import { TooltipComponent, TooltipPanelComponent, TooltipTrigger, } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-icon-tooltip-example',
-  imports: [TooltipComponent, TooltipPanelComponent, TooltipTrigger],
-  template: \`
+  selector: 'app-icon-tooltip-example', imports: [TooltipComponent, TooltipPanelComponent, TooltipTrigger], template: \`
     <ms-tooltip>
       <button class="btn btn-ghost btn-icon" type="button" msTooltipTrigger aria-label="Details">
         <span class="ms-icon" aria-hidden="true">info_i</span>
@@ -35,23 +28,15 @@ import {
 
       <ms-tooltip-panel>Invitees receive an email notification.</ms-tooltip-panel>
     </ms-tooltip>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class IconTooltipExample {}`;
 
-  protected readonly placementSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly placementSnippet = `import { Component } from '@angular/core';
 
-import {
-  TooltipComponent,
-  TooltipPanelComponent,
-  TooltipTrigger,
-} from './shared/ui-lib';
+import { TooltipComponent, TooltipPanelComponent, TooltipTrigger, } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-tooltip-placement-example',
-  imports: [TooltipComponent, TooltipPanelComponent, TooltipTrigger],
-  template: \`
+  selector: 'app-tooltip-placement-example', imports: [TooltipComponent, TooltipPanelComponent, TooltipTrigger], template: \`
     <ms-tooltip placement="top">
       <button class="btn btn-outline" type="button" msTooltipTrigger>Top</button>
       <ms-tooltip-panel>Appears above the action.</ms-tooltip-panel>
@@ -73,12 +58,10 @@ import {
         <ms-tooltip-panel>Mirrors to inline end.</ms-tooltip-panel>
       </ms-tooltip>
     </div>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class TooltipPlacementExample {}`;
 
-  protected readonly triggerSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly triggerSnippet = `import { Component } from '@angular/core';
 
 import {
   TooltipComponent,
@@ -115,7 +98,6 @@ import {
       <ms-tooltip-panel>Finish required checks before publishing.</ms-tooltip-panel>
     </ms-tooltip>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TooltipTriggerExample {}`;
 }

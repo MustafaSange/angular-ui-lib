@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
 import { SignalFormField } from '../../../../shared/ui-lib/components/signal-form-field';
@@ -9,10 +9,9 @@ import { SignalFormField } from '../../../../shared/ui-lib/components/signal-for
   templateUrl: './required-email-field.html',
   styleUrl: './required-email-field.scss',
   host: { class: 'showcase-pair' },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RequiredEmailFieldShowcase {
-  protected readonly snippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly snippet = `import { Component } from '@angular/core';
 
 import { SignalFormField } from './shared/ui-lib';
 
@@ -25,7 +24,6 @@ import { SignalFormField } from './shared/ui-lib';
       <input id="email" type="email" placeholder="ada@example.com" required />
     </ms-signal-form-field>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RequiredEmailFieldExample {}`;
 }

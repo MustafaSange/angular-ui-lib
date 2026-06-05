@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import {
   CheckboxControl,
@@ -14,10 +14,9 @@ import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code
   templateUrl: './checkbox-group-showcase.html',
   styleUrl: './checkbox-group-showcase.scss',
   host: { class: 'showcase-pair' },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CheckboxGroupShowcase {
-  protected readonly snippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly snippet = `import { Component } from '@angular/core';
 
 import {
   CheckboxControl,
@@ -64,7 +63,6 @@ import {
       </ms-checkbox-control>
     </ms-checkbox-group>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CheckboxGroupExample {}`;
 }

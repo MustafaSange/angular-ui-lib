@@ -55,9 +55,7 @@ Public pieces:
 Shared reusable components use the `ms-` selector prefix. Do not use `app-` for components under
 `src/app/shared`.
 
-Internal styling hooks remain concise and unprefixed. Use `.bottom-sheet`, `.bottom-sheet-panel`,
-`.bottom-sheet-backdrop`, `.bottom-sheet-header`, `.bottom-sheet-handle`,
-`.bottom-sheet-content`, and `.bottom-sheet-footer`; do not mirror the public component selector
+Internal styling hooks remain concise and unprefixed. Use `.bottom-sheet`, `.bottom-sheet-panel`, `.bottom-sheet-backdrop`, `.bottom-sheet-header`, `.bottom-sheet-handle`, `.bottom-sheet-content`, and `.bottom-sheet-footer`; do not mirror the public component selector
 as `.ms-bottom-sheet`. Established public utility classes such as `.ms-icon` and
 `.ms-icon-filled` remain namespaced.
 
@@ -123,7 +121,7 @@ Defaults:
 Declarative bottom sheet:
 
 ```ts
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {
   BottomSheetClose,
   BottomSheetComponent,
@@ -154,13 +152,10 @@ import {
       </div>
 
       <div class="bottom-sheet-footer" slot="footer">
-        <button class="btn btn-secondary btn-full" type="button" msBottomSheetClose>
-          Cancel
-        </button>
+        <button class="btn btn-secondary btn-full" type="button" msBottomSheetClose>Cancel</button>
       </div>
     </ms-bottom-sheet>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BottomSheetExample {
   protected readonly isOpen = signal(false);
@@ -216,7 +211,6 @@ Opened bottom sheet component:
       </div>
     </ms-bottom-sheet>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShareSheetComponent {
   protected readonly data = inject(BOTTOM_SHEET_DATA) as ShareSheetData;
@@ -382,7 +376,7 @@ Render snippets near the matching visual example with `<app-showcase-code>`.
 
 - Use standalone Angular APIs.
 - Do not add `standalone: true`.
-- Use `ChangeDetectionStrategy.OnPush`.
+- Rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`.
 - Prefer signals: `signal`, `computed`, `input`, `output`, `model`.
 - Prefer `inject()` over constructor injection.
 - Prefer `host` metadata in `@Component` over `@HostBinding` and `@HostListener`.

@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  contentChild,
-  effect,
-  input,
-  model,
-} from '@angular/core';
+import { Component, contentChild, effect, input, model } from '@angular/core';
 
 import type { AnchoredPlacement } from './anchored-placement';
 import { MenuPanelComponent } from './menu-panel';
@@ -14,7 +7,6 @@ import { MenuTrigger } from './menu-trigger';
 @Component({
   selector: 'ms-menu',
   templateUrl: './menu.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuComponent {
   readonly open = model(false);

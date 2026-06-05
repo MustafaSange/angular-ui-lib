@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  computed,
-  contentChild,
-  inject,
-} from '@angular/core';
+import { Component, ElementRef, computed, contentChild, inject } from '@angular/core';
 
 import { MediaCaptionDirective } from './media-caption';
 
@@ -15,7 +8,6 @@ import { MediaCaptionDirective } from './media-caption';
   host: {
     class: 'media-slide',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MediaSlideComponent {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);

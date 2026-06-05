@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { ThemeMode, ThemeService } from '../../services/theme.service';
 
@@ -6,7 +6,6 @@ import { ThemeMode, ThemeService } from '../../services/theme.service';
   selector: 'ms-theme-switcher',
   templateUrl: './theme-switcher.html',
   styleUrl: './theme-switcher.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThemeSwitcher {
   private readonly themeService = inject(ThemeService);

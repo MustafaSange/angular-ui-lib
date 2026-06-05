@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  inject,
-  output,
-  signal,
-} from '@angular/core';
+import { Component, ElementRef, inject, output, signal } from '@angular/core';
 
 import type { AnchoredPlacement } from './anchored-placement';
 import { isPopoverOpen, showAnchoredPopover } from './native-popover';
@@ -25,7 +18,6 @@ let nextMenuPanelId = 0;
     '(keydown)': 'handleKeydown($event)',
     '(toggle)': 'handleToggle($event)',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuPanelComponent {
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);

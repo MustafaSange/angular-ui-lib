@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
 
@@ -10,10 +10,9 @@ import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code
   host: {
     class: 'button-section',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonOutlineVariantsShowcase {
-  protected readonly snippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly snippet = `import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-button-outline-example',
@@ -23,7 +22,6 @@ export class ButtonOutlineVariantsShowcase {
     <button class="btn btn-outline-danger">Danger outline</button>
     <button class="btn btn-outline-success">Success outline</button>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonOutlineExample {}`;
 }

@@ -1,10 +1,4 @@
-import {
-  AfterContentInit,
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  inject,
-} from '@angular/core';
+import { AfterContentInit, Component, ElementRef, inject } from '@angular/core';
 
 @Component({
   selector: 'ms-checkbox-control',
@@ -12,7 +6,6 @@ import {
   host: {
     '[class.is-label-before]': 'isLabelBefore',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CheckboxControl implements AfterContentInit {
   private static nextId = 0;

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
 
@@ -10,17 +10,15 @@ import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code
   host: {
     class: 'button-section',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonFullWidthShowcase {
-  protected readonly snippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly snippet = `import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-full-width-button-example',
   template: \`
     <button class="btn btn-primary btn-full">Full width button</button>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FullWidthButtonExample {}`;
 }

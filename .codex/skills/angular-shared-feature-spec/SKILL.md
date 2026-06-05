@@ -95,6 +95,8 @@ Shared features must:
 Prefer:
 
 - standalone Angular APIs when project supports them
+- `@Service()` for root-provided services in Angular 22+ projects
+- rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`
 - content projection for reusable composition
 - explicit inputs/outputs
 - minimal dependencies

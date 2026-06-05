@@ -1,11 +1,7 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import {
-  DrawerClose,
-  DrawerComponent,
-  DrawerTrigger,
-} from '../../shared/ui-lib/components/drawer';
+import { DrawerClose, DrawerComponent, DrawerTrigger } from '../../shared/ui-lib/components/drawer';
 import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 
 @Component({
@@ -13,21 +9,18 @@ import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
   imports: [DrawerClose, DrawerComponent, DrawerTrigger, RouterLink, ShowcaseCode],
   templateUrl: './drawer.html',
   styleUrl: './drawer.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Drawer {
   protected readonly startOpen = signal(false);
   protected readonly rtlOpen = signal(false);
   protected readonly endOpen = signal(false);
 
-  protected readonly startSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+  protected readonly startSnippet = `import { Component, signal } from '@angular/core';
 
 import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-navigation-drawer-example',
-  imports: [DrawerClose, DrawerComponent, DrawerTrigger],
-  template: \`
+  selector: 'app-navigation-drawer-example', imports: [DrawerClose, DrawerComponent, DrawerTrigger], template: \`
     <button
       class="btn btn-ghost btn-icon"
       type="button"
@@ -51,21 +44,17 @@ import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/ui-lib';
         <a href="/tables" msDrawerClose>Tables</a>
       </nav>
     </ms-drawer>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class NavigationDrawerExample {
   protected readonly drawerOpen = signal(false);
 }`;
 
-  protected readonly rtlSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+  protected readonly rtlSnippet = `import { Component, signal } from '@angular/core';
 
 import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-rtl-navigation-drawer-example',
-  imports: [DrawerClose, DrawerComponent, DrawerTrigger],
-  template: \`
+  selector: 'app-rtl-navigation-drawer-example', imports: [DrawerClose, DrawerComponent, DrawerTrigger], template: \`
     <div dir="rtl">
       <button class="btn btn-outline" type="button" [msDrawerTrigger]="drawer">
         افتح التنقل
@@ -87,14 +76,12 @@ import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/ui-lib';
         </nav>
       </ms-drawer>
     </div>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class RtlNavigationDrawerExample {
   protected readonly drawerOpen = signal(false);
 }`;
 
-  protected readonly endSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+  protected readonly endSnippet = `import { Component, signal } from '@angular/core';
 
 import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/ui-lib';
 
@@ -122,7 +109,6 @@ import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/ui-lib';
       </nav>
     </ms-drawer>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EndDrawerExample {
   protected readonly open = signal(false);

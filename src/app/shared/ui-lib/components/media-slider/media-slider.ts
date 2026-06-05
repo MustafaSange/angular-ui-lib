@@ -1,7 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import {
   afterNextRender,
-  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   ElementRef,
@@ -30,7 +29,6 @@ import type { MediaSliderScrollBehavior, MediaSliderSnapAlign } from './media-sl
     '[style.--_media-slider-slide-size]': 'slideSize()',
     '[style.--_media-slider-aspect-ratio]': 'aspectRatio()',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MediaSliderComponent {
   private readonly document = inject(DOCUMENT);
@@ -59,9 +57,7 @@ export class MediaSliderComponent {
   protected readonly canScrollPrevious = computed(
     () => this.slides().length > 0 && this.activeIndex() > 0,
   );
-  protected readonly canScrollNext = computed(
-    () => this.activeIndex() < this.slides().length - 1,
-  );
+  protected readonly canScrollNext = computed(() => this.activeIndex() < this.slides().length - 1);
 
   constructor() {
     effect(() => {

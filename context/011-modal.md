@@ -155,7 +155,6 @@ Opened modal component:
       </div>
     </ms-modal>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserModalComponent {
   protected readonly data = inject(MODAL_DATA) as UserModalData;
@@ -191,7 +190,6 @@ Declarative modal shell config uses the raw token directly:
       <ms-modal title="Scrollable content" (close)="isOpen.set(false)"> ... </ms-modal>
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ScrollableModalExample {
   protected readonly isOpen = signal(false);
@@ -260,7 +258,7 @@ Showcase snippets must use `ShowcaseCode`, be hand-authored in the feature compo
 
 - Use standalone Angular APIs.
 - Do not add `standalone: true`.
-- Use `ChangeDetectionStrategy.OnPush`.
+- Rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`.
 - Prefer signals: `signal`, `computed`, `input`, `output`, `model`.
 - Prefer `inject()` over constructor injection.
 - Prefer `host` metadata in `@Component` over `@HostBinding` and `@HostListener`.

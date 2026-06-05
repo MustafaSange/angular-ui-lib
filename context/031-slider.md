@@ -65,7 +65,7 @@ Defaults:
 Basic slider:
 
 ```ts
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { SliderComponent } from './shared/components/slider';
 
@@ -73,16 +73,8 @@ import { SliderComponent } from './shared/components/slider';
   selector: 'app-basic-slider-example',
   imports: [SliderComponent],
   template: `
-    <ms-slider
-      [(value)]="volume"
-      min="0"
-      max="100"
-      step="5"
-      aria-label="Volume"
-      showValue
-    />
+    <ms-slider [(value)]="volume" min="0" max="100" step="5" aria-label="Volume" showValue />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BasicSliderExample {
   protected readonly volume = signal(65);
@@ -92,7 +84,7 @@ export class BasicSliderExample {
 Signal form-field model binding:
 
 ```ts
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormField, form, max, min, schema } from '@angular/forms/signals';
 
 import { SignalFormField, SignalFormHint } from './shared/components/signal-form-field';
@@ -109,17 +101,11 @@ type BudgetForm = {
     <ms-signal-form-field>
       <label id="budget-label">Monthly budget</label>
 
-      <ms-slider
-        [formField]="budgetField"
-        step="250"
-        aria-labelledby="budget-label"
-        showValue
-      />
+      <ms-slider [formField]="budgetField" step="250" aria-labelledby="budget-label" showValue />
 
       <ms-hint>Choose a budget range for the campaign.</ms-hint>
     </ms-signal-form-field>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormFieldSliderExample {
   private readonly model = signal<BudgetForm>({
@@ -141,17 +127,14 @@ export class FormFieldSliderExample {
 Disabled slider:
 
 ```ts
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { SliderComponent } from './shared/components/slider';
 
 @Component({
   selector: 'app-disabled-slider-example',
   imports: [SliderComponent],
-  template: `
-    <ms-slider value="40" aria-label="Storage used" disabled showValue />
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: ` <ms-slider value="40" aria-label="Storage used" disabled showValue /> `,
 })
 export class DisabledSliderExample {}
 ```
@@ -288,7 +271,7 @@ Render snippets near the matching visual example with `<app-showcase-code>`.
 
 - Use standalone Angular APIs.
 - Do not add `standalone: true`.
-- Use `ChangeDetectionStrategy.OnPush`.
+- Rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`.
 - Prefer signals: `signal`, `computed`, `input`, `model`.
 - Prefer `inject()` over constructor injection.
 - Prefer `host` metadata in `@Component` over `@HostBinding` and `@HostListener`.

@@ -35,13 +35,12 @@ Defaults:
 - projected `msTabTitle` content takes precedence over the `title` input
 - tabs without a projected title or `title` input render an empty tab label
 
-Shared reusable components use the `ms-` selector prefix. Internal styling hooks are `.tabs`,
-`.tab-header`, `.tab-list`, `.tab`, `.tab-scroll-button`, and `.tab-panel`.
+Shared reusable components use the `ms-` selector prefix. Internal styling hooks are `.tabs`, `.tab-header`, `.tab-list`, `.tab`, `.tab-scroll-button`, and `.tab-panel`.
 
 ## Desired Usage
 
 ```ts
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { TabComponent, TabTitleDirective, TabsComponent } from './shared/components/tabs';
 
@@ -61,7 +60,6 @@ import { TabComponent, TabTitleDirective, TabsComponent } from './shared/compone
       </ms-tab>
     </ms-tabs>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabsExample {}
 ```

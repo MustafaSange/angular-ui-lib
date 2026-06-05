@@ -1,6 +1,5 @@
 import { DOCUMENT, NgClass } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   ElementRef,
@@ -33,7 +32,6 @@ let openBottomSheetCount = 0;
   exportAs: 'msBottomSheet',
   imports: [NgClass],
   templateUrl: './bottom-sheet.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BottomSheetComponent {
   private readonly config = inject(BOTTOM_SHEET_CONFIG, {

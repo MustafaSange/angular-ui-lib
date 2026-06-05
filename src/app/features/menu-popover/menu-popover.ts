@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import {
@@ -33,26 +33,18 @@ import { SignalFormField } from '../../shared/ui-lib/components/signal-form-fiel
   ],
   templateUrl: './menu-popover.html',
   styleUrl: './menu-popover.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuPopover {
   protected readonly filtersOpen = signal(false);
   protected readonly selectedAction = signal('No project action selected.');
   protected readonly appliedFilters = signal('Showing all projects.');
 
-  protected readonly basicMenuSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly basicMenuSnippet = `import { Component } from '@angular/core';
 
-import {
-  MenuComponent,
-  MenuItem,
-  MenuPanelComponent,
-  MenuTrigger,
-} from './shared/ui-lib';
+import { MenuComponent, MenuItem, MenuPanelComponent, MenuTrigger, } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-action-menu-example',
-  imports: [MenuComponent, MenuItem, MenuPanelComponent, MenuTrigger],
-  template: \`
+  selector: 'app-action-menu-example', imports: [MenuComponent, MenuItem, MenuPanelComponent, MenuTrigger], template: \`
     <ms-menu>
       <button class="btn btn-outline" type="button" msMenuTrigger>
         Workspace
@@ -65,25 +57,15 @@ import {
         <button type="button" msMenuItem>Manage billing</button>
       </ms-menu-panel>
     </ms-menu>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class ActionMenuExample {}`;
 
-  protected readonly variantsMenuSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+  protected readonly variantsMenuSnippet = `import { Component, signal } from '@angular/core';
 
-import {
-  MenuComponent,
-  MenuDividerComponent,
-  MenuItem,
-  MenuPanelComponent,
-  MenuTrigger,
-} from './shared/ui-lib';
+import { MenuComponent, MenuDividerComponent, MenuItem, MenuPanelComponent, MenuTrigger, } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-project-actions-example',
-  imports: [MenuComponent, MenuDividerComponent, MenuItem, MenuPanelComponent, MenuTrigger],
-  template: \`
+  selector: 'app-project-actions-example', imports: [MenuComponent, MenuDividerComponent, MenuItem, MenuPanelComponent, MenuTrigger], template: \`
     <ms-menu placement="bottom-end">
       <button
         class="btn btn-ghost btn-icon"
@@ -113,26 +95,17 @@ import {
     </ms-menu>
 
     <p>{{ result() }}</p>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class ProjectActionsExample {
   protected readonly result = signal('No project action selected.');
 }`;
 
-  protected readonly placementMenuSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly placementMenuSnippet = `import { Component } from '@angular/core';
 
-import {
-  MenuComponent,
-  MenuItem,
-  MenuPanelComponent,
-  MenuTrigger,
-} from './shared/ui-lib';
+import { MenuComponent, MenuItem, MenuPanelComponent, MenuTrigger, } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-overflow-menu-example',
-  imports: [MenuComponent, MenuItem, MenuPanelComponent, MenuTrigger],
-  template: \`
+  selector: 'app-overflow-menu-example', imports: [MenuComponent, MenuItem, MenuPanelComponent, MenuTrigger], template: \`
     <div class="toolbar">
       <span>Release activity</span>
 
@@ -147,31 +120,17 @@ import {
         </ms-menu-panel>
       </ms-menu>
     </div>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class OverflowMenuExample {}`;
 
-  protected readonly popoverSnippet = `import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+  protected readonly popoverSnippet = `import { Component, signal } from '@angular/core';
 
-import {
-  PopoverClose,
-  PopoverComponent,
-  PopoverPanelComponent,
-  PopoverTrigger,
-} from './shared/ui-lib';
+import { PopoverClose, PopoverComponent, PopoverPanelComponent, PopoverTrigger, } from './shared/ui-lib';
 import { SignalFormField } from '../../shared/ui-lib/components/signal-form-field';
 
 @Component({
-  selector: 'app-filter-popover-example',
-  imports: [
-    PopoverClose,
-    PopoverComponent,
-    PopoverPanelComponent,
-    PopoverTrigger,
-    SignalFormField,
-  ],
-  template: \`
+  selector: 'app-filter-popover-example', imports: [
+    PopoverClose, PopoverComponent, PopoverPanelComponent, PopoverTrigger, SignalFormField, ], template: \`
     <ms-popover [(open)]="filtersOpen">
       <button class="btn btn-outline" type="button" msPopoverTrigger>
         <span class="ms-icon" aria-hidden="true">filter_list</span>
@@ -198,14 +157,12 @@ import { SignalFormField } from '../../shared/ui-lib/components/signal-form-fiel
         </form>
       </ms-popover-panel>
     </ms-popover>
-  \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  \`, })
 export class FilterPopoverExample {
   protected readonly filtersOpen = signal(false);
 }`;
 
-  protected readonly sidePopoverSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+  protected readonly sidePopoverSnippet = `import { Component } from '@angular/core';
 
 import {
   PopoverClose,
@@ -241,7 +198,6 @@ import {
       </ms-popover>
     </div>
   \`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidePopoverExample {}`;
 

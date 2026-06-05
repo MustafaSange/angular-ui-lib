@@ -60,7 +60,7 @@ Defaults:
 Basic button toggle:
 
 ```ts
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import {
   ButtonToggleDirective,
@@ -78,7 +78,6 @@ import {
       <button type="button" msButtonToggleValue="table">Table</button>
     </ms-button-toggle-group>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BasicButtonToggleExample {
   protected readonly view = signal<ButtonToggleValue>('list');
@@ -88,17 +87,14 @@ export class BasicButtonToggleExample {
 Signal form-field visual layout:
 
 ```ts
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import {
   ButtonToggleDirective,
   ButtonToggleGroup,
   type ButtonToggleValue,
 } from './shared/components/button-toggle';
-import {
-  SignalFormField,
-  SignalFormHint,
-} from './shared/components/signal-form-field';
+import { SignalFormField, SignalFormHint } from './shared/components/signal-form-field';
 
 @Component({
   selector: 'app-form-field-button-toggle-example',
@@ -115,7 +111,6 @@ import {
       <ms-hint>Choose how results are displayed.</ms-hint>
     </ms-signal-form-field>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormFieldButtonToggleExample {
   protected readonly view = signal<ButtonToggleValue>('grid');
@@ -239,7 +234,7 @@ Render snippets near the matching visual example with `<app-showcase-code>`.
 
 - Use standalone Angular APIs.
 - Do not add `standalone: true`.
-- Use `ChangeDetectionStrategy.OnPush`.
+- Rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`.
 - Prefer signals: `signal`, `computed`, `input`, `model`.
 - Prefer `inject()` over constructor injection.
 - Prefer `host` metadata over `@HostBinding` and `@HostListener`.

@@ -129,7 +129,7 @@ Selection-control examples can stay grouped by control type, with each group fol
 
 - Use standalone Angular APIs.
 - Do not add `standalone: true`.
-- Use `ChangeDetectionStrategy.OnPush`.
+- Rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`.
 - Prefer signals and signal forms APIs.
 - Keep strict TypeScript.
 - Do not add or update tests for this behavior.

@@ -48,7 +48,7 @@ Shared reusable components use the `ms-` selector prefix. The internal styling h
 ## Desired Usage
 
 ```ts
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import {
   TooltipComponent,
@@ -68,7 +68,6 @@ import {
       <ms-tooltip-panel>Invitees receive an email notification.</ms-tooltip-panel>
     </ms-tooltip>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IconTooltipExample {}
 ```
