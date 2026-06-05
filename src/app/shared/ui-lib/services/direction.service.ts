@@ -1,14 +1,12 @@
 import { DOCUMENT } from '@angular/common';
-import { effect, inject, Injectable, signal } from '@angular/core';
+import { effect, inject, Service, signal } from '@angular/core';
 
 export type LayoutDirection = 'ltr' | 'rtl';
 
 const DIRECTION_STORAGE_KEY = 'ui-lib-direction';
 const LAYOUT_DIRECTIONS: readonly LayoutDirection[] = ['ltr', 'rtl'];
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class DirectionService {
   private readonly document = inject(DOCUMENT);
   private readonly storedDirection = this.readStoredDirection();

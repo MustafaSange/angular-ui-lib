@@ -1,14 +1,12 @@
 import { DOCUMENT } from '@angular/common';
-import { effect, inject, Injectable, signal } from '@angular/core';
+import { effect, inject, Service, signal } from '@angular/core';
 
 export type ThemeMode = 'light' | 'dark' | 'system';
 
 const THEME_STORAGE_KEY = 'ui-lib-theme';
 const THEME_MODES: readonly ThemeMode[] = ['light', 'dark', 'system'];
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class ThemeService {
   private readonly document = inject(DOCUMENT);
   private readonly storedTheme = this.readStoredTheme();
