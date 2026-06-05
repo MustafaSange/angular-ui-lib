@@ -28,6 +28,7 @@ import type { MediaSliderScrollBehavior, MediaSliderSnapAlign } from './media-sl
     '[style.--_media-slider-snap-align]': 'snapAlign()',
     '[style.--_media-slider-scroll-behavior]': 'scrollBehavior()',
     '[style.--_media-slider-slide-size]': 'slideSize()',
+    '[style.--_media-slider-aspect-ratio]': 'aspectRatio()',
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -46,6 +47,9 @@ export class MediaSliderComponent {
   });
   readonly slideSize = input<string, string | undefined>('min(78vw, 22rem)', {
     transform: coerceSlideSize,
+  });
+  readonly aspectRatio = input<string, string | undefined>('4 / 3', {
+    transform: coerceAspectRatio,
   });
   readonly ariaLabel = input('Media slider', { alias: 'aria-label' });
   readonly previousLabel = input('Previous item');
@@ -185,4 +189,8 @@ function coerceScrollBehavior(value: string | undefined): MediaSliderScrollBehav
 
 function coerceSlideSize(value: string | undefined): string {
   return value?.trim() || 'min(78vw, 22rem)';
+}
+
+function coerceAspectRatio(value: string | undefined): string {
+  return value?.trim() || '4 / 3';
 }

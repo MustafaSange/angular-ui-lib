@@ -93,6 +93,59 @@ import {
 })
 export class LargeMediaSliderExample {}`;
 
+  protected readonly aspectRatioSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import { MediaSlideComponent, MediaSliderComponent } from './shared/ui-lib';
+
+@Component({
+  selector: 'app-aspect-ratio-media-slider-example',
+  imports: [MediaSliderComponent, MediaSlideComponent],
+  template: \`
+    <ms-media-slider
+      aspectRatio="16 / 9"
+      aria-label="Widescreen media"
+    >
+      <ms-media-slide>
+        <div class="media-frame">16:9</div>
+      </ms-media-slide>
+
+      <ms-media-slide>
+        <div class="media-frame">Widescreen</div>
+      </ms-media-slide>
+    </ms-media-slider>
+
+    <ms-media-slider
+      aspectRatio="9 / 16"
+      slideSize="min(72vw, 16rem)"
+      aria-label="Portrait media"
+    >
+      <ms-media-slide>
+        <div class="media-frame">9:16</div>
+      </ms-media-slide>
+
+      <ms-media-slide>
+        <div class="media-frame">Portrait</div>
+      </ms-media-slide>
+    </ms-media-slider>
+  \`,
+  styles: [\`
+    ms-media-slider + ms-media-slider {
+      display: block;
+      margin-block-start: 1rem;
+    }
+
+    .media-frame {
+      display: grid;
+      place-items: center;
+      background: var(--color-surface-muted);
+      color: var(--color-text-secondary);
+      font-weight: var(--font-weight-semibold);
+    }
+  \`],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class AspectRatioMediaSliderExample {}`;
+
   protected readonly captionSnippet = `import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import {
