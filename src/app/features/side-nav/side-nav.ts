@@ -109,8 +109,19 @@ export class CollapsedSideNavExample {
   protected readonly collapsed = signal(true);
 }`;
 
-  protected readonly manualActiveSnippet = `<button type="button" msSideNavItem [active]="true">
-  <span class="ms-icon" aria-hidden="true">settings</span>
-  <span class="side-nav-label">Settings</span>
-</button>`;
+  protected readonly manualActiveSnippet = `import { Component } from '@angular/core';
+
+import { SideNavItem } from './shared/ui-lib';
+
+@Component({
+  selector: 'app-manual-active-side-nav-item-example',
+  imports: [SideNavItem],
+  template: \`
+    <button type="button" msSideNavItem [active]="true">
+      <span class="ms-icon" aria-hidden="true">settings</span>
+      <span class="side-nav-label">Settings</span>
+    </button>
+  \`,
+})
+export class ManualActiveSideNavItemExample {}`;
 }
