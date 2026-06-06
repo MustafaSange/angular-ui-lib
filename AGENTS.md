@@ -18,7 +18,7 @@ Use modern Angular patterns:
   - root component class is `App`
   - app template/style files are `app.html` and `app.scss`
   - routes are in `src/app/app.routes.ts`
-- For reusable components under `src/app/shared/`:
+- For reusable UI library components under `src/app/shared/ui-lib/components/`:
   - Use the `ms-` prefix for public Angular element selectors, such as `ms-modal` or `ms-menu-panel`.
   - Use concise unprefixed internal CSS class hooks, such as `.modal-header`, `.menu-panel`, or `.menu-item`; do not mirror the component prefix as `.ms-*` for new internal styling hooks.
   - Keep established public utility classes such as `.ms-icon` and `.ms-icon-filled` unchanged.
@@ -27,10 +27,11 @@ Use modern Angular patterns:
   - Keep `.ms-icon { direction: ltr; }` as an intentional exception required for Material Symbols ligature rendering.
   - Keep public component and directive classes focused on Angular behavior. When a shared feature exposes reusable public types, config interfaces, state/meta interfaces, or helper functions, place them in dedicated sibling files such as `*-types.ts`, `*-config.ts`, `*-state.ts`, or `*-meta.ts`, and re-export them from the feature folder `index.ts`.
   - Do not create extra type files for trivial components that only export a component/directive class and have no meaningful reusable public types or helpers.
+- Import reusable UI library APIs through the public `src/app/shared/ui-lib` barrel in showcase copy/paste snippets, such as `./shared/ui-lib`.
 - For new showcase pages under `src/app/features/`, include copyable examples using
-  `ShowcaseCode` from `src/app/shared/components/showcase-code`.
+  `ShowcaseCode` from `src/app/shared/ui-lib/components/showcase-code`.
   - Keep snippets hand-authored in the feature component `.ts` file.
   - Snippets should be full standalone Angular component examples that users can copy/paste.
   - Render snippets near the matching visual example with `<app-showcase-code>`.
-  - On the form-fields showcase, render each form-field variant with its snippet directly below the visual example.
+  - On the form-fields showcase, render each form-field variant, including autocomplete variants, with its snippet directly below the visual example.
 - Do not add/update tests for behavior changes.
