@@ -6,10 +6,10 @@ standalone component APIs, signals, Vitest, and SCSS design tokens.
 ## What is included
 
 - Design tokens, reset styles, utilities, and component styles under `src/styles`.
-- Reusable shared components under `src/app/shared/components`.
-- Theme, direction, and Material Symbols services under `src/app/shared/services`.
+- Reusable shared components under `src/app/shared/ui-lib/components`.
+- Theme, direction, and Material Symbols services under `src/app/shared/ui-lib/services`.
 - Feature showcase pages under `src/app/features`.
-- A public in-app shared API barrel at `src/app/shared`.
+- A public in-app UI library API barrel at `src/app/shared/ui-lib`.
 
 ## Component API
 
@@ -17,23 +17,23 @@ Import shared components and services from the top-level shared barrel when work
 application:
 
 ```ts
-import { BadgeComponent, ThemeService } from './shared';
+import { BadgeComponent, ThemeService } from './shared/ui-lib';
 ```
 
 Feature folders also keep focused barrels for narrower imports:
 
 ```ts
-import { ButtonToggleGroup, ButtonToggleDirective } from './shared/components/button-toggle';
+import { ButtonToggleGroup, ButtonToggleDirective } from './shared/ui-lib/components/button-toggle';
 ```
 
-The top-level barrel exports the public shared component and service folders. Showcase-only helpers
-such as `ShowcaseCode` remain available from their own folder and are intentionally omitted from the
-main component barrel.
+The top-level UI library barrel exports the public shared component and service folders, including
+copyable showcase helpers such as `ShowcaseCode`.
 
 ## Available shared components
 
 - Accordion
 - Alerts and toasts
+- Autocomplete
 - Badge
 - Bottom sheet
 - Breadcrumb
@@ -44,6 +44,7 @@ main component barrel.
 - Clipboard copy
 - Direction switcher
 - Drawer
+- Media slider
 - Menu and popover
 - Modal
 - Pagination
@@ -69,14 +70,21 @@ styles use logical CSS properties so layouts can mirror in both left-to-right an
 contexts.
 
 Material Symbols support is handled by `MaterialIconsService`, which injects the configured Google
-Fonts stylesheet for the icons listed in `src/app/shared/services/material-icons/icon-registry.ts`.
+Fonts stylesheet for the icons listed in
+`src/app/shared/ui-lib/services/material-icons/icon-registry.ts`.
+
+## Showcase examples
+
+Feature showcase pages keep hand-authored copy/paste snippets in their `.ts` files and render them
+with `<app-showcase-code>` near the matching visual example. Form-field variants, including the
+autocomplete variants, keep their snippet directly below the rendered control.
 
 ## Example
 
 ```ts
 import { Component } from '@angular/core';
 
-import { BadgeComponent } from './shared';
+import { BadgeComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-status-example',
