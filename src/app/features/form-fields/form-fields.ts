@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { BasicTextFieldShowcase } from './showcases/basic-text-field/basic-text-field';
+import { AutocompleteFieldShowcase } from './showcases/autocomplete-field/autocomplete-field';
 import { CheckboxGroupShowcase } from './showcases/checkbox-group-showcase/checkbox-group-showcase';
 import { DisabledFieldShowcase } from './showcases/disabled-field/disabled-field';
 import { FieldActionsShowcase } from './showcases/field-actions/field-actions';
@@ -22,6 +23,7 @@ import { TextareaFieldShowcase } from './showcases/textarea-field/textarea-field
   selector: 'app-form-fields',
   imports: [
     RouterLink,
+    AutocompleteFieldShowcase,
     BasicTextFieldShowcase,
     SignalFormFieldShowcase,
     RequiredEmailFieldShowcase,

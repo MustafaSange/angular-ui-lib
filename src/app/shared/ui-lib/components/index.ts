@@ -1,4 +1,5 @@
 export * from './accordion';
+export * from './autocomplete';
 export * from './badge';
 export * from './bottom-sheet';
 export * from './breadcrumb';
