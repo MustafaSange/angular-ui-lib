@@ -5,6 +5,7 @@ import {
   booleanAttribute,
   computed,
   contentChildren,
+  debounced,
   effect,
   inject,
   input,
@@ -27,6 +28,10 @@ import type {
 import { AutocompleteOptionComponent } from './autocomplete-option';
 
 type AutocompleteValue<TValue> = TValue | TValue[] | null;
+type AutocompleteDebouncedQuery = {
+  readonly query: string;
+  readonly debounceMs: number;
+};
 type PopoverElement = HTMLElement & {
   showPopover(options?: { source?: HTMLElement }): void;
   hidePopover(): void;
@@ -71,6 +76,7 @@ export class AutocompleteComponent<TValue>
   readonly touch = output<void>();
 
   private readonly destroyRef = inject(DestroyRef);
+  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly projectedOptionComponents =
     contentChildren<AutocompleteOptionComponent<TValue>>(AutocompleteOptionComponent);
   private readonly inputRef = viewChild<ElementRef<HTMLInputElement>>('autocompleteInput');
@@ -87,8 +93,22 @@ export class AutocompleteComponent<TValue>
   protected readonly activeIndex = signal(-1);
   private readonly touchEmitted = signal(false);
   private readonly interacted = signal(false);
+  private readonly debouncedQuery = debounced<AutocompleteDebouncedQuery>(
+    () => ({
+      query: this.query(),
+      debounceMs: this.debounceMs(),
+    }),
+    (value) =>
+      new Promise<void>((resolve) => {
+        window.setTimeout(resolve, Math.max(0, value.debounceMs));
+      }),
+    {
+      equal: (a, b) => a.query === b.query && a.debounceMs === b.debounceMs,
+    },
+  );
 
-  private debounceHandle: ReturnType<typeof setTimeout> | null = null;
+  private activeOptionScrollHandle: ReturnType<typeof setTimeout> | null = null;
+  private panelOpenHandle: ReturnType<typeof setTimeout> | null = null;
   private sourceSubscription: Subscription | null = null;
   private sourceRequestId = 0;
 
@@ -156,36 +176,53 @@ export class AutocompleteComponent<TValue>
     effect(() => {
       const source = this.source();
       const query = this.query();
-      const debounceMs = this.debounceMs();
+      const debouncedQuery = this.debouncedQuery.value().query;
+      const isDebouncingQuery = this.debouncedQuery.isLoading();
       const minQueryLength = this.minQueryLength();
 
-      this.scheduleSourceLoad(source, query, debounceMs, minQueryLength);
+      this.scheduleSourceLoad(source, query, debouncedQuery, isDebouncingQuery, minQueryLength);
     });
 
     effect(() => {
       const panel = this.panelRef()?.nativeElement as PopoverElement | undefined;
       const inputElement = this.inputRef()?.nativeElement;
-      const shouldOpen = this.open();
+      const shouldOpen = this.open() && !this.isInteractiveDisabled();
 
       if (!panel || !inputElement) {
         return;
       }
 
       if (shouldOpen && !this.isPanelOpen(panel)) {
-        panel.showPopover({ source: inputElement });
+        panel.showPopover({ source: this.elementRef.nativeElement });
       } else if (!shouldOpen && this.isPanelOpen(panel)) {
         panel.hidePopover();
       }
     });
 
+    effect(() => {
+      if (this.isInteractiveDisabled() && this.open()) {
+        this.closePanel();
+      }
+    });
+
+    effect(() => {
+      const isOpen = this.open();
+      const activeIndex = this.activeIndex();
+
+      if (isOpen && activeIndex >= 0) {
+        this.scheduleActiveOptionScroll();
+      }
+    });
+
     this.destroyRef.onDestroy(() => {
-      this.clearDebounce();
+      this.clearScheduledPanelOpen();
+      this.clearActiveOptionScroll();
       this.sourceSubscription?.unsubscribe();
     });
   }
 
   focus(options?: FocusOptions): void {
-    this.inputRef()?.nativeElement.focus(options);
+    this.focusInput(options);
   }
 
   reset(): void {
@@ -231,9 +268,13 @@ export class AutocompleteComponent<TValue>
     return this.selectedValues().some((value) => this.compareWith()(value, option.value));
   }
 
-  protected focusInput(): void {
+  protected focusInput(options?: FocusOptions, shouldOpen = true): void {
     if (!this.isInteractiveDisabled()) {
-      this.inputRef()?.nativeElement.focus();
+      this.inputRef()?.nativeElement.focus(options);
+
+      if (shouldOpen) {
+        this.schedulePanelOpen();
+      }
     }
   }
 
@@ -251,7 +292,7 @@ export class AutocompleteComponent<TValue>
 
   protected handleFocus(): void {
     if (!this.isInteractiveDisabled()) {
-      this.openPanel();
+      this.schedulePanelOpen();
     }
   }
 
@@ -320,16 +361,23 @@ export class AutocompleteComponent<TValue>
   }
 
   protected handlePanelToggle(event: ToggleEvent): void {
+    if (event.newState === 'open' && this.isInteractiveDisabled()) {
+      this.closePanel();
+      return;
+    }
+
     this.open.set(event.newState === 'open');
   }
 
   protected togglePanel(): void {
-    this.focusInput();
+    const shouldOpen = !this.open();
 
-    if (this.open()) {
-      this.closePanel();
-    } else {
+    this.focusInput(undefined, false);
+
+    if (shouldOpen) {
       this.openPanel();
+    } else {
+      this.closePanel();
     }
   }
 
@@ -388,6 +436,7 @@ export class AutocompleteComponent<TValue>
 
   private openPanel(): void {
     if (!this.isInteractiveDisabled()) {
+      this.clearScheduledPanelOpen();
       this.open.set(true);
       this.ensureActiveOption();
     }
@@ -396,6 +445,8 @@ export class AutocompleteComponent<TValue>
   private closePanel(): void {
     this.open.set(false);
     this.activeIndex.set(-1);
+    this.clearScheduledPanelOpen();
+    this.clearActiveOptionScroll();
   }
 
   private markTouched(): void {
@@ -434,11 +485,27 @@ export class AutocompleteComponent<TValue>
   }
 
   private ensureActiveOption(): void {
-    if (this.activeIndex() >= 0) {
+    const activeIndex = this.activeIndex();
+    const optionCount = this.visibleOptions().length;
+
+    if (activeIndex >= 0 && activeIndex < optionCount) {
       return;
     }
 
-    this.setFirstActive();
+    const selectedIndex = this.firstSelectedOptionIndex();
+    this.activeIndex.set(selectedIndex >= 0 ? selectedIndex : this.enabledOptionIndexes()[0] ?? -1);
+  }
+
+  private firstSelectedOptionIndex(): number {
+    const selectedValues = this.selectedValues();
+
+    if (selectedValues.length === 0) {
+      return -1;
+    }
+
+    return this.visibleOptions().findIndex((option) =>
+      selectedValues.some((value) => this.compareWith()(value, option.value)),
+    );
   }
 
   private enabledOptionIndexes(): number[] {
@@ -457,10 +524,10 @@ export class AutocompleteComponent<TValue>
   private scheduleSourceLoad(
     source: AutocompleteSearchSource<TValue> | null,
     query: string,
-    debounceMs: number,
+    debouncedQuery: string,
+    isDebouncingQuery: boolean,
     minQueryLength: number,
   ): void {
-    this.clearDebounce();
     this.sourceSubscription?.unsubscribe();
     this.sourceSubscription = null;
 
@@ -478,11 +545,15 @@ export class AutocompleteComponent<TValue>
       return;
     }
 
+    if (isDebouncingQuery) {
+      this.loading.set(true);
+      this.error.set('');
+      return;
+    }
+
     this.loading.set(true);
     this.error.set('');
-    this.debounceHandle = setTimeout(() => {
-      this.loadSource(source, query);
-    }, Math.max(0, debounceMs));
+    this.loadSource(source, debouncedQuery);
   }
 
   private loadSource(source: AutocompleteSearchSource<TValue>, query: string): void {
@@ -522,6 +593,10 @@ export class AutocompleteComponent<TValue>
     this.loading.set(false);
     this.error.set('');
     this.activeIndex.set(-1);
+
+    if (this.open()) {
+      this.ensureActiveOption();
+    }
   }
 
   private applySourceError(requestId: number): void {
@@ -551,11 +626,46 @@ export class AutocompleteComponent<TValue>
     );
   }
 
-  private clearDebounce(): void {
-    if (this.debounceHandle !== null) {
-      clearTimeout(this.debounceHandle);
-      this.debounceHandle = null;
+  private schedulePanelOpen(): void {
+    this.clearScheduledPanelOpen();
+    this.panelOpenHandle = window.setTimeout(() => {
+      this.panelOpenHandle = null;
+
+      if (this.hostContainsFocus()) {
+        this.openPanel();
+      }
+    });
+  }
+
+  private clearScheduledPanelOpen(): void {
+    if (this.panelOpenHandle !== null) {
+      clearTimeout(this.panelOpenHandle);
+      this.panelOpenHandle = null;
     }
+  }
+
+  private scheduleActiveOptionScroll(): void {
+    this.clearActiveOptionScroll();
+    this.activeOptionScrollHandle = window.setTimeout(() => {
+      this.activeOptionScrollHandle = null;
+      this.scrollActiveOptionIntoView();
+    });
+  }
+
+  private clearActiveOptionScroll(): void {
+    if (this.activeOptionScrollHandle !== null) {
+      clearTimeout(this.activeOptionScrollHandle);
+      this.activeOptionScrollHandle = null;
+    }
+  }
+
+  private scrollActiveOptionIntoView(): void {
+    const activeIndex = this.activeIndex();
+    const activeOption = this.panelRef()?.nativeElement.querySelector<HTMLElement>(
+      `#${CSS.escape(this.optionDomId(activeIndex))}`,
+    );
+
+    activeOption?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   }
 
   private isPromise(
