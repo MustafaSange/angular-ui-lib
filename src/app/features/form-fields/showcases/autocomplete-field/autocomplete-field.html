@@ -1,0 +1,122 @@
+<div class="showcase-preview">
+  <ms-signal-form-field>
+    <label for="autocomplete-role">Role</label>
+    <ms-autocomplete
+      id="autocomplete-role"
+      name="role"
+      placeholder="Choose a role"
+      [(value)]="role"
+    >
+      @for (option of roleOptions; track option.value) {
+        <ms-autocomplete-option
+          [value]="option.value"
+          [label]="option.label"
+          [description]="option.description ?? null"
+          [disabled]="option.disabled ?? false"
+        >
+          @if (option.description) {
+            <strong>{{ option.label }}</strong>
+            <span>{{ option.description }}</span>
+          } @else {
+            {{ option.label }}
+          }
+        </ms-autocomplete-option>
+      }
+    </ms-autocomplete>
+  </ms-signal-form-field>
+</div>
+<app-showcase-code label="Autocomplete with label/value options" [code]="staticSnippet" />
+
+<div class="showcase-preview">
+  <ms-signal-form-field>
+    <label for="autocomplete-cities">Cities</label>
+    <ms-autocomplete
+      id="autocomplete-cities"
+      name="cities"
+      placeholder="Choose cities"
+      [multiple]="true"
+      [(value)]="selectedCities"
+    >
+      @for (option of cityOptions; track option.value) {
+        <ms-autocomplete-option
+          [value]="option.value"
+          [label]="option.label"
+          [group]="option.group ?? null"
+        >
+          {{ option.label }}
+        </ms-autocomplete-option>
+      }
+    </ms-autocomplete>
+  </ms-signal-form-field>
+</div>
+<app-showcase-code label="Multiple autocomplete" [code]="multipleSnippet" />
+
+<div class="showcase-preview">
+  <ms-signal-form-field>
+    <label for="autocomplete-remote-city">Remote city</label>
+    <ms-autocomplete
+      id="autocomplete-remote-city"
+      name="remoteCity"
+      placeholder="Search cities"
+      [source]="asyncCitySource"
+      [debounceMs]="300"
+      [minQueryLength]="1"
+      [compareWith]="compareCities"
+      [displayWith]="displayCity"
+      [valueSerializer]="serializeCity"
+    />
+  </ms-signal-form-field>
+</div>
+<app-showcase-code label="Async autocomplete with progress" [code]="asyncSnippet" />
+
+<div class="showcase-preview">
+  <ms-signal-form-field>
+    <label for="autocomplete-country">Country</label>
+    <ms-autocomplete
+      id="autocomplete-country"
+      placeholder="Choose a country"
+      [formField]="countryField"
+    >
+      @for (option of countryOptions; track option.value) {
+        <ms-autocomplete-option [value]="option.value" [label]="option.label">
+          {{ option.label }}
+        </ms-autocomplete-option>
+      }
+    </ms-autocomplete>
+  </ms-signal-form-field>
+
+  <ms-signal-form-field>
+    <label for="autocomplete-readonly">Readonly value</label>
+    <ms-autocomplete
+      id="autocomplete-readonly"
+      placeholder="Readonly"
+      readonly
+      [value]="'developer'"
+    >
+      @for (option of roleOptions; track option.value) {
+        <ms-autocomplete-option [value]="option.value" [label]="option.label">
+          {{ option.label }}
+        </ms-autocomplete-option>
+      }
+    </ms-autocomplete>
+  </ms-signal-form-field>
+
+  <ms-signal-form-field dir="rtl">
+    <label for="autocomplete-rtl">RTL autocomplete</label>
+    <ms-autocomplete
+      id="autocomplete-rtl"
+      placeholder="اختر مدينة"
+    >
+      @for (option of cityOptions; track option.value) {
+        <ms-autocomplete-option
+          [value]="option.value"
+          [label]="option.label"
+          [group]="option.group ?? null"
+        >
+          {{ option.label }}
+        </ms-autocomplete-option>
+      }
+    </ms-autocomplete>
+  </ms-signal-form-field>
+</div>
+<app-showcase-code label="Signal forms, readonly, and RTL" [code]="formsSnippet" />
