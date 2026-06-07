@@ -19,7 +19,7 @@ import {
   SideNavItem,
   SideNavSectionComponent,
   SideNavTrigger,
-} from '../../shared/components/side-nav';
+} from '../../shared/ui-lib';
 ```
 
 Public pieces:
@@ -82,7 +82,7 @@ import {
   SideNavItem,
   SideNavSectionComponent,
   SideNavTrigger,
-} from './shared/components/side-nav';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-side-nav-example',
@@ -146,7 +146,7 @@ Manual active button:
 
 The implementation lives in:
 
-`src/app/shared/components/side-nav`
+`src/app/shared/ui-lib/components/side-nav`
 
 The feature includes:
 
@@ -264,7 +264,7 @@ The side-nav showcase page demonstrates:
 - router-aware active anchor state
 - RTL preview for logical flyout placement and collapsed section indicator placement
 
-Showcase snippets use `ShowcaseCode` from `src/app/shared/components/showcase-code`, are
+Showcase snippets use `ShowcaseCode` from `src/app/shared/ui-lib/components/showcase-code`, are
 hand-authored in `src/app/features/side-nav/side-nav.ts`, and render near the matching visual
 examples with `<app-showcase-code>`.
 

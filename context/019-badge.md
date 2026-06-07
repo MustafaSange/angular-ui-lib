@@ -10,7 +10,7 @@ non-interactive by default and communicate brief state in a small inline visual 
 Import badge primitives from the folder barrel:
 
 ```ts
-import { BadgeComponent } from '../../shared/components/badge';
+import { BadgeComponent } from '../../shared/ui-lib';
 ```
 
 Public pieces:
@@ -44,7 +44,7 @@ Shared reusable components use the `ms-` selector prefix. Internal styling hooks
 ```ts
 import { Component } from '@angular/core';
 
-import { BadgeComponent } from './shared/components/badge';
+import { BadgeComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-badge-example',
@@ -62,7 +62,7 @@ export class BadgeExample {}
 
 ## Component Structure
 
-The implementation lives in `src/app/shared/components/badge`:
+The implementation lives in `src/app/shared/ui-lib/components/badge`:
 
 - `BadgeComponent` renders projected compact text and an optional status dot
 - `badge-types.ts` defines `BadgeVariant` and `BadgeAppearance`

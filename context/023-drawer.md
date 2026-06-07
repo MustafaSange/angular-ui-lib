@@ -22,12 +22,7 @@ left-to-right and right-to-left layouts through logical `start` and `end` placem
 Import public pieces from the folder barrel:
 
 ```ts
-import {
-  DrawerClose,
-  DrawerComponent,
-  DrawerPlacement,
-  DrawerTrigger,
-} from '../../shared/components/drawer';
+import { DrawerClose, DrawerComponent, DrawerPlacement, DrawerTrigger } from '../../shared/ui-lib';
 ```
 
 Public pieces:
@@ -87,7 +82,7 @@ Basic navigation drawer:
 
 ```ts
 import { Component, signal } from '@angular/core';
-import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/components/drawer';
+import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/ui-lib';
 
 @Component({
   selector: 'app-navigation-drawer-example',
@@ -132,7 +127,7 @@ End placement drawer:
 
 ```ts
 import { Component, signal } from '@angular/core';
-import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/components/drawer';
+import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/ui-lib';
 
 @Component({
   selector: 'app-end-drawer-example',
@@ -173,7 +168,7 @@ export class EndDrawerExample {
 
 The implementation lives in:
 
-`src/app/shared/components/drawer`
+`src/app/shared/ui-lib/components/drawer`
 
 The feature includes:
 
@@ -280,7 +275,7 @@ The drawer showcase should demonstrate:
 - close actions inside the drawer
 
 Showcase snippets must use `ShowcaseCode` from
-`src/app/shared/components/showcase-code`. Keep snippets hand-authored in the feature component
+`src/app/shared/ui-lib/components/showcase-code`. Keep snippets hand-authored in the feature component
 `.ts` file, make each snippet a full standalone Angular component example that users can
 copy/paste, and render snippets near the matching visual example with `<app-showcase-code>`.
 

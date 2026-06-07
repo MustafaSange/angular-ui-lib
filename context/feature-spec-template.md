@@ -11,11 +11,7 @@ Describe the expected quality bar and the main capability this feature adds. Kee
 Import public pieces from the folder barrel:
 
 ```ts
-import {
-  FeatureComponent,
-  FeatureConfig,
-  FeatureService,
-} from '../../shared/components/feature-name';
+import { FeatureComponent, FeatureConfig, FeatureService } from '../../shared/ui-lib';
 ```
 
 Public pieces:
@@ -54,7 +50,7 @@ Examples should reflect the final public API, not internal implementation detail
 
 The implementation lives in:
 
-`src/app/shared/components/feature-name`
+`src/app/shared/ui-lib/components/feature-name`
 
 The feature includes:
 
@@ -131,7 +127,7 @@ Remove this section only when there are no meaningful accessibility requirements
 
 Add or update the relevant showcase page with live examples for the main variants and states.
 
-Showcase snippets should use `ShowcaseCode` from `src/app/shared/components/showcase-code`.
+Showcase snippets should use `ShowcaseCode` from `src/app/shared/ui-lib/components/showcase-code`.
 
 Keep snippets hand-authored in the feature component `.ts` file and make each snippet a full standalone Angular component example that users can copy/paste.
 

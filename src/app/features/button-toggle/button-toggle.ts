@@ -95,7 +95,7 @@ export class DisabledButtonToggleExample {
 
 import { ButtonToggleDirective, ButtonToggleGroup, type ButtonToggleValue, } from './shared/ui-lib';
 import {
-  SignalFormField, SignalFormHint, } from '../../shared/ui-lib/components/signal-form-field';
+  SignalFormField, SignalFormHint, } from './shared/ui-lib';
 
 @Component({
   selector: 'app-form-field-button-toggle-example', imports: [ButtonToggleGroup, ButtonToggleDirective, SignalFormField, SignalFormHint], template: \`

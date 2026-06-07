@@ -17,7 +17,7 @@ import {
   BreadcrumbComponent,
   BreadcrumbItemDirective,
   BreadcrumbSeparatorDirective,
-} from '../../shared/components/breadcrumb';
+} from '../../shared/ui-lib';
 ```
 
 Public pieces:
@@ -63,7 +63,7 @@ Basic breadcrumb with router links:
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { BreadcrumbComponent, BreadcrumbItemDirective } from './shared/components/breadcrumb';
+import { BreadcrumbComponent, BreadcrumbItemDirective } from './shared/ui-lib';
 
 @Component({
   selector: 'app-breadcrumb-example',
@@ -88,7 +88,7 @@ import {
   BreadcrumbComponent,
   BreadcrumbItemDirective,
   BreadcrumbSeparatorDirective,
-} from './shared/components/breadcrumb';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-custom-breadcrumb-example',
@@ -126,7 +126,7 @@ Collapsed middle path:
 
 The implementation lives in:
 
-`src/app/shared/components/breadcrumb`
+`src/app/shared/ui-lib/components/breadcrumb`
 
 The feature includes:
 
@@ -237,7 +237,7 @@ Add a dedicated `/breadcrumb` page and home card demonstrating:
 - long-label truncation
 - scoped RTL preview showing mirrored separator direction and logical spacing
 
-Showcase snippets use `ShowcaseCode` from `src/app/shared/components/showcase-code`, are
+Showcase snippets use `ShowcaseCode` from `src/app/shared/ui-lib/components/showcase-code`, are
 hand-authored in dedicated showcase components under `src/app/features/breadcrumb/showcases`, and
 render near the matching visual examples with `<app-showcase-code>`.
 

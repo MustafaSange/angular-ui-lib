@@ -95,10 +95,10 @@ Expose the theme modes through a small reusable Angular UI control.
 Create:
 
 - `src/app/shared/services/theme.service.ts`
-- `src/app/shared/components/theme-switcher/theme-switcher.ts`
-- `src/app/shared/components/theme-switcher/theme-switcher.html`
-- `src/app/shared/components/theme-switcher/theme-switcher.scss`
-- `src/app/shared/components/theme-switcher/index.ts`
+- `src/app/shared/ui-lib/components/theme-switcher/theme-switcher.ts`
+- `src/app/shared/ui-lib/components/theme-switcher/theme-switcher.html`
+- `src/app/shared/ui-lib/components/theme-switcher/theme-switcher.scss`
+- `src/app/shared/ui-lib/components/theme-switcher/index.ts`
 
 The theme switcher should:
 

@@ -138,3 +138,9 @@ $button-variants: primary, secondary, success, danger;
     block-size: var(--control-height-lg);
   }
 }
+
+.btn.back-link {
+  display: flex;
+  inline-size: max-content;
+  max-inline-size: 100%;
+}

@@ -12,7 +12,7 @@ consumer-owned through projection.
 Import tabs primitives from the folder barrel:
 
 ```ts
-import { TabComponent, TabTitleDirective, TabsComponent } from '../../shared/components/tabs';
+import { TabComponent, TabTitleDirective, TabsComponent } from '../../shared/ui-lib';
 ```
 
 Public pieces:
@@ -42,7 +42,7 @@ Shared reusable components use the `ms-` selector prefix. Internal styling hooks
 ```ts
 import { Component } from '@angular/core';
 
-import { TabComponent, TabTitleDirective, TabsComponent } from './shared/components/tabs';
+import { TabComponent, TabTitleDirective, TabsComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-tabs-example',
@@ -66,7 +66,7 @@ export class TabsExample {}
 
 ## Component Structure
 
-The implementation lives in `src/app/shared/components/tabs`:
+The implementation lives in `src/app/shared/ui-lib/components/tabs`:
 
 - `TabsComponent` coordinates projected tabs, selected state, generated IDs, and keyboard behavior
 - `TabComponent` stores a simple title input, optional projected title template, and projected panel

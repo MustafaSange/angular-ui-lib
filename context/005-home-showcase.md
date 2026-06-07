@@ -1,9 +1,11 @@
 # Feature 005: Home Showcase
 
 ## Goal
+
 Maintain a small home page that acts as the entry point for the UI library demos and makes the current theme system visible at a glance.
 
 ## Context
+
 The showcase currently includes feature pages for:
 
 - Buttons
@@ -18,6 +20,7 @@ The showcase currently includes feature pages for:
 Each feature page is discoverable from one central place, and users can return there without relying on browser navigation.
 
 ## Task
+
 Create a Home feature under:
 
 `src/app/features/home/`

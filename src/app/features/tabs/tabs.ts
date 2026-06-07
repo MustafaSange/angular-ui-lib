@@ -64,7 +64,19 @@ import { TabComponent, TabTitleDirective, TabsComponent } from './shared/ui-lib'
         <p>Two-factor authentication is enabled for all administrators.</p>
       </ms-tab>
     </ms-tabs>
-  \`, })
+  \`,
+  styles: [\`
+    .status-dot {
+      display: inline-block;
+      inline-size: 0.5rem;
+      block-size: 0.5rem;
+      margin-inline-start: 0.375rem;
+      border-radius: 999px;
+      background: var(--color-success);
+      vertical-align: middle;
+    }
+  \`],
+})
 export class ProjectedTitleTabsExample {}`;
 
   protected readonly overflowSnippet = `import { Component } from '@angular/core';

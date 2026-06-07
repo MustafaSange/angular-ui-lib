@@ -25,7 +25,7 @@ import {
   PopoverComponent,
   PopoverPanelComponent,
   PopoverTrigger,
-} from '../../shared/components/menu-popover';
+} from '../../shared/ui-lib';
 ```
 
 Public pieces:
@@ -105,7 +105,7 @@ import {
   MenuItem,
   MenuPanelComponent,
   MenuTrigger,
-} from './shared/components/menu-popover';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-project-actions-example',
@@ -146,7 +146,7 @@ import {
   PopoverComponent,
   PopoverPanelComponent,
   PopoverTrigger,
-} from './shared/components/menu-popover';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-filter-popover-example',
@@ -192,7 +192,7 @@ import {
   PopoverComponent,
   PopoverPanelComponent,
   PopoverTrigger,
-} from './shared/components/menu-popover';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-side-popover-example',
@@ -216,7 +216,7 @@ export class SidePopoverExample {}
 
 The implementation lives in:
 
-`src/app/shared/components/menu-popover`
+`src/app/shared/ui-lib/components/menu-popover`
 
 The feature includes:
 
@@ -374,7 +374,7 @@ The showcase demonstrates:
   applied-filter result
 - a logical inline-end popover using `placement="end-top"` that demonstrates RTL mirroring
 
-Showcase snippets should use `ShowcaseCode` from `src/app/shared/components/showcase-code`.
+Showcase snippets should use `ShowcaseCode` from `src/app/shared/ui-lib/components/showcase-code`.
 
 Keep snippets hand-authored in the feature component `.ts` file and make each snippet a full
 standalone Angular component example that users can copy/paste.

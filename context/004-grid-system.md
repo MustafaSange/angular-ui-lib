@@ -1,9 +1,11 @@
 # Feature 006: Form Field Style Guide
 
 ## Goal
+
 Create a reusable form field SCSS style guide that supports labels, controls, hints, errors, required, readonly, and disabled states.
 
 ## Context
+
 The project already contains:
 
 - `src/styles/tokens/`
@@ -13,6 +15,7 @@ The project already contains:
 The form field style guide must integrate with the existing design tokens, typography, spacing, color, radius, and component patterns.
 
 ## Task
+
 Create or update the form field styles inside the appropriate styles folder.
 
 Prefer:

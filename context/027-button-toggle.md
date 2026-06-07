@@ -13,11 +13,7 @@ the projected button labels, icons, and accessible group name.
 Import button toggle primitives from the folder barrel:
 
 ```ts
-import {
-  ButtonToggleDirective,
-  ButtonToggleGroup,
-  ButtonToggleValue,
-} from '../../shared/components/button-toggle';
+import { ButtonToggleDirective, ButtonToggleGroup, ButtonToggleValue } from '../../shared/ui-lib';
 ```
 
 Public pieces:
@@ -62,11 +58,7 @@ Basic button toggle:
 ```ts
 import { Component, signal } from '@angular/core';
 
-import {
-  ButtonToggleDirective,
-  ButtonToggleGroup,
-  type ButtonToggleValue,
-} from './shared/components/button-toggle';
+import { ButtonToggleDirective, ButtonToggleGroup, type ButtonToggleValue } from './shared/ui-lib';
 
 @Component({
   selector: 'app-basic-button-toggle-example',
@@ -89,12 +81,8 @@ Signal form-field visual layout:
 ```ts
 import { Component, signal } from '@angular/core';
 
-import {
-  ButtonToggleDirective,
-  ButtonToggleGroup,
-  type ButtonToggleValue,
-} from './shared/components/button-toggle';
-import { SignalFormField, SignalFormHint } from './shared/components/signal-form-field';
+import { ButtonToggleDirective, ButtonToggleGroup, type ButtonToggleValue } from './shared/ui-lib';
+import { SignalFormField, SignalFormHint } from './shared/ui-lib';
 
 @Component({
   selector: 'app-form-field-button-toggle-example',
@@ -121,7 +109,7 @@ export class FormFieldButtonToggleExample {
 
 The implementation lives in:
 
-`src/app/shared/components/button-toggle`
+`src/app/shared/ui-lib/components/button-toggle`
 
 The feature includes:
 
@@ -223,7 +211,7 @@ Add a dedicated `/button-toggle` page and home card demonstrating:
 - signal form-field visual integration
 - keyboard behavior in an RTL example
 
-Showcase snippets use `ShowcaseCode` from `src/app/shared/components/showcase-code`.
+Showcase snippets use `ShowcaseCode` from `src/app/shared/ui-lib/components/showcase-code`.
 
 Keep snippets hand-authored in `src/app/features/button-toggle/button-toggle.ts` and make each
 snippet a full standalone Angular component example that users can copy/paste.

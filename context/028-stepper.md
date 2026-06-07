@@ -23,7 +23,7 @@ import {
   StepOrientation,
   StepperComponent,
   StepTitleDirective,
-} from '../../shared/components/stepper';
+} from '../../shared/ui-lib';
 ```
 
 Public pieces:
@@ -67,7 +67,7 @@ Shared reusable components use the `ms-` selector prefix. Internal styling hooks
 ```ts
 import { Component } from '@angular/core';
 
-import { StepComponent, StepperComponent, StepTitleDirective } from './shared/components/stepper';
+import { StepComponent, StepperComponent, StepTitleDirective } from './shared/ui-lib';
 
 @Component({
   selector: 'app-stepper-example',
@@ -109,7 +109,7 @@ export class StepperExample {}
 
 ## Component Structure
 
-The implementation lives in `src/app/shared/components/stepper`:
+The implementation lives in `src/app/shared/ui-lib/components/stepper`:
 
 - `StepperComponent` coordinates projected steps, selected state, generated IDs, linear selection
   rules, orientation layout, and keyboard focus movement

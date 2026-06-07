@@ -115,7 +115,19 @@ import { StepComponent, StepperComponent, StepTitleDirective, } from './shared/u
         <p>Review all entered information.</p>
       </ms-step>
     </ms-stepper>
-  \`, })
+  \`,
+  styles: [\`
+    .status-dot {
+      display: inline-block;
+      inline-size: 0.5rem;
+      block-size: 0.5rem;
+      margin-inline-start: 0.375rem;
+      border-radius: 999px;
+      background: var(--color-success);
+      vertical-align: middle;
+    }
+  \`],
+})
 export class RichTitleStepperExample {}`;
 
   protected readonly disabledSnippet = `import { Component } from '@angular/core';

@@ -60,7 +60,15 @@ import {
         </ms-side-nav-section>
       </ms-side-nav-section>
     </ms-side-nav>
-  \`, })
+  \`,
+  styles: [\`
+    .side-nav-label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  \`],
+})
 export class SideNavExample {
   protected readonly collapsed = signal(false);
   protected readonly projectsOpen = signal(true);
@@ -104,6 +112,13 @@ import {
       </ms-side-nav-section>
     </ms-side-nav>
   \`,
+  styles: [\`
+    .side-nav-label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  \`],
 })
 export class CollapsedSideNavExample {
   protected readonly collapsed = signal(true);
@@ -122,6 +137,13 @@ import { SideNavItem } from './shared/ui-lib';
       <span class="side-nav-label">Settings</span>
     </button>
   \`,
+  styles: [\`
+    .side-nav-label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  \`],
 })
 export class ManualActiveSideNavItemExample {}`;
 }

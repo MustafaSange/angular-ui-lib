@@ -15,7 +15,7 @@ import {
   AccordionComponent,
   AccordionItemComponent,
   AccordionTitleDirective,
-} from '../../shared/components/accordion';
+} from '../../shared/ui-lib';
 ```
 
 Public pieces:
@@ -61,7 +61,7 @@ import {
   AccordionComponent,
   AccordionItemComponent,
   AccordionTitleDirective,
-} from './shared/components/accordion';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-accordion-example',
@@ -91,7 +91,7 @@ export class AccordionExample {}
 
 ## Component Structure
 
-The implementation lives in `src/app/shared/components/accordion`:
+The implementation lives in `src/app/shared/ui-lib/components/accordion`:
 
 - `AccordionComponent` coordinates projected items, generated IDs, toggle behavior, and keyboard
   focus movement

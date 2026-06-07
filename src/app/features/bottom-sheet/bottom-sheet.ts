@@ -117,7 +117,14 @@ import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger, } from './s
         </button>
       </div>
     </ms-bottom-sheet>
-  \`, })
+  \`,
+  styles: [\`
+    .action-list {
+      display: grid;
+      gap: 0.5rem;
+    }
+  \`],
+})
 export class BottomSheetActionsExample {
   protected readonly isOpen = signal(false);
 }`;
@@ -199,7 +206,14 @@ import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './sh
         </button>
       </div>
     </ms-bottom-sheet>
-  \`, })
+  \`,
+  styles: [\`
+    .review-list {
+      display: grid;
+      gap: 0.75rem;
+    }
+  \`],
+})
 export class FullBottomSheetExample {
   protected readonly open = signal(false);
 }`;
@@ -318,6 +332,12 @@ import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './sh
       </ms-bottom-sheet>
     </div>
   \`,
+  styles: [\`
+    .action-list {
+      display: grid;
+      gap: 0.5rem;
+    }
+  \`],
 })
 export class RtlBottomSheetExample {
   protected readonly open = signal(false);

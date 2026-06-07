@@ -14,11 +14,7 @@ Shared reusable components use the `ms-` selector prefix. Do not use `app-` for 
 Import the public component from the folder barrel:
 
 ```ts
-import {
-  CopyButtonComponent,
-  CopyRevealComponent,
-  copyTextToClipboard,
-} from '../../shared/components/copy-button';
+import { CopyButtonComponent, CopyRevealComponent, copyTextToClipboard } from '../../shared/ui-lib';
 ```
 
 Public pieces:
@@ -80,7 +76,7 @@ Copy from an explicit input:
 ```ts
 import { Component } from '@angular/core';
 
-import { CopyButtonComponent } from './shared/components/copy-button';
+import { CopyButtonComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-copy-input-example',
@@ -98,7 +94,7 @@ Copy from projected fallback text:
 ```ts
 import { Component } from '@angular/core';
 
-import { CopyButtonComponent } from './shared/components/copy-button';
+import { CopyButtonComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-copy-projected-example',
@@ -121,7 +117,7 @@ Reveal copy button on hover or focus:
 ```ts
 import { Component } from '@angular/core';
 
-import { CopyRevealComponent } from './shared/components/copy-button';
+import { CopyRevealComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-copy-reveal-example',
@@ -145,7 +141,7 @@ const result = await copyTextToClipboard('support@example.com');
 
 The implementation lives in:
 
-`src/app/shared/components/copy-button`
+`src/app/shared/ui-lib/components/copy-button`
 
 The feature includes:
 
@@ -277,7 +273,7 @@ Add a home showcase card that links to `/clipboard`.
 
 ## Acceptance Criteria
 
-- The public API is exported from `src/app/shared/components/copy-button/index.ts`.
+- The public API is exported from `src/app/shared/ui-lib/components/copy-button/index.ts`.
 - The component selector is `ms-copy-button`.
 - The primary usage examples work as documented.
 - The button copies explicit `text` input and falls back to projected text when `text` is absent.

@@ -13,7 +13,7 @@ state handling, RTL-safe layout, and showcase examples.
 Import slider primitives from the folder barrel:
 
 ```ts
-import { SliderComponent } from '../../shared/components/slider';
+import { SliderComponent } from '../../shared/ui-lib';
 ```
 
 Public pieces:
@@ -67,7 +67,7 @@ Basic slider:
 ```ts
 import { Component, signal } from '@angular/core';
 
-import { SliderComponent } from './shared/components/slider';
+import { SliderComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-basic-slider-example',
@@ -87,8 +87,8 @@ Signal form-field model binding:
 import { Component, signal } from '@angular/core';
 import { FormField, form, max, min, schema } from '@angular/forms/signals';
 
-import { SignalFormField, SignalFormHint } from './shared/components/signal-form-field';
-import { SliderComponent } from './shared/components/slider';
+import { SignalFormField, SignalFormHint } from './shared/ui-lib';
+import { SliderComponent } from './shared/ui-lib';
 
 type BudgetForm = {
   budget: number;
@@ -129,7 +129,7 @@ Disabled slider:
 ```ts
 import { Component } from '@angular/core';
 
-import { SliderComponent } from './shared/components/slider';
+import { SliderComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-disabled-slider-example',
@@ -143,7 +143,7 @@ export class DisabledSliderExample {}
 
 The implementation lives in:
 
-`src/app/shared/components/slider`
+`src/app/shared/ui-lib/components/slider`
 
 The feature includes:
 
@@ -260,7 +260,7 @@ Add a dedicated `/slider` page and home card demonstrating:
 - signal form-field model integration with `[formField]`
 - an RTL example showing logical fill placement
 
-Showcase snippets use `ShowcaseCode` from `src/app/shared/components/showcase-code`.
+Showcase snippets use `ShowcaseCode` from `src/app/shared/ui-lib/components/showcase-code`.
 
 Keep snippets hand-authored in `src/app/features/slider/slider.ts` and make each snippet a full
 standalone Angular component example that users can copy/paste.
