@@ -18,7 +18,7 @@ import {
   RadioGroup,
   SwitchControl,
   SwitchGroup,
-} from '../../shared/components/choice-controls';
+} from '../../shared/ui-lib';
 ```
 
 Components:
@@ -98,7 +98,7 @@ Label-before layout:
 
 The implementation lives in:
 
-`src/app/shared/components/choice-controls`
+`src/app/shared/ui-lib/components/choice-controls`
 
 Each component has its own folder and local barrel:
 

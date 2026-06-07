@@ -6,18 +6,14 @@ Create a reusable Angular signal form field component that uses content projecti
 
 The component lives in:
 
-`src/app/shared/components/signal-form-field`
+`src/app/shared/ui-lib/components/signal-form-field`
 
 ## Public API
 
 Import the public components from the folder barrel:
 
 ```ts
-import {
-  SignalFormError,
-  SignalFormField,
-  SignalFormHint,
-} from '../../shared/components/signal-form-field';
+import { SignalFormError, SignalFormField, SignalFormHint } from '../../shared/ui-lib';
 ```
 
 Components:

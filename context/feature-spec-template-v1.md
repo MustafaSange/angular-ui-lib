@@ -3,6 +3,7 @@
 Use this template for reusable shared Angular features.
 
 Before writing:
+
 - Replace all placeholders.
 - Remove sections that do not apply.
 - Do not invent APIs, services, configs, or showcase examples unless required.
@@ -13,6 +14,7 @@ Before writing:
 ## Goal
 
 Describe:
+
 - the feature’s purpose
 - the primary use case
 - the expected user/library outcome
@@ -26,6 +28,7 @@ Do not include implementation details.
 Describe what this feature should NOT do.
 
 Examples:
+
 - duplicate existing shared functionality
 - include app-specific business logic
 - introduce unrelated utilities
@@ -37,6 +40,7 @@ Examples:
 Document only actual public exports from the feature barrel.
 
 For each export, include:
+
 - name
 - purpose
 - type
@@ -45,7 +49,7 @@ For each export, include:
 Example:
 
 ```ts
-import { FeatureComponent } from '../../shared/components/feature-name';
+import { FeatureComponent } from '../../shared/ui-lib';
 ```
 
 ---
@@ -55,6 +59,7 @@ import { FeatureComponent } from '../../shared/components/feature-name';
 Show real consumer usage.
 
 Rules:
+
 - examples must compile
 - reflect final API
 - no pseudo-code
@@ -72,9 +77,10 @@ Example:
 
 Location:
 
-`src/app/shared/components/feature-name`
+`src/app/shared/ui-lib/components/feature-name`
 
 Document:
+
 - required public files
 - optional supporting files
 - rendered structure
@@ -88,12 +94,14 @@ Document:
 Document implementation-ready behavior.
 
 Include where relevant:
+
 - states (`default`, `disabled`, `loading`, `error`, etc.)
 - interactions (click, keyboard, pointer, gestures)
 - lifecycle/setup/cleanup
 - exact state transitions
 
 Example:
+
 - Escape closes dropdown
 - outside click dismisses overlay
 
@@ -104,6 +112,7 @@ Example:
 Document how consumers provide content.
 
 Include:
+
 - projection vs inputs
 - named slots
 - child directives/components
@@ -116,6 +125,7 @@ Remove if not applicable.
 ## Styling
 
 Document:
+
 - style file location
 - responsive behavior
 - RTL requirements
@@ -132,6 +142,7 @@ Use design tokens and logical CSS properties.
 Document exact accessibility requirements.
 
 Include:
+
 - semantic elements
 - ARIA roles/relationships
 - keyboard behavior
@@ -146,6 +157,7 @@ Remove if native semantics are sufficient.
 ## Showcase
 
 For visual reusable components:
+
 - add showcase examples
 - include copyable snippets
 - ensure snippets compile

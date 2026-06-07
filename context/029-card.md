@@ -19,7 +19,7 @@ import {
   CardMediaDirective,
   CardSubtitleDirective,
   CardTitleDirective,
-} from '../../shared/components/card';
+} from '../../shared/ui-lib';
 ```
 
 Public pieces:
@@ -65,7 +65,7 @@ import {
   CardHeaderDirective,
   CardSubtitleDirective,
   CardTitleDirective,
-} from './shared/components/card';
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-card-example',
@@ -99,7 +99,7 @@ export class CardExample {}
 
 ## Component Structure
 
-The implementation lives in `src/app/shared/components/card`:
+The implementation lives in `src/app/shared/ui-lib/components/card`:
 
 - `CardComponent` renders projected content inside the `ms-card` host
 - `card-types.ts` defines `CardAppearance` and `CardPadding`

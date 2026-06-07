@@ -8,12 +8,12 @@ Every feature showcase should pair visual examples with copyable code snippets s
 
 Use the shared snippet viewer:
 
-`src/app/shared/components/showcase-code`
+`src/app/shared/ui-lib/components/showcase-code`
 
 Import it in showcase feature components:
 
 ```ts
-import { ShowcaseCode } from '../../shared/components/showcase-code';
+import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 ```
 
 Use it in the component `imports` array.
@@ -33,6 +33,9 @@ For repeated examples, store snippets as an array and render them with `@for`.
 - Keep snippets hand-authored in the feature component `.ts` file.
 - Snippets should be full standalone Angular component examples.
 - Include all imports needed for the example.
+- In copy/paste snippet content, import reusable UI library APIs from `./shared/ui-lib`.
+- Include a `styles` array when the snippet introduces local CSS classes that are not public
+  utilities or shared component classes.
 - Rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`.
 - Do not add `standalone: true`.
 - Prefer signals, signal forms, and native Angular control flow where relevant.

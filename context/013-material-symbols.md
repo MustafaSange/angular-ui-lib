@@ -107,7 +107,7 @@ Update existing component showcase pages rather than adding a standalone icon pa
 - tabs overflow scroll controls render the `chevron_left` and `chevron_right` symbols
 - the search field demonstrates a passive `search` symbol prefix
 
-Showcase snippets should use `ShowcaseCode` from `src/app/shared/components/showcase-code`.
+Showcase snippets should use `ShowcaseCode` from `src/app/shared/ui-lib/components/showcase-code`.
 
 Keep snippets hand-authored in the feature component `.ts` file and make each snippet a full standalone Angular component example that users can copy/paste.
 

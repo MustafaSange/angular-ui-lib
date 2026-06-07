@@ -44,7 +44,27 @@ import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/ui-lib';
         <a href="/tables" msDrawerClose>Tables</a>
       </nav>
     </ms-drawer>
-  \`, })
+  \`,
+  styles: [\`
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-block-end: 1rem;
+    }
+
+    .drawer-content {
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .navigation-list a {
+      color: var(--color-text);
+      text-decoration: none;
+    }
+  \`],
+})
 export class NavigationDrawerExample {
   protected readonly drawerOpen = signal(false);
 }`;
@@ -76,7 +96,27 @@ import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/ui-lib';
         </nav>
       </ms-drawer>
     </div>
-  \`, })
+  \`,
+  styles: [\`
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-block-end: 1rem;
+    }
+
+    .drawer-content {
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .navigation-list a {
+      color: var(--color-text);
+      text-decoration: none;
+    }
+  \`],
+})
 export class RtlNavigationDrawerExample {
   protected readonly drawerOpen = signal(false);
 }`;
@@ -109,6 +149,25 @@ import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/ui-lib';
       </nav>
     </ms-drawer>
   \`,
+  styles: [\`
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-block-end: 1rem;
+    }
+
+    .drawer-content {
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .navigation-list a {
+      color: var(--color-text);
+      text-decoration: none;
+    }
+  \`],
 })
 export class EndDrawerExample {
   protected readonly open = signal(false);

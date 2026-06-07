@@ -81,8 +81,7 @@ export class DisabledSliderExample {}`;
   protected readonly signalFormFieldSnippet = `import { Component, signal } from '@angular/core';
 import { FormField, form, max, min, schema } from '@angular/forms/signals';
 
-import { SignalFormField, SignalFormHint } from './shared/ui-lib';
-import { SliderComponent } from '../../shared/ui-lib/components/slider';
+import { SignalFormField, SignalFormHint, SliderComponent } from './shared/ui-lib';
 
 type BudgetForm = {
   budget: number;

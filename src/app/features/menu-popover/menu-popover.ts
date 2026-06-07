@@ -120,13 +120,22 @@ import { MenuComponent, MenuItem, MenuPanelComponent, MenuTrigger, } from './sha
         </ms-menu-panel>
       </ms-menu>
     </div>
-  \`, })
+  \`,
+  styles: [\`
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+  \`],
+})
 export class OverflowMenuExample {}`;
 
   protected readonly popoverSnippet = `import { Component, signal } from '@angular/core';
 
 import { PopoverClose, PopoverComponent, PopoverPanelComponent, PopoverTrigger, } from './shared/ui-lib';
-import { SignalFormField } from '../../shared/ui-lib/components/signal-form-field';
+import { SignalFormField } from './shared/ui-lib';
 
 @Component({
   selector: 'app-filter-popover-example', imports: [
@@ -157,7 +166,16 @@ import { SignalFormField } from '../../shared/ui-lib/components/signal-form-fiel
         </form>
       </ms-popover-panel>
     </ms-popover>
-  \`, })
+  \`,
+  styles: [\`
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      margin-block-start: 1rem;
+    }
+  \`],
+})
 export class FilterPopoverExample {
   protected readonly filtersOpen = signal(false);
 }`;

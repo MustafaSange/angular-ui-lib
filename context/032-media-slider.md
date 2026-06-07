@@ -15,7 +15,7 @@ import {
   MediaSliderComponent,
   type MediaSliderScrollBehavior,
   type MediaSliderSnapAlign,
-} from '../../shared/ui-lib/components/media-slider';
+} from '../../shared/ui-lib';
 ```
 
 Public pieces:

@@ -35,7 +35,7 @@ import {
   BottomSheetService,
   BottomSheetSize,
   BottomSheetTrigger,
-} from '../../shared/components/bottom-sheet';
+} from '../../shared/ui-lib';
 ```
 
 Public pieces:
@@ -122,11 +122,7 @@ Declarative bottom sheet:
 
 ```ts
 import { Component, signal } from '@angular/core';
-import {
-  BottomSheetClose,
-  BottomSheetComponent,
-  BottomSheetTrigger,
-} from './shared/components/bottom-sheet';
+import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './shared/ui-lib';
 
 @Component({
   selector: 'app-bottom-sheet-example',
@@ -226,7 +222,7 @@ export class ShareSheetComponent {
 
 The implementation lives in:
 
-`src/app/shared/components/bottom-sheet`
+`src/app/shared/ui-lib/components/bottom-sheet`
 
 The feature includes:
 
@@ -365,7 +361,7 @@ The bottom sheet showcase should demonstrate:
 - service-opened sheet with typed data and typed close result
 - RTL layout
 
-Showcase snippets must use `ShowcaseCode` from `src/app/shared/components/showcase-code`.
+Showcase snippets must use `ShowcaseCode` from `src/app/shared/ui-lib/components/showcase-code`.
 
 Keep snippets hand-authored in the feature component `.ts` file and make each snippet a full
 standalone Angular component example that users can copy/paste.

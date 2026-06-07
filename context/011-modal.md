@@ -20,7 +20,7 @@ import {
   ModalOpenOptions,
   ModalRef,
   ModalService,
-} from '../../shared/components/modal';
+} from '../../shared/ui-lib';
 ```
 
 Public pieces:

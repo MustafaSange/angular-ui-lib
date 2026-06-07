@@ -11,7 +11,7 @@ label and leading content.
 Import chip primitives from the folder barrel:
 
 ```ts
-import { ChipComponent, ChipRemoveDirective } from '../../shared/components/chip';
+import { ChipComponent, ChipRemoveDirective } from '../../shared/ui-lib';
 ```
 
 Public pieces:
@@ -48,7 +48,7 @@ Shared reusable components use the `ms-` selector prefix. Internal styling hooks
 ```ts
 import { Component, signal } from '@angular/core';
 
-import { ChipComponent, ChipRemoveDirective } from './shared/components/chip';
+import { ChipComponent, ChipRemoveDirective } from './shared/ui-lib';
 
 @Component({
   selector: 'app-chip-example',
@@ -76,7 +76,7 @@ export class ChipExample {
 
 ## Component Structure
 
-The implementation lives in `src/app/shared/components/chip`:
+The implementation lives in `src/app/shared/ui-lib/components/chip`:
 
 - `ChipComponent` renders projected chip content, selected/disabled state, and optional removable
   behavior

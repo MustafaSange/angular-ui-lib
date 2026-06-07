@@ -22,7 +22,7 @@ import {
   PaginationComponent,
   PaginationMeta,
   PaginationState,
-} from '../../shared/components/pagination';
+} from '../../shared/ui-lib';
 ```
 
 Public pieces:
@@ -90,11 +90,7 @@ Shared reusable components use the `ms-` selector prefix. Internal styling hooks
 ```ts
 import { Component, computed, signal } from '@angular/core';
 
-import {
-  PaginationComponent,
-  PaginationState,
-  getPaginationMeta,
-} from './shared/components/pagination';
+import { PaginationComponent, PaginationState, getPaginationMeta } from './shared/ui-lib';
 
 @Component({
   selector: 'app-pagination-example',
@@ -117,7 +113,7 @@ export class PaginationExample {
 
 ## Component Structure
 
-The implementation lives in `src/app/shared/components/pagination`:
+The implementation lives in `src/app/shared/ui-lib/components/pagination`:
 
 - `PaginationComponent` calculates visible pages, ellipses, previous/next state, and summary text
 - `pagination-state.ts` defines `PaginationAlignment` and `PaginationState`

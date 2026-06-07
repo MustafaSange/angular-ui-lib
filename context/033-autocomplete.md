@@ -18,7 +18,7 @@ import {
   AutocompleteOptionComponent,
   AutocompleteOption,
   AutocompleteSearchSource,
-} from '../../shared/ui-lib/components/autocomplete';
+} from '../../shared/ui-lib';
 ```
 
 Public pieces:
@@ -78,7 +78,11 @@ Single selection with separate display and stored values:
 ```ts
 import { Component, signal } from '@angular/core';
 
-import { AutocompleteComponent, AutocompleteOptionComponent, SignalFormField } from './shared/ui-lib';
+import {
+  AutocompleteComponent,
+  AutocompleteOptionComponent,
+  SignalFormField,
+} from './shared/ui-lib';
 
 @Component({
   selector: 'app-role-picker-example',
@@ -86,12 +90,7 @@ import { AutocompleteComponent, AutocompleteOptionComponent, SignalFormField } f
   template: `
     <ms-signal-form-field>
       <label for="role">Role</label>
-      <ms-autocomplete
-        id="role"
-        name="role"
-        placeholder="Choose a role"
-        [(value)]="role"
-      >
+      <ms-autocomplete id="role" name="role" placeholder="Choose a role" [(value)]="role">
         <ms-autocomplete-option value="designer" label="Designer">
           <strong>Designer</strong>
           <span>Shapes visual and interaction systems</span>
@@ -155,7 +154,9 @@ export class CityPickerExample {
     new Promise((resolve) => {
       window.setTimeout(() => {
         const normalizedQuery = query.toLocaleLowerCase();
-        resolve(this.cities.filter((city) => city.label.toLocaleLowerCase().includes(normalizedQuery)));
+        resolve(
+          this.cities.filter((city) => city.label.toLocaleLowerCase().includes(normalizedQuery)),
+        );
       }, 700);
     });
 
@@ -187,11 +188,7 @@ type CountryForm = {
   template: `
     <ms-signal-form-field>
       <label for="country">Country</label>
-      <ms-autocomplete
-        id="country"
-        placeholder="Choose a country"
-        [formField]="countryField"
-      >
+      <ms-autocomplete id="country" placeholder="Choose a country" [formField]="countryField">
         <ms-autocomplete-option value="QA">Qatar</ms-autocomplete-option>
         <ms-autocomplete-option value="AE">United Arab Emirates</ms-autocomplete-option>
         <ms-autocomplete-option value="SA">Saudi Arabia</ms-autocomplete-option>

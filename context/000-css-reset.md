@@ -1,9 +1,11 @@
 # Feature 000: CSS Reset
 
 ## Goal
+
 Create a small foundational reset layer for the Angular UI library.
 
 ## Context
+
 This project uses:
 
 - Angular 21
@@ -15,6 +17,7 @@ This project uses:
 The reset should provide a stable baseline for future styling without taking ownership of richer element styling yet.
 
 ## Task
+
 Create a base styles folder:
 
 `src/styles/base/`
@@ -29,6 +32,7 @@ Import the base layer from the shared style entrypoint before tokens, utilities,
 ## Requirements
 
 ### Universal box model and spacing
+
 Apply a shared baseline to:
 
 ```scss
@@ -46,16 +50,19 @@ box-sizing: border-box;
 ```
 
 ### Document baseline
+
 - Add `-webkit-text-size-adjust: 100%` to `html`.
 - Set `body` background color, text color, font family, and line height from existing design tokens.
 
 ### Responsive media defaults
+
 For `img`, `picture`, `video`, `canvas`, and `svg`:
 
 - use `display: block`
 - use `max-inline-size: 100%`
 
 ### Form controls
+
 Make `input`, `button`, `textarea`, and `select` inherit the surrounding font with:
 
 ```scss
@@ -63,6 +70,7 @@ font: inherit;
 ```
 
 ### Links
+
 Style native links consistently:
 
 - use dedicated semantic link colors
@@ -71,6 +79,7 @@ Style native links consistently:
 - show a visible focus ring consistent with interactive controls
 
 ## Out of scope for this first version
+
 Do not reset or restyle:
 
 - button chrome
@@ -78,6 +87,7 @@ Do not reset or restyle:
 These can be expanded later when the design system has stronger opinions for them.
 
 ## `_index.scss`
+
 Forward the reset partial:
 
 ```scss
@@ -85,12 +95,14 @@ Forward the reset partial:
 ```
 
 ## Rules
+
 - Use existing design tokens where available.
 - Keep the reset intentionally small and easy to extend.
 - Do not modify unrelated styles.
 - Do not add or update tests for this styling change.
 
 ## Acceptance Criteria
+
 - The base layer is imported globally before the other style layers.
 - Sass compiles with the new reset files in place.
 - Elements have no default browser margin or padding.

@@ -20,10 +20,11 @@ application:
 import { BadgeComponent, ThemeService } from './shared/ui-lib';
 ```
 
-Feature folders also keep focused barrels for narrower imports:
+Feature folders also keep focused barrels for narrower implementation imports, but showcase
+copy/paste snippets should use the top-level barrel:
 
 ```ts
-import { ButtonToggleGroup, ButtonToggleDirective } from './shared/ui-lib/components/button-toggle';
+import { ButtonToggleGroup, ButtonToggleDirective } from './shared/ui-lib';
 ```
 
 The top-level UI library barrel exports the public shared component and service folders, including

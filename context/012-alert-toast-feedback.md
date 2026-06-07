@@ -18,7 +18,7 @@ import {
   ToastOutletComponent,
   ToastRef,
   ToastService,
-} from '../../shared/components/feedback';
+} from '../../shared/ui-lib';
 ```
 
 Public pieces:
@@ -244,7 +244,7 @@ Showcase snippets must use `ShowcaseCode`, be hand-authored in the feature compo
 
 ## Acceptance Criteria
 
-- Feedback public API is exported from `src/app/shared/components/feedback/index.ts`.
+- Feedback public API is exported from `src/app/shared/ui-lib/components/feedback/index.ts`.
 - Root app includes one `ms-toast-outlet`.
 - Alerts render variants, optional title, projected body, projected actions, optional icon, and optional dismiss button.
 - Dismissible alerts hide and emit `dismissed`.

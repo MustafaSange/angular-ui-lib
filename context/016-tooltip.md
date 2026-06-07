@@ -16,7 +16,7 @@ import {
   TooltipPanelComponent,
   TooltipPlacement,
   TooltipTrigger,
-} from '../../shared/components/tooltip';
+} from '../../shared/ui-lib';
 ```
 
 Public pieces:
@@ -50,11 +50,7 @@ Shared reusable components use the `ms-` selector prefix. The internal styling h
 ```ts
 import { Component } from '@angular/core';
 
-import {
-  TooltipComponent,
-  TooltipPanelComponent,
-  TooltipTrigger,
-} from './shared/components/tooltip';
+import { TooltipComponent, TooltipPanelComponent, TooltipTrigger } from './shared/ui-lib';
 
 @Component({
   selector: 'app-icon-tooltip-example',
@@ -74,7 +70,7 @@ export class IconTooltipExample {}
 
 ## Component Structure
 
-The implementation lives in `src/app/shared/components/tooltip`:
+The implementation lives in `src/app/shared/ui-lib/components/tooltip`:
 
 - `TooltipComponent` coordinates its projected trigger, panel, placement, delays, dismissal, and
   active-tooltip ownership
