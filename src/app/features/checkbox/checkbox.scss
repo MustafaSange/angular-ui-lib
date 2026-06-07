@@ -5,13 +5,13 @@
   color: var(--color-text-primary);
 }
 
-.form-fields-page {
+.component-page {
   max-inline-size: var(--container-page);
   margin-inline: auto;
   padding: var(--spacing-32) var(--spacing-16);
 }
 
-.form-fields-header {
+.component-header {
   margin-block-end: var(--spacing-32);
 }
 
@@ -38,50 +38,21 @@ h1 {
   line-height: var(--line-height-heading);
 }
 
-.description,
-.section-copy {
+h2 {
+  margin-block-end: var(--spacing-16);
+  font-size: var(--font-size-lg);
+}
+
+.description {
   margin-block-start: var(--spacing-8);
   color: var(--color-text-secondary);
 }
 
-.form-field-section {
+.component-section {
   padding: var(--spacing-20);
   border: var(--border-width-sm) solid var(--color-border);
   border-radius: var(--radius-lg);
   background-color: var(--color-surface);
-
-  & + & {
-    margin-block-start: var(--spacing-16);
-  }
-}
-
-h2 {
-  font-size: var(--font-size-lg);
-}
-
-.section-heading {
-  margin-block-end: var(--spacing-16);
-}
-
-.section-copy {
-  font-size: var(--font-size-sm);
-}
-
-.showcase-pair-stack {
-  display: grid;
-  gap: var(--spacing-16);
-}
-
-.showcase-pair {
-  display: grid;
-  gap: var(--spacing-12);
-  padding-block-start: var(--spacing-16);
-  border-block-start: var(--border-width-sm) solid var(--color-border);
-
-  &:first-child {
-    padding-block-start: 0;
-    border-block-start: 0;
-  }
 }
 
 .showcase-preview {
@@ -89,4 +60,14 @@ h2 {
   gap: var(--spacing-16);
   max-inline-size: 42rem;
   min-inline-size: 0;
+  padding: var(--spacing-16);
+  border: var(--border-width-sm) solid var(--color-border-muted);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-muted);
+}
+
+.showcase-preview + app-showcase-code,
+app-showcase-code + .showcase-preview {
+  display: block;
+  margin-block-start: var(--spacing-16);
 }

@@ -1,0 +1,135 @@
+<div class="select-control">
+  <div class="select-values" (click)="focusInput()">
+    @if (multiple()) {
+      @for (option of selectedOptions(); track optionId(option)) {
+        <span class="select-chip">
+          {{ option.label }}
+          @if (!isInteractiveDisabled()) {
+            <button
+              class="select-chip-remove"
+              type="button"
+              [attr.aria-label]="'Remove ' + option.label"
+              (click)="removeOption(option, $event)"
+            >
+              <span class="ms-icon" aria-hidden="true">close</span>
+            </button>
+          }
+        </span>
+      }
+    }
+
+    <input
+      #selectInput
+      type="text"
+      role="combobox"
+      autocomplete="off"
+      [id]="inputId()"
+      [placeholder]="inputPlaceholder()"
+      [disabled]="isDisabled()"
+      [readonly]="readonly() || !searchable()"
+      [required]="required()"
+      [attr.aria-autocomplete]="searchable() ? 'list' : null"
+      [attr.aria-controls]="panelId"
+      [attr.aria-expanded]="open()"
+      [attr.aria-activedescendant]="activeOptionDomId()"
+      [attr.aria-required]="required() || null"
+      [value]="inputText()"
+      (input)="handleInput($event)"
+      (focus)="handleFocus()"
+      (blur)="handleBlur()"
+      (keydown)="handleKeydown($event)"
+    />
+  </div>
+
+  @if (loading()) {
+    <span class="select-progress" aria-label="Loading options" role="status"></span>
+  }
+
+  @if (clearable() && hasSelection() && !isInteractiveDisabled()) {
+    <button
+      class="select-clear"
+      type="button"
+      aria-label="Clear selection"
+      (click)="clearSelection()"
+    >
+      <span class="ms-icon" aria-hidden="true">close</span>
+    </button>
+  }
+
+  <button
+    class="select-toggle"
+    type="button"
+    aria-label="Show options"
+    [disabled]="isDisabled() || readonly()"
+    [attr.aria-expanded]="open()"
+    [attr.aria-controls]="panelId"
+    (click)="togglePanel()"
+  >
+    <span class="ms-icon" aria-hidden="true">expand_more</span>
+  </button>
+</div>
+
+<div
+  #selectPanel
+  class="select-panel"
+  popover="auto"
+  role="listbox"
+  [id]="panelId"
+  [attr.aria-multiselectable]="multiple() || null"
+  (toggle)="handlePanelToggle($event)"
+>
+  @if (loading()) {
+    <div class="select-status" role="status">Loading options</div>
+  } @else if (error()) {
+    <div class="select-status" role="status">{{ error() }}</div>
+  } @else if (visibleOptions().length === 0) {
+    <div class="select-status">No options found</div>
+  } @else {
+    @for (option of visibleOptions(); track optionId(option); let index = $index) {
+      @if (shouldRenderGroup(index)) {
+        <div class="select-group">{{ option.group }}</div>
+      }
+      <div
+        class="select-option"
+        role="option"
+        [id]="optionDomId(index)"
+        [class.is-active]="activeIndex() === index"
+        [class.is-selected]="isSelected(option)"
+        [class.is-disabled]="option.disabled"
+        [attr.aria-selected]="isSelected(option)"
+        [attr.aria-disabled]="option.disabled || null"
+        (mousedown)="handleOptionPointerDown($event)"
+        (click)="selectOption(option)"
+      >
+        @if (option.template) {
+          <span class="select-option-content">
+            <ng-container [ngTemplateOutlet]="option.template" />
+          </span>
+        } @else {
+          @if (option.icon) {
+            <span class="ms-icon" aria-hidden="true">{{ option.icon }}</span>
+          }
+          <span class="select-option-text">
+            <span class="select-option-label">{{ option.label }}</span>
+            @if (option.description) {
+              <span class="select-option-description">{{ option.description }}</span>
+            }
+          </span>
+        }
+        @if (isSelected(option)) {
+          <span class="ms-icon select-selected-icon" aria-hidden="true">check</span>
+        }
+      </div>
+    }
+  }
+</div>
+
+@if (name()) {
+  @for (submittedValue of submittedValues(); track submittedValue) {
+    <input type="hidden" [name]="name()" [value]="submittedValue" />
+  }
+}
+
+<div class="select-option-source" aria-hidden="true">
+  <ng-content select="ms-select-option" />
+</div>

@@ -1,14 +1,15 @@
 import { Component, signal } from '@angular/core';
 import { FormField, form, required, schema } from '@angular/forms/signals';
+import { RouterLink } from '@angular/router';
 
 import {
   AutocompleteComponent,
   AutocompleteOptionComponent,
   AutocompleteOption,
   AutocompleteSearchSource,
-} from '../../../../shared/ui-lib/components/autocomplete';
-import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
-import { SignalFormField } from '../../../../shared/ui-lib/components/signal-form-field';
+} from '../../shared/ui-lib/components/autocomplete';
+import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
+import { SignalFormField } from '../../shared/ui-lib/components/signal-form-field';
 
 interface City {
   readonly id: string;
@@ -17,19 +18,19 @@ interface City {
 }
 
 @Component({
-  selector: 'app-autocomplete-field-showcase',
+  selector: 'app-autocomplete',
   imports: [
+    RouterLink,
     AutocompleteComponent,
     AutocompleteOptionComponent,
     FormField,
     SignalFormField,
     ShowcaseCode,
   ],
-  templateUrl: './autocomplete-field.html',
-  styleUrl: './autocomplete-field.scss',
-  host: { class: 'showcase-pair' },
+  templateUrl: './autocomplete.html',
+  styleUrl: './autocomplete.scss',
 })
-export class AutocompleteFieldShowcase {
+export class Autocomplete {
   private readonly signalFormModel = signal<AutocompleteForm>({
     country: null,
   });

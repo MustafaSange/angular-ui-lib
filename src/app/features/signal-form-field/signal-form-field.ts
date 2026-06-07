@@ -1,12 +1,13 @@
 import { Component, signal } from '@angular/core';
 import { FormField, form, required, schema } from '@angular/forms/signals';
+import { RouterLink } from '@angular/router';
 
-import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
+import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 import {
   SignalFormError,
   SignalFormField,
   SignalFormHint,
-} from '../../../../shared/ui-lib/components/signal-form-field';
+} from '../../shared/ui-lib/components/signal-form-field';
 
 type SignalFormExample = {
   email: string;
@@ -14,13 +15,12 @@ type SignalFormExample = {
 };
 
 @Component({
-  selector: 'app-signal-form-field-showcase',
-  imports: [FormField, SignalFormField, SignalFormHint, SignalFormError, ShowcaseCode],
-  templateUrl: './signal-form-field-showcase.html',
-  styleUrl: './signal-form-field-showcase.scss',
-  host: { class: 'showcase-pair' },
+  selector: 'app-signal-form-field',
+  imports: [RouterLink, FormField, SignalFormField, SignalFormHint, SignalFormError, ShowcaseCode],
+  templateUrl: './signal-form-field.html',
+  styleUrl: './signal-form-field.scss',
 })
-export class SignalFormFieldShowcase {
+export class SignalFormFieldPage {
   private readonly signalFormModel = signal<SignalFormExample>({
     email: 'ada@example.com',
     requiredEmail: '',

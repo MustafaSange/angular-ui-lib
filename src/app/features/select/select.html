@@ -1,0 +1,173 @@
+<main class="select-page">
+  <header class="select-header">
+    <a class="btn btn-ghost back-link" routerLink="/">← Back to home</a>
+    <p class="eyebrow">Components</p>
+    <h1>Select</h1>
+    <p class="description">
+      Searchable selection controls with separate display labels, stored values, and signal form
+      binding.
+    </p>
+  </header>
+
+  <section class="select-section">
+    <h2>Searchable select</h2>
+    <p class="section-copy">Search is enabled by default for lists that benefit from quick filtering.</p>
+    <div class="select-demo">
+      <ms-signal-form-field>
+        <label for="select-role">Role</label>
+        <ms-select id="select-role" name="role" placeholder="Choose a role" [(value)]="role">
+          @for (option of roleOptions; track option.value) {
+            <ms-select-option
+              [value]="option.value"
+              [label]="option.label"
+              [description]="option.description ?? null"
+              [disabled]="option.disabled ?? false"
+            >
+              @if (option.description) {
+                <strong>{{ option.label }}</strong>
+                <span>{{ option.description }}</span>
+              } @else {
+                {{ option.label }}
+              }
+            </ms-select-option>
+          }
+        </ms-select>
+      </ms-signal-form-field>
+    </div>
+    <app-showcase-code label="Searchable select" [code]="basicSnippet" />
+  </section>
+
+  <section class="select-section">
+    <h2>Non-searchable select</h2>
+    <p class="section-copy">Turn search off for short fixed lists that should feel closer to a closed picker.</p>
+    <div class="select-demo">
+      <ms-signal-form-field>
+        <label for="select-status">Status</label>
+        <ms-select
+          id="select-status"
+          name="status"
+          placeholder="Choose status"
+          [searchable]="false"
+          [(value)]="status"
+        >
+          @for (option of statusOptions; track option.value) {
+            <ms-select-option [value]="option.value" [label]="option.label">
+              {{ option.label }}
+            </ms-select-option>
+          }
+        </ms-select>
+      </ms-signal-form-field>
+    </div>
+    <app-showcase-code label="Non-searchable select" [code]="nativeLikeSnippet" />
+  </section>
+
+  <section class="select-section">
+    <h2>Multiple values</h2>
+    <p class="section-copy">Multiple mode keeps the panel open and renders selected values as chips.</p>
+    <div class="select-demo">
+      <ms-signal-form-field>
+        <label for="select-cities">Cities</label>
+        <ms-select
+          id="select-cities"
+          name="cities"
+          placeholder="Choose cities"
+          multiple
+          [(value)]="selectedCities"
+        >
+          @for (option of cityOptions; track option.value) {
+            <ms-select-option
+              [value]="option.value"
+              [label]="option.label"
+              [group]="option.group ?? null"
+            >
+              {{ option.label }}
+            </ms-select-option>
+          }
+        </ms-select>
+      </ms-signal-form-field>
+    </div>
+    <app-showcase-code label="Multiple select" [code]="multipleSnippet" />
+  </section>
+
+  <section class="select-section">
+    <h2>Async source</h2>
+    <p class="section-copy">Use a debounced source for remote option lookup with loading feedback.</p>
+    <div class="select-demo">
+      <ms-signal-form-field>
+        <label for="select-remote-city">Remote city</label>
+        <ms-select
+          id="select-remote-city"
+          name="remoteCity"
+          placeholder="Search cities"
+          [source]="asyncCitySource"
+          [debounceMs]="300"
+          [minQueryLength]="1"
+          [compareWith]="compareCities"
+          [displayWith]="displayCity"
+          [valueSerializer]="serializeCity"
+        />
+      </ms-signal-form-field>
+    </div>
+    <app-showcase-code label="Async searchable select" [code]="asyncSnippet" />
+  </section>
+
+  <section class="select-section">
+    <h2>Forms and states</h2>
+    <p class="section-copy">The control integrates with signal forms and keeps disabled, readonly, and RTL states visible.</p>
+    <div class="select-demo state-demo">
+      <ms-signal-form-field>
+        <label for="select-country">Country</label>
+        <ms-select id="select-country" placeholder="Choose a country" [formField]="countryField">
+          @for (option of countryOptions; track option.value) {
+            <ms-select-option [value]="option.value" [label]="option.label">
+              {{ option.label }}
+            </ms-select-option>
+          }
+        </ms-select>
+      </ms-signal-form-field>
+
+      <ms-signal-form-field>
+        <label for="select-readonly">Readonly value</label>
+        <ms-select id="select-readonly" placeholder="Readonly" readonly [value]="'developer'">
+          @for (option of roleOptions; track option.value) {
+            <ms-select-option [value]="option.value" [label]="option.label">
+              {{ option.label }}
+            </ms-select-option>
+          }
+        </ms-select>
+      </ms-signal-form-field>
+
+      <ms-signal-form-field>
+        <label for="select-disabled">Disabled value</label>
+        <ms-select
+          id="select-disabled"
+          placeholder="Disabled"
+          disabled
+          [(value)]="disabledValue"
+        >
+          @for (option of roleOptions; track option.value) {
+            <ms-select-option [value]="option.value" [label]="option.label">
+              {{ option.label }}
+            </ms-select-option>
+          }
+        </ms-select>
+      </ms-signal-form-field>
+
+      <ms-signal-form-field dir="rtl">
+        <label for="select-rtl">RTL select</label>
+        <ms-select id="select-rtl" placeholder="اختر مدينة">
+          @for (option of cityOptions; track option.value) {
+            <ms-select-option
+              [value]="option.value"
+              [label]="option.label"
+              [group]="option.group ?? null"
+            >
+              {{ option.label }}
+            </ms-select-option>
+          }
+        </ms-select>
+      </ms-signal-form-field>
+    </div>
+    <app-showcase-code label="Signal forms, readonly, disabled, and RTL" [code]="formsSnippet" />
+  </section>
+</main>

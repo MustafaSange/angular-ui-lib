@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import {
   ChoiceError,
   ChoiceHint,
   RadioControl,
   RadioGroup,
-} from '../../../../shared/ui-lib/components/choice-controls';
-import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
+} from '../../shared/ui-lib/components/choice-controls';
+import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 
 @Component({
-  selector: 'app-radio-group-showcase',
-  imports: [RadioGroup, RadioControl, ChoiceHint, ChoiceError, ShowcaseCode],
-  templateUrl: './radio-group-showcase.html',
-  styleUrl: './radio-group-showcase.scss',
-  host: { class: 'showcase-pair' },
+  selector: 'app-radio',
+  imports: [RouterLink, RadioGroup, RadioControl, ChoiceHint, ChoiceError, ShowcaseCode],
+  templateUrl: './radio.html',
+  styleUrl: './radio.scss',
 })
-export class RadioGroupShowcase {
+export class Radio {
   protected readonly snippet = `import { Component } from '@angular/core';
 
 import {

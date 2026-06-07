@@ -10,6 +10,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/accordion/accordion').then((m) => m.Accordion),
   },
   {
+    path: 'autocomplete',
+    loadComponent: () => import('./features/autocomplete/autocomplete').then((m) => m.Autocomplete),
+  },
+  {
     path: 'feedback',
     loadComponent: () => import('./features/feedback/feedback').then((m) => m.Feedback),
   },
@@ -41,6 +45,10 @@ export const routes: Routes = [
   {
     path: 'chip',
     loadComponent: () => import('./features/chip/chip').then((m) => m.Chip),
+  },
+  {
+    path: 'checkbox',
+    loadComponent: () => import('./features/checkbox/checkbox').then((m) => m.Checkbox),
   },
   {
     path: 'clipboard',
@@ -76,8 +84,21 @@ export const routes: Routes = [
     loadComponent: () => import('./features/pagination/pagination').then((m) => m.Pagination),
   },
   {
+    path: 'radio',
+    loadComponent: () => import('./features/radio/radio').then((m) => m.Radio),
+  },
+  {
     path: 'side-nav',
     loadComponent: () => import('./features/side-nav/side-nav').then((m) => m.SideNav),
+  },
+  {
+    path: 'signal-form-field',
+    loadComponent: () =>
+      import('./features/signal-form-field/signal-form-field').then((m) => m.SignalFormFieldPage),
+  },
+  {
+    path: 'select',
+    loadComponent: () => import('./features/select/select').then((m) => m.Select),
   },
   {
     path: 'slider',
@@ -86,6 +107,10 @@ export const routes: Routes = [
   {
     path: 'stepper',
     loadComponent: () => import('./features/stepper/stepper').then((m) => m.Stepper),
+  },
+  {
+    path: 'switch',
+    loadComponent: () => import('./features/switch/switch').then((m) => m.Switch),
   },
   {
     path: 'tables',
