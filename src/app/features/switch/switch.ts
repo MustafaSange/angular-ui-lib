@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import {
   ChoiceError,
   ChoiceHint,
   SwitchControl,
   SwitchGroup,
-} from '../../../../shared/ui-lib/components/choice-controls';
-import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
+} from '../../shared/ui-lib/components/choice-controls';
+import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 
 @Component({
-  selector: 'app-switch-controls-showcase',
-  imports: [SwitchGroup, SwitchControl, ChoiceHint, ChoiceError, ShowcaseCode],
-  templateUrl: './switch-controls-showcase.html',
-  styleUrl: './switch-controls-showcase.scss',
-  host: { class: 'showcase-pair' },
+  selector: 'app-switch',
+  imports: [RouterLink, SwitchGroup, SwitchControl, ChoiceHint, ChoiceError, ShowcaseCode],
+  templateUrl: './switch.html',
+  styleUrl: './switch.scss',
 })
-export class SwitchControlsShowcase {
+export class Switch {
   protected readonly snippet = `import { Component } from '@angular/core';
 
 import {

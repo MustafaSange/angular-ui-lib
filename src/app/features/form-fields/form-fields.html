@@ -9,31 +9,50 @@
   </header>
 
   <section class="form-field-section">
-    <h2>Examples</h2>
+    <div class="section-heading">
+      <h2>Core fields</h2>
+      <p class="section-copy">Base field shells and native text controls.</p>
+    </div>
     <div class="showcase-pair-stack">
       <app-basic-text-field-showcase />
-      <app-autocomplete-field-showcase />
-      <app-signal-form-field-showcase />
-      <app-required-email-field-showcase />
-      <app-select-field-showcase />
-      <app-field-with-hint-showcase />
       <app-textarea-field-showcase />
+      <app-search-field-showcase />
+    </div>
+  </section>
+
+  <section class="form-field-section">
+    <div class="section-heading">
+      <h2>Validation and help text</h2>
+      <p class="section-copy">Required fields, hints, and validation message placement.</p>
+    </div>
+    <div class="showcase-pair-stack">
+      <app-required-email-field-showcase />
+      <app-field-with-hint-showcase />
+    </div>
+  </section>
+
+  <section class="form-field-section">
+    <div class="section-heading">
+      <h2>Adornments and actions</h2>
+      <p class="section-copy">Prefix, suffix, and inline action patterns inside the control row.</p>
+    </div>
+    <div class="showcase-pair-stack">
       <app-prefix-field-showcase />
       <app-suffix-field-showcase />
-      <app-search-field-showcase />
       <app-field-actions-showcase />
       <app-segmented-suffix-action-showcase />
+    </div>
+  </section>
+
+  <section class="form-field-section">
+    <div class="section-heading">
+      <h2>States</h2>
+      <p class="section-copy">Disabled and readonly examples for the shared field treatment.</p>
+    </div>
+    <div class="showcase-pair-stack">
       <app-disabled-field-showcase />
       <app-readonly-field-showcase />
     </div>
   </section>
 
-  <section class="form-field-section">
-    <h2>Selection controls</h2>
-    <div class="showcase-pair-stack">
-      <app-checkbox-group-showcase />
-      <app-radio-group-showcase />
-      <app-switch-controls-showcase />
-    </div>
-  </section>
 </main>

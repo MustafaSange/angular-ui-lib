@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import {
   CheckboxControl,
   CheckboxGroup,
   ChoiceError,
   ChoiceHint,
-} from '../../../../shared/ui-lib/components/choice-controls';
-import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
+} from '../../shared/ui-lib/components/choice-controls';
+import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 
 @Component({
-  selector: 'app-checkbox-group-showcase',
-  imports: [CheckboxGroup, CheckboxControl, ChoiceHint, ChoiceError, ShowcaseCode],
-  templateUrl: './checkbox-group-showcase.html',
-  styleUrl: './checkbox-group-showcase.scss',
-  host: { class: 'showcase-pair' },
+  selector: 'app-checkbox',
+  imports: [RouterLink, CheckboxGroup, CheckboxControl, ChoiceHint, ChoiceError, ShowcaseCode],
+  templateUrl: './checkbox.html',
+  styleUrl: './checkbox.scss',
 })
-export class CheckboxGroupShowcase {
+export class Checkbox {
   protected readonly snippet = `import { Component } from '@angular/core';
 
 import {
