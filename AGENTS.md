@@ -32,6 +32,9 @@ Use modern Angular patterns:
   `ShowcaseCode` from `src/app/shared/ui-lib/components/showcase-code`.
   - Keep snippets hand-authored in the feature component `.ts` file.
   - Snippets should be full standalone Angular component examples that users can copy/paste.
+  - Keep the rendered showcase behavior and the copyable snippet behavior in sync. If a snippet uses a signal form model, `[formField]`, computed display state, validators, toggles, or other interaction state, the live showcase component/template should use the same behavior instead of static placeholder markup.
+  - For Angular signal forms, bind controls with `[formField]` and define validation through `schema(...)` helpers such as `required`, `email`, `minLength`, `maxLength`, `min`, `pattern`, and related APIs. Do not place native validation attributes such as `required`, `minlength`, or `pattern` on the same control as `[formField]`.
+  - When displaying live form-derived UI such as character counts, read from the signal form field/control state so the visible example updates while the user types.
   - Render snippets near the matching visual example with `<app-showcase-code>`.
   - On the form-fields showcase, render each form-field variant, including autocomplete variants, with its snippet directly below the visual example.
 - Do not add/update tests for behavior changes.

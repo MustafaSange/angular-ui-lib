@@ -3,7 +3,12 @@ import { FormField, form, required, schema } from '@angular/forms/signals';
 
 import { RouterLink } from '@angular/router';
 
-import { SelectComponent, SelectOption, SelectOptionComponent, SelectSearchSource } from '../../shared/ui-lib/components/select';
+import {
+  SelectComponent,
+  SelectOption,
+  SelectOptionComponent,
+  SelectSearchSource,
+} from '../../shared/ui-lib/components/select';
 import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 import { SignalFormField } from '../../shared/ui-lib/components/signal-form-field';
 
@@ -260,12 +265,46 @@ type CountryForm = {
         <ms-select-option value="SA">Saudi Arabia</ms-select-option>
       </ms-select>
     </ms-signal-form-field>
+
+    <ms-signal-form-field>
+      <label for="readonly-role">Readonly value</label>
+      <ms-select id="readonly-role" placeholder="Readonly" readonly [value]="'developer'">
+        <ms-select-option value="designer">Designer</ms-select-option>
+        <ms-select-option value="developer">Developer</ms-select-option>
+        <ms-select-option value="pm">Product manager</ms-select-option>
+      </ms-select>
+    </ms-signal-form-field>
+
+    <ms-signal-form-field>
+      <label for="disabled-role">Disabled value</label>
+      <ms-select
+        id="disabled-role"
+        placeholder="Disabled"
+        disabled
+        [(value)]="disabledValue"
+      >
+        <ms-select-option value="designer">Designer</ms-select-option>
+        <ms-select-option value="developer">Developer</ms-select-option>
+        <ms-select-option value="pm">Product manager</ms-select-option>
+      </ms-select>
+    </ms-signal-form-field>
+
+    <ms-signal-form-field dir="rtl">
+      <label for="rtl-city">RTL select</label>
+      <ms-select id="rtl-city" placeholder="اختر مدينة">
+        <ms-select-option value="doha" group="Middle East">Doha</ms-select-option>
+        <ms-select-option value="dubai" group="Middle East">Dubai</ms-select-option>
+        <ms-select-option value="london" group="Europe">London</ms-select-option>
+      </ms-select>
+    </ms-signal-form-field>
   \`,
 })
 export class SelectFormExample {
   private readonly model = signal<CountryForm>({
     country: null,
   });
+
+  protected readonly disabledValue = signal<string | null>('developer');
 
   protected readonly form = form(
     this.model,

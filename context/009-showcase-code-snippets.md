@@ -34,11 +34,21 @@ For repeated examples, store snippets as an array and render them with `@for`.
 - Snippets should be full standalone Angular component examples.
 - Include all imports needed for the example.
 - In copy/paste snippet content, import reusable UI library APIs from `./shared/ui-lib`.
+- Keep the rendered visual example and copyable snippet behavior in sync. When the snippet uses
+  signals, computed values, signal forms, validators, or interaction state, the live showcase should
+  use the same behavior instead of static placeholder markup.
 - Include a `styles` array when the snippet introduces local CSS classes that are not public
   utilities or shared component classes.
 - Rely on Angular 22 default OnPush change detection; do not add explicit `changeDetection` metadata unless overriding to `ChangeDetectionStrategy.Eager`.
 - Do not add `standalone: true`.
 - Prefer signals, signal forms, and native Angular control flow where relevant.
+- For Angular signal-form snippets, include the signal model, `form(...)`, `schema(...)`, imported
+  `FormField`, and `[formField]` bindings when those APIs are part of the demo behavior.
+- Define signal-form validation through `schema(...)` validators such as `required`, `email`,
+  `minLength`, `maxLength`, `min`, and `pattern`. Do not use native validation attributes such as
+  `required`, `minlength`, or `pattern` on controls that also use `[formField]`.
+- Derive live UI such as character counts, selected labels, and error messages from the same state
+  used by the live example.
 - Keep snippets focused on the component or utility being showcased.
 - Place each snippet near the matching visual example.
 - For form-field variants, place the snippet directly below the matching visual field rather than beside it.
@@ -55,5 +65,5 @@ For repeated examples, store snippets as an array and render them with `@for`.
 
 - New showcase pages include at least one copyable full-component snippet per major example or section.
 - The snippet can be copied with the built-in copy button.
-- Snippet content matches the visual example closely enough to be pasted and adapted.
+- Snippet content matches the visual example behavior closely enough to be pasted and adapted.
 - Showcase pages keep their existing visual examples and add snippets without replacing the live demo.

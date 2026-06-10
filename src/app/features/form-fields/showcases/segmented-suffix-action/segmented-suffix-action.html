@@ -1,9 +1,10 @@
 <div class="showcase-preview">
-      <ms-signal-form-field>
-        <label for="domain">Domain</label>
-        <input id="domain" type="text" placeholder="analytical-engines" />
-        <button class="form-field-suffix form-field-action is-segmented" type="button">.com</button>
-      </ms-signal-form-field>
-    </div>
-    <app-showcase-code label="Segmented suffix action" [code]="snippet" />
-  
+  <ms-signal-form-field>
+    <label for="domain">Domain</label>
+    <input id="domain" type="text" placeholder="analytical-engines" [formField]="domainField" />
+    <button class="form-field-suffix form-field-action is-segmented" type="button">
+      {{ suffix() }}
+    </button>
+  </ms-signal-form-field>
+</div>
+<app-showcase-code label="Segmented suffix action" [code]="snippet" />

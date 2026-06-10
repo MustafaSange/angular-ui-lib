@@ -78,6 +78,25 @@ Examples must:
 - avoid private selectors
 - avoid internal implementation details
 - avoid hypothetical inputs/outputs
+- match the behavior of the rendered showcase when the example is paired with a live demo
+
+For Angular signal-form examples:
+
+- include the signal model, `form(...)`, `schema(...)`, imported `FormField`, and bound `[formField]` controls when those APIs are required by the demo behavior
+- define validation in `schema(...)` with signal-form validators such as `required`, `email`, `minLength`, `maxLength`, `min`, and `pattern`
+- do not place native validation attributes such as `required`, `minlength`, or `pattern` on controls that also use `[formField]`
+- derive live UI such as character counts or validation messages from signal form state so the rendered showcase updates while users interact
+
+---
+
+## Showcase rules
+
+Showcases must:
+
+- keep the visible demo and copyable snippet behavior in sync
+- render snippets near the visual example with the project `ShowcaseCode` component when used in `src/app/features`
+- avoid static placeholder markup when the snippet demonstrates state, validation, computed values, or interactive behavior
+- use public UI library imports in copyable snippets through the project barrel, such as `./shared/ui-lib`
 
 ---
 
@@ -183,6 +202,7 @@ Before finishing verify:
 - RTL works
 - accessibility requirements are met
 - showcase matches public API
+- showcase snippets match the visible demo behavior
 
 If implementation conflicts with requirements:
 document actual behavior and explicitly note mismatch.

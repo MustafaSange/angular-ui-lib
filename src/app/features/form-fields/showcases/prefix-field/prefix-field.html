@@ -1,9 +1,8 @@
 <div class="showcase-preview">
-      <ms-signal-form-field>
-        <label for="price">Price</label>
-        <span class="form-field-prefix" aria-hidden="true">$</span>
-        <input id="price" type="text" placeholder="0.00" />
-      </ms-signal-form-field>
-    </div>
-    <app-showcase-code label="Prefix field" [code]="snippet" />
-  
+  <ms-signal-form-field>
+    <label for="price">Price</label>
+    <span class="form-field-prefix" aria-hidden="true">$</span>
+    <input id="price" type="number" placeholder="0.00" [formField]="priceField" />
+  </ms-signal-form-field>
+</div>
+<app-showcase-code label="Prefix field" [code]="snippet" />

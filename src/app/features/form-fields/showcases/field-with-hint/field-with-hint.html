@@ -1,12 +1,11 @@
 <div class="showcase-preview">
-      <ms-signal-form-field>
-        <label for="username">Username</label>
-        <input id="username" type="text" aria-describedby="username-hint" />
-        <ms-hint id="username-hint">
-          Use letters, numbers, or underscores.
-          <span slot="hint-extra">3 min</span>
-        </ms-hint>
-      </ms-signal-form-field>
-    </div>
-    <app-showcase-code label="Field with hint" [code]="snippet" />
-  
+  <ms-signal-form-field>
+    <label for="username">Username</label>
+    <input id="username" type="text" [formField]="usernameField" aria-describedby="username-hint" />
+    <ms-hint id="username-hint">
+      Use letters, numbers, or underscores.
+      <span slot="hint-extra">3 min</span>
+    </ms-hint>
+  </ms-signal-form-field>
+</div>
+<app-showcase-code label="Field with hint" [code]="snippet" />

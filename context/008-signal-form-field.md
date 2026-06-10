@@ -26,7 +26,7 @@ Shared reusable components use the `ms-` selector prefix. Do not use `app-` for 
 
 ## Desired Usage
 
-Use Angular 21 signal forms with `[formField]`.
+Use Angular 22 signal forms with `[formField]`.
 
 ```html
 <ms-signal-form-field>
@@ -47,6 +47,22 @@ Use Angular 21 signal forms with `[formField]`.
 ```
 
 Do not use `[field]`; this project uses the Angular signal forms `[formField]` directive.
+
+For validation, define rules in the signal-form `schema(...)` instead of native validation attributes
+on the bound control.
+
+```ts
+protected readonly form = form(
+  this.model,
+  schema<EmailForm>((path) => {
+    required(path.email, { message: 'Email is required.' });
+    email(path.email, { message: 'Enter a valid email address.' });
+  }),
+);
+```
+
+Do not combine `[formField]` with native validation attributes such as `required`, `minlength`, or
+`pattern` on the same input, textarea, or select.
 
 ## Component Structure
 
@@ -115,6 +131,17 @@ Each form-field variant should render as a small vertical showcase item:
 
 Keep snippets hand-authored in `form-fields.ts` and make each snippet a full standalone Angular component example. Include separate snippets for individual variants such as text input, signal form field, required email, select, hint, textarea, prefix, suffix, search, actions, segmented suffix action, disabled, and readonly fields.
 
+The rendered showcase and its copyable snippet must stay behaviorally aligned:
+
+- If the snippet uses `signal`, `computed`, `form(...)`, `schema(...)`, or `[formField]`, the live
+  showcase component/template should use the same behavior rather than static markup.
+- If the snippet demonstrates validation, the live example should project `ms-error` and derive the
+  displayed message from signal form errors.
+- If the snippet demonstrates live derived UI, such as a textarea character count, the live example
+  should derive it from the signal form field/control state so it updates while typing.
+- If the snippet demonstrates interaction state, such as a password visibility toggle, the live
+  showcase should expose the same interaction.
+
 Selection controls in the same showcase should use the projected choice-control components documented in:
 
 `context/010-choice-controls.md`
@@ -144,3 +171,5 @@ Selection-control examples can stay grouped by control type, with each group fol
 - Existing `.form-field` examples and styling remain supported.
 - Projected inline-start and inline-end content mirrors correctly in `dir="rtl"`.
 - The showcase uses the signal form field component and renders each form-field variant with its snippet directly below the visual example.
+- The showcase snippets and rendered examples match behavior, including validation, derived labels,
+  and interactive actions.
