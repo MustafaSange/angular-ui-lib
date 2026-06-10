@@ -124,4 +124,8 @@ export const routes: Routes = [
     path: 'tooltip',
     loadComponent: () => import('./features/tooltip/tooltip').then((m) => m.Tooltip),
   },
+  {
+    path: 'utilities',
+    loadComponent: () => import('./features/utilities/utilities').then((m) => m.Utilities),
+  },
 ];

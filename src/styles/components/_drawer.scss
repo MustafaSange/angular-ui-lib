@@ -26,7 +26,7 @@ body.ms-drawer-open {
   inset-block: 0;
   display: flex;
   flex-direction: column;
-  inline-size: min(20rem, 85vw);
+  inline-size: var(--drawer-inline-size, min(20rem, 85vw));
   max-inline-size: 100%;
   overflow: auto;
   border: 0 solid var(--color-border);
