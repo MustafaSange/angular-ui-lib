@@ -1,5 +1,13 @@
-import { Component, signal } from '@angular/core';
-import { FormField, form, required, schema } from '@angular/forms/signals';
+import { Component, computed, signal } from '@angular/core';
+import {
+  FormField,
+  email,
+  form,
+  minLength,
+  pattern,
+  required,
+  schema,
+} from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
 
 import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
@@ -11,7 +19,7 @@ import {
 
 type SignalFormExample = {
   email: string;
-  requiredEmail: string;
+  username: string;
 };
 
 @Component({
@@ -22,23 +30,32 @@ type SignalFormExample = {
 })
 export class SignalFormFieldPage {
   private readonly signalFormModel = signal<SignalFormExample>({
-    email: 'ada@example.com',
-    requiredEmail: '',
+    email: '',
+    username: '',
   });
 
   protected readonly signalForm = form(
     this.signalFormModel,
     schema<SignalFormExample>((path) => {
       required(path.email, { message: 'Email is required.' });
-      required(path.requiredEmail, { message: 'This field is required.' });
+      email(path.email, { message: 'Enter a valid email address.' });
+      required(path.username, { message: 'Username is required.' });
+      minLength(path.username, 3, { message: 'Use at least 3 characters.' });
+      pattern(path.username, /^[a-z0-9_]+$/i, {
+        message: 'Use only letters, numbers, or underscores.',
+      });
     }),
   );
 
   protected readonly emailField = this.signalForm.email;
-  protected readonly requiredEmailField = this.signalForm.requiredEmail;
+  protected readonly usernameField = this.signalForm.username;
+  protected readonly emailError = computed(() => this.emailField().errors()[0]?.message ?? '');
+  protected readonly usernameError = computed(
+    () => this.usernameField().errors()[0]?.message ?? '',
+  );
 
-  protected readonly snippet = `import { Component, signal } from '@angular/core';
-import { FormField, form, required, schema } from '@angular/forms/signals';
+  protected readonly snippet = `import { Component, computed, signal } from '@angular/core';
+import { FormField, email, form, minLength, pattern, required, schema } from '@angular/forms/signals';
 
 import {
   SignalFormError,
@@ -48,39 +65,65 @@ import {
 
 type EmailForm = {
   email: string;
+  username: string;
 };
 
 @Component({
-  selector: 'app-signal-form-field-example',
+  selector: 'app-profile-form-fields-example',
   imports: [FormField, SignalFormField, SignalFormHint, SignalFormError],
   template: \`
     <ms-signal-form-field>
-      <label for="email">Email address</label>
-      <input id="email" type="email" [formField]="emailField" />
+      <label for="email">Email address *</label>
+      <input
+        id="email"
+        type="email"
+        placeholder="ada@example.com"
+        [formField]="emailField"
+      />
 
       <ms-hint>
-        Enter your email.
+        Blur this field while it is empty to show the required error.
         <span slot="hint-extra">Required</span>
       </ms-hint>
-      <ms-error>
-        This field is required.
-        <span slot="error-extra">Required</span>
-      </ms-error>
+      <ms-error>{{ emailError() }}</ms-error>
+    </ms-signal-form-field>
+
+    <ms-signal-form-field>
+      <label for="username">Username *</label>
+      <input
+        id="username"
+        type="text"
+        placeholder="ada_lovelace"
+        [formField]="usernameField"
+      />
+
+      <ms-hint>Use letters, numbers, or underscores.</ms-hint>
+      <ms-error>{{ usernameError() }}</ms-error>
     </ms-signal-form-field>
   \`,
 })
-export class SignalFormFieldExample {
+export class ProfileFormFieldsExample {
   private readonly model = signal<EmailForm>({
     email: '',
+    username: '',
   });
 
   protected readonly form = form(
     this.model,
     schema<EmailForm>((path) => {
       required(path.email, { message: 'Email is required.' });
+      email(path.email, { message: 'Enter a valid email address.' });
+      required(path.username, { message: 'Username is required.' });
+      minLength(path.username, 3, { message: 'Use at least 3 characters.' });
+      pattern(path.username, /^[a-z0-9_]+$/i, {
+        message: 'Use only letters, numbers, or underscores.',
+      });
     }),
   );
 
   protected readonly emailField = this.form.email;
+  protected readonly usernameField = this.form.username;
+  protected readonly emailError = computed(() => this.emailField().errors()[0]?.message ?? '');
+  protected readonly usernameError = computed(() => this.usernameField().errors()[0]?.message ?? '');
 }`;
 }

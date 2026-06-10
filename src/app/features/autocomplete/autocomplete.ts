@@ -248,6 +248,29 @@ type CountryForm = {
         <ms-autocomplete-option value="SA">Saudi Arabia</ms-autocomplete-option>
       </ms-autocomplete>
     </ms-signal-form-field>
+
+    <ms-signal-form-field>
+      <label for="readonly-role">Readonly value</label>
+      <ms-autocomplete
+        id="readonly-role"
+        placeholder="Readonly"
+        readonly
+        [value]="'developer'"
+      >
+        <ms-autocomplete-option value="designer">Designer</ms-autocomplete-option>
+        <ms-autocomplete-option value="developer">Developer</ms-autocomplete-option>
+        <ms-autocomplete-option value="pm">Product manager</ms-autocomplete-option>
+      </ms-autocomplete>
+    </ms-signal-form-field>
+
+    <ms-signal-form-field dir="rtl">
+      <label for="rtl-city">RTL autocomplete</label>
+      <ms-autocomplete id="rtl-city" placeholder="اختر مدينة">
+        <ms-autocomplete-option value="doha" group="Middle East">Doha</ms-autocomplete-option>
+        <ms-autocomplete-option value="dubai" group="Middle East">Dubai</ms-autocomplete-option>
+        <ms-autocomplete-option value="london" group="Europe">London</ms-autocomplete-option>
+      </ms-autocomplete>
+    </ms-signal-form-field>
   \`,
 })
 export class AutocompleteFormExample {

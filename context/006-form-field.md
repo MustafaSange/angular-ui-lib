@@ -200,6 +200,18 @@ Provide example markup for:
 - disabled field
 - readonly field
 
+When examples are rendered in the Angular showcase:
+
+- The live visual example and the copyable snippet must demonstrate the same behavior.
+- Do not leave the live example as static placeholder markup when the snippet uses a signal form model,
+  `[formField]`, validators, computed display state, or interaction state.
+- For signal form examples, bind controls with `[formField]` and define validation with `schema(...)`
+  helpers such as `required`, `email`, `minLength`, `maxLength`, `min`, and `pattern`.
+- Do not place native validation attributes such as `required`, `minlength`, or `pattern` on the same
+  control as `[formField]`.
+- Live UI derived from field state, such as character counts and validation messages, should read from
+  the signal form field/control state so it updates while users interact.
+
 ## Accessibility
 
 - Preserve proper label and control association.
@@ -241,5 +253,6 @@ After reviewing the existing style guide, suggest improvements if you find:
 - Error text replaces hint text when an error is active.
 - Hint and error are never visible at the same time.
 - Disabled and readonly states dim both label and control.
+- Angular showcase snippets match the behavior of their rendered visual examples.
 - Styling uses existing tokens, variables, mixins, and conventions.
 - The implementation is consistent with the existing style guide.

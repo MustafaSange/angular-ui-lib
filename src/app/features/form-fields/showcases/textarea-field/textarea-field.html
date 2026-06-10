@@ -1,9 +1,12 @@
 <div class="showcase-preview">
-      <ms-signal-form-field>
-        <label for="bio">Bio</label>
-        <span slot="label-extra">0 / 280</span>
-        <textarea id="bio" placeholder="Tell us a little about yourself"></textarea>
-      </ms-signal-form-field>
-    </div>
-    <app-showcase-code label="Textarea with label extra" [code]="snippet" />
-  
+  <ms-signal-form-field>
+    <label for="bio">Bio</label>
+    <span slot="label-extra">{{ characterCount() }} / 280</span>
+    <textarea
+      id="bio"
+      placeholder="Tell us a little about yourself"
+      [formField]="bioField"
+    ></textarea>
+  </ms-signal-form-field>
+</div>
+<app-showcase-code label="Textarea with label extra" [code]="snippet" />
