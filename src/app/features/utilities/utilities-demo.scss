@@ -1,0 +1,204 @@
+.card-preview {
+  display: grid;
+  align-items: center;
+  min-block-size: 4.25rem;
+  margin-block-start: var(--spacing-4);
+  padding: var(--spacing-12);
+  border: var(--border-width-sm) solid var(--color-border-muted);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+}
+
+.preview-row {
+  inline-size: 100%;
+
+  > span {
+    display: block;
+    inline-size: 100%;
+    block-size: var(--spacing-16);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-border-muted);
+  }
+}
+
+.preview-pill {
+  max-inline-size: 4rem;
+  border-radius: var(--radius-full) !important;
+  background-color: var(--color-surface-muted) !important;
+}
+
+.preview-frame {
+  display: grid;
+  place-items: center;
+  min-block-size: 3rem;
+  padding: var(--spacing-12);
+  border: var(--border-width-sm) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+
+  > span {
+    inline-size: 60%;
+    block-size: var(--spacing-12);
+    background-color: var(--color-border-muted);
+  }
+}
+
+.preview-type {
+  display: grid;
+  gap: var(--spacing-8);
+
+  span,
+  strong {
+    display: block;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-border-muted);
+  }
+
+  span {
+    inline-size: 35%;
+    block-size: var(--spacing-8);
+  }
+
+  strong {
+    inline-size: 75%;
+    block-size: var(--spacing-16);
+  }
+}
+
+.preview-raised,
+.preview-size {
+  display: block;
+  block-size: 3rem;
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-raised);
+}
+
+.preview-dot {
+  inset-block-start: var(--spacing-8);
+  inset-inline-end: var(--spacing-8);
+  inline-size: var(--spacing-8) !important;
+  block-size: var(--spacing-8) !important;
+  border-radius: var(--radius-full);
+  background-color: var(--color-text-muted) !important;
+}
+
+.demo-token,
+.demo-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-8) var(--spacing-12);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-medium);
+}
+
+.demo-pill {
+  border-radius: var(--radius-full);
+}
+
+.demo-wide-row {
+  inline-size: 100%;
+}
+
+.demo-raised {
+  max-inline-size: 16rem;
+}
+
+.demo-position {
+  min-block-size: 6rem;
+}
+
+.sizing-rail {
+  inline-size: 100%;
+  padding: var(--spacing-12);
+  border: var(--border-width-sm) dashed var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.demo-dot {
+  inset-block-start: var(--spacing-12);
+  inset-inline-end: var(--spacing-12);
+  inline-size: 0.625rem;
+  block-size: 0.625rem;
+  border-radius: var(--radius-full);
+  background-color: var(--color-success);
+}
+
+.real-demo {
+  padding: var(--spacing-16);
+  border: var(--border-width-sm) solid var(--color-border-muted);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-muted);
+}
+
+.product-panel {
+  display: grid;
+  gap: var(--spacing-16);
+  padding: var(--spacing-20);
+  border: var(--border-width-sm) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+
+  > p:last-child {
+    margin: 0;
+    color: var(--color-text-secondary);
+  }
+}
+
+.utility-row {
+  padding: var(--spacing-12);
+  border: var(--border-width-sm) solid var(--color-border-muted);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+}
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--spacing-40);
+  block-size: var(--spacing-40);
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface-muted);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-4) var(--spacing-10);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.border-bottom {
+  border-block-end: var(--border-width-sm) solid var(--color-border);
+}
+
+.overlay-stage {
+  background:
+    linear-gradient(var(--color-border-muted) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-border-muted) 1px, transparent 1px),
+    var(--color-surface-muted);
+  background-size: 2rem 2rem;
+}
+
+.command-card {
+  inline-size: min(24rem, 100%);
+  margin-inline: auto;
+}
+
+.min-h-card {
+  min-block-size: 8rem;
+}
+
+.class-row-header {
+  background-color: var(--color-surface-muted);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+}

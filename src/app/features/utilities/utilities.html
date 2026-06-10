@@ -1,0 +1,348 @@
+<main class="utilities-page">
+  <header class="utilities-header">
+    <a class="btn btn-ghost back-link" routerLink="/">&larr; Back to home</a>
+    <p class="eyebrow">Utilities</p>
+    <h1>Utilities</h1>
+    <p class="description">
+      Quick-reference helpers for layout, spacing, typography, color, surface, and state styling.
+    </p>
+  </header>
+
+  <section class="utility-grid" aria-label="Utility sections">
+    @for (group of groups; track group.id) {
+      <button
+        class="utility-card"
+        type="button"
+        [class.utility-card-selected]="selectedGroup().id === group.id"
+        [attr.aria-pressed]="selectedGroup().id === group.id"
+        (click)="openDetails(group)"
+      >
+        <span class="utility-category">{{ group.category }}</span>
+        <strong>{{ group.title }}</strong>
+        <span class="utility-summary">{{ group.summary }}</span>
+        <span class="utility-benefit">{{ group.benefit }}</span>
+
+        <span class="card-preview" aria-hidden="true">
+          @switch (group.id) {
+            @case ('display') {
+              <span class="preview-row d-flex gap-4">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            }
+            @case ('flex') {
+              <span class="preview-row d-flex justify-between align-center">
+                <span></span>
+                <span class="preview-pill"></span>
+              </span>
+            }
+            @case ('gaps') {
+              <span class="preview-row d-grid gap-8">
+                <span></span>
+                <span></span>
+              </span>
+            }
+            @case ('spacing') {
+              <span class="preview-frame"><span></span></span>
+            }
+            @case ('typography') {
+              <span class="preview-type">
+                <span></span>
+                <strong></strong>
+              </span>
+            }
+            @case ('colors') {
+              <span class="preview-row d-flex gap-4">
+                <span class="bg-success-subtle"></span>
+                <span class="bg-warning-subtle"></span>
+                <span class="bg-danger-subtle"></span>
+              </span>
+            }
+            @case ('borders') {
+              <span class="preview-frame rounded-lg"><span class="rounded-full"></span></span>
+            }
+            @case ('shadows') {
+              <span class="preview-raised shadow-md"></span>
+            }
+            @case ('sizing') {
+              <span class="preview-size w-full"></span>
+            }
+            @case ('position') {
+              <span class="preview-frame position-relative"><span class="preview-dot position-absolute"></span></span>
+            }
+            @case ('states') {
+              <span class="preview-row d-flex gap-6">
+                <span class="opacity-muted"></span>
+                <span class="opacity-disabled"></span>
+              </span>
+            }
+          }
+        </span>
+      </button>
+    }
+  </section>
+
+  <ms-drawer
+    class="utility-detail-drawer"
+    style="--drawer-inline-size: min(52rem, 96vw)"
+    [(open)]="drawerOpen"
+    placement="end"
+    aria-labelledby="utility-detail-title"
+  >
+    <div class="drawer-header">
+      <div>
+        <p class="eyebrow">{{ selectedGroup().category }}</p>
+        <h2 id="utility-detail-title">{{ selectedGroup().title }}</h2>
+      </div>
+
+      <button class="btn btn-ghost btn-icon" type="button" msDrawerClose aria-label="Close details">
+        <span class="ms-icon" aria-hidden="true">close</span>
+      </button>
+    </div>
+
+    <div class="drawer-content">
+      <section class="explain-strip" aria-label="Utility purpose">
+        <div>
+          <span>What it does</span>
+          <strong>{{ selectedGroup().summary }}</strong>
+        </div>
+        <div>
+          <span>Why it helps</span>
+          <strong>{{ selectedGroup().benefit }}</strong>
+        </div>
+      </section>
+
+      <p class="detail-copy">{{ selectedGroup().guidance }}</p>
+
+      <section class="detail-section" aria-labelledby="utility-demo-title">
+        <h3 id="utility-demo-title">Realistic example</h3>
+
+        <div class="real-demo">
+          @switch (selectedGroup().id) {
+            @case ('display') {
+              <article class="product-panel">
+                <header class="d-flex align-center justify-between gap-16">
+                  <div>
+                    <p class="m-0 text-sm text-muted">Workspace</p>
+                    <h4 class="m-0 text-lg">Design system audit</h4>
+                  </div>
+                  <button class="btn btn-outline" type="button">Export</button>
+                </header>
+                <div class="d-grid gap-12 mt-16">
+                  <div class="d-flex align-center justify-between gap-12 utility-row">
+                    <span>Token coverage</span>
+                    <strong>94%</strong>
+                  </div>
+                  <div class="d-none md-d-flex align-center justify-between gap-12 utility-row">
+                    <span>Desktop-only review notes</span>
+                    <strong>18</strong>
+                  </div>
+                </div>
+                <p><code>d-flex</code>, <code>d-grid</code>, and responsive display classes make the panel structure obvious from the template.</p>
+              </article>
+            }
+            @case ('flex') {
+              <article class="product-panel">
+                <div class="d-flex align-center justify-between gap-16">
+                  <div class="d-flex align-center gap-12">
+                    <span class="avatar" aria-hidden="true">MS</span>
+                    <div>
+                      <h4 class="m-0 text-lg">Maya Stone</h4>
+                      <p class="m-0 text-sm text-muted">Reviewer</p>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary" type="button">Assign</button>
+                </div>
+                <p><code>d-flex</code>, <code>align-center</code>, and <code>justify-between</code> keep identity, metadata, and actions aligned.</p>
+              </article>
+            }
+            @case ('gaps') {
+              <article class="product-panel">
+                <div class="d-grid gap-12">
+                  <button class="btn btn-outline d-flex justify-between" type="button">
+                    Account <span class="ms-icon" aria-hidden="true">chevron_right</span>
+                  </button>
+                  <button class="btn btn-outline d-flex justify-between" type="button">
+                    Security <span class="ms-icon" aria-hidden="true">chevron_right</span>
+                  </button>
+                  <button class="btn btn-outline d-flex justify-between" type="button">
+                    Billing <span class="ms-icon" aria-hidden="true">chevron_right</span>
+                  </button>
+                </div>
+                <p><code>gap-12</code> spaces repeated controls evenly without adding margins to each button.</p>
+              </article>
+            }
+            @case ('spacing') {
+              <article class="product-panel p-0">
+                <div class="p-20 border-bottom">
+                  <p class="m-0 text-sm text-muted">Invoice</p>
+                  <h4 class="m-0 mt-4 text-lg">INV-2048</h4>
+                </div>
+                <div class="p-20 d-grid gap-12">
+                  <div class="d-flex justify-between">
+                    <span>Subtotal</span>
+                    <strong>$420.00</strong>
+                  </div>
+                  <div class="d-flex justify-between">
+                    <span>Tax</span>
+                    <strong>$21.00</strong>
+                  </div>
+                </div>
+                <p class="px-20 pb-20 m-0"><code>p-20</code>, <code>mt-4</code>, and <code>gap-12</code> create a clean invoice rhythm.</p>
+              </article>
+            }
+            @case ('typography') {
+              <article class="product-panel">
+                <p class="m-0 text-sm text-muted text-uppercase">Release notes</p>
+                <h4 class="m-0 mt-8 text-xl fw-semibold">Utility classes refreshed</h4>
+                <p class="m-0 mt-8 text-secondary">Cards, demos, and references now use clearer hierarchy and compact supporting copy.</p>
+                <p class="m-0 mt-16 text-sm text-muted">Updated 12 minutes ago</p>
+                <p><code>text-sm</code>, <code>text-xl</code>, <code>fw-semibold</code>, and muted text create scan-friendly hierarchy.</p>
+              </article>
+            }
+            @case ('colors') {
+              <article class="product-panel">
+                <div class="d-grid gap-12">
+                  <div class="d-flex align-center justify-between utility-row">
+                    <span>Payment received</span>
+                    <span class="status-pill bg-success-subtle text-success">Success</span>
+                  </div>
+                  <div class="d-flex align-center justify-between utility-row">
+                    <span>Contract review</span>
+                    <span class="status-pill bg-warning-subtle text-warning">Warning</span>
+                  </div>
+                  <div class="d-flex align-center justify-between utility-row">
+                    <span>Deployment blocked</span>
+                    <span class="status-pill bg-danger-subtle text-danger">Danger</span>
+                  </div>
+                </div>
+                <p>Semantic colors attach meaning to status badges without hardcoded color values.</p>
+              </article>
+            }
+            @case ('borders') {
+              <article class="product-panel">
+                <div class="border rounded-lg p-16 bg-surface d-flex align-center gap-12">
+                  <span class="avatar" aria-hidden="true">UI</span>
+                  <div>
+                    <h4 class="m-0 text-lg">Reusable card</h4>
+                    <p class="m-0 text-sm text-muted">Border and radius define the surface.</p>
+                  </div>
+                </div>
+                <p><code>border</code> and <code>rounded-lg</code> make lightweight content feel intentionally grouped.</p>
+              </article>
+            }
+            @case ('shadows') {
+              <article class="product-panel overlay-stage">
+                <div class="shadow-md rounded-lg p-20 bg-surface-raised command-card">
+                  <p class="m-0 text-sm text-muted">Command palette</p>
+                  <h4 class="m-0 mt-4 text-lg">Quick actions</h4>
+                  <div class="d-grid gap-8 mt-16">
+                    <span>Open documentation</span>
+                    <span>Create component</span>
+                  </div>
+                </div>
+                <p><code>shadow-md</code> separates an overlay from the page behind it.</p>
+              </article>
+            }
+            @case ('sizing') {
+              <article class="product-panel">
+                <label class="d-grid gap-8">
+                  <span class="text-sm fw-medium">Search workspace</span>
+                  <input class="w-full p-12 border rounded-md bg-surface" value="button variants" aria-label="Search workspace" />
+                </label>
+                <div class="min-h-card d-flex align-center justify-center mt-16 rounded-md bg-surface-muted">
+                  Results area keeps a stable minimum height
+                </div>
+                <p><code>w-full</code> and minimum-height utilities keep form and result areas stable.</p>
+              </article>
+            }
+            @case ('position') {
+              <article class="product-panel">
+                <div class="position-relative border rounded-lg p-20 bg-surface">
+                  <span class="position-absolute demo-dot" aria-label="Unread"></span>
+                  <p class="m-0 text-sm text-muted">Inbox</p>
+                  <h4 class="m-0 mt-4 text-lg">New design review</h4>
+                  <p class="m-0 mt-8 text-secondary">The unread dot stays anchored to the card corner.</p>
+                </div>
+                <p><code>position-relative</code> on the card gives the absolute dot a predictable anchor.</p>
+              </article>
+            }
+            @case ('states') {
+              <article class="product-panel">
+                <div class="d-grid gap-12">
+                  <div class="d-flex align-center justify-between utility-row">
+                    <div>
+                      <h4 class="m-0 text-md">Email reports</h4>
+                      <p class="m-0 text-sm opacity-muted">Sent every Monday at 9:00</p>
+                    </div>
+                    <button class="btn btn-outline" type="button">Edit</button>
+                  </div>
+                  <div class="d-flex align-center justify-between utility-row opacity-disabled">
+                    <div>
+                      <h4 class="m-0 text-md">SMS alerts</h4>
+                      <p class="m-0 text-sm">Requires billing setup</p>
+                    </div>
+                    <button class="btn btn-outline" type="button" disabled>Locked</button>
+                  </div>
+                </div>
+                <p><code>opacity-muted</code> and <code>opacity-disabled</code> separate supporting details from unavailable actions.</p>
+              </article>
+            }
+          }
+        </div>
+      </section>
+
+      <section class="detail-section" aria-labelledby="utility-used-title">
+        <h3 id="utility-used-title">Classes used here</h3>
+        <div class="used-class-list" aria-label="Classes used in the example">
+          @for (className of selectedGroup().usedClasses; track className) {
+            <code>{{ className }}</code>
+          }
+        </div>
+      </section>
+
+      <section class="guidance-grid" aria-label="Usage guidance">
+        <div class="guidance-card">
+          <h3>Use when</h3>
+          <ul>
+            @for (item of selectedGroup().useWhen; track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+        </div>
+
+        <div class="guidance-card">
+          <h3>Avoid when</h3>
+          <ul>
+            @for (item of selectedGroup().avoidWhen; track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+        </div>
+      </section>
+
+      <section class="detail-section" aria-labelledby="utility-classes-title">
+        <h3 id="utility-classes-title">All available classes</h3>
+        <p class="section-note">
+          The example above only uses a few classes. This list shows the available utilities for
+          this group.
+        </p>
+        <div class="class-list">
+          <div class="class-row class-row-header" aria-hidden="true">
+            <span>Class</span>
+            <span>What it does</span>
+          </div>
+          @for (utilityClass of selectedGroup().classes; track utilityClass.name) {
+            <div class="class-row">
+              <code>{{ utilityClass.name }}</code>
+              <span>{{ utilityClass.description }}</span>
+            </div>
+          }
+        </div>
+      </section>
+
+      <app-showcase-code [label]="selectedGroup().title + ' utilities'" [code]="selectedGroup().snippet" />
+    </div>
+  </ms-drawer>
+</main>
