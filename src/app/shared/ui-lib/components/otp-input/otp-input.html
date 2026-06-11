@@ -1,0 +1,36 @@
+<div
+  class="otp-group"
+  role="group"
+  [attr.aria-label]="ariaLabelledby() ? null : ariaLabel()"
+  [attr.aria-labelledby]="ariaLabelledby()"
+  [attr.aria-describedby]="ariaDescribedby()"
+>
+  @for (index of slotIndexes(); track index) {
+    <input
+      #otpInput
+      class="otp-cell"
+      type="text"
+      maxlength="1"
+      autocapitalize="characters"
+      spellcheck="false"
+      [id]="inputId(index)"
+      [value]="slots()[index]"
+      [disabled]="disabled()"
+      [readonly]="readonly()"
+      [inputMode]="inputMode()"
+      [pattern]="inputPattern()"
+      [attr.autocomplete]="index === 0 ? 'one-time-code' : 'off'"
+      [attr.aria-label]="ariaLabelFor(index)"
+      [attr.aria-describedby]="ariaDescribedby()"
+      (input)="handleInput(index, $event)"
+      (keydown)="handleKeydown(index, $event)"
+      (paste)="handlePaste(index, $event)"
+      (focus)="handleFocus(index, $event)"
+      (blur)="handleBlur($event)"
+    />
+  }
+</div>
+
+@if (name()) {
+  <input type="hidden" [name]="name()" [value]="value()" />
+}

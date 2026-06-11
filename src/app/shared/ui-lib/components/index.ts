@@ -14,6 +14,7 @@ export * from './feedback';
 export * from './media-slider';
 export * from './menu-popover';
 export * from './modal';
+export * from './otp-input';
 export * from './pagination';
 export * from './showcase-code';
 export * from './side-nav';

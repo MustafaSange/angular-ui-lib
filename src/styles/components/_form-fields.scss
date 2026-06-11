@@ -102,7 +102,8 @@ ms-signal-form-field {
   ms-autocomplete,
   ms-select,
   ms-button-toggle-group,
-  ms-slider {
+  ms-slider,
+  ms-otp-input {
     flex: 1 1 auto;
     inline-size: 100%;
     min-inline-size: 0;
@@ -142,6 +143,24 @@ ms-signal-form-field {
 
   select {
     cursor: pointer;
+  }
+
+  &:has(ms-otp-input) {
+    .form-field-control {
+      display: block;
+      min-block-size: auto;
+      border: 0;
+      border-radius: 0;
+      background-color: transparent;
+      overflow: visible;
+      transition: none;
+
+      &:hover:not(:has(:disabled)):not(:has([readonly])):not(:focus-within),
+      &:focus-within {
+        border-color: transparent;
+        box-shadow: none;
+      }
+    }
   }
 
   .form-field-message {

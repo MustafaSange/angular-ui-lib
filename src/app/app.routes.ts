@@ -71,9 +71,12 @@ export const routes: Routes = [
     loadComponent: () => import('./features/modal/modal').then((m) => m.Modal),
   },
   {
+    path: 'otp-input',
+    loadComponent: () => import('./features/otp-input/otp-input').then((m) => m.OtpInput),
+  },
+  {
     path: 'media-slider',
-    loadComponent: () =>
-      import('./features/media-slider/media-slider').then((m) => m.MediaSlider),
+    loadComponent: () => import('./features/media-slider/media-slider').then((m) => m.MediaSlider),
   },
   {
     path: 'drawer',
