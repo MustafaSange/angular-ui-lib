@@ -1,0 +1,101 @@
+ms-otp-input,
+.otp-input {
+  display: block;
+  inline-size: 100%;
+  color: var(--color-text-primary);
+}
+
+.otp-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-8);
+  inline-size: 100%;
+}
+
+.otp-cell {
+  inline-size: var(--control-height-lg);
+  block-size: var(--control-height-lg);
+  padding: 0;
+  border: var(--control-border-width) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  font: inherit;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-control);
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow: var(--shadow-sm);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-fast);
+  appearance: textfield;
+  font-variant-numeric: tabular-nums;
+
+  &:hover:not(:disabled):not(:read-only) {
+    border-color: var(--color-border-strong);
+  }
+
+  &:focus {
+    outline: 0;
+  }
+
+  &:focus-visible {
+    border-color: var(--color-primary);
+    box-shadow: var(--control-focus-ring);
+  }
+
+  &:disabled,
+  &:read-only {
+    background-color: var(--color-surface-muted);
+  }
+
+  &:disabled {
+    color: var(--color-text-muted);
+    cursor: not-allowed;
+    opacity: var(--opacity-disabled);
+  }
+
+  &:read-only {
+    cursor: default;
+  }
+}
+
+.form-field ms-otp-input .otp-cell,
+ms-signal-form-field ms-otp-input .otp-cell {
+  inline-size: var(--control-height-lg);
+  min-inline-size: var(--control-height-lg);
+  block-size: var(--control-height-lg);
+  min-block-size: var(--control-height-lg);
+  padding: 0;
+  border: var(--control-border-width) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+
+  &:focus-visible {
+    border-color: var(--color-primary);
+    box-shadow: var(--control-focus-ring);
+  }
+}
+
+.form-field ms-otp-input,
+ms-signal-form-field ms-otp-input {
+  inline-size: fit-content;
+  max-inline-size: 100%;
+
+  .otp-group {
+    inline-size: fit-content;
+    max-inline-size: 100%;
+  }
+}
+
+ms-otp-input.is-disabled,
+.otp-input.is-disabled,
+ms-otp-input.is-readonly,
+.otp-input.is-readonly {
+  .otp-cell {
+    box-shadow: none;
+  }
+}
