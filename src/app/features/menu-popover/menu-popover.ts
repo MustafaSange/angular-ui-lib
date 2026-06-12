@@ -36,8 +36,12 @@ import { SignalFormField } from '../../shared/ui-lib/components/signal-form-fiel
 })
 export class MenuPopover {
   protected readonly filtersOpen = signal(false);
+  protected readonly inlineEditorOpen = signal(false);
   protected readonly selectedAction = signal('No project action selected.');
   protected readonly appliedFilters = signal('Showing all projects.');
+  protected readonly splitButtonResult = signal('No save action selected.');
+  protected readonly projectName = signal('Project Alpha');
+  protected readonly draftProjectName = signal(this.projectName());
 
   protected readonly basicMenuSnippet = `import { Component } from '@angular/core';
 
@@ -98,6 +102,58 @@ import { MenuComponent, MenuDividerComponent, MenuItem, MenuPanelComponent, Menu
   \`, })
 export class ProjectActionsExample {
   protected readonly result = signal('No project action selected.');
+}`;
+
+  protected readonly splitButtonSnippet = `import { Component, signal } from '@angular/core';
+
+import { MenuComponent, MenuItem, MenuPanelComponent, MenuTrigger } from './shared/ui-lib';
+
+@Component({
+  selector: 'app-split-button-example',
+  imports: [MenuComponent, MenuItem, MenuPanelComponent, MenuTrigger],
+  template: \`
+    <div class="split-button">
+      <button class="btn btn-primary" type="button" (click)="save('Saved changes.')">
+        Save
+      </button>
+
+      <ms-menu placement="bottom-end">
+        <button
+          class="btn btn-primary btn-icon"
+          type="button"
+          msMenuTrigger
+          aria-label="More save options"
+        >
+          <span class="ms-icon" aria-hidden="true">expand_more</span>
+        </button>
+
+        <ms-menu-panel aria-label="Save options">
+          <button type="button" msMenuItem (click)="save('Saved as draft.')">Save draft</button>
+          <button type="button" msMenuItem (click)="save('Saved as template.')">
+            Save as template
+          </button>
+          <button type="button" msMenuItem (click)="save('Saved and published.')">
+            Save and publish
+          </button>
+        </ms-menu-panel>
+      </ms-menu>
+    </div>
+
+    <p>{{ result() }}</p>
+  \`,
+  styles: [\`
+    .split-button {
+      display: inline-flex;
+      align-items: stretch;
+    }
+  \`],
+})
+export class SplitButtonExample {
+  protected readonly result = signal('No save action selected.');
+
+  protected save(message: string): void {
+    this.result.set(message);
+  }
 }`;
 
   protected readonly placementMenuSnippet = `import { Component } from '@angular/core';
@@ -180,6 +236,89 @@ export class FilterPopoverExample {
   protected readonly filtersOpen = signal(false);
 }`;
 
+  protected readonly inlineEditSnippet = `import { Component, signal } from '@angular/core';
+
+import {
+  PopoverClose,
+  PopoverComponent,
+  PopoverPanelComponent,
+  PopoverTrigger,
+  SignalFormField,
+} from './shared/ui-lib';
+
+@Component({
+  selector: 'app-inline-edit-popover-example',
+  imports: [PopoverClose, PopoverComponent, PopoverPanelComponent, PopoverTrigger, SignalFormField],
+  template: \`
+    <ms-popover [(open)]="editorOpen">
+      <button class="editable-value" type="button" msPopoverTrigger (click)="startRename()">
+        {{ projectName() }}
+      </button>
+
+      <ms-popover-panel aria-label="Edit project name">
+        <form class="inline-editor" (submit)="saveRename($event)">
+          <ms-signal-form-field>
+            <label for="project-name">Project name</label>
+            <input
+              id="project-name"
+              type="text"
+              [value]="draftProjectName()"
+              (input)="updateDraftName($event)"
+            />
+          </ms-signal-form-field>
+
+          <div class="actions">
+            <button class="btn btn-ghost" type="button" msPopoverClose>Cancel</button>
+            <button class="btn btn-primary" type="submit">Save</button>
+          </div>
+        </form>
+      </ms-popover-panel>
+    </ms-popover>
+  \`,
+  styles: [\`
+    .inline-editor {
+      display: grid;
+      gap: 0.75rem;
+      inline-size: min(18rem, calc(100dvi - 3rem));
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+    }
+  \`],
+})
+export class InlineEditPopoverExample {
+  protected readonly editorOpen = signal(false);
+  protected readonly projectName = signal('Project Alpha');
+  protected readonly draftProjectName = signal(this.projectName());
+
+  protected startRename(): void {
+    this.draftProjectName.set(this.projectName());
+  }
+
+  protected updateDraftName(event: Event): void {
+    const target = event.target;
+
+    if (target instanceof HTMLInputElement) {
+      this.draftProjectName.set(target.value);
+    }
+  }
+
+  protected saveRename(event: Event): void {
+    event.preventDefault();
+
+    const nextName = this.draftProjectName().trim();
+
+    if (nextName) {
+      this.projectName.set(nextName);
+    }
+
+    this.editorOpen.set(false);
+  }
+}`;
+
   protected readonly sidePopoverSnippet = `import { Component } from '@angular/core';
 
 import {
@@ -223,8 +362,36 @@ export class SidePopoverExample {}`;
     this.selectedAction.set(action);
   }
 
+  protected chooseSaveAction(action: string): void {
+    this.splitButtonResult.set(action);
+  }
+
   protected applyFilters(event: Event): void {
     event.preventDefault();
     this.appliedFilters.set('Showing active projects owned by this team.');
+  }
+
+  protected startProjectRename(): void {
+    this.draftProjectName.set(this.projectName());
+  }
+
+  protected updateDraftProjectName(event: Event): void {
+    const target = event.target;
+
+    if (target instanceof HTMLInputElement) {
+      this.draftProjectName.set(target.value);
+    }
+  }
+
+  protected saveProjectName(event: Event): void {
+    event.preventDefault();
+
+    const nextName = this.draftProjectName().trim();
+
+    if (nextName) {
+      this.projectName.set(nextName);
+    }
+
+    this.inlineEditorOpen.set(false);
   }
 }
