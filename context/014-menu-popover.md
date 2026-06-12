@@ -183,6 +183,149 @@ export class FilterPopoverExample {
 }
 ```
 
+Split-button menu composition:
+
+```ts
+import { Component, signal } from '@angular/core';
+
+import { MenuComponent, MenuItem, MenuPanelComponent, MenuTrigger } from './shared/ui-lib';
+
+@Component({
+  selector: 'app-split-button-example',
+  imports: [MenuComponent, MenuItem, MenuPanelComponent, MenuTrigger],
+  template: `
+    <div class="split-button">
+      <button class="btn btn-primary" type="button" (click)="save('Saved changes.')">
+        Save
+      </button>
+
+      <ms-menu placement="bottom-end">
+        <button
+          class="btn btn-primary btn-icon"
+          type="button"
+          msMenuTrigger
+          aria-label="More save options"
+        >
+          <span class="ms-icon" aria-hidden="true">expand_more</span>
+        </button>
+
+        <ms-menu-panel aria-label="Save options">
+          <button type="button" msMenuItem (click)="save('Saved as draft.')">Save draft</button>
+          <button type="button" msMenuItem (click)="save('Saved as template.')">
+            Save as template
+          </button>
+          <button type="button" msMenuItem (click)="save('Saved and published.')">
+            Save and publish
+          </button>
+        </ms-menu-panel>
+      </ms-menu>
+    </div>
+
+    <p>{{ result() }}</p>
+  `,
+  styles: [`
+    .split-button {
+      display: inline-flex;
+      align-items: stretch;
+    }
+  `],
+})
+export class SplitButtonExample {
+  protected readonly result = signal('No save action selected.');
+
+  protected save(message: string): void {
+    this.result.set(message);
+  }
+}
+```
+
+Inline edit popover:
+
+```ts
+import { Component, signal } from '@angular/core';
+
+import {
+  PopoverClose,
+  PopoverComponent,
+  PopoverPanelComponent,
+  PopoverTrigger,
+  SignalFormField,
+} from './shared/ui-lib';
+
+@Component({
+  selector: 'app-inline-edit-popover-example',
+  imports: [PopoverClose, PopoverComponent, PopoverPanelComponent, PopoverTrigger, SignalFormField],
+  template: `
+    <ms-popover [(open)]="editorOpen">
+      <button class="editable-value" type="button" msPopoverTrigger (click)="startRename()">
+        {{ projectName() }}
+      </button>
+
+      <ms-popover-panel aria-label="Edit project name">
+        <form class="inline-editor" (submit)="saveRename($event)">
+          <ms-signal-form-field>
+            <label for="project-name">Project name</label>
+            <input
+              id="project-name"
+              type="text"
+              [value]="draftProjectName()"
+              (input)="updateDraftName($event)"
+            />
+          </ms-signal-form-field>
+
+          <div class="actions">
+            <button class="btn btn-ghost" type="button" msPopoverClose>Cancel</button>
+            <button class="btn btn-primary" type="submit">Save</button>
+          </div>
+        </form>
+      </ms-popover-panel>
+    </ms-popover>
+  `,
+  styles: [`
+    .inline-editor {
+      display: grid;
+      gap: 0.75rem;
+      inline-size: min(18rem, calc(100dvi - 3rem));
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+    }
+  `],
+})
+export class InlineEditPopoverExample {
+  protected readonly editorOpen = signal(false);
+  protected readonly projectName = signal('Project Alpha');
+  protected readonly draftProjectName = signal(this.projectName());
+
+  protected startRename(): void {
+    this.draftProjectName.set(this.projectName());
+  }
+
+  protected updateDraftName(event: Event): void {
+    const target = event.target;
+
+    if (target instanceof HTMLInputElement) {
+      this.draftProjectName.set(target.value);
+    }
+  }
+
+  protected saveRename(event: Event): void {
+    event.preventDefault();
+
+    const nextName = this.draftProjectName().trim();
+
+    if (nextName) {
+      this.projectName.set(nextName);
+    }
+
+    this.editorOpen.set(false);
+  }
+}
+```
+
 Side-positioned popover:
 
 ```ts
@@ -306,8 +449,12 @@ Popover behavior:
 - menu panels accept native `<button type="button" msMenuItem>` actions and `<a msMenuItem>`
   navigation targets, together with optional `ms-menu-divider` separators
 - menu item text, decorative icons, and action meaning remain consumer-owned content
+- menus can be composed with adjacent controls, such as a split button, without adding a separate
+  split-button component
 - popover panels accept arbitrary projected content such as text, form controls, and action rows
 - `msPopoverClose` is applied to projected native buttons intended to close a popover explicitly
+- popover forms may close through `msPopoverClose` actions or by updating the container `open`
+  model from submitted component state
 - container components generate panel IDs and manage native target relationships internally
 
 ## Styling
@@ -369,15 +516,21 @@ The showcase demonstrates:
 
 - a basic action menu
 - an icon-triggered menu with button actions, a navigation item, a disabled item, and a divider
+- a split-button composition with a primary action and menu-triggered save variants
 - an end-aligned overflow menu that demonstrates placement and CSS position fallback behavior
 - a controlled filters popover containing projected form fields, close actions, and a visible
   applied-filter result
+- an inline edit popover with an editable projected form and controlled close state
 - a logical inline-end popover using `placement="end-top"` that demonstrates RTL mirroring
 
 Showcase snippets should use `ShowcaseCode` from `src/app/shared/ui-lib/components/showcase-code`.
 
 Keep snippets hand-authored in the feature component `.ts` file and make each snippet a full
 standalone Angular component example that users can copy/paste.
+
+When snippets demonstrate state changes, such as selected menu actions, split-button results,
+filter application, or inline editing, the rendered showcase should use matching signal-backed
+state instead of static placeholder markup.
 
 Render snippets near the matching visual example with `<app-showcase-code>`.
 
@@ -427,5 +580,5 @@ Render snippets near the matching visual example with `<app-showcase-code>`.
 - Styling uses existing tokens, component-private variables, and the components style index.
 - The showcased `archive`, `delete`, `edit`, `expand_more`, `filter_list`, and `more_vert` icon
   names are registered in `MATERIAL_ICONS`.
-- The `/menu-popover` showcase and home card demonstrate both patterns and render matching
-  copyable snippets.
+- The `/menu-popover` showcase and home card demonstrate both patterns, including composed menu
+  and stateful popover examples, and render matching copyable snippets.
