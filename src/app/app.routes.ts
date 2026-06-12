@@ -55,6 +55,11 @@ export const routes: Routes = [
     loadComponent: () => import('./features/clipboard/clipboard').then((m) => m.Clipboard),
   },
   {
+    path: 'confirm-dialog',
+    loadComponent: () =>
+      import('./features/confirm-dialog/confirm-dialog').then((m) => m.ConfirmDialog),
+  },
+  {
     path: 'form-fields',
     loadComponent: () => import('./features/form-fields/form-fields').then((m) => m.FormFields),
   },

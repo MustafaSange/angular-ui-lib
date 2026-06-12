@@ -1,0 +1,61 @@
+<main class="confirm-dialog-page">
+  <header class="confirm-dialog-header">
+    <a class="btn btn-ghost back-link" routerLink="/">&larr; Back to home</a>
+    <p class="eyebrow">Components</p>
+    <h1>Confirmation dialog</h1>
+    <p class="description">
+      Service-opened confirmations for yes-or-no decisions, built on the modal system.
+    </p>
+  </header>
+
+  <section class="confirm-dialog-section">
+    <h2>Basic confirmation</h2>
+    <div class="confirm-dialog-demo-row">
+      <button class="btn btn-primary" type="button" (click)="openBasic()">
+        Publish release
+      </button>
+      <span class="result-note">{{ basicResult() }}</span>
+    </div>
+    <app-showcase-code label="Basic confirmation" [code]="basicSnippet" />
+  </section>
+
+  <section class="confirm-dialog-section">
+    <h2>Destructive confirmation</h2>
+    <div class="confirm-dialog-demo-row">
+      <button class="btn btn-danger" type="button" (click)="openDanger()">
+        Delete project
+      </button>
+      <span class="result-note">{{ dangerResult() }}</span>
+    </div>
+    <app-showcase-code label="Destructive confirmation" [code]="dangerSnippet" />
+  </section>
+
+  <section class="confirm-dialog-section">
+    <h2>Semantic kinds</h2>
+    <div class="confirm-dialog-demo-row">
+      <button class="btn btn-outline" type="button" (click)="openKind('info')">Info</button>
+      <button class="btn btn-outline-success" type="button" (click)="openKind('success')">
+        Success
+      </button>
+      <button class="btn btn-outline-primary" type="button" (click)="openKind('warning')">
+        Warning
+      </button>
+      <button class="btn btn-outline-danger" type="button" (click)="openKind('danger')">
+        Danger
+      </button>
+      <span class="result-note">{{ kindResult() }}</span>
+    </div>
+    <app-showcase-code label="Semantic kinds" [code]="kindsSnippet" />
+  </section>
+
+  <section class="confirm-dialog-section">
+    <h2>Locked confirmation</h2>
+    <div class="confirm-dialog-demo-row">
+      <button class="btn btn-primary" type="button" (click)="openLocked()">
+        Open locked confirmation
+      </button>
+      <span class="result-note">{{ lockedResult() }}</span>
+    </div>
+    <app-showcase-code label="Locked confirmation" [code]="lockedSnippet" />
+  </section>
+</main>
