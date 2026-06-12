@@ -135,8 +135,15 @@ import { SelectComponent, SelectOptionComponent, SignalFormField } from './share
           <strong>Designer</strong>
           <span>Shapes visual and interaction systems</span>
         </ms-select-option>
-        <ms-select-option value="developer">Developer</ms-select-option>
-        <ms-select-option value="pm">Product manager</ms-select-option>
+        <ms-select-option value="developer" label="Developer">
+          <strong>Developer</strong>
+          <span>Builds product interfaces</span>
+        </ms-select-option>
+        <ms-select-option value="pm" label="Product manager">
+          <strong>Product manager</strong>
+          <span>Coordinates product direction</span>
+        </ms-select-option>
+        <ms-select-option value="support" disabled>Support lead</ms-select-option>
       </ms-select>
     </ms-signal-form-field>
   \`,
@@ -186,7 +193,9 @@ import { SelectComponent, SelectOptionComponent, SignalFormField } from './share
       <ms-select id="cities" name="cities" placeholder="Choose cities" multiple [(value)]="cities">
         <ms-select-option value="doha" group="Middle East">Doha</ms-select-option>
         <ms-select-option value="dubai" group="Middle East">Dubai</ms-select-option>
+        <ms-select-option value="riyadh" group="Middle East">Riyadh</ms-select-option>
         <ms-select-option value="london" group="Europe">London</ms-select-option>
+        <ms-select-option value="madrid" group="Europe">Madrid</ms-select-option>
       </ms-select>
     </ms-signal-form-field>
   \`,
@@ -227,20 +236,44 @@ interface City {
 })
 export class AsyncSelectExample {
   readonly cities: readonly SelectOption<City>[] = [
-    { label: 'Doha', value: { id: 'doha', name: 'Doha', country: 'Qatar' } },
-    { label: 'Dubai', value: { id: 'dubai', name: 'Dubai', country: 'United Arab Emirates' } },
+    {
+      label: 'Doha',
+      value: { id: 'doha', name: 'Doha', country: 'Qatar' },
+      description: 'Qatar',
+    },
+    {
+      label: 'Dubai',
+      value: { id: 'dubai', name: 'Dubai', country: 'United Arab Emirates' },
+      description: 'United Arab Emirates',
+    },
+    {
+      label: 'Riyadh',
+      value: { id: 'riyadh', name: 'Riyadh', country: 'Saudi Arabia' },
+      description: 'Saudi Arabia',
+    },
+    {
+      label: 'Singapore',
+      value: { id: 'singapore', name: 'Singapore', country: 'Singapore' },
+      description: 'Singapore',
+    },
   ];
 
   readonly citySource: SelectSearchSource<City> = (query) =>
     new Promise((resolve) => {
       window.setTimeout(() => {
         const normalizedQuery = query.toLocaleLowerCase();
-        resolve(this.cities.filter((city) => city.label.toLocaleLowerCase().includes(normalizedQuery)));
+        resolve(
+          this.cities.filter((city) =>
+            [city.label, city.description]
+              .filter((value): value is string => Boolean(value))
+              .some((value) => value.toLocaleLowerCase().includes(normalizedQuery)),
+          ),
+        );
       }, 700);
     });
 
   readonly compareCities = (a: City, b: City) => a.id === b.id;
-  readonly displayCity = (city: City) => city.name;
+  readonly displayCity = (city: City) => \`\${city.name}, \${city.country}\`;
   readonly serializeCity = (city: City) => city.id;
 }`;
 
@@ -272,6 +305,7 @@ type CountryForm = {
         <ms-select-option value="designer">Designer</ms-select-option>
         <ms-select-option value="developer">Developer</ms-select-option>
         <ms-select-option value="pm">Product manager</ms-select-option>
+        <ms-select-option value="support" disabled>Support lead</ms-select-option>
       </ms-select>
     </ms-signal-form-field>
 
@@ -286,6 +320,7 @@ type CountryForm = {
         <ms-select-option value="designer">Designer</ms-select-option>
         <ms-select-option value="developer">Developer</ms-select-option>
         <ms-select-option value="pm">Product manager</ms-select-option>
+        <ms-select-option value="support" disabled>Support lead</ms-select-option>
       </ms-select>
     </ms-signal-form-field>
 
@@ -294,7 +329,9 @@ type CountryForm = {
       <ms-select id="rtl-city" placeholder="اختر مدينة">
         <ms-select-option value="doha" group="Middle East">Doha</ms-select-option>
         <ms-select-option value="dubai" group="Middle East">Dubai</ms-select-option>
+        <ms-select-option value="riyadh" group="Middle East">Riyadh</ms-select-option>
         <ms-select-option value="london" group="Europe">London</ms-select-option>
+        <ms-select-option value="madrid" group="Europe">Madrid</ms-select-option>
       </ms-select>
     </ms-signal-form-field>
   \`,

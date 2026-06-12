@@ -49,6 +49,7 @@ copyable showcase helpers such as `ShowcaseCode`.
 - Menu and popover
 - Modal
 - Pagination
+- Select
 - Side navigation
 - Signal form field
 - Slider
