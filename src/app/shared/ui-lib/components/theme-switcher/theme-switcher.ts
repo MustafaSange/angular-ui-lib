@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 
-import { ThemeMode, ThemeService } from '../../services/theme.service';
+import { ThemeMode, ThemeService } from '../../services';
 
 @Component({
   selector: 'ms-theme-switcher',

@@ -1,0 +1,44 @@
+<details class="theme-customizer">
+  <summary class="theme-trigger">
+    <span class="ms-icon" aria-hidden="true">palette</span>
+    <span>Colors</span>
+  </summary>
+
+  <div class="theme-panel" aria-label="Theme color customizer">
+    <div class="theme-header">
+      <span class="theme-title">Theme colors</span>
+      <button
+        type="button"
+        class="theme-reset-all"
+        [disabled]="!hasCustomizations()"
+        (click)="resetColors()"
+      >
+        Reset all
+      </button>
+    </div>
+
+    <div class="theme-list">
+      @for (option of options; track option.value) {
+        <label class="theme-field">
+          <span class="theme-label">{{ option.label }}</span>
+          <input
+            type="color"
+            class="theme-input"
+            [value]="colorValue(option.value)"
+            [attr.aria-label]="option.label + ' theme color'"
+            (input)="setColor(option.value, $event)"
+          />
+          <button
+            type="button"
+            class="theme-reset"
+            [disabled]="!isCustomized(option.value)"
+            [attr.aria-label]="'Reset ' + option.label + ' theme color'"
+            (click)="resetColor(option.value)"
+          >
+            <span class="ms-icon" aria-hidden="true">restart_alt</span>
+          </button>
+        </label>
+      }
+    </div>
+  </div>
+</details>

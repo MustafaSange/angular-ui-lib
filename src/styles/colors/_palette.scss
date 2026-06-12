@@ -5,6 +5,7 @@
   $hue: color.channel($base, 'hue', $space: oklch);
 
   :root {
+    --color-#{$name}-base: #{$base};
     --color-#{$name}-50: oklch(0.97 #{$chroma * 0.12} #{$hue});
     --color-#{$name}-100: oklch(0.93 #{$chroma * 0.2} #{$hue});
     --color-#{$name}-200: oklch(0.87 #{$chroma * 0.35} #{$hue});

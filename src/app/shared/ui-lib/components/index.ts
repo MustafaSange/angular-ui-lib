@@ -24,6 +24,7 @@ export * from './signal-form-field';
 export * from './slider';
 export * from './stepper';
 export * from './tabs';
+export * from './theme-customizer';
 export * from './theme-switcher';
 export * from './timeline';
 export * from './tooltip';
