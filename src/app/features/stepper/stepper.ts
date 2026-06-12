@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+import { BadgeComponent } from '../../shared/ui-lib/components/badge';
 import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 import {
   StepComponent,
@@ -10,7 +11,14 @@ import {
 
 @Component({
   selector: 'app-stepper',
-  imports: [RouterLink, ShowcaseCode, StepperComponent, StepComponent, StepTitleDirective],
+  imports: [
+    RouterLink,
+    ShowcaseCode,
+    StepperComponent,
+    StepComponent,
+    StepTitleDirective,
+    BadgeComponent,
+  ],
   templateUrl: './stepper.html',
   styleUrl: './stepper.scss',
 })
@@ -90,14 +98,14 @@ export class LinearStepperExample {
 
   protected readonly richTitleSnippet = `import { Component } from '@angular/core';
 
-import { StepComponent, StepperComponent, StepTitleDirective, } from './shared/ui-lib';
+import { StepComponent, StepperComponent, StepTitleDirective, BadgeComponent } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-rich-title-stepper-example', imports: [StepperComponent, StepComponent, StepTitleDirective], template: \`
+  selector: 'app-rich-title-stepper-example', imports: [StepperComponent, StepComponent, StepTitleDirective, BadgeComponent], template: \`
     <ms-stepper>
       <ms-step [completed]="true">
         <ng-template msStepTitle>
-          Account <span class="badge">Done</span>
+          Account <ms-badge kind="success">Done</ms-badge>
         </ng-template>
 
         <p>Account details passed review.</p>
@@ -105,7 +113,7 @@ import { StepComponent, StepperComponent, StepTitleDirective, } from './shared/u
 
       <ms-step>
         <ng-template msStepTitle>
-          Billing <span class="status-dot" aria-hidden="true"></span>
+          Billing <ms-badge kind="info" dot>Editing</ms-badge>
         </ng-template>
 
         <p>Billing details are being edited.</p>
@@ -116,17 +124,6 @@ import { StepComponent, StepperComponent, StepTitleDirective, } from './shared/u
       </ms-step>
     </ms-stepper>
   \`,
-  styles: [\`
-    .status-dot {
-      display: inline-block;
-      inline-size: 0.5rem;
-      block-size: 0.5rem;
-      margin-inline-start: 0.375rem;
-      border-radius: 999px;
-      background: var(--color-success);
-      vertical-align: middle;
-    }
-  \`],
 })
 export class RichTitleStepperExample {}`;
 

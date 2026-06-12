@@ -1,5 +1,5 @@
-<main class="timeline-page">
-  <header class="timeline-header">
+<main class="timeline-page showcase-page">
+  <header class="timeline-header showcase-header">
     <a class="btn btn-ghost back-link" routerLink="/">← Back to home</a>
     <p class="eyebrow">Components</p>
     <h1>Timeline</h1>
@@ -9,10 +9,10 @@
     </p>
   </header>
 
-  <section class="timeline-section">
+  <section class="timeline-section showcase-section">
     <h2>Vertical workflow</h2>
     <p class="section-copy">Use workflow statuses to show completed, current, and waiting steps.</p>
-    <div class="timeline-demo">
+    <div class="timeline-demo showcase-demo-panel">
       <ms-timeline ariaLabel="Purchase request workflow">
         <ms-timeline-item status="done" title="Request submitted" meta="Today, 09:10">
           <p>The purchase request was sent to the approval queue.</p>
@@ -30,10 +30,10 @@
     <app-showcase-code label="Vertical timeline" [code]="verticalSnippet" />
   </section>
 
-  <section class="timeline-section">
+  <section class="timeline-section showcase-section">
     <h2>Horizontal workflow</h2>
     <p class="section-copy">Switch orientation when the stages should scan left to right.</p>
-    <div class="timeline-demo">
+    <div class="timeline-demo showcase-demo-panel">
       <ms-timeline orientation="horizontal" ariaLabel="Deployment workflow">
         <ms-timeline-item status="done" title="Build" subtitle="Package created" />
         <ms-timeline-item status="done" title="Test" subtitle="Checks passed" />
@@ -44,15 +44,15 @@
     <app-showcase-code label="Horizontal timeline" [code]="horizontalSnippet" />
   </section>
 
-  <section class="timeline-section">
+  <section class="timeline-section showcase-section">
     <h2>Projected content</h2>
     <p class="section-copy">Project rich title, subtitle, meta, and body content into each item.</p>
-    <div class="timeline-demo">
+    <div class="timeline-demo showcase-demo-panel">
       <ms-timeline ariaLabel="Approval timeline">
         <ms-timeline-item status="done">
           <ng-template msTimelineMeta>Completed</ng-template>
           <ng-template msTimelineTitle>
-            Manager approval <span class="badge">Signed</span>
+            Manager approval <ms-badge kind="success">Signed</ms-badge>
           </ng-template>
           <ng-template msTimelineSubtitle>Approved by Mariam Hassan</ng-template>
 
@@ -67,10 +67,10 @@
     <app-showcase-code label="Projected timeline" [code]="projectedSnippet" />
   </section>
 
-  <section class="timeline-section">
+  <section class="timeline-section showcase-section">
     <h2>Custom icon</h2>
     <p class="section-copy">Override the marker icon while keeping the workflow status color.</p>
-    <div class="timeline-demo">
+    <div class="timeline-demo showcase-demo-panel">
       <ms-timeline ariaLabel="Document workflow">
         <ms-timeline-item status="skipped" icon="redo" title="Secondary review skipped">
           <p>The requester selected the fast-track policy.</p>

@@ -21,10 +21,8 @@ import type { MediaSliderScrollBehavior, MediaSliderSnapAlign } from './media-sl
   templateUrl: './media-slider.html',
   host: {
     class: 'media-slider',
-    '[class.media-slider-align-start]': "snapAlign() === 'start'",
-    '[class.media-slider-align-center]': "snapAlign() === 'center'",
-    '[class.media-slider-align-end]': "snapAlign() === 'end'",
     '[style.--_media-slider-snap-align]': 'snapAlign()',
+    '[style.--_media-slider-track-padding-inline]': 'trackPaddingInline()',
     '[style.--_media-slider-scroll-behavior]': 'scrollBehavior()',
     '[style.--_media-slider-slide-size]': 'slideSize()',
     '[style.--_media-slider-aspect-ratio]': 'aspectRatio()',
@@ -58,6 +56,11 @@ export class MediaSliderComponent {
     () => this.slides().length > 0 && this.activeIndex() > 0,
   );
   protected readonly canScrollNext = computed(() => this.activeIndex() < this.slides().length - 1);
+  protected readonly trackPaddingInline = computed(() =>
+    this.snapAlign() === 'center'
+      ? 'max(var(--spacing-4), calc((100% - var(--_media-slider-slide-size)) / 2))'
+      : 'var(--spacing-4)',
+  );
 
   constructor() {
     effect(() => {

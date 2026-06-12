@@ -1,5 +1,5 @@
-<main class="accordion-page">
-  <header class="accordion-header">
+<main class="accordion-page showcase-page">
+  <header class="accordion-header showcase-header">
     <a class="btn btn-ghost back-link" routerLink="/">← Back to home</a>
     <p class="eyebrow">Components</p>
     <h1>Accordion</h1>
@@ -9,12 +9,12 @@
     </p>
   </header>
 
-  <section class="accordion-section">
+  <section class="accordion-section showcase-section">
     <h2>Single-open accordion</h2>
     <p class="section-copy">
       Use the default mode when expanding one item should close the previously open item.
     </p>
-    <div class="accordion-demo">
+    <div class="accordion-demo showcase-demo-panel">
       <ms-accordion>
         <ms-accordion-item title="Account settings" [expanded]="true">
           <p>Manage profile details, sign-in methods, and notification preferences.</p>
@@ -32,12 +32,12 @@
     <app-showcase-code label="Single-open accordion" [code]="basicSnippet" />
   </section>
 
-  <section class="accordion-section">
+  <section class="accordion-section showcase-section">
     <h2>Compact accordion</h2>
     <p class="section-copy">
       Add `accordion-compact` when disclosure groups need tighter vertical rhythm.
     </p>
-    <div class="accordion-demo">
+    <div class="accordion-demo showcase-demo-panel">
       <ms-accordion class="accordion-compact">
         <ms-accordion-item title="Profile" [expanded]="true">
           <p>Review account identity, language, and display settings.</p>
@@ -55,23 +55,25 @@
     <app-showcase-code label="Compact accordion" [code]="compactSnippet" />
   </section>
 
-  <section class="accordion-section">
+  <section class="accordion-section showcase-section">
     <h2>Multiple panels and rich titles</h2>
     <p class="section-copy">
       Enable `multiple` when sections can stay open together and use `msAccordionTitle` for compact
       label markup.
     </p>
-    <div class="accordion-demo">
+    <div class="accordion-demo showcase-demo-panel">
       <ms-accordion [multiple]="true">
         <ms-accordion-item [expanded]="true">
-          <ng-template msAccordionTitle> Deployment <span class="badge">Ready</span> </ng-template>
+          <ng-template msAccordionTitle>
+            Deployment <ms-badge kind="success">Ready</ms-badge>
+          </ng-template>
 
           <p>The release candidate passed validation and is ready to promote.</p>
         </ms-accordion-item>
 
         <ms-accordion-item [expanded]="true">
           <ng-template msAccordionTitle>
-            Review <span class="status-dot" aria-hidden="true"></span>
+            Review <ms-badge kind="success" dot>Approved</ms-badge>
           </ng-template>
 
           <p>Two reviewers have approved the latest design token updates.</p>
@@ -85,12 +87,12 @@
     <app-showcase-code label="Multiple accordion" [code]="multipleSnippet" />
   </section>
 
-  <section class="accordion-section">
+  <section class="accordion-section showcase-section">
     <h2>Keyboard and RTL behavior</h2>
     <p class="section-copy">
       Focus a header and use arrow keys, Home, or End. This example scopes direction to RTL.
     </p>
-    <div class="accordion-demo rtl-demo" dir="rtl">
+    <div class="accordion-demo showcase-demo-panel rtl-demo" dir="rtl">
       <span class="rtl-label">RTL context</span>
       <ms-accordion>
         <ms-accordion-item title="First">

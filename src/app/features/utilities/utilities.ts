@@ -1,7 +1,7 @@
 import { Component, computed, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { DrawerClose, DrawerComponent, ShowcaseCode } from '../../shared/ui-lib';
+import { BadgeComponent, DrawerClose, DrawerComponent, ShowcaseCode } from '../../shared/ui-lib';
 
 type UtilityDemo =
   | 'display'
@@ -39,7 +39,7 @@ interface UtilityGroup {
 
 @Component({
   selector: 'app-utilities',
-  imports: [DrawerClose, DrawerComponent, RouterLink, ShowcaseCode],
+  imports: [BadgeComponent, DrawerClose, DrawerComponent, RouterLink, ShowcaseCode],
   templateUrl: './utilities.html',
   styleUrls: ['./utilities.scss', './utilities-demo.scss', './utilities-guidance.scss'],
 })
@@ -237,7 +237,7 @@ export class SpacingUtilitiesExample {}`,
         'Keeping copy on the shared font size and weight scale.',
       ],
       avoidWhen: [
-        'A component needs a reusable typographic variant with its own semantic API.',
+        'A component needs a reusable typographic kind with its own semantic API.',
       ],
       classes: [
         { name: 'text-xs / text-sm / text-md / text-lg / text-xl / text-2xl', description: 'Sets font size from the token scale.' },
@@ -289,13 +289,16 @@ export class TypographyUtilitiesExample {}`,
       ],
       snippet: `import { Component } from '@angular/core';
 
+import { BadgeComponent } from './shared/ui-lib';
+
 @Component({
   selector: 'app-color-utilities-example',
+  imports: [BadgeComponent],
   template: \`
     <div class="d-flex flex-wrap gap-12">
-      <span class="px-12 py-8 rounded-full bg-success-subtle text-success">Success</span>
-      <span class="px-12 py-8 rounded-full bg-warning-subtle text-warning">Warning</span>
-      <span class="px-12 py-8 rounded-full bg-danger-subtle text-danger">Danger</span>
+      <ms-badge kind="success">Success</ms-badge>
+      <ms-badge kind="warning">Warning</ms-badge>
+      <ms-badge kind="danger">Danger</ms-badge>
     </div>
   \`,
 })
@@ -316,7 +319,7 @@ export class ColorUtilitiesExample {}`,
         'Applying token-backed radius without writing new CSS.',
       ],
       avoidWhen: [
-        'The border is part of a stateful component variant such as selected, invalid, or active.',
+        'The border is part of a stateful component kind such as selected, invalid, or active.',
       ],
       classes: [
         { name: 'border', description: 'Applies the default border width and color.' },

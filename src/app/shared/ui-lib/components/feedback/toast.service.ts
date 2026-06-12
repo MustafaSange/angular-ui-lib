@@ -1,6 +1,6 @@
 import { Service, signal } from '@angular/core';
 
-import type { FeedbackVariant, ToastConfig, ToastEntry } from './feedback-types';
+import type { FeedbackKind, ToastConfig, ToastEntry } from './feedback-types';
 import { ToastRef } from './toast-ref';
 
 type ToastRecord = ToastEntry & {
@@ -26,14 +26,14 @@ export class ToastService {
   readonly entries = this.toastEntries.asReadonly();
 
   show(config: ToastConfig): ToastRef {
-    const variant = config.variant ?? 'info';
-    const duration = config.duration ?? this.getDefaultDuration(variant);
+    const kind = config.kind ?? 'info';
+    const duration = config.duration ?? this.getDefaultDuration(kind);
     const id = `toast-${nextToastId++}`;
     const ref = new ToastRef(id);
     const record: ToastRecord = {
       id,
       message: config.message,
-      variant,
+      kind,
       title: config.title,
       action: config.action,
       duration,
@@ -55,35 +55,35 @@ export class ToastService {
     return ref;
   }
 
-  info(message: string, options: Omit<ToastConfig, 'message' | 'variant'> = {}): ToastRef {
+  info(message: string, options: Omit<ToastConfig, 'message' | 'kind'> = {}): ToastRef {
     return this.show({
       ...options,
       message,
-      variant: 'info',
+      kind: 'info',
     });
   }
 
-  success(message: string, options: Omit<ToastConfig, 'message' | 'variant'> = {}): ToastRef {
+  success(message: string, options: Omit<ToastConfig, 'message' | 'kind'> = {}): ToastRef {
     return this.show({
       ...options,
       message,
-      variant: 'success',
+      kind: 'success',
     });
   }
 
-  warning(message: string, options: Omit<ToastConfig, 'message' | 'variant'> = {}): ToastRef {
+  warning(message: string, options: Omit<ToastConfig, 'message' | 'kind'> = {}): ToastRef {
     return this.show({
       ...options,
       message,
-      variant: 'warning',
+      kind: 'warning',
     });
   }
 
-  danger(message: string, options: Omit<ToastConfig, 'message' | 'variant'> = {}): ToastRef {
+  danger(message: string, options: Omit<ToastConfig, 'message' | 'kind'> = {}): ToastRef {
     return this.show({
       ...options,
       message,
-      variant: 'danger',
+      kind: 'danger',
     });
   }
 
@@ -193,8 +193,8 @@ export class ToastService {
     }, record.remainingDuration);
   }
 
-  private getDefaultDuration(variant: FeedbackVariant): number | false {
-    return variant === 'info' || variant === 'success' ? DEFAULT_TIMED_DURATION : false;
+  private getDefaultDuration(kind: FeedbackKind): number | false {
+    return kind === 'info' || kind === 'success' ? DEFAULT_TIMED_DURATION : false;
   }
 
   private elapsed(record: ToastRecord): number {
@@ -202,12 +202,12 @@ export class ToastService {
   }
 
   private toEntry(record: ToastRecord): ToastEntry {
-    const { id, message, variant, title, action, duration, dismissible, showIcon } = record;
+    const { id, message, kind, title, action, duration, dismissible, showIcon } = record;
 
     return {
       id,
       message,
-      variant,
+      kind,
       title,
       action,
       duration,

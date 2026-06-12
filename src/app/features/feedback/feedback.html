@@ -4,36 +4,36 @@
     <p class="eyebrow">Components</p>
     <h1>Alerts and toasts</h1>
     <p class="description">
-      Inline status messages and global notifications with shared feedback variants.
+      Inline status messages and global notifications with shared feedback kinds.
     </p>
   </header>
 
   <section class="feedback-section">
-    <h2>Alert variants</h2>
+    <h2>Alert kinds</h2>
     <div class="feedback-stack">
-      <ms-alert variant="info" title="Heads up">
+      <ms-alert kind="info" title="Heads up">
         Invite links expire after seven days.
       </ms-alert>
 
-      <ms-alert variant="success" title="Saved">
+      <ms-alert kind="success" title="Saved">
         Your workspace settings were updated.
       </ms-alert>
 
-      <ms-alert variant="warning" title="Review required">
+      <ms-alert kind="warning" title="Review required">
         Two imported rows need attention before publishing.
       </ms-alert>
 
-      <ms-alert variant="danger" title="Sync failed">
+      <ms-alert kind="danger" title="Sync failed">
         The billing export could not be completed.
       </ms-alert>
     </div>
-    <app-showcase-code label="Alert variants" [code]="alertVariantsSnippet" />
+    <app-showcase-code label="Alert kinds" [code]="alertKindsSnippet" />
   </section>
 
   <section class="feedback-section">
     <h2>Alert actions</h2>
     <div class="feedback-stack">
-      <ms-alert variant="warning" title="Subscription needs attention">
+      <ms-alert kind="warning" title="Subscription needs attention">
         Update the payment method before the next renewal.
 
         <div slot="actions">
@@ -50,7 +50,7 @@
     <div class="feedback-stack">
       @if (dismissibleAlertVisible()) {
         <ms-alert
-          variant="danger"
+          kind="danger"
           title="Payment failed"
           dismissible
           (dismissed)="dismissibleAlertVisible.set(false)"
@@ -67,13 +67,13 @@
   </section>
 
   <section class="feedback-section">
-    <h2>Toast variants</h2>
+    <h2>Toast kinds</h2>
     <div class="feedback-demo-row">
-      <button class="btn btn-primary" type="button" (click)="showToastVariants()">
-        Show toast variants
+      <button class="btn btn-primary" type="button" (click)="showToastKinds()">
+        Show toast kinds
       </button>
     </div>
-    <app-showcase-code label="Toast variants" [code]="toastVariantsSnippet" />
+    <app-showcase-code label="Toast kinds" [code]="toastKindsSnippet" />
   </section>
 
   <section class="feedback-section">

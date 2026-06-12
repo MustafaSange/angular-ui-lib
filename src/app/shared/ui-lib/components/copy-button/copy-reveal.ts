@@ -1,7 +1,7 @@
 import { Component, ElementRef, booleanAttribute, input, viewChild } from '@angular/core';
 
 import { CopyButtonComponent } from './copy-button';
-import type { CopyButtonSize, CopyButtonVariant } from './copy-button-types';
+import type { CopyButtonKind, CopyButtonSize } from './copy-button-types';
 
 @Component({
   selector: 'ms-copy-reveal',
@@ -15,7 +15,7 @@ export class CopyRevealComponent {
   readonly failedLabel = input('Copy failed');
   readonly resetDelay = input(2000);
   readonly disabled = input(false, { transform: booleanAttribute });
-  readonly variant = input<CopyButtonVariant>('ghost');
+  readonly kind = input<CopyButtonKind>('ghost');
   readonly size = input<CopyButtonSize>('sm');
 
   private readonly content = viewChild<ElementRef<HTMLElement>>('content');

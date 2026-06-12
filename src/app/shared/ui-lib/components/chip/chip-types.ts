@@ -1,2 +1,4 @@
-export type ChipVariant = 'neutral' | 'info' | 'success' | 'warning' | 'danger';
+import type { NeutralSemanticKind } from '../../semantic-types';
+
+export type ChipKind = NeutralSemanticKind;
 export type ChipAppearance = 'soft' | 'outline';

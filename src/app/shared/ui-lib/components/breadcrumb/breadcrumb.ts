@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 
 import type { BreadcrumbSize } from './breadcrumb-types';
 
@@ -6,11 +6,30 @@ import type { BreadcrumbSize } from './breadcrumb-types';
   selector: 'ms-breadcrumb',
   templateUrl: './breadcrumb.html',
   host: {
-    '[class.breadcrumb-size-sm]': "size() === 'sm'",
-    '[class.breadcrumb-size-md]': "size() === 'md'",
+    '[style.--_breadcrumb-gap]': 'sizeValue().gap',
+    '[style.--_breadcrumb-item-gap]': 'sizeValue().itemGap',
+    '[style.--_breadcrumb-font-size]': 'sizeValue().fontSize',
   },
 })
 export class BreadcrumbComponent {
   readonly label = input('Breadcrumb');
   readonly size = input<BreadcrumbSize>('md');
+
+  protected readonly sizeValue = computed(() => {
+    switch (this.size()) {
+      case 'sm':
+        return {
+          gap: 'var(--spacing-6)',
+          itemGap: 'var(--spacing-6)',
+          fontSize: 'var(--font-size-xs)',
+        };
+      case 'md':
+      default:
+        return {
+          gap: 'var(--spacing-8)',
+          itemGap: 'var(--spacing-8)',
+          fontSize: 'var(--font-size-sm)',
+        };
+    }
+  });
 }

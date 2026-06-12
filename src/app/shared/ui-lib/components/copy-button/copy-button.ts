@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 
 import { copyTextToClipboard } from './copy-clipboard';
-import type { CopyButtonSize, CopyButtonVariant, CopyClipboardResult } from './copy-button-types';
+import type { CopyButtonKind, CopyButtonSize, CopyClipboardResult } from './copy-button-types';
 
 type CopyState = 'idle' | CopyClipboardResult;
 
@@ -28,7 +28,7 @@ export class CopyButtonComponent implements OnDestroy {
   readonly failedLabel = input('Copy failed');
   readonly resetDelay = input(2000);
   readonly disabled = input(false, { transform: booleanAttribute });
-  readonly variant = input<CopyButtonVariant>('ghost');
+  readonly kind = input<CopyButtonKind>('ghost');
   readonly size = input<CopyButtonSize>('md');
 
   private readonly projectedContent = viewChild<ElementRef<HTMLElement>>('projectedContent');
@@ -61,7 +61,7 @@ export class CopyButtonComponent implements OnDestroy {
   protected readonly buttonClasses = computed(() => {
     const classes = ['btn', 'btn-icon', `btn-${this.size()}`];
 
-    switch (this.variant()) {
+    switch (this.kind()) {
       case 'outline':
         classes.push('btn-outline');
         break;

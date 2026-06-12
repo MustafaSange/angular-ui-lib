@@ -1,6 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 
-import type { FeedbackVariant } from './feedback-types';
+import type { FeedbackKind } from './feedback-types';
 import { ToastService } from './toast.service';
 
 @Component({
@@ -48,16 +48,16 @@ export class ToastOutletComponent {
     this.toastService.resume(id, 'focus');
   }
 
-  protected getRole(variant: FeedbackVariant): 'status' | 'alert' {
-    return variant === 'warning' || variant === 'danger' ? 'alert' : 'status';
+  protected getRole(kind: FeedbackKind): 'status' | 'alert' {
+    return kind === 'warning' || kind === 'danger' ? 'alert' : 'status';
   }
 
-  protected getAriaLive(variant: FeedbackVariant): 'polite' | 'assertive' {
-    return variant === 'warning' || variant === 'danger' ? 'assertive' : 'polite';
+  protected getAriaLive(kind: FeedbackKind): 'polite' | 'assertive' {
+    return kind === 'warning' || kind === 'danger' ? 'assertive' : 'polite';
   }
 
-  protected getIcon(variant: FeedbackVariant): string {
-    switch (variant) {
+  protected getIcon(kind: FeedbackKind): string {
+    switch (kind) {
       case 'success':
         return 'check';
       case 'warning':

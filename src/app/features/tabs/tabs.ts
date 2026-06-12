@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+import { BadgeComponent } from '../../shared/ui-lib/components/badge';
 import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 import {
   TabComponent,
@@ -10,7 +11,14 @@ import {
 
 @Component({
   selector: 'app-tabs',
-  imports: [RouterLink, ShowcaseCode, TabsComponent, TabComponent, TabTitleDirective],
+  imports: [
+    RouterLink,
+    ShowcaseCode,
+    TabsComponent,
+    TabComponent,
+    TabTitleDirective,
+    BadgeComponent,
+  ],
   templateUrl: './tabs.html',
   styleUrl: './tabs.scss',
 })
@@ -39,10 +47,10 @@ export class SimpleTabsExample {}`;
 
   protected readonly projectedTitleSnippet = `import { Component } from '@angular/core';
 
-import { TabComponent, TabTitleDirective, TabsComponent } from './shared/ui-lib';
+import { TabComponent, TabTitleDirective, TabsComponent, BadgeComponent } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-projected-title-tabs-example', imports: [TabsComponent, TabComponent, TabTitleDirective], template: \`
+  selector: 'app-projected-title-tabs-example', imports: [TabsComponent, TabComponent, TabTitleDirective, BadgeComponent], template: \`
     <ms-tabs>
       <ms-tab title="Profile">
         <p>Profile details are ready for review.</p>
@@ -50,7 +58,7 @@ import { TabComponent, TabTitleDirective, TabsComponent } from './shared/ui-lib'
 
       <ms-tab>
         <ng-template msTabTitle>
-          Billing <span class="badge">3</span>
+          Billing <ms-badge kind="info" appearance="solid" aria-label="3 billing items">3</ms-badge>
         </ng-template>
 
         <p>Three invoices need attention before the next renewal.</p>
@@ -58,24 +66,13 @@ import { TabComponent, TabTitleDirective, TabsComponent } from './shared/ui-lib'
 
       <ms-tab>
         <ng-template msTabTitle>
-          Security <span class="status-dot" aria-hidden="true"></span>
+          Security <ms-badge kind="success" dot>Enabled</ms-badge>
         </ng-template>
 
         <p>Two-factor authentication is enabled for all administrators.</p>
       </ms-tab>
     </ms-tabs>
   \`,
-  styles: [\`
-    .status-dot {
-      display: inline-block;
-      inline-size: 0.5rem;
-      block-size: 0.5rem;
-      margin-inline-start: 0.375rem;
-      border-radius: 999px;
-      background: var(--color-success);
-      vertical-align: middle;
-    }
-  \`],
 })
 export class ProjectedTitleTabsExample {}`;
 

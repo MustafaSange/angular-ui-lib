@@ -3,6 +3,10 @@ ms-media-slider,
   --_media-slider-gap: var(--spacing-16);
   --_media-slider-slide-size: min(78vw, 22rem);
   --_media-slider-snap-align: center;
+  --_media-slider-track-padding-inline: max(
+    var(--spacing-4),
+    calc((100% - var(--_media-slider-slide-size)) / 2)
+  );
   --_media-slider-scroll-behavior: smooth;
   --_media-slider-aspect-ratio: 4 / 3;
 
@@ -21,11 +25,11 @@ ms-media-slider,
   gap: var(--_media-slider-gap);
   min-inline-size: 0;
   padding-block: var(--spacing-4);
-  padding-inline: var(--spacing-4);
+  padding-inline: var(--_media-slider-track-padding-inline);
   overflow-x: auto;
   overscroll-behavior-inline: contain;
   scroll-behavior: var(--_media-slider-scroll-behavior);
-  scroll-padding-inline: var(--spacing-4);
+  scroll-padding-inline: var(--_media-slider-track-padding-inline);
   scroll-snap-type: inline mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -38,17 +42,6 @@ ms-media-slider,
     outline: 0;
     box-shadow: var(--control-focus-ring);
   }
-}
-
-.media-slider-align-center .media-slider-track {
-  padding-inline: max(
-    var(--spacing-4),
-    calc((100% - var(--_media-slider-slide-size)) / 2)
-  );
-  scroll-padding-inline: max(
-    var(--spacing-4),
-    calc((100% - var(--_media-slider-slide-size)) / 2)
-  );
 }
 
 .media-slider-button {

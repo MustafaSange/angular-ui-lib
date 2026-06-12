@@ -1,4 +1,6 @@
-export type FeedbackVariant = 'info' | 'success' | 'warning' | 'danger';
+import type { SemanticKind } from '../../semantic-types';
+
+export type FeedbackKind = SemanticKind;
 
 export type ToastAction = {
   label: string;
@@ -7,7 +9,7 @@ export type ToastAction = {
 
 export type ToastConfig = {
   message: string;
-  variant?: FeedbackVariant;
+  kind?: FeedbackKind;
   title?: string;
   action?: ToastAction;
   duration?: number | false;
@@ -18,7 +20,7 @@ export type ToastConfig = {
 export type ToastEntry = {
   id: string;
   message: string;
-  variant: FeedbackVariant;
+  kind: FeedbackKind;
   title: string | undefined;
   action: ToastAction | undefined;
   duration: number | false;

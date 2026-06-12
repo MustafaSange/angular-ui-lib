@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+import { BadgeComponent } from '../../shared/ui-lib/components/badge';
 import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 import {
   TimelineComponent,
@@ -20,6 +21,7 @@ import {
     TimelineTitleDirective,
     TimelineSubtitleDirective,
     TimelineMetaDirective,
+    BadgeComponent,
   ],
   templateUrl: './timeline.html',
   styleUrl: './timeline.scss',
@@ -65,6 +67,7 @@ export class HorizontalTimelineExample {}`;
   protected readonly projectedSnippet = `import { Component } from '@angular/core';
 
 import {
+  BadgeComponent,
   TimelineComponent,
   TimelineItemComponent,
   TimelineMetaDirective,
@@ -80,13 +83,14 @@ import {
     TimelineTitleDirective,
     TimelineSubtitleDirective,
     TimelineMetaDirective,
+    BadgeComponent,
   ],
   template: \`
     <ms-timeline ariaLabel="Approval timeline">
       <ms-timeline-item status="done">
         <ng-template msTimelineMeta>Completed</ng-template>
         <ng-template msTimelineTitle>
-          Manager approval <span class="badge">Signed</span>
+          Manager approval <ms-badge kind="success">Signed</ms-badge>
         </ng-template>
         <ng-template msTimelineSubtitle>Approved by Mariam Hassan</ng-template>
 
@@ -98,13 +102,6 @@ import {
       </ms-timeline-item>
     </ms-timeline>
   \`,
-  styles: [\`
-    .badge {
-      margin-inline-start: 0.375rem;
-      color: var(--color-success);
-      font-size: var(--font-size-xs);
-    }
-  \`],
 })
 export class ProjectedTimelineExample {}`;
 

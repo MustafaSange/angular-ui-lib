@@ -3,12 +3,12 @@
     @for (entry of entries(); track entry.id) {
       <article
         class="ms-toast"
-        [class.ms-toast-info]="entry.variant === 'info'"
-        [class.ms-toast-success]="entry.variant === 'success'"
-        [class.ms-toast-warning]="entry.variant === 'warning'"
-        [class.ms-toast-danger]="entry.variant === 'danger'"
-        [attr.role]="getRole(entry.variant)"
-        [attr.aria-live]="getAriaLive(entry.variant)"
+        [class.ms-toast-info]="entry.kind === 'info'"
+        [class.ms-toast-success]="entry.kind === 'success'"
+        [class.ms-toast-warning]="entry.kind === 'warning'"
+        [class.ms-toast-danger]="entry.kind === 'danger'"
+        [attr.role]="getRole(entry.kind)"
+        [attr.aria-live]="getAriaLive(entry.kind)"
         (mouseenter)="pauseHover(entry.id)"
         (mouseleave)="resumeHover(entry.id)"
         (focusin)="pauseFocus(entry.id)"
@@ -16,7 +16,7 @@
       >
         @if (entry.showIcon) {
           <span class="ms-toast-icon" aria-hidden="true">
-            <span class="ms-icon ms-icon-filled">{{ getIcon(entry.variant) }}</span>
+            <span class="ms-icon ms-icon-filled">{{ getIcon(entry.kind) }}</span>
           </span>
         }
 

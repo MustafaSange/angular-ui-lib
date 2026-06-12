@@ -91,7 +91,7 @@ import { BadgeComponent } from './shared/ui-lib';
 @Component({
   selector: 'app-status-example',
   imports: [BadgeComponent],
-  template: ` <ms-badge variant="success">Active</ms-badge> `,
+  template: ` <ms-badge kind="success">Active</ms-badge> `,
 })
 export class StatusExample {}
 ```
