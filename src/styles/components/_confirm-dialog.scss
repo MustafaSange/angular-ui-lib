@@ -1,0 +1,87 @@
+$confirm-dialog-kinds: info, success, warning, danger;
+
+.confirm-dialog {
+  --_confirm-dialog-color: var(--color-info);
+  --_confirm-dialog-border: var(--color-info-border);
+  --_confirm-dialog-surface: var(--color-info-subtle);
+  --_confirm-dialog-text: var(--color-info-text);
+
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: var(--spacing-12);
+}
+
+@each $kind in $confirm-dialog-kinds {
+  .confirm-dialog-#{$kind} {
+    --_confirm-dialog-color: var(--color-#{$kind});
+    --_confirm-dialog-border: var(--color-#{$kind}-border);
+    --_confirm-dialog-surface: var(--color-#{$kind}-subtle);
+    --_confirm-dialog-text: var(--color-#{$kind}-text);
+  }
+}
+
+.confirm-dialog-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--spacing-32);
+  min-inline-size: var(--spacing-32);
+  block-size: var(--spacing-32);
+  border: var(--border-width-sm) solid var(--_confirm-dialog-border);
+  border-radius: var(--radius-full);
+  background-color: var(--_confirm-dialog-surface);
+  color: var(--_confirm-dialog-text);
+
+  .ms-icon {
+    font-size: var(--font-size-lg);
+    line-height: 1;
+  }
+}
+
+.confirm-dialog-message {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-body);
+  overflow-wrap: anywhere;
+}
+
+.confirm-dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--spacing-8);
+  inline-size: 100%;
+}
+
+@mixin dark-confirm-dialog-tones {
+  .confirm-dialog {
+    --_confirm-dialog-border: color-mix(
+      in srgb,
+      var(--color-border-strong) 55%,
+      var(--_confirm-dialog-color)
+    );
+    --_confirm-dialog-surface: color-mix(
+      in srgb,
+      var(--color-surface) 84%,
+      var(--_confirm-dialog-color)
+    );
+    --_confirm-dialog-text: color-mix(
+      in srgb,
+      var(--color-text-primary) 78%,
+      var(--_confirm-dialog-color)
+    );
+  }
+}
+
+[data-theme='dark'] {
+  @include dark-confirm-dialog-tones;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]),
+  [data-theme='system'] {
+    @include dark-confirm-dialog-tones;
+  }
+}

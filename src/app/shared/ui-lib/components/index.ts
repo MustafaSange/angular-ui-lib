@@ -7,6 +7,7 @@ export * from './button-toggle';
 export * from './card';
 export * from './chip';
 export * from './choice-controls';
+export * from './confirm-dialog';
 export * from './copy-button';
 export * from './direction-switcher';
 export * from './drawer';
