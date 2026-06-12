@@ -2,6 +2,8 @@ export const MATERIAL_ICONS = [
   'add',
   'archive',
   'bar_chart',
+  'block',
+  'cancel',
   'check',
   'check_circle',
   'chevron_left',
@@ -23,6 +25,9 @@ export const MATERIAL_ICONS = [
   'more_horiz',
   'more_vert',
   'priority_high',
+  'redo',
   'settings',
   'search',
+  'skip_next',
+  'sync',
 ] as const;

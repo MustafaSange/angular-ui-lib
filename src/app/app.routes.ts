@@ -129,6 +129,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/tabs/tabs').then((m) => m.Tabs),
   },
   {
+    path: 'timeline',
+    loadComponent: () => import('./features/timeline/timeline').then((m) => m.Timeline),
+  },
+  {
     path: 'tooltip',
     loadComponent: () => import('./features/tooltip/tooltip').then((m) => m.Tooltip),
   },
