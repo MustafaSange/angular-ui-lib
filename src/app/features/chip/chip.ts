@@ -20,27 +20,27 @@ import { ChipComponent } from './shared/ui-lib';
 @Component({
   selector: 'app-static-chip-example', imports: [ChipComponent], template: \`
     <ms-chip>Design system</ms-chip>
-    <ms-chip variant="info">Documentation</ms-chip>
-    <ms-chip variant="success">
+    <ms-chip kind="info">Documentation</ms-chip>
+    <ms-chip kind="success">
       <span class="ms-icon" aria-hidden="true">check_circle</span>
       Published
     </ms-chip>
   \`, })
 export class StaticChipExample {}`;
 
-  protected readonly variantsSnippet = `import { Component } from '@angular/core';
+  protected readonly kindsSnippet = `import { Component } from '@angular/core';
 
 import { ChipComponent } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-chip-variants-example', imports: [ChipComponent], template: \`
+  selector: 'app-chip-kinds-example', imports: [ChipComponent], template: \`
     <ms-chip>Neutral</ms-chip>
-    <ms-chip variant="info">Info</ms-chip>
-    <ms-chip variant="success">Success</ms-chip>
-    <ms-chip variant="warning">Warning</ms-chip>
-    <ms-chip variant="danger">Danger</ms-chip>
+    <ms-chip kind="info">Info</ms-chip>
+    <ms-chip kind="success">Success</ms-chip>
+    <ms-chip kind="warning">Warning</ms-chip>
+    <ms-chip kind="danger">Danger</ms-chip>
   \`, })
-export class ChipVariantsExample {}`;
+export class ChipKindsExample {}`;
 
   protected readonly statesSnippet = `import { Component } from '@angular/core';
 
@@ -48,11 +48,26 @@ import { ChipComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-chip-states-example', imports: [ChipComponent], template: \`
-    <ms-chip variant="info" selected>Selected</ms-chip>
-    <ms-chip variant="success" appearance="outline">Outline</ms-chip>
-    <ms-chip variant="warning" disabled>Disabled</ms-chip>
+    <ms-chip kind="info" selected>Selected</ms-chip>
+    <ms-chip kind="success" appearance="outline">Outline</ms-chip>
+    <ms-chip kind="warning" disabled>Disabled</ms-chip>
   \`, })
 export class ChipStatesExample {}`;
+
+  protected readonly radiusSnippet = `import { Component } from '@angular/core';
+
+import { ChipComponent } from './shared/ui-lib';
+
+@Component({
+  selector: 'app-chip-radius-example', imports: [ChipComponent], template: \`
+    <ms-chip kind="success" radius="none">None</ms-chip>
+    <ms-chip kind="success">Small</ms-chip>
+    <ms-chip kind="success" radius="md">Medium</ms-chip>
+    <ms-chip kind="success" radius="lg">Large</ms-chip>
+    <ms-chip kind="success" radius="xl">Extra large</ms-chip>
+    <ms-chip kind="success" radius="full">Full</ms-chip>
+  \`, })
+export class ChipRadiusExample {}`;
 
   protected readonly removableSnippet = `import { Component, signal } from '@angular/core';
 
@@ -89,7 +104,7 @@ import { ChipComponent, ChipRemoveDirective } from './shared/ui-lib';
   imports: [ChipComponent, ChipRemoveDirective],
   template: \`
     <div dir="rtl">
-      <ms-chip variant="success">
+      <ms-chip kind="success">
         <span class="ms-icon" aria-hidden="true">check_circle</span>
         منشور
       </ms-chip>

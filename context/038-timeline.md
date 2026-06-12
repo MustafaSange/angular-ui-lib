@@ -130,6 +130,7 @@ import {
   TimelineMetaDirective,
   TimelineSubtitleDirective,
   TimelineTitleDirective,
+  BadgeComponent,
 } from './shared/ui-lib';
 
 @Component({
@@ -140,13 +141,14 @@ import {
     TimelineTitleDirective,
     TimelineSubtitleDirective,
     TimelineMetaDirective,
+    BadgeComponent,
   ],
   template: `
     <ms-timeline>
       <ms-timeline-item status="done">
         <ng-template msTimelineMeta>Completed</ng-template>
         <ng-template msTimelineTitle>
-          Manager approval <span class="badge">Signed</span>
+          Manager approval <ms-badge kind="success">Signed</ms-badge>
         </ng-template>
         <ng-template msTimelineSubtitle>Approved by Mariam Hassan</ng-template>
 

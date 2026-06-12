@@ -11,19 +11,19 @@ import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
   styleUrl: './badge.scss',
 })
 export class Badge {
-  protected readonly variantsSnippet = `import { Component } from '@angular/core';
+  protected readonly kindsSnippet = `import { Component } from '@angular/core';
 
 import { BadgeComponent } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-badge-variants-example', imports: [BadgeComponent], template: \`
+  selector: 'app-badge-kinds-example', imports: [BadgeComponent], template: \`
     <ms-badge>Neutral</ms-badge>
-    <ms-badge variant="info">Info</ms-badge>
-    <ms-badge variant="success">Success</ms-badge>
-    <ms-badge variant="warning">Warning</ms-badge>
-    <ms-badge variant="danger">Danger</ms-badge>
+    <ms-badge kind="info">Info</ms-badge>
+    <ms-badge kind="success">Success</ms-badge>
+    <ms-badge kind="warning">Warning</ms-badge>
+    <ms-badge kind="danger">Danger</ms-badge>
   \`, })
-export class BadgeVariantsExample {}`;
+export class BadgeKindsExample {}`;
 
   protected readonly appearancesSnippet = `import { Component } from '@angular/core';
 
@@ -31,11 +31,26 @@ import { BadgeComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-badge-appearances-example', imports: [BadgeComponent], template: \`
-    <ms-badge variant="info" appearance="soft">Soft</ms-badge>
-    <ms-badge variant="info" appearance="solid">Solid</ms-badge>
-    <ms-badge variant="info" appearance="outline">Outline</ms-badge>
+    <ms-badge kind="info" appearance="soft">Soft</ms-badge>
+    <ms-badge kind="info" appearance="solid">Solid</ms-badge>
+    <ms-badge kind="info" appearance="outline">Outline</ms-badge>
   \`, })
 export class BadgeAppearancesExample {}`;
+
+  protected readonly radiusSnippet = `import { Component } from '@angular/core';
+
+import { BadgeComponent } from './shared/ui-lib';
+
+@Component({
+  selector: 'app-badge-radius-example', imports: [BadgeComponent], template: \`
+    <ms-badge kind="success" radius="none">None</ms-badge>
+    <ms-badge kind="success" radius="sm">Small</ms-badge>
+    <ms-badge kind="success" radius="md">Medium</ms-badge>
+    <ms-badge kind="success" radius="lg">Large</ms-badge>
+    <ms-badge kind="success" radius="xl">Extra large</ms-badge>
+    <ms-badge kind="success">Full</ms-badge>
+  \`, })
+export class BadgeRadiusExample {}`;
 
   protected readonly dotsCountsSnippet = `import { Component } from '@angular/core';
 
@@ -43,10 +58,10 @@ import { BadgeComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-badge-dots-counts-example', imports: [BadgeComponent], template: \`
-    <ms-badge variant="success" dot>Online</ms-badge>
-    <ms-badge variant="warning" dot>Syncing</ms-badge>
-    <ms-badge variant="danger" aria-label="12 unread notifications">12</ms-badge>
-    <ms-badge variant="info" appearance="solid" aria-label="99 or more updates">99+</ms-badge>
+    <ms-badge kind="success" dot>Online</ms-badge>
+    <ms-badge kind="warning" dot>Syncing</ms-badge>
+    <ms-badge kind="danger" aria-label="12 unread notifications">12</ms-badge>
+    <ms-badge kind="info" appearance="solid" aria-label="99 or more updates">99+</ms-badge>
   \`, })
 export class BadgeDotsCountsExample {}`;
 
@@ -56,11 +71,11 @@ import { BadgeComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-badge-icons-example', imports: [BadgeComponent], template: \`
-    <ms-badge variant="success">
+    <ms-badge kind="success">
       <span class="ms-icon" aria-hidden="true">check_circle</span>
       Verified
     </ms-badge>
-    <ms-badge variant="info" appearance="outline">
+    <ms-badge kind="info" appearance="outline">
       <span class="ms-icon" aria-hidden="true">filter_list</span>
       Filtered
     </ms-badge>
@@ -76,8 +91,8 @@ import { BadgeComponent } from './shared/ui-lib';
   imports: [BadgeComponent],
   template: \`
     <div dir="rtl">
-      <ms-badge variant="success" dot>متصل</ms-badge>
-      <ms-badge variant="info" appearance="outline">
+      <ms-badge kind="success" dot>متصل</ms-badge>
+      <ms-badge kind="info" appearance="outline">
         <span class="ms-icon" aria-hidden="true">check_circle</span>
         موثق
       </ms-badge>

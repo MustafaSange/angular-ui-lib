@@ -61,11 +61,12 @@ import {
   AccordionComponent,
   AccordionItemComponent,
   AccordionTitleDirective,
+  BadgeComponent,
 } from './shared/ui-lib';
 
 @Component({
   selector: 'app-accordion-example',
-  imports: [AccordionComponent, AccordionItemComponent, AccordionTitleDirective],
+  imports: [AccordionComponent, AccordionItemComponent, AccordionTitleDirective, BadgeComponent],
   template: `
     <ms-accordion>
       <ms-accordion-item title="Account settings" [expanded]="true">
@@ -73,7 +74,7 @@ import {
       </ms-accordion-item>
 
       <ms-accordion-item>
-        <ng-template msAccordionTitle> Billing <span class="badge">Updated</span> </ng-template>
+        <ng-template msAccordionTitle> Billing <ms-badge kind="success">Updated</ms-badge> </ng-template>
 
         <p>Review invoices, payment methods, and renewal settings.</p>
       </ms-accordion-item>

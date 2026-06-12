@@ -31,26 +31,6 @@
   --_card-surface: var(--color-surface-muted);
 }
 
-.card-padding-none {
-  --_card-padding: var(--spacing-0);
-  --_card-gap: var(--spacing-0);
-}
-
-.card-padding-sm {
-  --_card-padding: var(--spacing-16);
-  --_card-gap: var(--spacing-12);
-}
-
-.card-padding-md {
-  --_card-padding: var(--spacing-20);
-  --_card-gap: var(--spacing-16);
-}
-
-.card-padding-lg {
-  --_card-padding: var(--spacing-24);
-  --_card-gap: var(--spacing-20);
-}
-
 .card-header,
 .card-content,
 .card-footer {

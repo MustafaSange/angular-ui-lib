@@ -1,13 +1,13 @@
 import { Component, booleanAttribute, computed, input, output, signal } from '@angular/core';
 
-import type { FeedbackVariant } from './feedback-types';
+import type { FeedbackKind } from './feedback-types';
 
 @Component({
   selector: 'ms-alert',
   templateUrl: './alert.html',
 })
 export class AlertComponent {
-  readonly variant = input<FeedbackVariant>('info');
+  readonly kind = input<FeedbackKind>('info');
   readonly title = input<string>();
   readonly dismissible = input(false, { transform: booleanAttribute });
   readonly showIcon = input(true, { transform: booleanAttribute });
@@ -15,9 +15,9 @@ export class AlertComponent {
   readonly dismissed = output<void>();
 
   protected readonly isVisible = signal(true);
-  protected readonly role = computed(() => this.getRole(this.variant()));
-  protected readonly ariaLive = computed(() => this.getAriaLive(this.variant()));
-  protected readonly icon = computed(() => this.getIcon(this.variant()));
+  protected readonly role = computed(() => this.getRole(this.kind()));
+  protected readonly ariaLive = computed(() => this.getAriaLive(this.kind()));
+  protected readonly icon = computed(() => this.getIcon(this.kind()));
 
   protected dismiss(): void {
     if (!this.dismissible() || !this.isVisible()) {
@@ -28,16 +28,16 @@ export class AlertComponent {
     this.dismissed.emit();
   }
 
-  private getRole(variant: FeedbackVariant): 'status' | 'alert' {
-    return variant === 'warning' || variant === 'danger' ? 'alert' : 'status';
+  private getRole(kind: FeedbackKind): 'status' | 'alert' {
+    return kind === 'warning' || kind === 'danger' ? 'alert' : 'status';
   }
 
-  private getAriaLive(variant: FeedbackVariant): 'polite' | 'assertive' {
-    return variant === 'warning' || variant === 'danger' ? 'assertive' : 'polite';
+  private getAriaLive(kind: FeedbackKind): 'polite' | 'assertive' {
+    return kind === 'warning' || kind === 'danger' ? 'assertive' : 'polite';
   }
 
-  private getIcon(variant: FeedbackVariant): string {
-    switch (variant) {
+  private getIcon(kind: FeedbackKind): string {
+    switch (kind) {
       case 'success':
         return 'check';
       case 'warning':

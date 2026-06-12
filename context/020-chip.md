@@ -22,12 +22,14 @@ Public pieces:
 Required API:
 
 ```ts
-type ChipVariant = 'neutral' | 'info' | 'success' | 'warning' | 'danger';
+type ChipKind = 'neutral' | 'info' | 'success' | 'warning' | 'danger';
 type ChipAppearance = 'soft' | 'outline';
+type ShapeRadius = 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
 
 class ChipComponent {
-  readonly variant = input<ChipVariant>('neutral');
+  readonly kind = input<ChipKind>('neutral');
   readonly appearance = input<ChipAppearance>('soft');
+  readonly radius = input<ShapeRadius>('sm');
   readonly selected = input(false);
   readonly disabled = input(false);
   readonly removable = input(false);
@@ -38,6 +40,7 @@ class ChipComponent {
 Defaults:
 
 - chips use the neutral soft treatment
+- chips use a small radius by default
 - chips are not selected, disabled, or removable unless configured
 - removable chips emit `removed` when their remove button is activated
 
@@ -55,8 +58,8 @@ import { ChipComponent, ChipRemoveDirective } from './shared/ui-lib';
   imports: [ChipComponent, ChipRemoveDirective],
   template: `
     <ms-chip>Design system</ms-chip>
-    <ms-chip variant="info" [selected]="true">Selected filter</ms-chip>
-    <ms-chip variant="success">
+    <ms-chip kind="info" [selected]="true">Selected filter</ms-chip>
+    <ms-chip kind="success" radius="full">
       <span class="ms-icon" aria-hidden="true">check_circle</span>
       Published
     </ms-chip>
@@ -82,7 +85,7 @@ The implementation lives in `src/app/shared/ui-lib/components/chip`:
   behavior
 - `ChipRemoveDirective` marks the projected remove button and coordinates remove activation with
   the nearest chip
-- `chip-types.ts` defines `ChipVariant` and `ChipAppearance`
+- `chip-types.ts` defines `ChipKind` and `ChipAppearance`
 - `index.ts` exposes the public API
 
 `ms-chip` renders host-level inline markup. Consumers own the projected label text and any
@@ -148,7 +151,7 @@ Add a dedicated `/chip` page and home card demonstrating:
 
 - static chips with text
 - chips with leading icons
-- chip variants: neutral, info, success, warning, and danger
+- chip kinds: neutral, info, success, warning, and danger
 - chip appearances: soft and outline
 - selected chips
 - removable chips

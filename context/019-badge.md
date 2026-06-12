@@ -20,12 +20,14 @@ Public pieces:
 Required API:
 
 ```ts
-type BadgeVariant = 'neutral' | 'info' | 'success' | 'warning' | 'danger';
+type BadgeKind = 'neutral' | 'info' | 'success' | 'warning' | 'danger';
 type BadgeAppearance = 'soft' | 'solid' | 'outline';
+type ShapeRadius = 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
 
 class BadgeComponent {
-  readonly variant = input<BadgeVariant>('neutral');
+  readonly kind = input<BadgeKind>('neutral');
   readonly appearance = input<BadgeAppearance>('soft');
+  readonly radius = input<ShapeRadius>('full');
   readonly dot = input(false);
 }
 ```
@@ -33,6 +35,7 @@ class BadgeComponent {
 Defaults:
 
 - badges use the neutral soft treatment
+- badges use a full radius by default
 - badges are not dot-only unless configured
 - dot badges render a visual status dot and may still include projected text
 
@@ -51,9 +54,10 @@ import { BadgeComponent } from './shared/ui-lib';
   imports: [BadgeComponent],
   template: `
     <ms-badge>Draft</ms-badge>
-    <ms-badge variant="success">Active</ms-badge>
-    <ms-badge variant="warning" appearance="solid">Pending</ms-badge>
-    <ms-badge variant="danger" appearance="outline" [dot]="true">Incident</ms-badge>
+    <ms-badge kind="success">Active</ms-badge>
+    <ms-badge kind="warning" appearance="solid">Pending</ms-badge>
+    <ms-badge kind="danger" appearance="outline" [dot]="true">Incident</ms-badge>
+    <ms-badge kind="info" radius="sm">Compact</ms-badge>
     <ms-badge aria-label="12 unread notifications">12</ms-badge>
   `,
 })
@@ -65,7 +69,7 @@ export class BadgeExample {}
 The implementation lives in `src/app/shared/ui-lib/components/badge`:
 
 - `BadgeComponent` renders projected compact text and an optional status dot
-- `badge-types.ts` defines `BadgeVariant` and `BadgeAppearance`
+- `badge-types.ts` defines `BadgeKind` and `BadgeAppearance`
 - `index.ts` exposes the public API
 
 `ms-badge` renders host-level inline markup. Consumers own the projected label text.
@@ -114,7 +118,7 @@ Feature styles live in `src/styles/components/_badge.scss` and are forwarded fro
 
 Add a dedicated `/badge` page and home card demonstrating:
 
-- badge variants: neutral, info, success, warning, and danger
+- badge kinds: neutral, info, success, warning, and danger
 - badge appearances: soft, solid, and outline
 - dot badges
 - count badges
@@ -141,7 +145,7 @@ Each visual example renders a matching hand-authored, full standalone Angular ex
 
 - Public badge primitives are exported from the badge barrel.
 - The primary badge usage example works as documented.
-- Badges render variant, appearance, dot, count, and icon examples.
+- Badges render kind, appearance, radius, dot, count, and icon examples.
 - Styles are token-based, use logical properties, and are forwarded through the component styles
   index.
 - Badge dots and projected icons mirror correctly in RTL layouts.

@@ -80,8 +80,8 @@ import { CopyButtonComponent } from './shared/ui-lib';
   selector: 'app-copy-states-example',
   imports: [CopyButtonComponent],
   template: \`
-    <ms-copy-button text="Primary action" variant="primary" ariaLabel="Copy primary value" />
-    <ms-copy-button text="Outline action" variant="outline" ariaLabel="Copy outline value" />
+    <ms-copy-button text="Primary action" kind="primary" ariaLabel="Copy primary value" />
+    <ms-copy-button text="Outline action" kind="outline" ariaLabel="Copy outline value" />
     <ms-copy-button text="Small action" size="sm" ariaLabel="Copy small value" />
     <ms-copy-button text="Unavailable" ariaLabel="Copy unavailable value" disabled />
   \`,

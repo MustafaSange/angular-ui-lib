@@ -3,6 +3,9 @@ ms-stepper {
 }
 
 .stepper {
+  --_step-marker-size: 1.75rem;
+  --_step-padding-inline: var(--spacing-8);
+
   display: grid;
   gap: var(--spacing-16);
   min-inline-size: 0;
@@ -25,7 +28,7 @@ ms-stepper {
   min-inline-size: 0;
   min-block-size: var(--control-height-md);
   padding-block: var(--spacing-8);
-  padding-inline: var(--spacing-8);
+  padding-inline: var(--_step-padding-inline);
   border: 0;
   border-radius: var(--radius-md);
   background: transparent;
@@ -59,8 +62,8 @@ ms-stepper {
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
-  inline-size: 1.75rem;
-  block-size: 1.75rem;
+  inline-size: var(--_step-marker-size);
+  block-size: var(--_step-marker-size);
   border: var(--border-width-sm) solid var(--color-border);
   border-radius: var(--radius-full);
   background-color: var(--color-surface);
@@ -141,9 +144,12 @@ ms-stepper {
 
   .step-connector {
     grid-column: 1;
-    justify-self: center;
+    justify-self: start;
     inline-size: var(--border-width-sm);
     min-block-size: var(--spacing-20);
+    margin-inline-start: calc(
+      var(--_step-padding-inline) + (var(--_step-marker-size) - var(--border-width-sm)) / 2
+    );
     margin-block: var(--spacing-4);
   }
 }

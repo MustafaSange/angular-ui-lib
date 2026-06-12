@@ -56,19 +56,6 @@ body.ms-bottom-sheet-open {
   animation-name: bottom-sheet-panel-enter-rtl;
 }
 
-.bottom-sheet-panel-compact {
-  --_bottom-sheet-max-block-size: min(45svh, 22rem);
-}
-
-.bottom-sheet-panel-medium {
-  --_bottom-sheet-max-block-size: min(70svh, 36rem);
-}
-
-.bottom-sheet-panel-full {
-  --_bottom-sheet-block-size: calc(100svh - var(--spacing-16));
-  --_bottom-sheet-max-block-size: calc(100svh - var(--spacing-16));
-}
-
 .bottom-sheet-handle {
   flex: 0 0 auto;
   inline-size: var(--spacing-40);

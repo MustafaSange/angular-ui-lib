@@ -1,4 +1,4 @@
-import { DOCUMENT, NgClass } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 import {
   Component,
   DestroyRef,
@@ -30,7 +30,6 @@ let openBottomSheetCount = 0;
 @Component({
   selector: 'ms-bottom-sheet',
   exportAs: 'msBottomSheet',
-  imports: [NgClass],
   templateUrl: './bottom-sheet.html',
 })
 export class BottomSheetComponent {
@@ -61,11 +60,26 @@ export class BottomSheetComponent {
 
   readonly panelId = `bottom-sheet-panel-${nextBottomSheetId++}`;
   protected readonly titleId = `bottom-sheet-title-${nextBottomSheetId++}`;
-  protected readonly panelClasses = computed(() => ({
-    'bottom-sheet-panel-compact': this.size() === 'compact',
-    'bottom-sheet-panel-medium': this.size() === 'medium',
-    'bottom-sheet-panel-full': this.size() === 'full',
-  }));
+  protected readonly sizeValue = computed(() => {
+    switch (this.size()) {
+      case 'compact':
+        return {
+          blockSize: 'auto',
+          maxBlockSize: 'min(45svh, 22rem)',
+        };
+      case 'full':
+        return {
+          blockSize: 'calc(100svh - var(--spacing-16))',
+          maxBlockSize: 'calc(100svh - var(--spacing-16))',
+        };
+      case 'medium':
+      default:
+        return {
+          blockSize: 'auto',
+          maxBlockSize: 'min(70svh, 36rem)',
+        };
+    }
+  });
   protected readonly labelledby = computed(() => this.ariaLabelledby() ?? this.titleId);
   protected readonly backdropZIndex = computed(
     () => 'calc(var(--z-index-modal) + var(--ms-bottom-sheet-stack-offset, 0))',

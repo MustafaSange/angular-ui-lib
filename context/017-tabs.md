@@ -42,11 +42,11 @@ Shared reusable components use the `ms-` selector prefix. Internal styling hooks
 ```ts
 import { Component } from '@angular/core';
 
-import { TabComponent, TabTitleDirective, TabsComponent } from './shared/ui-lib';
+import { BadgeComponent, TabComponent, TabTitleDirective, TabsComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-tabs-example',
-  imports: [TabsComponent, TabComponent, TabTitleDirective],
+  imports: [TabsComponent, TabComponent, TabTitleDirective, BadgeComponent],
   template: `
     <ms-tabs>
       <ms-tab title="Overview">
@@ -54,7 +54,9 @@ import { TabComponent, TabTitleDirective, TabsComponent } from './shared/ui-lib'
       </ms-tab>
 
       <ms-tab>
-        <ng-template msTabTitle> Billing <span class="badge">3</span> </ng-template>
+        <ng-template msTabTitle>
+          Billing <ms-badge kind="info" appearance="solid" aria-label="3 billing items">3</ms-badge>
+        </ng-template>
 
         <p>Billing content.</p>
       </ms-tab>

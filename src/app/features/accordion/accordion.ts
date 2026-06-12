@@ -6,6 +6,7 @@ import {
   AccordionItemComponent,
   AccordionTitleDirective,
 } from '../../shared/ui-lib/components/accordion';
+import { BadgeComponent } from '../../shared/ui-lib/components/badge';
 import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 
 @Component({
@@ -16,6 +17,7 @@ import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
     AccordionComponent,
     AccordionItemComponent,
     AccordionTitleDirective,
+    BadgeComponent,
   ],
   templateUrl: './accordion.html',
   styleUrl: './accordion.scss',
@@ -67,14 +69,14 @@ export class CompactAccordionExample {}`;
 
   protected readonly multipleSnippet = `import { Component } from '@angular/core';
 
-import { AccordionComponent, AccordionItemComponent, AccordionTitleDirective, } from './shared/ui-lib';
+import { AccordionComponent, AccordionItemComponent, AccordionTitleDirective, BadgeComponent } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-multiple-accordion-example', imports: [AccordionComponent, AccordionItemComponent, AccordionTitleDirective], template: \`
+  selector: 'app-multiple-accordion-example', imports: [AccordionComponent, AccordionItemComponent, AccordionTitleDirective, BadgeComponent], template: \`
     <ms-accordion [multiple]="true">
       <ms-accordion-item [expanded]="true">
         <ng-template msAccordionTitle>
-          Deployment <span class="badge">Ready</span>
+          Deployment <ms-badge kind="success">Ready</ms-badge>
         </ng-template>
 
         <p>The release candidate passed validation and is ready to promote.</p>
@@ -82,7 +84,7 @@ import { AccordionComponent, AccordionItemComponent, AccordionTitleDirective, } 
 
       <ms-accordion-item [expanded]="true">
         <ng-template msAccordionTitle>
-          Review <span class="status-dot" aria-hidden="true"></span>
+          Review <ms-badge kind="success" dot>Approved</ms-badge>
         </ng-template>
 
         <p>Two reviewers have approved the latest design token updates.</p>
@@ -93,17 +95,6 @@ import { AccordionComponent, AccordionItemComponent, AccordionTitleDirective, } 
       </ms-accordion-item>
     </ms-accordion>
   \`,
-  styles: [\`
-    .status-dot {
-      display: inline-block;
-      inline-size: 0.5rem;
-      block-size: 0.5rem;
-      margin-inline-start: 0.375rem;
-      border-radius: 999px;
-      background: var(--color-success);
-      vertical-align: middle;
-    }
-  \`],
 })
 export class MultipleAccordionExample {}`;
 

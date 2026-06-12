@@ -14,13 +14,14 @@ ms-chip {
   --_chip-selected-surface: color-mix(in srgb, var(--color-primary) 9%, var(--color-surface));
   --_chip-selected-border: var(--color-primary-border);
   --_chip-selected-text: var(--color-primary-text);
+  --_chip-radius: var(--radius-sm);
 
   display: inline-flex;
   align-items: center;
   max-inline-size: 100%;
   min-block-size: var(--control-height-md);
   border: var(--border-width-sm) solid transparent;
-  border-radius: var(--radius-full);
+  border-radius: var(--_chip-radius);
   background-color: var(--_chip-surface);
   color: var(--_chip-text);
   font-size: var(--font-size-sm);

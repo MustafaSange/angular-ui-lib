@@ -1,10 +1,10 @@
 @if (isVisible()) {
   <section
     class="ms-alert"
-    [class.ms-alert-info]="variant() === 'info'"
-    [class.ms-alert-success]="variant() === 'success'"
-    [class.ms-alert-warning]="variant() === 'warning'"
-    [class.ms-alert-danger]="variant() === 'danger'"
+    [class.ms-alert-info]="kind() === 'info'"
+    [class.ms-alert-success]="kind() === 'success'"
+    [class.ms-alert-warning]="kind() === 'warning'"
+    [class.ms-alert-danger]="kind() === 'danger'"
     [attr.role]="role()"
     [attr.aria-live]="ariaLive()"
   >

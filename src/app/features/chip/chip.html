@@ -1,5 +1,5 @@
-<main class="chip-page">
-  <header class="chip-header">
+<main class="chip-page showcase-page">
+  <header class="chip-header showcase-header">
     <a class="btn btn-ghost back-link" routerLink="/">← Back to home</a>
     <p class="eyebrow">Components</p>
     <h1>Chip</h1>
@@ -8,12 +8,12 @@
     </p>
   </header>
 
-  <section class="chip-section">
+  <section class="chip-section showcase-section">
     <h2>Static chips</h2>
-    <div class="chip-demo-row">
+    <div class="chip-demo-row showcase-demo-row">
       <ms-chip>Design system</ms-chip>
-      <ms-chip variant="info">Documentation</ms-chip>
-      <ms-chip variant="success">
+      <ms-chip kind="info">Documentation</ms-chip>
+      <ms-chip kind="success">
         <span class="ms-icon" aria-hidden="true">check_circle</span>
         Published
       </ms-chip>
@@ -21,31 +21,44 @@
     <app-showcase-code label="Static chips" [code]="staticSnippet" />
   </section>
 
-  <section class="chip-section">
-    <h2>Variants</h2>
-    <div class="chip-demo-row">
+  <section class="chip-section showcase-section">
+    <h2>Kinds</h2>
+    <div class="chip-demo-row showcase-demo-row">
       <ms-chip>Neutral</ms-chip>
-      <ms-chip variant="info">Info</ms-chip>
-      <ms-chip variant="success">Success</ms-chip>
-      <ms-chip variant="warning">Warning</ms-chip>
-      <ms-chip variant="danger">Danger</ms-chip>
+      <ms-chip kind="info">Info</ms-chip>
+      <ms-chip kind="success">Success</ms-chip>
+      <ms-chip kind="warning">Warning</ms-chip>
+      <ms-chip kind="danger">Danger</ms-chip>
     </div>
-    <app-showcase-code label="Chip variants" [code]="variantsSnippet" />
+    <app-showcase-code label="Chip kinds" [code]="kindsSnippet" />
   </section>
 
-  <section class="chip-section">
+  <section class="chip-section showcase-section">
     <h2>Appearances and states</h2>
-    <div class="chip-demo-row">
-      <ms-chip variant="info" selected>Selected</ms-chip>
-      <ms-chip variant="success" appearance="outline">Outline</ms-chip>
-      <ms-chip variant="warning" disabled>Disabled</ms-chip>
+    <div class="chip-demo-row showcase-demo-row">
+      <ms-chip kind="info" selected>Selected</ms-chip>
+      <ms-chip kind="success" appearance="outline">Outline</ms-chip>
+      <ms-chip kind="warning" disabled>Disabled</ms-chip>
     </div>
     <app-showcase-code label="Chip states" [code]="statesSnippet" />
   </section>
 
-  <section class="chip-section">
+  <section class="chip-section showcase-section">
+    <h2>Radius</h2>
+    <div class="chip-demo-row showcase-demo-row">
+      <ms-chip kind="success" radius="none">None</ms-chip>
+      <ms-chip kind="success">Small</ms-chip>
+      <ms-chip kind="success" radius="md">Medium</ms-chip>
+      <ms-chip kind="success" radius="lg">Large</ms-chip>
+      <ms-chip kind="success" radius="xl">Extra large</ms-chip>
+      <ms-chip kind="success" radius="full">Full</ms-chip>
+    </div>
+    <app-showcase-code label="Chip radius" [code]="radiusSnippet" />
+  </section>
+
+  <section class="chip-section showcase-section">
     <h2>Removable chips</h2>
-    <div class="chip-demo-row">
+    <div class="chip-demo-row showcase-demo-row">
       @for (chip of removableChips(); track chip) {
         <ms-chip removable (removed)="removeChip(chip)">
           {{ chip }}
@@ -67,11 +80,11 @@
     <app-showcase-code label="Removable chips" [code]="removableSnippet" />
   </section>
 
-  <section class="chip-section">
+  <section class="chip-section showcase-section">
     <h2>RTL mirroring</h2>
-    <div class="chip-demo-row rtl-demo" dir="rtl">
+    <div class="chip-demo-row showcase-demo-row rtl-demo" dir="rtl">
       <span class="rtl-label">RTL context</span>
-      <ms-chip variant="success">
+      <ms-chip kind="success">
         <span class="ms-icon" aria-hidden="true">check_circle</span>
         منشور
       </ms-chip>

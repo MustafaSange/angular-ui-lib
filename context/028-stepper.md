@@ -67,11 +67,11 @@ Shared reusable components use the `ms-` selector prefix. Internal styling hooks
 ```ts
 import { Component } from '@angular/core';
 
-import { StepComponent, StepperComponent, StepTitleDirective } from './shared/ui-lib';
+import { BadgeComponent, StepComponent, StepperComponent, StepTitleDirective } from './shared/ui-lib';
 
 @Component({
   selector: 'app-stepper-example',
-  imports: [StepperComponent, StepComponent, StepTitleDirective],
+  imports: [StepperComponent, StepComponent, StepTitleDirective, BadgeComponent],
   template: `
     <ms-stepper>
       <ms-step title="Account" [completed]="true">
@@ -79,7 +79,7 @@ import { StepComponent, StepperComponent, StepTitleDirective } from './shared/ui
       </ms-step>
 
       <ms-step>
-        <ng-template msStepTitle> Billing <span class="badge">Required</span> </ng-template>
+        <ng-template msStepTitle> Billing <ms-badge kind="info" dot>Required</ms-badge> </ng-template>
 
         <p>Capture billing address and payment details.</p>
       </ms-step>

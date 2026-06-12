@@ -1,4 +1,6 @@
-export type ConfirmDialogKind = 'info' | 'success' | 'warning' | 'danger';
+import type { SemanticKind } from '../../semantic-types';
+
+export type ConfirmDialogKind = SemanticKind;
 
 export type ConfirmDialogConfig = {
   title: string;

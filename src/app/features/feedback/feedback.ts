@@ -16,29 +16,29 @@ export class Feedback {
   protected readonly dismissibleAlertVisible = signal(true);
   protected readonly actionResult = signal('No toast action has run yet.');
 
-  protected readonly alertVariantsSnippet = `import { Component } from '@angular/core';
+  protected readonly alertKindsSnippet = `import { Component } from '@angular/core';
 
 import { AlertComponent } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-alert-variants-example', imports: [AlertComponent], template: \`
-    <ms-alert variant="info" title="Heads up">
+  selector: 'app-alert-kinds-example', imports: [AlertComponent], template: \`
+    <ms-alert kind="info" title="Heads up">
       Invite links expire after seven days.
     </ms-alert>
 
-    <ms-alert variant="success" title="Saved">
+    <ms-alert kind="success" title="Saved">
       Your workspace settings were updated.
     </ms-alert>
 
-    <ms-alert variant="warning" title="Review required">
+    <ms-alert kind="warning" title="Review required">
       Two imported rows need attention before publishing.
     </ms-alert>
 
-    <ms-alert variant="danger" title="Sync failed">
+    <ms-alert kind="danger" title="Sync failed">
       The billing export could not be completed.
     </ms-alert>
   \`, })
-export class AlertVariantsExample {}`;
+export class AlertKindsExample {}`;
 
   protected readonly alertActionsSnippet = `import { Component } from '@angular/core';
 
@@ -46,7 +46,7 @@ import { AlertComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-alert-actions-example', imports: [AlertComponent], template: \`
-    <ms-alert variant="warning" title="Subscription needs attention">
+    <ms-alert kind="warning" title="Subscription needs attention">
       Update the payment method before the next renewal.
 
       <div slot="actions">
@@ -65,7 +65,7 @@ import { AlertComponent } from './shared/ui-lib';
   selector: 'app-dismissible-alert-example', imports: [AlertComponent], template: \`
     @if (isVisible()) {
       <ms-alert
-        variant="danger"
+        kind="danger"
         title="Payment failed"
         dismissible
         (dismissed)="isVisible.set(false)"
@@ -78,18 +78,18 @@ export class DismissibleAlertExample {
   protected readonly isVisible = signal(true);
 }`;
 
-  protected readonly toastVariantsSnippet = `import { Component, inject } from '@angular/core';
+  protected readonly toastKindsSnippet = `import { Component, inject } from '@angular/core';
 
 import { ToastOutletComponent, ToastService } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-toast-variants-example', imports: [ToastOutletComponent], template: \`
+  selector: 'app-toast-kinds-example', imports: [ToastOutletComponent], template: \`
     <button class="btn btn-primary" type="button" (click)="showToasts()">
-      Show toast variants
+      Show toast kinds
     </button>
     <ms-toast-outlet />
   \`, })
-export class ToastVariantsExample {
+export class ToastKindsExample {
   private readonly toast = inject(ToastService);
 
   protected showToasts(): void {
@@ -177,7 +177,7 @@ export class StackedToastsExample {
     this.dismissibleAlertVisible.set(true);
   }
 
-  protected showToastVariants(): void {
+  protected showToastKinds(): void {
     this.toast.clear();
     this.toast.info('Import started', { title: 'Queued' });
     this.toast.success('Profile saved', { title: 'Saved' });

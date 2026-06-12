@@ -23,7 +23,7 @@ Public pieces:
 - `CopyRevealComponent` with selector `ms-copy-reveal`
 - `copyTextToClipboard` helper for imperative copy flows
 - `CopyClipboardResult = 'copied' | 'failed'`
-- `CopyButtonVariant = 'ghost' | 'outline' | 'primary' | 'secondary'`
+- `CopyButtonKind = 'ghost' | 'outline' | 'primary' | 'secondary'`
 - `CopyButtonSize = 'xs' | 'sm' | 'md' | 'lg'`
 
 Internal styling hooks remain concise and unprefixed: `.copy-button`, `.copy-icon`, `.copy-content`, `.copy-status`, `.copy-reveal`, `.copy-reveal-content`, and
@@ -39,7 +39,7 @@ class CopyButtonComponent {
   readonly failedLabel = input('Copy failed');
   readonly resetDelay = input(2000);
   readonly disabled = input(false, { transform: booleanAttribute });
-  readonly variant = input<CopyButtonVariant>('ghost');
+  readonly kind = input<CopyButtonKind>('ghost');
   readonly size = input<CopyButtonSize>('md');
 }
 
@@ -50,7 +50,7 @@ class CopyRevealComponent {
   readonly failedLabel = input('Copy failed');
   readonly resetDelay = input(2000);
   readonly disabled = input(false, { transform: booleanAttribute });
-  readonly variant = input<CopyButtonVariant>('ghost');
+  readonly kind = input<CopyButtonKind>('ghost');
   readonly size = input<CopyButtonSize>('sm');
 }
 
@@ -65,7 +65,7 @@ Defaults:
 - `failedLabel` is `Copy failed`
 - `resetDelay` is `2000`
 - `disabled` is `false`
-- `variant` is `ghost`
+- `kind` is `ghost`
 - `CopyButtonComponent` `size` is `md`
 - `CopyRevealComponent` `size` is `sm`
 

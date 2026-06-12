@@ -2,7 +2,7 @@
 
 ## Goal
 
-Create a combined feedback feature for inline alerts and transient global toast notifications. Both use the same feedback variants, token-based styling, accessibility semantics, and showcase page.
+Create a combined feedback feature for inline alerts and transient global toast notifications. Both use the same feedback kinds, token-based styling, accessibility semantics, and showcase page.
 
 Shared reusable components use the `ms-` selector prefix. Do not use `app-` for components under `src/app/shared`.
 
@@ -13,7 +13,7 @@ Import feedback primitives from the folder barrel:
 ```ts
 import {
   AlertComponent,
-  FeedbackVariant,
+  FeedbackKind,
   ToastConfig,
   ToastOutletComponent,
   ToastRef,
@@ -27,8 +27,8 @@ Public pieces:
 - `ToastOutletComponent` with selector `ms-toast-outlet`
 - `ToastService` for message-based global toasts
 - `ToastRef` for imperative close and close observation
-- `FeedbackVariant = 'info' | 'success' | 'warning' | 'danger'`
-- `ToastConfig` for toast message, title, variant, action, duration, dismissibility, and icon visibility
+- `FeedbackKind = 'info' | 'success' | 'warning' | 'danger'`
+- `ToastConfig` for toast message, title, kind, action, duration, dismissibility, and icon visibility
 
 Required types:
 
@@ -40,7 +40,7 @@ type ToastAction = {
 
 type ToastConfig = {
   message: string;
-  variant?: FeedbackVariant;
+  kind?: FeedbackKind;
   title?: string;
   action?: ToastAction;
   duration?: number | false;
@@ -54,10 +54,10 @@ Required service API:
 ```ts
 class ToastService {
   show(config: ToastConfig): ToastRef;
-  info(message: string, options?: Omit<ToastConfig, 'message' | 'variant'>): ToastRef;
-  success(message: string, options?: Omit<ToastConfig, 'message' | 'variant'>): ToastRef;
-  warning(message: string, options?: Omit<ToastConfig, 'message' | 'variant'>): ToastRef;
-  danger(message: string, options?: Omit<ToastConfig, 'message' | 'variant'>): ToastRef;
+  info(message: string, options?: Omit<ToastConfig, 'message' | 'kind'>): ToastRef;
+  success(message: string, options?: Omit<ToastConfig, 'message' | 'kind'>): ToastRef;
+  warning(message: string, options?: Omit<ToastConfig, 'message' | 'kind'>): ToastRef;
+  danger(message: string, options?: Omit<ToastConfig, 'message' | 'kind'>): ToastRef;
   clear(): void;
 }
 
@@ -70,10 +70,10 @@ class ToastRef {
 
 Defaults:
 
-- alert `variant` is `info`
+- alert `kind` is `info`
 - alert `dismissible` is `false`
 - alert `showIcon` is `true`
-- toast `variant` is `info`
+- toast `kind` is `info`
 - toast `dismissible` is `true`
 - toast `showIcon` is `true`
 - info and success toasts auto-dismiss after `5000ms`
@@ -84,14 +84,14 @@ Defaults:
 Inline alert:
 
 ```html
-<ms-alert variant="success" title="Saved"> Your changes were saved. </ms-alert>
+<ms-alert kind="success" title="Saved"> Your changes were saved. </ms-alert>
 ```
 
 Dismissible alert:
 
 ```html
 @if (isVisible()) {
-<ms-alert variant="danger" title="Payment failed" dismissible (dismissed)="isVisible.set(false)">
+<ms-alert kind="danger" title="Payment failed" dismissible (dismissed)="isVisible.set(false)">
   Verify your payment method before retrying the renewal.
 </ms-alert>
 }
@@ -100,7 +100,7 @@ Dismissible alert:
 Alert with actions:
 
 ```html
-<ms-alert variant="warning" title="Subscription needs attention">
+<ms-alert kind="warning" title="Subscription needs attention">
   Update the payment method before the next renewal.
 
   <div slot="actions">
@@ -164,7 +164,7 @@ Alert behavior:
 `ToastService` behavior:
 
 - `show(config)` creates a message toast and returns its `ToastRef`
-- convenience methods set the variant and delegate to `show`
+- convenience methods set the kind and delegate to `show`
 - `clear()` closes all open toasts
 - newest toasts render first
 - the stack keeps at most five visible toasts and closes the oldest overflow toast
@@ -191,7 +191,7 @@ The styles are forwarded from:
 Styling rules:
 
 - use existing semantic feedback tokens for color, surface, border, and text
-- use component-private `--_feedback-*` custom properties for variant and theme-specific internal aliases; these are not consumer customization tokens
+- use component-private `--_feedback-*` custom properties for kind and theme-specific internal aliases; these are not consumer customization tokens
 - alert and toast surfaces use subtle variant backgrounds
 - light theme keeps the palette-backed subtle surfaces
 - dark theme blends variant colors with dark surface tokens to avoid fluorescent backgrounds

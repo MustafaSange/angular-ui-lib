@@ -1,13 +1,14 @@
 <span
   class="badge"
-  [class.badge-neutral]="variant() === 'neutral'"
-  [class.badge-info]="variant() === 'info'"
-  [class.badge-success]="variant() === 'success'"
-  [class.badge-warning]="variant() === 'warning'"
-  [class.badge-danger]="variant() === 'danger'"
+  [class.badge-neutral]="kind() === 'neutral'"
+  [class.badge-info]="kind() === 'info'"
+  [class.badge-success]="kind() === 'success'"
+  [class.badge-warning]="kind() === 'warning'"
+  [class.badge-danger]="kind() === 'danger'"
   [class.badge-soft]="appearance() === 'soft'"
   [class.badge-solid]="appearance() === 'solid'"
   [class.badge-outline]="appearance() === 'outline'"
+  [style.--_badge-radius]="radiusValue()"
 >
   @if (dot()) {
     <span class="badge-dot" aria-hidden="true"></span>

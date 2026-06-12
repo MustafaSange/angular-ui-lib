@@ -1,2 +1,4 @@
-export type BadgeVariant = 'neutral' | 'info' | 'success' | 'warning' | 'danger';
+import type { NeutralSemanticKind } from '../../semantic-types';
+
+export type BadgeKind = NeutralSemanticKind;
 export type BadgeAppearance = 'soft' | 'solid' | 'outline';
