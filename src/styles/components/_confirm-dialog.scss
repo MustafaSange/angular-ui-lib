@@ -55,6 +55,10 @@ $confirm-dialog-kinds: info, success, warning, danger;
   inline-size: 100%;
 }
 
+[dir='rtl'] .confirm-dialog-actions {
+  justify-content: flex-start;
+}
+
 @mixin dark-confirm-dialog-tones {
   .confirm-dialog {
     --_confirm-dialog-border: color-mix(
