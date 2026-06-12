@@ -1,0 +1,194 @@
+ms-timeline {
+  display: block;
+}
+
+.timeline {
+  display: flex;
+  gap: 0;
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline-item {
+  --_timeline-status: var(--color-text-muted);
+  --_timeline-status-surface: var(--color-surface);
+  --_timeline-status-border: var(--color-border);
+
+  position: relative;
+  display: grid;
+  min-inline-size: 0;
+  color: var(--color-text-primary);
+}
+
+.timeline-marker {
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 1.75rem;
+  block-size: 1.75rem;
+  border: var(--border-width-sm) solid var(--_timeline-status-border);
+  border-radius: var(--radius-full);
+  background-color: var(--_timeline-status-surface);
+  color: var(--_timeline-status);
+  font-size: var(--font-size-sm);
+  line-height: 1;
+
+  .ms-icon {
+    font-size: var(--font-size-md);
+  }
+}
+
+.timeline-connector {
+  background-color: var(--color-border);
+}
+
+.timeline-content {
+  min-inline-size: 0;
+}
+
+.timeline-title,
+.timeline-subtitle,
+.timeline-meta,
+.timeline-body :where(p) {
+  margin: 0;
+}
+
+.timeline-title {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-heading);
+}
+
+.timeline-subtitle {
+  margin-block-start: var(--spacing-4);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.timeline-meta {
+  margin-block-end: var(--spacing-4);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+}
+
+.timeline-body {
+  margin-block-start: var(--spacing-8);
+  color: var(--color-text-secondary);
+}
+
+.timeline-body:empty {
+  display: none;
+}
+
+.timeline-vertical {
+  flex-direction: column;
+
+  .timeline-item {
+    grid-template-columns: max-content minmax(0, 1fr);
+    column-gap: var(--spacing-12);
+    padding-block-end: var(--spacing-20);
+  }
+
+  .timeline-marker {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .timeline-connector {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    justify-self: center;
+    inline-size: var(--border-width-sm);
+    min-block-size: 100%;
+    margin-block-start: 1.75rem;
+  }
+
+  .timeline-content {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    padding-block-start: var(--spacing-2);
+  }
+
+  .timeline-item:last-child {
+    padding-block-end: 0;
+  }
+}
+
+.timeline-horizontal {
+  align-items: stretch;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+
+  .timeline-item {
+    flex: 1 0 min(14rem, 80vw);
+    grid-template-rows: max-content minmax(0, 1fr);
+    row-gap: var(--spacing-12);
+    padding-inline-end: var(--spacing-20);
+  }
+
+  .timeline-marker {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .timeline-connector {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+    inline-size: calc(100% - 1.75rem);
+    block-size: var(--border-width-sm);
+    margin-inline-start: 1.75rem;
+  }
+
+  .timeline-content {
+    grid-column: 1;
+    grid-row: 2;
+    padding-inline-end: var(--spacing-12);
+  }
+}
+
+.timeline-item-done {
+  --_timeline-status: var(--color-success);
+  --_timeline-status-surface: var(--color-success-subtle);
+  --_timeline-status-border: var(--color-success-border);
+}
+
+.timeline-item-in-progress {
+  --_timeline-status: var(--color-primary-contrast);
+  --_timeline-status-surface: var(--color-primary);
+  --_timeline-status-border: var(--color-primary);
+}
+
+.timeline-item-pending {
+  --_timeline-status: var(--color-text-muted);
+  --_timeline-status-surface: var(--color-surface);
+  --_timeline-status-border: var(--color-border);
+}
+
+.timeline-item-blocked,
+.timeline-item-skipped {
+  --_timeline-status: var(--color-warning-text);
+  --_timeline-status-surface: var(--color-warning-subtle);
+  --_timeline-status-border: var(--color-warning-border);
+}
+
+.timeline-item-error,
+.timeline-item-cancelled {
+  --_timeline-status: var(--color-danger-text);
+  --_timeline-status-surface: var(--color-danger-subtle);
+  --_timeline-status-border: var(--color-danger-border);
+}
+
+@media (max-width: 48rem) {
+  .timeline-horizontal {
+    .timeline-item {
+      flex-basis: min(12rem, 78vw);
+    }
+  }
+}

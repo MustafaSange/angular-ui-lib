@@ -25,4 +25,5 @@ export * from './slider';
 export * from './stepper';
 export * from './tabs';
 export * from './theme-switcher';
+export * from './timeline';
 export * from './tooltip';
