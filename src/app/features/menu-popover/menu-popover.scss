@@ -124,6 +124,54 @@ h3 {
   font-size: var(--font-size-sm);
 }
 
+.field-label {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.split-button {
+  display: inline-flex;
+  align-items: stretch;
+
+  .split-button-primary {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+  }
+
+  .split-button-trigger {
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+    border-inline-start: var(--border-width-sm) solid color-mix(
+        in srgb,
+        currentcolor 28%,
+        transparent
+      );
+  }
+}
+
+.editable-value {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--control-height-sm);
+  padding-inline: var(--spacing-8);
+  border: var(--border-width-sm) solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface-muted);
+  color: var(--color-text-primary);
+  font: inherit;
+  cursor: pointer;
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
+
+  &:hover,
+  &:focus-visible {
+    outline: 0;
+    border-color: var(--color-primary);
+    background-color: var(--color-primary-subtle);
+  }
+}
+
 .filter-form {
   display: grid;
   gap: var(--spacing-16);
@@ -140,4 +188,16 @@ h3 {
   display: grid;
   gap: var(--spacing-12);
   max-inline-size: 18rem;
+}
+
+.inline-editor {
+  display: grid;
+  gap: var(--spacing-16);
+  inline-size: min(18rem, calc(100dvi - (var(--spacing-48) * 2)));
+}
+
+.inline-editor-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-8);
 }
