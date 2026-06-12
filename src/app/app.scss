@@ -5,5 +5,8 @@
   inset-inline-end: var(--spacing-16);
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   gap: var(--spacing-8);
+  max-inline-size: calc(100vw - var(--spacing-32));
 }
