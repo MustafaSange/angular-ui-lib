@@ -73,7 +73,7 @@ type EmailForm = {
   imports: [FormField, SignalFormField, SignalFormHint, SignalFormError],
   template: \`
     <ms-signal-form-field>
-      <label for="email">Email address *</label>
+      <label for="email">Email address</label>
       <input
         id="email"
         type="email"
@@ -89,7 +89,7 @@ type EmailForm = {
     </ms-signal-form-field>
 
     <ms-signal-form-field>
-      <label for="username">Username *</label>
+      <label for="username">Username</label>
       <input
         id="username"
         type="text"
