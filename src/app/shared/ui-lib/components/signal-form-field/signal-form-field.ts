@@ -7,6 +7,9 @@ import { SignalFormHint } from './signal-form-hint/signal-form-hint';
 @Component({
   selector: 'ms-signal-form-field',
   templateUrl: './signal-form-field.html',
+  host: {
+    '[class.is-required]': 'isRequired()',
+  },
 })
 export class SignalFormField {
   private readonly field = contentChild<FormField<unknown>>(FormField);
@@ -21,4 +24,6 @@ export class SignalFormField {
   });
 
   protected readonly showHint = computed(() => Boolean(this.hint() && !this.showError()));
+
+  protected readonly isRequired = computed(() => Boolean(this.field()?.state().required()));
 }
