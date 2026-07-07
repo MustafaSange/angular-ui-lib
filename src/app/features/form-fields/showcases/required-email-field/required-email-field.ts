@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {
   FormField,
   email,
@@ -11,7 +11,6 @@ import {
 
 import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
 import {
-  SignalFormError,
   SignalFormField,
   SignalFormHint,
 } from '../../../../shared/ui-lib/components/signal-form-field';
@@ -23,7 +22,7 @@ type ValidationFieldsForm = {
 
 @Component({
   selector: 'app-required-email-field-showcase',
-  imports: [FormField, SignalFormField, SignalFormHint, SignalFormError, ShowcaseCode],
+  imports: [FormField, SignalFormField, SignalFormHint, ShowcaseCode],
   templateUrl: './required-email-field.html',
   styleUrl: './required-email-field.scss',
   host: { class: 'showcase-pair' },
@@ -37,31 +36,21 @@ export class RequiredEmailFieldShowcase {
   protected readonly form = form(
     this.model,
     schema<ValidationFieldsForm>((path) => {
-      required(path.email, { message: 'Email address is required.' });
-      email(path.email, { message: 'Enter a valid email address.' });
-      required(path.username, { message: 'Username is required.' });
-      minLength(path.username, 3, { message: 'Use at least 3 characters.' });
-      pattern(path.username, /^[a-z0-9_]+$/i, {
-        message: 'Use only letters, numbers, or underscores.',
-      });
+      required(path.email);
+      email(path.email);
+      required(path.username);
+      minLength(path.username, 3);
+      pattern(path.username, /^[a-z0-9_]+$/i);
     }),
   );
 
   protected readonly emailField = this.form.email;
   protected readonly usernameField = this.form.username;
-  protected readonly emailError = computed(() => this.emailField().errors()[0]?.message ?? '');
-  protected readonly usernameError = computed(
-    () => this.usernameField().errors()[0]?.message ?? '',
-  );
 
-  protected readonly snippet = `import { Component, computed, signal } from '@angular/core';
+  protected readonly snippet = `import { Component, signal } from '@angular/core';
 import { FormField, email, form, minLength, pattern, required, schema } from '@angular/forms/signals';
 
-import {
-  SignalFormError,
-  SignalFormField,
-  SignalFormHint,
-} from './shared/ui-lib';
+import { SignalFormField, SignalFormHint } from './shared/ui-lib';
 
 type ProfileForm = {
   email: string;
@@ -70,7 +59,7 @@ type ProfileForm = {
 
 @Component({
   selector: 'app-validation-fields-example',
-  imports: [FormField, SignalFormField, SignalFormHint, SignalFormError],
+  imports: [FormField, SignalFormField, SignalFormHint],
   template: \`
     <ms-signal-form-field>
       <label for="email">Email address</label>
@@ -81,7 +70,6 @@ type ProfileForm = {
         [formField]="emailField"
       />
       <ms-hint>Blur the empty field to show the required error.</ms-hint>
-      <ms-error>{{ emailError() }}</ms-error>
     </ms-signal-form-field>
 
     <ms-signal-form-field>
@@ -93,7 +81,6 @@ type ProfileForm = {
         [formField]="usernameField"
       />
       <ms-hint>Letters, numbers, or underscores. Minimum 3 characters.</ms-hint>
-      <ms-error>{{ usernameError() }}</ms-error>
     </ms-signal-form-field>
   \`,
 })
@@ -106,19 +93,15 @@ export class ValidationFieldsExample {
   protected readonly form = form(
     this.model,
     schema<ProfileForm>((path) => {
-      required(path.email, { message: 'Email address is required.' });
-      email(path.email, { message: 'Enter a valid email address.' });
-      required(path.username, { message: 'Username is required.' });
-      minLength(path.username, 3, { message: 'Use at least 3 characters.' });
-      pattern(path.username, /^[a-z0-9_]+$/i, {
-        message: 'Use only letters, numbers, or underscores.',
-      });
+      required(path.email);
+      email(path.email);
+      required(path.username);
+      minLength(path.username, 3);
+      pattern(path.username, /^[a-z0-9_]+$/i);
     }),
   );
 
   protected readonly emailField = this.form.email;
   protected readonly usernameField = this.form.username;
-  protected readonly emailError = computed(() => this.emailField().errors()[0]?.message ?? '');
-  protected readonly usernameError = computed(() => this.usernameField().errors()[0]?.message ?? '');
 }`;
 }

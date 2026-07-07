@@ -10,8 +10,10 @@
 </div>
 
 <div class="form-field-message">
-  @if (showError()) {
+  @if (showError() && hasErrorContent()) {
     <ng-content select="ms-error" />
+  } @else if (showError()) {
+    <ms-error>{{ errorMessage() }}</ms-error>
   } @else if (showHint()) {
     <ng-content select="ms-hint" />
   }
