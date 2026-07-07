@@ -1,0 +1,164 @@
+<form class="search-query-form" (submit)="submitSearch($event)">
+  @if (filters().length > 0) {
+    <div class="filter-list" aria-label="Search filters">
+      @for (filter of filters(); track filter.id) {
+        @let property = getProperty(filter.property);
+        @let field = filterField($index);
+        <div
+          class="filter-row"
+          role="group"
+          [attr.aria-label]="'Filter for ' + propertyLabel(property)"
+        >
+          <ms-signal-form-field class="filter-property">
+            <label>Property</label>
+            <select [formField]="field.property" (change)="handlePropertyChange(filter, $event)">
+              @for (option of rowPropertyOptions(filter); track option.propertyName) {
+                <option [value]="option.propertyName">{{ propertyLabel(option) }}</option>
+              }
+            </select>
+          </ms-signal-form-field>
+
+          @if (property) {
+            <ms-signal-form-field class="filter-operator">
+              <label>Operator</label>
+              <select [formField]="field.operator" (change)="handleOperatorChange(filter, $event)">
+                @for (operator of allowedOperators(property); track operator) {
+                  <option [value]="operator">{{ operatorLabels[operator] }}</option>
+                }
+              </select>
+            </ms-signal-form-field>
+
+            <div class="filter-value">
+              @if (isBetweenOperator(filter)) {
+                <ms-signal-form-field>
+                  <label>From</label>
+                  @if (hasOptions(property)) {
+                    <select [formField]="field.from">
+                      <option value="">Choose from</option>
+                      @for (option of propertyOptions(property); track option.value) {
+                        <option [value]="option.value">{{ option.label }}</option>
+                      }
+                    </select>
+                  } @else {
+                    <input
+                      [type]="inputType(property)"
+                      [inputMode]="inputMode(property)"
+                      [step]="step(property)"
+                      [placeholder]="property.placeholder ?? ''"
+                      [formField]="field.from"
+                    />
+                  }
+                </ms-signal-form-field>
+
+                <ms-signal-form-field>
+                  <label>To</label>
+                  @if (hasOptions(property)) {
+                    <select [formField]="field.to">
+                      <option value="">Choose to</option>
+                      @for (option of propertyOptions(property); track option.value) {
+                        <option [value]="option.value">{{ option.label }}</option>
+                      }
+                    </select>
+                  } @else {
+                    <input
+                      [type]="inputType(property)"
+                      [inputMode]="inputMode(property)"
+                      [step]="step(property)"
+                      [placeholder]="property.placeholder ?? ''"
+                      [formField]="field.to"
+                    />
+                  }
+                </ms-signal-form-field>
+              } @else if (isInOperator(filter) && hasOptions(property)) {
+                <ms-signal-form-field>
+                  <label>Values</label>
+                  <ms-select multiple [searchable]="false" [formField]="field.values">
+                    @for (option of propertyOptions(property); track option.value) {
+                      <ms-select-option [value]="option.value.toString()" [label]="option.label">
+                        {{ option.label }}
+                      </ms-select-option>
+                    }
+                  </ms-select>
+                </ms-signal-form-field>
+              } @else if (hasOptions(property)) {
+                <ms-signal-form-field>
+                  <label>Value</label>
+                  <select [formField]="field.value">
+                    <option value="">Choose value</option>
+                    @for (option of propertyOptions(property); track option.value) {
+                      <option [value]="option.value">{{ option.label }}</option>
+                    }
+                  </select>
+                </ms-signal-form-field>
+              } @else {
+                <ms-signal-form-field>
+                  <label>Value</label>
+                  <input
+                    [type]="inputType(property)"
+                    [inputMode]="inputMode(property)"
+                    [step]="step(property)"
+                    [placeholder]="property.placeholder ?? ''"
+                    [formField]="field.value"
+                  />
+                </ms-signal-form-field>
+              }
+            </div>
+          }
+
+          <div class="filter-actions">
+            @if (isFilterLocked(filter)) {
+              <span class="action-spacer" aria-hidden="true"></span>
+            } @else {
+              <button
+                class="btn btn-ghost btn-icon remove-filter"
+                type="button"
+                [attr.aria-label]="'Remove ' + propertyLabel(property) + ' filter'"
+                title="Remove filter"
+                (click)="removeFilter(filter)"
+              >
+                <span class="ms-icon" aria-hidden="true">delete</span>
+              </button>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  <div class="filter-toolbar">
+    <ms-signal-form-field class="add-filter">
+      <label>Add filter</label>
+      <select
+        aria-label="Add filter"
+        [disabled]="availableProperties().length === 0"
+        (change)="handleAddChange($event)"
+      >
+        <option value="">Choose property</option>
+        @for (property of availableProperties(); track property.propertyName) {
+          <option [value]="property.propertyName">{{ propertyLabel(property) }}</option>
+        }
+      </select>
+    </ms-signal-form-field>
+
+    <div class="toolbar-actions">
+      <button
+        class="btn btn-primary btn-sm search-filters"
+        type="submit"
+        [disabled]="isSearchDisabled()"
+      >
+        <span class="ms-icon" aria-hidden="true">search</span>
+        Search
+      </button>
+
+      <button
+        class="btn btn-outline btn-sm clear-filters"
+        type="button"
+        [disabled]="!canClear()"
+        (click)="clearOptionalFilters()"
+      >
+        <span class="ms-icon" aria-hidden="true">restart_alt</span>
+        Clear
+      </button>
+    </div>
+  </div>
+</form>

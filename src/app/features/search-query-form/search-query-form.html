@@ -1,0 +1,44 @@
+<main class="search-query-form-page">
+  <header class="search-query-form-header">
+    <a class="btn btn-ghost back-link" routerLink="/">← Back to home</a>
+    <p class="eyebrow">Components</p>
+    <h1>Search query form</h1>
+    <p class="description">
+      Config-driven filters that emit the same paginated search request shape used by the backend.
+    </p>
+  </header>
+
+  <section class="search-query-form-section">
+    <h2>Empty by default</h2>
+    <p class="section-copy">
+      Optional properties stay hidden until a user adds them. With no required config, the emitted
+      request has no filters.
+    </p>
+    <div class="search-query-form-demo-panel">
+      <ms-search-query-form
+        [properties]="emptyProperties"
+        [(state)]="emptyState"
+        (requestChange)="emptyRequest.set($event)"
+      />
+      <pre aria-label="Empty search request">{{ emptyRequestJson() }}</pre>
+    </div>
+    <app-showcase-code label="Empty search query form" [code]="emptySnippet" />
+  </section>
+
+  <section class="search-query-form-section">
+    <h2>Required and optional filters</h2>
+    <p class="section-copy">
+      Required filters render immediately and survive clear. Optional filters can be added, removed,
+      changed to dropdown or boolean values, and cleared.
+    </p>
+    <div class="search-query-form-demo-panel">
+      <ms-search-query-form
+        [properties]="userProperties"
+        [(state)]="userState"
+        (requestChange)="userRequest.set($event)"
+      />
+      <pre aria-label="User search request">{{ userRequestJson() }}</pre>
+    </div>
+    <app-showcase-code label="Search query form with required filters" [code]="fullSnippet" />
+  </section>
+</main>

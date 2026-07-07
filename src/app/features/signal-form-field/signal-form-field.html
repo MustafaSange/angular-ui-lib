@@ -18,7 +18,6 @@
           Blur this field while it is empty to show the required error.
           <span slot="hint-extra">Required</span>
         </ms-hint>
-        <ms-error>{{ emailError() }}</ms-error>
       </ms-signal-form-field>
 
       <ms-signal-form-field>
@@ -26,7 +25,6 @@
         <input id="username" type="text" placeholder="ada_lovelace" [formField]="usernameField" />
 
         <ms-hint>Use letters, numbers, or underscores.</ms-hint>
-        <ms-error>{{ usernameError() }}</ms-error>
       </ms-signal-form-field>
     </div>
     <app-showcase-code label="Signal form field validation" [code]="snippet" />

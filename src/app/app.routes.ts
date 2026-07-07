@@ -109,6 +109,11 @@ export const routes: Routes = [
     loadComponent: () => import('./features/select/select').then((m) => m.Select),
   },
   {
+    path: 'search-query-form',
+    loadComponent: () =>
+      import('./features/search-query-form/search-query-form').then((m) => m.SearchQueryForm),
+  },
+  {
     path: 'slider',
     loadComponent: () => import('./features/slider/slider').then((m) => m.Slider),
   },
