@@ -1,0 +1,64 @@
+<main class="time-ago-page">
+  <header class="time-ago-header">
+    <a class="btn btn-ghost back-link" routerLink="/">&larr; Back to home</a>
+    <p class="eyebrow">Pipes</p>
+    <h1>Time ago</h1>
+    <p class="description">
+      Locale-aware relative dates for static metadata, live activity, and future events.
+    </p>
+  </header>
+
+  <section class="time-ago-section">
+    <h2>Relative units</h2>
+    <div class="value-list">
+      @for (item of staticDates; track item.label) {
+        <div class="value-row">
+          <span>{{ item.label }}</span>
+          <strong>{{ item.value | timeAgo }}</strong>
+        </div>
+      }
+    </div>
+    <app-showcase-code label="Static relative dates" [code]="staticSnippet" />
+  </section>
+
+  <section class="time-ago-section">
+    <div class="section-heading">
+      <div>
+        <h2>Live updates</h2>
+        <p>The label refreshes adaptively while live mode is enabled.</p>
+      </div>
+      <label class="live-toggle">
+        <input type="checkbox" [checked]="liveEnabled()" (change)="toggleLive()" />
+        Live
+      </label>
+    </div>
+
+    <div class="live-example">
+      <span>Last activity</span>
+      <strong>{{ liveDate() | timeAgo: liveEnabled() }}</strong>
+      <button class="btn btn-outline" type="button" (click)="resetLiveDate()">
+        Reset activity
+      </button>
+    </div>
+    <app-showcase-code label="Live relative date" [code]="liveSnippet" />
+  </section>
+
+  <section class="time-ago-section">
+    <h2>Future and invalid values</h2>
+    <div class="value-list">
+      <div class="value-row">
+        <span>Future date</span>
+        <strong>{{ futureDate | timeAgo }}</strong>
+      </div>
+      <div class="value-row">
+        <span>Invalid string</span>
+        <strong class="empty-value">{{ invalidDate | timeAgo }}</strong>
+      </div>
+      <div class="value-row">
+        <span>Missing value</span>
+        <strong class="empty-value">{{ null | timeAgo }}</strong>
+      </div>
+    </div>
+    <app-showcase-code label="Future and invalid dates" [code]="edgeCasesSnippet" />
+  </section>
+</main>
