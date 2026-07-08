@@ -7,6 +7,12 @@ const STRING_OPERATORS: readonly SearchOperator[] = [
   'startsWith',
   'endsWith',
   'in',
+  'isNull',
+  'isEmpty',
+  'isNullOrEmpty',
+  'isNotNull',
+  'isNotEmpty',
+  'isNotNullOrEmpty',
 ];
 
 const NUMERIC_OPERATORS: readonly SearchOperator[] = [
@@ -18,6 +24,8 @@ const NUMERIC_OPERATORS: readonly SearchOperator[] = [
   'lte',
   'between',
   'in',
+  'isNull',
+  'isNotNull',
 ];
 
 const DATE_OPERATORS: readonly SearchOperator[] = [
@@ -28,23 +36,39 @@ const DATE_OPERATORS: readonly SearchOperator[] = [
   'lt',
   'lte',
   'between',
+  'isNull',
+  'isNotNull',
 ];
 
-const BOOLEAN_OPERATORS: readonly SearchOperator[] = ['eq', 'neq'];
-const ENUM_OPERATORS: readonly SearchOperator[] = ['eq', 'neq', 'in'];
+const BOOLEAN_OPERATORS: readonly SearchOperator[] = ['eq', 'neq', 'isNull', 'isNotNull'];
+const ENUM_OPERATORS: readonly SearchOperator[] = ['eq', 'neq', 'in', 'isNull', 'isNotNull'];
+const VALUELESS_OPERATORS: readonly SearchOperator[] = [
+  'isNull',
+  'isEmpty',
+  'isNullOrEmpty',
+  'isNotNull',
+  'isNotEmpty',
+  'isNotNullOrEmpty',
+];
 
 export const SEARCH_OPERATOR_LABELS: Record<SearchOperator, string> = {
   eq: 'Equals',
-  neq: 'Does not equal',
+  neq: 'Does Not Equal',
   contains: 'Contains',
-  startsWith: 'Starts with',
-  endsWith: 'Ends with',
-  gt: 'Greater than',
-  gte: 'Greater than or equal',
-  lt: 'Less than',
-  lte: 'Less than or equal',
+  startsWith: 'Starts With',
+  endsWith: 'Ends With',
+  gt: 'Greater Than',
+  gte: 'Greater Than Or Equal',
+  lt: 'Less Than',
+  lte: 'Less Than Or Equal',
   between: 'Between',
   in: 'In',
+  isNull: 'Is Null',
+  isEmpty: 'Is Empty',
+  isNullOrEmpty: 'Is Null Or Empty',
+  isNotNull: 'Is Not Null',
+  isNotEmpty: 'Is Not Empty',
+  isNotNullOrEmpty: 'Is Not Null Or Empty',
 };
 
 export function getDefaultSearchOperator(dataType: SearchDataType): SearchOperator {
@@ -90,4 +114,8 @@ export function isSearchOperatorCompatible(
   operator: SearchOperator,
 ): boolean {
   return getCompatibleSearchOperators(dataType).includes(operator);
+}
+
+export function isValuelessSearchOperator(operator: SearchOperator): boolean {
+  return VALUELESS_OPERATORS.includes(operator);
 }

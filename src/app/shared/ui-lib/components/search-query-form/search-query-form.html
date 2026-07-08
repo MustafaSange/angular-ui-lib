@@ -28,81 +28,85 @@
               </select>
             </ms-signal-form-field>
 
-            <div class="filter-value">
-              @if (isBetweenOperator(filter)) {
-                <ms-signal-form-field>
-                  <label>From</label>
-                  @if (hasOptions(property)) {
-                    <select [formField]="field.from">
-                      <option value="">Choose from</option>
-                      @for (option of propertyOptions(property); track option.value) {
-                        <option [value]="option.value">{{ option.label }}</option>
-                      }
-                    </select>
-                  } @else {
-                    <input
-                      [type]="inputType(property)"
-                      [inputMode]="inputMode(property)"
-                      [step]="step(property)"
-                      [placeholder]="property.placeholder ?? ''"
-                      [formField]="field.from"
-                    />
-                  }
-                </ms-signal-form-field>
+            @if (isValuelessOperator(filter)) {
+              <span class="filter-value" aria-hidden="true"></span>
+            } @else {
+              <div class="filter-value">
+                @if (isBetweenOperator(filter)) {
+                  <ms-signal-form-field>
+                    <label>From</label>
+                    @if (hasOptions(property)) {
+                      <select [formField]="field.from">
+                        <option value="">Choose from</option>
+                        @for (option of propertyOptions(property); track option.value) {
+                          <option [value]="option.value">{{ option.label }}</option>
+                        }
+                      </select>
+                    } @else {
+                      <input
+                        [type]="inputType(property)"
+                        [inputMode]="inputMode(property)"
+                        [step]="step(property)"
+                        [placeholder]="property.placeholder ?? ''"
+                        [formField]="field.from"
+                      />
+                    }
+                  </ms-signal-form-field>
 
-                <ms-signal-form-field>
-                  <label>To</label>
-                  @if (hasOptions(property)) {
-                    <select [formField]="field.to">
-                      <option value="">Choose to</option>
+                  <ms-signal-form-field>
+                    <label>To</label>
+                    @if (hasOptions(property)) {
+                      <select [formField]="field.to">
+                        <option value="">Choose to</option>
+                        @for (option of propertyOptions(property); track option.value) {
+                          <option [value]="option.value">{{ option.label }}</option>
+                        }
+                      </select>
+                    } @else {
+                      <input
+                        [type]="inputType(property)"
+                        [inputMode]="inputMode(property)"
+                        [step]="step(property)"
+                        [placeholder]="property.placeholder ?? ''"
+                        [formField]="field.to"
+                      />
+                    }
+                  </ms-signal-form-field>
+                } @else if (isInOperator(filter) && hasOptions(property)) {
+                  <ms-signal-form-field>
+                    <label>Values</label>
+                    <ms-select multiple [searchable]="false" [formField]="field.values">
+                      @for (option of propertyOptions(property); track option.value) {
+                        <ms-select-option [value]="option.value.toString()" [label]="option.label">
+                          {{ option.label }}
+                        </ms-select-option>
+                      }
+                    </ms-select>
+                  </ms-signal-form-field>
+                } @else if (hasOptions(property)) {
+                  <ms-signal-form-field>
+                    <label>Value</label>
+                    <select [formField]="field.value">
+                      <option value="">Choose value</option>
                       @for (option of propertyOptions(property); track option.value) {
                         <option [value]="option.value">{{ option.label }}</option>
                       }
                     </select>
-                  } @else {
+                  </ms-signal-form-field>
+                } @else {
+                  <ms-signal-form-field>
+                    <label>Value</label>
                     <input
                       [type]="inputType(property)"
                       [inputMode]="inputMode(property)"
                       [step]="step(property)"
                       [placeholder]="property.placeholder ?? ''"
-                      [formField]="field.to"
+                      [formField]="field.value"
                     />
-                  }
-                </ms-signal-form-field>
-              } @else if (isInOperator(filter) && hasOptions(property)) {
-                <ms-signal-form-field>
-                  <label>Values</label>
-                  <ms-select multiple [searchable]="false" [formField]="field.values">
-                    @for (option of propertyOptions(property); track option.value) {
-                      <ms-select-option [value]="option.value.toString()" [label]="option.label">
-                        {{ option.label }}
-                      </ms-select-option>
-                    }
-                  </ms-select>
-                </ms-signal-form-field>
-              } @else if (hasOptions(property)) {
-                <ms-signal-form-field>
-                  <label>Value</label>
-                  <select [formField]="field.value">
-                    <option value="">Choose value</option>
-                    @for (option of propertyOptions(property); track option.value) {
-                      <option [value]="option.value">{{ option.label }}</option>
-                    }
-                  </select>
-                </ms-signal-form-field>
-              } @else {
-                <ms-signal-form-field>
-                  <label>Value</label>
-                  <input
-                    [type]="inputType(property)"
-                    [inputMode]="inputMode(property)"
-                    [step]="step(property)"
-                    [placeholder]="property.placeholder ?? ''"
-                    [formField]="field.value"
-                  />
-                </ms-signal-form-field>
-              }
-            </div>
+                  </ms-signal-form-field>
+                }
+              </div>
+            }
           }
 
           <div class="filter-actions">

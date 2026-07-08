@@ -27,6 +27,7 @@ Use modern Angular patterns:
   - Keep `.ms-icon { direction: ltr; }` as an intentional exception required for Material Symbols ligature rendering.
   - Keep public component and directive classes focused on Angular behavior. When a shared feature exposes reusable public types, config interfaces, state/meta interfaces, or helper functions, place them in dedicated sibling files such as `*-types.ts`, `*-config.ts`, `*-state.ts`, or `*-meta.ts`, and re-export them from the feature folder `index.ts`.
   - Do not create extra type files for trivial components that only export a component/directive class and have no meaningful reusable public types or helpers.
+  - For `ms-search-query-form`, keep frontend search operators aligned with backend wire names. Operators that do not take user-entered values, such as `isNull`, `isEmpty`, `isNullOrEmpty`, `isNotNull`, `isNotEmpty`, and `isNotNullOrEmpty`, should hide value inputs, skip value validators, keep filter state value as `null`, and emit request filters with `value: null`.
 - Import reusable UI library APIs through the public `src/app/shared/ui-lib` barrel in showcase copy/paste snippets, such as `./shared/ui-lib`.
 - For new showcase pages under `src/app/features/`, include copyable examples using
   `ShowcaseCode` from `src/app/shared/ui-lib/components/showcase-code`.
@@ -37,4 +38,5 @@ Use modern Angular patterns:
   - When displaying live form-derived UI such as character counts, read from the signal form field/control state so the visible example updates while the user types.
   - Render snippets near the matching visual example with `<app-showcase-code>`.
   - On the form-fields showcase, render each form-field variant, including autocomplete variants, with its snippet directly below the visual example.
+- Keep global form-control browser resets in `src/styles/base/_reset.scss`; number input spinner resets should be scoped to `input[type='number']` and cover both Firefox (`-moz-appearance: textfield`) and WebKit spin button pseudo-elements.
 - Do not add/update tests for behavior changes.
