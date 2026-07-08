@@ -8,7 +8,7 @@ ms-search-query-form {
 
   .filter-toolbar {
     display: grid;
-    grid-template-columns: 1fr 1fr 2fr 40px;
+    grid-template-columns: 1fr 3fr 40px;
     align-items: center;
     gap: var(--spacing-12);
     padding: var(--spacing-12) var(--spacing-16);
@@ -33,7 +33,6 @@ ms-search-query-form {
     grid-template-columns: 1fr 1fr 2fr 40px;
     gap: var(--spacing-12);
     align-items: center;
-
   }
 
   .filter-value {

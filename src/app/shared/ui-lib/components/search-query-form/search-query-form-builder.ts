@@ -5,10 +5,19 @@ import type {
   SearchRequestValue,
   SearchScalarValue,
 } from './search-query-form-types';
+import { isValuelessSearchOperator } from './search-query-form-operators';
 
 export function buildSearchRequest(state: SearchQueryFormState): PaginatedSearchRequest {
   const filters = state.filters
     .map((filter) => {
+      if (isValuelessSearchOperator(filter.operator)) {
+        return {
+          property: filter.property,
+          operator: filter.operator,
+          value: null,
+        };
+      }
+
       const value = normalizeRequestValue(filter.value);
 
       return value === null

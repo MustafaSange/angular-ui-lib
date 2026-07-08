@@ -16,6 +16,7 @@ import {
   SEARCH_OPERATOR_LABELS,
   getCompatibleSearchOperators,
   getDefaultSearchOperator,
+  isValuelessSearchOperator,
 } from './search-query-form-operators';
 import type {
   PaginatedSearchRequest,
@@ -90,7 +91,11 @@ export class SearchQueryFormComponent {
             message: 'Enter a value.',
             when: ({ valueOf }) => {
               const operator = valueOf(filter.operator);
-              return operator !== 'between' && operator !== 'in';
+              return (
+                operator !== 'between' &&
+                operator !== 'in' &&
+                !isValuelessSearchOperator(operator)
+              );
             },
           });
           required(filter.from, {
@@ -271,6 +276,10 @@ export class SearchQueryFormComponent {
 
   protected isInOperator(filter: SearchQueryFormFilterModel): boolean {
     return filter.operator === 'in';
+  }
+
+  protected isValuelessOperator(filter: SearchQueryFormFilterModel): boolean {
+    return isValuelessSearchOperator(filter.operator);
   }
 
   protected isFilterLocked(filter: SearchQueryFormFilterModel): boolean {
@@ -480,6 +489,10 @@ export class SearchQueryFormComponent {
       return this.createInValueFields(nextValue);
     }
 
+    if (isValuelessSearchOperator(operator)) {
+      return this.createScalarValueFields(null);
+    }
+
     return this.createScalarValueFields(nextValue);
   }
 
@@ -537,6 +550,10 @@ export class SearchQueryFormComponent {
 
     if (operator === 'in') {
       return Array.isArray(value);
+    }
+
+    if (isValuelessSearchOperator(operator)) {
+      return value === null;
     }
 
     return (
@@ -623,6 +640,10 @@ export class SearchQueryFormComponent {
 
     if (filter.operator === 'in') {
       return filter.values.map((value) => this.parseScalarValue(property, value));
+    }
+
+    if (isValuelessSearchOperator(filter.operator)) {
+      return null;
     }
 
     return this.parseScalarValue(property, filter.value);

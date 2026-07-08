@@ -79,7 +79,16 @@ export class SearchQueryForm {
   ];
 
   protected readonly emptyState = signal<SearchQueryFormState>({ filters: [] });
-  protected readonly userState = signal<SearchQueryFormState>({ filters: [] });
+  protected readonly userState = signal<SearchQueryFormState>({
+    filters: [
+      {
+        id: 'name-null-or-empty',
+        property: 'name',
+        operator: 'isNullOrEmpty',
+        value: null,
+      },
+    ],
+  });
   protected readonly emptyRequest = signal<PaginatedSearchRequest>(
     buildSearchRequest(this.emptyState()),
   );
@@ -180,7 +189,16 @@ export class UserSearchQueryExample {
     },
   ];
 
-  readonly searchState = signal<SearchQueryFormState>({ filters: [] });
+  readonly searchState = signal<SearchQueryFormState>({
+    filters: [
+      {
+        id: 'name-null-or-empty',
+        property: 'name',
+        operator: 'isNullOrEmpty',
+        value: null,
+      },
+    ],
+  });
   readonly request = signal<PaginatedSearchRequest>(buildSearchRequest(this.searchState()));
   readonly requestJson = computed(() => JSON.stringify(this.request(), null, 2));
 }`;

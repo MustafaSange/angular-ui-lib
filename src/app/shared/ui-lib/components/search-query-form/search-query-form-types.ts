@@ -21,7 +21,13 @@ export type SearchOperator =
   | 'lt'
   | 'lte'
   | 'between'
-  | 'in';
+  | 'in'
+  | 'isNull'
+  | 'isEmpty'
+  | 'isNullOrEmpty'
+  | 'isNotNull'
+  | 'isNotEmpty'
+  | 'isNotNullOrEmpty';
 
 export type SearchSortDirection = 0 | 1;
 
@@ -85,7 +91,7 @@ export interface PaginatedSearchRequest {
 export interface SearchFilterRequest {
   readonly property: string;
   readonly operator: SearchOperator;
-  readonly value: SearchRequestValue;
+  readonly value: SearchRequestValue | null;
 }
 
 export interface PaginatedResponse<T> {
