@@ -5,13 +5,18 @@ ms-search-query-form {
 .search-query-form {
   display: flex;
   flex-direction: column;
+  // gap: var(--spacing-8);
+  padding: var(--spacing-12) var(--spacing-16);
+  padding-block-end: 0;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-sm);
+  border: var(--border-width-sm) solid var(--color-border);
 
   .filter-toolbar {
     display: grid;
     grid-template-columns: 1fr 3fr 40px;
     align-items: center;
     gap: var(--spacing-12);
-    padding: var(--spacing-12) var(--spacing-16);
   }
 
   .toolbar-actions {
@@ -22,10 +27,10 @@ ms-search-query-form {
   .filter-list {
     display: flex;
     flex-direction: column;
-    background-color: var(--color-surface);
-    border-radius: var(--radius-sm);
-    border: var(--border-width-sm) solid var(--color-border);
-    padding: var(--spacing-12) var(--spacing-16);
+    // background-color: var(--color-surface);
+    // border-radius: var(--radius-sm);
+    // border: var(--border-width-sm) solid var(--color-border);
+    // padding: var(--spacing-12) var(--spacing-16);
   }
 
   .filter-row {
@@ -39,7 +44,7 @@ ms-search-query-form {
     display: flex;
     gap: var(--spacing-12);
 
-    > * {
+    >* {
       width: 100%;
     }
   }
