@@ -8,12 +8,20 @@ The component lives in:
 
 `src/app/shared/ui-lib/components/signal-form-field`
 
+This file owns the Angular component and projection contract. Shared SCSS behavior lives in
+`context/006-form-field.md`.
+
 ## Public API
 
 Import the public components from the folder barrel:
 
 ```ts
-import { SignalFormError, SignalFormField, SignalFormHint } from '../../shared/ui-lib';
+import {
+  SignalFormError,
+  SignalFormField,
+  SignalFormHint,
+  SignalReadonlyValue,
+} from '../../shared/ui-lib';
 ```
 
 Components:
@@ -21,6 +29,14 @@ Components:
 - `SignalFormField` with selector `ms-signal-form-field`
 - `SignalFormHint` with selector `ms-hint`
 - `SignalFormError` with selector `ms-error`
+- `SignalReadonlyValue` with selector `ms-readonly-value`
+
+`SignalReadonlyValue` inputs:
+
+- `value: unknown`, default `null`
+- `placeholder: string`, default `''`
+- `readonly: boolean`, default `false`
+- `disabled: boolean`, default `false`
 
 Shared reusable components use the `ms-` selector prefix. Do not use `app-` for components under `src/app/shared`.
 
@@ -43,6 +59,28 @@ Use Angular 22 signal forms with `[formField]`.
     This field is required.
     <span slot="error-extra">Required</span>
   </ms-error>
+</ms-signal-form-field>
+```
+
+Display-only values use `ms-readonly-value` inside the field control row.
+
+```html
+<ms-signal-form-field>
+  <label>Display name</label>
+  <ms-readonly-value [value]="displayName()" />
+  <ms-hint>Display values can use the default field treatment.</ms-hint>
+</ms-signal-form-field>
+
+<ms-signal-form-field>
+  <label>Account ID</label>
+  <ms-readonly-value [value]="accountId()" readonly />
+  <ms-hint>This value is displayed with the readonly field treatment.</ms-hint>
+</ms-signal-form-field>
+
+<ms-signal-form-field>
+  <label>Status</label>
+  <ms-readonly-value [value]="archivedStatus()" disabled />
+  <ms-hint>Disabled display values use the same disabled treatment as inputs.</ms-hint>
 </ms-signal-form-field>
 ```
 
@@ -74,6 +112,7 @@ The implementation is split into separate files:
 - `signal-form-hint/signal-form-hint.html`
 - `signal-form-error/signal-form-error.ts`
 - `signal-form-error/signal-form-error.html`
+- `signal-readonly-value.ts`
 - `index.ts`
 
 `signal-form-field.ts` owns the wrapper component behavior.
@@ -84,7 +123,8 @@ The implementation is split into separate files:
 2. Projected input/control row
 3. Message row
 
-`ms-hint` and `ms-error` are separate projected support components.
+`ms-hint` and `ms-error` are separate projected support components. `ms-readonly-value` is a
+projected display-value component for non-editing field rows.
 
 ## Projection Rules
 
@@ -95,11 +135,19 @@ The implementation is split into separate files:
 - Optional inline-end hint content uses `slot="hint-extra"` inside `ms-hint`.
 - Optional inline-end error content uses `slot="error-extra"` inside `ms-error`.
 - The projected control remains fully owned by the consumer.
-- The wrapper detects projected `ms-hint`, `ms-error`, and Angular signal `FormField`.
+- The control row projects `[formField]`, native controls, supported `ms-*` controls,
+  `ms-readonly-value`, and prefix/suffix/action content.
+- The wrapper detects projected `ms-hint`, `ms-error`, `ms-readonly-value`, and Angular signal
+  `FormField`.
 - The wrapper shows `ms-error` only when an error component exists and the projected signal field is invalid and touched or dirty.
 - The wrapper shows `ms-hint` before interaction and whenever no error is visible.
 - Initial invalid fields should not display errors until the field becomes touched or dirty.
 - The message row remains present so spacing does not jump.
+- When `ms-readonly-value` is projected with `readonly`, the wrapper applies `is-readonly`.
+- When `ms-readonly-value` is projected with `disabled`, the wrapper applies `is-disabled`.
+- When `ms-readonly-value` is projected, the wrapper applies `has-readonly-value`.
+- `ms-readonly-value` renders projected content when present; otherwise it stringifies `value`.
+- `ms-readonly-value` renders `placeholder` for `null`, `undefined`, or empty-string values.
 
 ## Styling
 
@@ -110,7 +158,7 @@ Reuse the existing form field styling in:
 The styles support both:
 
 - legacy `.form-field` markup
-- `ms-signal-form-field`, `ms-hint`, and `ms-error` element selectors
+- `ms-signal-form-field`, `ms-hint`, `ms-error`, and `ms-readonly-value` element selectors
 - a 2-column `.form-field-label` area using `1fr auto`
 - 2-column `ms-hint` and `ms-error` message layouts using `1fr auto`
 - logical block/inline layout behavior so label extras, message extras, prefixes, and suffixes
@@ -118,7 +166,7 @@ The styles support both:
 
 Dense form-field sizing is part of the component contract:
 
-- native `input` and `select` controls, `ms-select`, and `ms-autocomplete` align to
+- native `input` and `select` controls, `ms-select`, `ms-autocomplete`, and `ms-readonly-value` align to
   `--control-height-sm` with a 28px total control height including the outer form-field border
 - control text uses `--font-size-sm` (14px)
 - labels use `--color-text-muted`
@@ -127,7 +175,9 @@ Dense form-field sizing is part of the component contract:
 - projected controls must account for wrapper borders so they do not increase the composed field
   height
 
-Do not add state inputs, state classes, or `data-*` state attributes to `ms-signal-form-field`.
+Do not add consumer-facing state inputs or `data-*` state attributes to `ms-signal-form-field`.
+Internal host classes may reflect projected component state, such as `is-readonly`, `is-disabled`,
+and `has-readonly-value` for `ms-readonly-value`.
 
 ## Showcase
 
@@ -140,7 +190,10 @@ Each form-field variant should render as a small vertical showcase item:
 1. The live `ms-signal-form-field` visual example
 2. The matching `<app-showcase-code>` snippet directly below it
 
-Keep snippets hand-authored in `form-fields.ts` and make each snippet a full standalone Angular component example. Include separate snippets for individual variants such as text input, signal form field, required email, select, hint, textarea, prefix, suffix, search, actions, segmented suffix action, disabled, and readonly fields.
+Keep snippets hand-authored in each form-fields showcase component and make each snippet a full
+standalone Angular component example. Include separate snippets for individual variants such as text
+input, signal form field, required email, select, hint, textarea, prefix, suffix, search, actions,
+segmented suffix action, disabled, readonly, and display-value fields.
 
 The rendered showcase and its copyable snippet must stay behaviorally aligned:
 
@@ -152,6 +205,8 @@ The rendered showcase and its copyable snippet must stay behaviorally aligned:
   should derive it from the signal form field/control state so it updates while typing.
 - If the snippet demonstrates interaction state, such as a password visibility toggle, the live
   showcase should expose the same interaction.
+- If the snippet demonstrates display values, the live showcase should use the same
+  `SignalReadonlyValue` imports, signals, and `readonly` or `disabled` inputs.
 
 Selection controls in the same showcase should use the projected choice-control components documented in:
 
@@ -175,6 +230,8 @@ Selection-control examples can stay grouped by control type, with each group fol
 - Hint-side content can be projected with `slot="hint-extra"`.
 - Error-side content can be projected with `slot="error-extra"`.
 - `ms-hint` and `ms-error` are projected components in separate folders.
+- `ms-readonly-value` is exported from the folder barrel and can render plain, readonly, or disabled
+  display values.
 - Consumers import all signal form field pieces from the folder `index.ts`.
 - `[formField]` works with projected controls.
 - Hint and error are mutually exclusive.
@@ -183,4 +240,4 @@ Selection-control examples can stay grouped by control type, with each group fol
 - Projected inline-start and inline-end content mirrors correctly in `dir="rtl"`.
 - The showcase uses the signal form field component and renders each form-field variant with its snippet directly below the visual example.
 - The showcase snippets and rendered examples match behavior, including validation, derived labels,
-  and interactive actions.
+  interactive actions, and display-value states.
