@@ -1,7 +1,7 @@
 import { Component, booleanAttribute, computed, input, output } from '@angular/core';
 
 import { shapeRadiusValue, type ShapeRadius } from '../../shape-types';
-import type { ChipAppearance, ChipKind } from './chip-types';
+import type { ChipAppearance, ChipKind, ChipSize } from './chip-types';
 
 @Component({
   selector: 'ms-chip',
@@ -13,6 +13,7 @@ import type { ChipAppearance, ChipKind } from './chip-types';
 export class ChipComponent {
   readonly kind = input<ChipKind>('neutral');
   readonly appearance = input<ChipAppearance>('soft');
+  readonly size = input<ChipSize>('sm');
   readonly radius = input<ShapeRadius>('sm');
   readonly selected = input(false, { transform: booleanAttribute });
   readonly disabled = input(false, { transform: booleanAttribute });

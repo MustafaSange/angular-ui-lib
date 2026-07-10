@@ -1,0 +1,39 @@
+.file-upload-page {
+  display: grid;
+  gap: var(--spacing-24);
+  max-inline-size: var(--container-page);
+  margin-inline: auto;
+  padding: var(--spacing-32) var(--spacing-16);
+}
+
+.file-upload-header,
+.file-upload-section {
+  display: grid;
+  gap: var(--spacing-12);
+}
+
+.file-upload-header {
+  max-inline-size: 760px;
+}
+
+.description,
+.section-copy {
+  max-inline-size: 760px;
+  color: var(--color-text-muted);
+}
+
+.file-upload-demo {
+  display: grid;
+  gap: var(--spacing-16);
+  max-inline-size: 720px;
+}
+
+.state-demo {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 720px) {
+  .state-demo {
+    grid-template-columns: 1fr;
+  }
+}

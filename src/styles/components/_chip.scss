@@ -34,6 +34,16 @@ ms-chip {
     opacity var(--transition-fast);
 }
 
+.chip-sm {
+  min-block-size: var(--control-height-sm);
+  font-size: var(--font-size-sm);
+}
+
+.chip-xs {
+  min-block-size: calc(var(--control-height-xs) - (var(--control-border-width) * 2));
+  font-size: var(--font-size-xs);
+}
+
 .chip-neutral {
   --_chip-color: var(--color-text-secondary);
   --_chip-border: var(--color-border);
@@ -89,8 +99,18 @@ ms-chip {
   padding-inline: var(--spacing-8);
 }
 
+.chip-xs .chip-content {
+  gap: var(--spacing-2);
+  padding-block: 0;
+  padding-inline: var(--spacing-4);
+}
+
 .chip-removable .chip-content {
-  padding-inline-end: var(--spacing-4);
+  padding-inline-end: 0;
+}
+
+.chip-xs.chip-removable .chip-content {
+  padding-inline-start: var(--spacing-4);
 }
 
 .chip-content > .ms-icon {
@@ -128,6 +148,11 @@ ms-chip {
   &:disabled {
     cursor: not-allowed;
   }
+}
+
+.chip-xs .chip-remove {
+  inline-size: calc(var(--control-height-xs) - (var(--control-border-width) * 2));
+  block-size: calc(var(--control-height-xs) - (var(--control-border-width) * 2));
 }
 
 .chip-remove-icon {

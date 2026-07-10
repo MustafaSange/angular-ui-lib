@@ -1,0 +1,96 @@
+<main class="file-upload-page">
+  <header class="file-upload-header">
+    <a class="btn btn-ghost back-link" routerLink="/">← Back to home</a>
+    <p class="eyebrow">Components</p>
+    <h1>File upload</h1>
+    <p class="description">
+      Signal-form file selection with button activation, drag and drop, validation, and sanitized
+      file metadata.
+    </p>
+  </header>
+
+  <section class="file-upload-section">
+    <h2>Basic upload</h2>
+    <p class="section-copy">A single upload stores one accepted file item in the signal-form model.</p>
+    <div class="file-upload-demo">
+      <ms-signal-form-field>
+        <label for="single-upload">Attachment</label>
+        <ms-file-upload id="single-upload" [formField]="singleField" [config]="basicConfig" />
+      </ms-signal-form-field>
+    </div>
+    <app-showcase-code label="Basic file upload" [code]="basicSnippet" />
+  </section>
+
+  <section class="file-upload-section">
+    <h2>Restrictions</h2>
+    <p class="section-copy">Configure accepted extensions and maximum size while rejecting unsafe names.</p>
+    <div class="file-upload-demo">
+      <ms-signal-form-field>
+        <label for="restricted-upload">Attachment</label>
+        <ms-file-upload
+          id="restricted-upload"
+          [formField]="restrictedField"
+          [config]="restrictedConfig"
+        />
+      </ms-signal-form-field>
+    </div>
+    <app-showcase-code label="Restricted file upload" [code]="restrictedSnippet" />
+  </section>
+
+  <section class="file-upload-section">
+    <h2>Multiple upload</h2>
+    <p class="section-copy">Multiple mode appends accepted files and rejects duplicates.</p>
+    <div class="file-upload-demo">
+      <ms-signal-form-field>
+        <label for="multiple-upload">Attachments</label>
+        <ms-file-upload
+          id="multiple-upload"
+          [formField]="multipleField"
+          [config]="multipleConfig"
+        />
+      </ms-signal-form-field>
+    </div>
+    <app-showcase-code label="Multiple file upload" [code]="multipleSnippet" />
+  </section>
+
+  <section class="file-upload-section">
+    <h2>States</h2>
+    <p class="section-copy">Disabled and readonly uploads stay visible but prevent selection, drop, and removal.</p>
+    <div class="file-upload-demo state-demo">
+      <ms-signal-form-field>
+        <label for="disabled-upload">Disabled upload</label>
+        <ms-file-upload
+          id="disabled-upload"
+          [formField]="disabledField"
+          [config]="disabledConfig"
+        />
+      </ms-signal-form-field>
+
+      <ms-signal-form-field>
+        <label for="readonly-upload">Readonly upload</label>
+        <ms-file-upload
+          id="readonly-upload"
+          [formField]="readonlyField"
+          [config]="readonlyConfig"
+        />
+      </ms-signal-form-field>
+    </div>
+    <app-showcase-code label="Disabled and readonly uploads" [code]="statesSnippet" />
+  </section>
+
+  <section class="file-upload-section">
+    <h2>Button only</h2>
+    <p class="section-copy">Disable drag and drop when uploads should happen only through the button.</p>
+    <div class="file-upload-demo">
+      <ms-signal-form-field>
+        <label for="button-only-upload">Attachment</label>
+        <ms-file-upload
+          id="button-only-upload"
+          [formField]="buttonOnlyField"
+          [config]="buttonOnlyConfig"
+        />
+      </ms-signal-form-field>
+    </div>
+    <app-showcase-code label="Button-only upload" [code]="buttonOnlySnippet" />
+  </section>
+</main>
