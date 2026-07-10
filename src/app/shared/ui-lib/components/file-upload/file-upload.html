@@ -1,0 +1,66 @@
+<input
+  #fileInput
+  class="file-upload-input"
+  type="file"
+  [id]="uploadInputId()"
+  [attr.name]="name() || null"
+  [attr.accept]="accept()"
+  [attr.multiple]="multiple() ? '' : null"
+  [attr.aria-describedby]="descriptionId()"
+  [disabled]="isInteractiveDisabled()"
+  (change)="handleInputChange($event)"
+  (blur)="markTouched()"
+/>
+
+<div
+  class="drop-zone"
+  [attr.aria-disabled]="isInteractiveDisabled()"
+  [attr.data-draggable]="isDraggable()"
+  (dragenter)="handleDragEnter($event)"
+  (dragover)="handleDragOver($event)"
+  (dragleave)="handleDragLeave($event)"
+  (drop)="handleDrop($event)"
+>
+  <div class="drop-zone-content" [id]="descriptionId()">
+    @if (hasItems()) {
+      <ul class="file-list" aria-label="Selected files">
+        @for (item of acceptedItems(); track item.safeName + item.size) {
+          <li>
+            <ms-chip
+              class="file-chip"
+              appearance="outline"
+              size="xs"
+              removable
+              [disabled]="isInteractiveDisabled()"
+              (removed)="removeItem(item)"
+            >
+              <span class="ms-icon" aria-hidden="true">description</span>
+              <span class="file-name">{{ item.safeName }}</span>
+              <span class="file-size">{{ formatFileSize(item.size) }}</span>
+              <button
+                type="button"
+                msChipRemove
+                [attr.aria-label]="'Remove ' + item.safeName"
+              ></button>
+            </ms-chip>
+          </li>
+        }
+      </ul>
+    } @else {
+      <div class="drop-zone-copy">
+        <span class="ms-icon" aria-hidden="true">upload_file</span>
+        <span>{{ helperText() }}</span>
+      </div>
+    }
+  </div>
+
+  <button
+    class="btn btn-secondary btn-xs"
+    type="button"
+    [disabled]="isInteractiveDisabled()"
+    (click)="openFileDialog()"
+  >
+    <span class="ms-icon" aria-hidden="true">upload_file</span>
+    {{ multiple() ? 'Choose files' : 'Choose file' }}
+  </button>
+</div>

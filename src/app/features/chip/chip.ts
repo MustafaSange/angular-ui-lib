@@ -69,6 +69,24 @@ import { ChipComponent } from './shared/ui-lib';
   \`, })
 export class ChipRadiusExample {}`;
 
+  protected readonly sizesSnippet = `import { Component } from '@angular/core';
+
+import { ChipComponent, ChipRemoveDirective } from './shared/ui-lib';
+
+@Component({
+  selector: 'app-chip-sizes-example',
+  imports: [ChipComponent, ChipRemoveDirective],
+  template: \`
+    <ms-chip>Small</ms-chip>
+    <ms-chip size="xs">Extra small</ms-chip>
+    <ms-chip size="xs" removable>
+      Extra small removable
+      <button type="button" msChipRemove aria-label="Remove extra small chip"></button>
+    </ms-chip>
+  \`,
+})
+export class ChipSizesExample {}`;
+
   protected readonly removableSnippet = `import { Component, signal } from '@angular/core';
 
 import { ChipComponent, ChipRemoveDirective } from './shared/ui-lib';

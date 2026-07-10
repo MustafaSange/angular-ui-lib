@@ -24,11 +24,13 @@ Required API:
 ```ts
 type ChipKind = 'neutral' | 'info' | 'success' | 'warning' | 'danger';
 type ChipAppearance = 'soft' | 'outline';
+type ChipSize = 'sm' | 'xs';
 type ShapeRadius = 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
 
 class ChipComponent {
   readonly kind = input<ChipKind>('neutral');
   readonly appearance = input<ChipAppearance>('soft');
+  readonly size = input<ChipSize>('sm');
   readonly radius = input<ShapeRadius>('sm');
   readonly selected = input(false);
   readonly disabled = input(false);
@@ -40,6 +42,7 @@ class ChipComponent {
 Defaults:
 
 - chips use the neutral soft treatment
+- chips use `sm` size by default
 - chips use a small radius by default
 - chips are not selected, disabled, or removable unless configured
 - removable chips emit `removed` when their remove button is activated
@@ -63,6 +66,7 @@ import { ChipComponent, ChipRemoveDirective } from './shared/ui-lib';
       <span class="ms-icon" aria-hidden="true">check_circle</span>
       Published
     </ms-chip>
+    <ms-chip size="xs">Extra small</ms-chip>
 
     @if (showRemovable()) {
       <ms-chip removable (removed)="showRemovable.set(false)">
@@ -96,6 +100,9 @@ projected leading icon or avatar content.
 - Chips are non-interactive by default unless the consumer projects interactive controls.
 - Selected chips apply a distinct selected visual state.
 - Disabled chips apply disabled styling and suppress remove behavior.
+- `size="sm"` uses the default small chip height and text sizing.
+- `size="xs"` uses extra-small chip height, text sizing, and remove-button sizing for dense token
+  displays such as file upload selections.
 - Removable chips require a projected native `button[msChipRemove]`.
 - Activating an enabled `button[msChipRemove]` emits the parent chip `removed` output.
 - Pressing `Enter` or `Space` on the remove button activates removal through native button
@@ -122,6 +129,10 @@ Feature styles live in `src/styles/components/_chip.scss` and are forwarded from
 - Use logical block/inline properties so leading content and remove buttons mirror correctly in
   both `dir="ltr"` and `dir="rtl"`.
 - Keep chips large enough for comfortable remove-button targeting.
+- `sm` chips align to `--control-height-sm`.
+- `xs` chips align to the extra-small control height while accounting for the chip border.
+- Removable chips remove trailing content padding so the projected remove button aligns directly to
+  the chip inline end.
 - `soft` uses a subtle surface with optional selected emphasis.
 - `outline` uses a transparent surface with a visible border.
 - In dark mode, chip text should match the alert/toast tone model: mix
@@ -153,6 +164,7 @@ Add a dedicated `/chip` page and home card demonstrating:
 - chips with leading icons
 - chip kinds: neutral, info, success, warning, and danger
 - chip appearances: soft and outline
+- chip sizes: small and extra small
 - selected chips
 - removable chips
 - disabled chips
@@ -179,6 +191,7 @@ Each visual example renders a matching hand-authored, full standalone Angular ex
 - Public chip primitives are exported from the chip barrel.
 - The primary chip usage example works as documented.
 - Chips render static, leading-icon, selected, removable, and disabled examples.
+- Chips render small and extra-small size examples.
 - Removable chips emit `removed` only when enabled.
 - Remove buttons are native buttons with accessible names and visible focus.
 - Styles are token-based, use logical properties, and are forwarded through the component styles

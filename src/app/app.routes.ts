@@ -64,6 +64,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/form-fields/form-fields').then((m) => m.FormFields),
   },
   {
+    path: 'file-upload',
+    loadComponent: () => import('./features/file-upload/file-upload').then((m) => m.FileUpload),
+  },
+  {
     path: 'grid',
     loadComponent: () => import('./features/grid/grid').then((m) => m.Grid),
   },

@@ -12,6 +12,7 @@ export const MATERIAL_ICONS = [
   'content_copy',
   'delete',
   'dashboard',
+  'description',
   'edit',
   'error',
   'expand_more',
@@ -32,4 +33,5 @@ export const MATERIAL_ICONS = [
   'search',
   'skip_next',
   'sync',
+  'upload_file',
 ] as const;

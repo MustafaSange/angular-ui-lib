@@ -12,6 +12,7 @@ export * from './copy-button';
 export * from './direction-switcher';
 export * from './drawer';
 export * from './feedback';
+export * from './file-upload';
 export * from './media-slider';
 export * from './menu-popover';
 export * from './modal';

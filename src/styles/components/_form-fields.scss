@@ -104,6 +104,7 @@ ms-signal-form-field {
   ms-button-toggle-group,
   ms-slider,
   ms-otp-input,
+  ms-file-upload,
   ms-readonly-value {
     flex: 1 1 auto;
     inline-size: 100%;
@@ -163,6 +164,24 @@ ms-signal-form-field {
   }
 
   &:has(ms-otp-input) {
+    .form-field-control {
+      display: block;
+      min-block-size: auto;
+      border: 0;
+      border-radius: 0;
+      background-color: transparent;
+      overflow: visible;
+      transition: none;
+
+      &:hover:not(:has(:disabled)):not(:has([readonly])):not(:focus-within),
+      &:focus-within {
+        border-color: transparent;
+        box-shadow: none;
+      }
+    }
+  }
+
+  &:has(ms-file-upload) {
     .form-field-control {
       display: block;
       min-block-size: auto;
@@ -255,6 +274,7 @@ ms-signal-form-field {
     input,
     textarea,
     select,
+    ms-file-upload,
     ms-readonly-value,
     .form-field-prefix,
     .form-field-suffix,
@@ -281,6 +301,7 @@ ms-signal-form-field {
     input,
     textarea,
     select,
+    ms-file-upload,
     ms-readonly-value {
       cursor: default;
     }

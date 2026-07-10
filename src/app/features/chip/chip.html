@@ -57,6 +57,19 @@
   </section>
 
   <section class="chip-section showcase-section">
+    <h2>Sizes</h2>
+    <div class="chip-demo-row showcase-demo-row">
+      <ms-chip>Small</ms-chip>
+      <ms-chip size="xs">Extra small</ms-chip>
+      <ms-chip size="xs" removable>
+        Extra small removable
+        <button type="button" msChipRemove aria-label="Remove extra small chip"></button>
+      </ms-chip>
+    </div>
+    <app-showcase-code label="Chip sizes" [code]="sizesSnippet" />
+  </section>
+
+  <section class="chip-section showcase-section">
     <h2>Removable chips</h2>
     <div class="chip-demo-row showcase-demo-row">
       @for (chip of removableChips(); track chip) {
