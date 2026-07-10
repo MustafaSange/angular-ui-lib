@@ -148,6 +148,8 @@ Styling rules:
 - Use existing tokens for color, spacing, radius, border width, motion, and focus rings.
 - Checked checkbox, radio, and switch states use accent colors.
 - Checkbox and radio controls use `var(--border-width-md)`.
+- Checkbox, radio, and switch labels use the same muted compact label treatment as form-field
+  labels: `--font-size-sm` (14px) text with `--color-text-muted`.
 - `ms-choice-hint` and `ms-choice-error` use the same font size as form field hint/error messages.
 - Disabled controls must use `cursor: not-allowed`.
 - The visible switch track must use `cursor: pointer` and remain clickable.

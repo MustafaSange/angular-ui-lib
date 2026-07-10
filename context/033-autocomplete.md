@@ -279,6 +279,9 @@ The styles are forwarded from:
 Styling rules:
 
 - use existing tokens for color, spacing, radius, border, shadow, motion, and focus behavior
+- match the enterprise-dense form-field sizing when projected in `ms-signal-form-field`: the
+  visible control fits the shared `--control-height-sm` 28px total height, including wrapper
+  borders, and uses `--font-size-sm` control text
 - use concise internal hooks such as `.autocomplete-panel`, `.autocomplete-option`,
   `.autocomplete-chip`, and `.autocomplete-progress`
 - use logical sizing and placement so the control and panel behave in both `dir="ltr"` and
@@ -316,5 +319,6 @@ Update the form-fields showcase with copyable examples for:
 - Angular forms can read, write, disable, touch, and validate the control.
 - Hidden form values are rendered when `name` is provided.
 - Keyboard and pointer interactions follow the documented behavior.
-- Styling uses existing tokens, logical properties, and RTL-safe panel placement.
+- Styling uses existing tokens, compact form-field sizing, logical properties, and RTL-safe panel
+  placement.
 - The showcase demonstrates core variants and renders matching copyable snippets.

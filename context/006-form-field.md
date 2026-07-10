@@ -90,6 +90,20 @@ Shared styles should be grouped where possible.
 
 Element-specific styles should only be added where behavior differs.
 
+Keep text, select, and autocomplete fields enterprise-dense:
+
+- The composed control row uses the small control height token, `--control-height-sm`, with a
+  28px total block size including the form-field border.
+- Native `input` and `select` controls should fill the projected control row without increasing
+  the total field height.
+- Projected custom controls such as `ms-select` and `ms-autocomplete` must align to the same
+  28px total control height when used inside `ms-signal-form-field`.
+- Form-control text uses `--font-size-sm` (14px).
+- Field labels use `--color-text-muted` and the same compact label treatment as checkbox, radio,
+  and switch labels.
+- Account for wrapper borders and internal padding when sizing projected controls so nested
+  controls do not make the field taller than the shared compact height.
+
 ## Prefix and Suffix Behavior
 
 The control row should support optional prefix and suffix content inside `.form-field-control`.

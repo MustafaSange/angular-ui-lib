@@ -356,6 +356,9 @@ Styling rules:
 
 - use `.select-*` internal class hooks
 - keep `<ms-select>` block-level and flexible inside form field layouts
+- match the enterprise-dense form-field sizing when projected in `ms-signal-form-field`: the
+  visible control fits the shared `--control-height-sm` 28px total height, including wrapper
+  borders, and uses `--font-size-sm` control text
 - use design tokens for control sizing, spacing, borders, radius, shadows, color, and motion
 - use logical CSS properties for inline/block sizing, margins, borders, and placement
 - use popover anchor placement with logical fallback positions
@@ -419,6 +422,7 @@ public APIs through `./shared/ui-lib`, and are rendered near their matching visu
 - The control implements signal form binding through `FormValueControl`.
 - Hidden form inputs are rendered when `name` is provided.
 - Keyboard navigation works for opening, active option movement, selection, closing, and tabbing away.
-- Styling uses existing tokens, logical CSS properties, and RTL-safe placement.
+- Styling uses existing tokens, compact form-field sizing, logical CSS properties, and RTL-safe
+  placement.
 - Accessibility roles, states, focus behavior, and labels are implemented.
 - The showcase demonstrates core use cases and renders matching copyable snippets.

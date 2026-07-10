@@ -116,6 +116,17 @@ The styles support both:
 - logical block/inline layout behavior so label extras, message extras, prefixes, and suffixes
   mirror correctly in both `dir="ltr"` and `dir="rtl"`
 
+Dense form-field sizing is part of the component contract:
+
+- native `input` and `select` controls, `ms-select`, and `ms-autocomplete` align to
+  `--control-height-sm` with a 28px total control height including the outer form-field border
+- control text uses `--font-size-sm` (14px)
+- labels use `--color-text-muted`
+- checkbox, radio, and switch labels should match that muted 14px label treatment when shown in
+  the form-fields showcase
+- projected controls must account for wrapper borders so they do not increase the composed field
+  height
+
 Do not add state inputs, state classes, or `data-*` state attributes to `ms-signal-form-field`.
 
 ## Showcase

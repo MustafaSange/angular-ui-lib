@@ -73,6 +73,15 @@ Shared control styles should be grouped together.
 
 Element-specific styles should only be added where behavior differs.
 
+Keep native fields and projected custom controls visually compact and aligned:
+
+- use `--control-height-sm` for the shared text/select control height
+- the total control row height is 28px including the form-field border
+- control text uses `--font-size-sm` (14px)
+- labels use `--color-text-muted`
+- native `input` and `select` controls, plus projected `ms-select` and `ms-autocomplete`, should
+  not increase the total field height when placed inside the form-field wrapper
+
 ## Required state
 
 When `.is-required` is applied:
