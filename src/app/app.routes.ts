@@ -101,8 +101,7 @@ export const routes: Routes = [
   },
   {
     path: 'signal-form-field',
-    loadComponent: () =>
-      import('./features/signal-form-field/signal-form-field').then((m) => m.SignalFormFieldPage),
+    redirectTo: 'form-fields',
   },
   {
     path: 'select',

@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 
 import { BasicTextFieldShowcase } from './showcases/basic-text-field/basic-text-field';
 import { DisabledFieldShowcase } from './showcases/disabled-field/disabled-field';
+import { DisplayValuesShowcase } from './showcases/display-values/display-values';
 import { FieldActionsShowcase } from './showcases/field-actions/field-actions';
 import { FieldWithHintShowcase } from './showcases/field-with-hint/field-with-hint';
 import { PrefixFieldShowcase } from './showcases/prefix-field/prefix-field';
@@ -28,6 +29,7 @@ import { TextareaFieldShowcase } from './showcases/textarea-field/textarea-field
     SegmentedSuffixActionShowcase,
     DisabledFieldShowcase,
     ReadonlyFieldShowcase,
+    DisplayValuesShowcase,
   ],
   templateUrl: './form-fields.html',
   styleUrl: './form-fields.scss',

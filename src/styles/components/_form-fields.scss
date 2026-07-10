@@ -103,7 +103,8 @@ ms-signal-form-field {
   ms-select,
   ms-button-toggle-group,
   ms-slider,
-  ms-otp-input {
+  ms-otp-input,
+  ms-readonly-value {
     flex: 1 1 auto;
     inline-size: 100%;
     min-inline-size: 0;
@@ -144,6 +145,21 @@ ms-signal-form-field {
 
   select {
     cursor: pointer;
+  }
+
+  ms-readonly-value {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: calc(var(--control-height-sm) - (var(--control-border-width) * 2));
+    padding-inline: var(--control-padding-x-xs);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-body);
+    overflow-wrap: anywhere;
+  }
+
+  ms-readonly-value.is-placeholder {
+    color: var(--color-text-muted);
   }
 
   &:has(ms-otp-input) {
@@ -239,6 +255,7 @@ ms-signal-form-field {
     input,
     textarea,
     select,
+    ms-readonly-value,
     .form-field-prefix,
     .form-field-suffix,
     .form-field-action,
@@ -263,7 +280,8 @@ ms-signal-form-field {
 
     input,
     textarea,
-    select {
+    select,
+    ms-readonly-value {
       cursor: default;
     }
   }
