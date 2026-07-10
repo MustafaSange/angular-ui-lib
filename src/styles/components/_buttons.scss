@@ -2,13 +2,13 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-8);
-  min-height: var(--control-height-md);
-  padding-inline: var(--control-padding-x-md);
+  gap: var(--spacing-4);
+  min-height: var(--control-height-sm);
+  padding-inline: var(--control-padding-x-sm);
   border: var(--control-border-width) solid transparent;
   border-radius: var(--radius-sm);
   font-family: var(--font-family-sans);
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-control);
   text-decoration: none;
@@ -105,7 +105,7 @@ $button-variants: primary, secondary, success, danger;
 .btn-md {
   min-height: var(--control-height-md);
   padding-inline: var(--control-padding-x-md);
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
 }
 
 .btn-lg {
@@ -119,8 +119,8 @@ $button-variants: primary, secondary, success, danger;
 }
 
 .btn-icon {
-  inline-size: var(--control-height-md);
-  block-size: var(--control-height-md);
+  inline-size: var(--control-height-sm);
+  block-size: var(--control-height-sm);
   padding-inline: 0;
 
   &.btn-xs {
@@ -131,6 +131,11 @@ $button-variants: primary, secondary, success, danger;
   &.btn-sm {
     inline-size: var(--control-height-sm);
     block-size: var(--control-height-sm);
+  }
+
+  &.btn-md {
+    inline-size: var(--control-height-md);
+    block-size: var(--control-height-md);
   }
 
   &.btn-lg {

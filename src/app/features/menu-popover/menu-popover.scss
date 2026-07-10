@@ -174,7 +174,7 @@ h3 {
 
 .filter-form {
   display: grid;
-  gap: var(--spacing-16);
+  // gap: var(--spacing-16);
   inline-size: min(20rem, calc(100dvi - (var(--spacing-48) * 2)));
 }
 

@@ -18,7 +18,7 @@ body.ms-modal-open {
   inset: 0;
   display: grid;
   place-items: center;
-  padding: var(--spacing-16);
+  padding: var(--spacing-12);
   pointer-events: none;
 }
 
@@ -50,15 +50,15 @@ body.ms-modal-open {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
-  gap: var(--spacing-12);
-  padding: var(--spacing-16) var(--spacing-20);
+  gap: var(--spacing-8);
+  padding: var(--spacing-12) var(--spacing-16);
 }
 
 .modal-header {
   justify-content: space-between;
   min-block-size: var(--spacing-40);
   padding-block: 0;
-  padding-inline: var(--spacing-20) 0;
+  padding-inline: var(--spacing-16) 0;
   border-block-end: var(--border-width-sm) solid var(--color-border-muted);
 }
 
@@ -66,7 +66,7 @@ body.ms-modal-open {
   display: flex;
   min-inline-size: 0;
   align-items: center;
-  gap: var(--spacing-12);
+  gap: var(--spacing-8);
 }
 
 .modal-title {
@@ -104,7 +104,7 @@ body.ms-modal-open {
   flex: 1 1 auto;
   min-block-size: 0;
   overflow: auto;
-  padding: var(--spacing-20);
+  padding: var(--spacing-16);
 }
 
 .modal-footer {
@@ -118,7 +118,7 @@ body.ms-modal-open {
 
 .modal-stack {
   display: grid;
-  gap: var(--spacing-16);
+  gap: var(--spacing-12);
 }
 
 @keyframes modal-enter {

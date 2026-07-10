@@ -25,10 +25,10 @@ ms-button-toggle-group,
   align-items: center;
   justify-content: center;
   flex: 0 0 auto;
-  gap: var(--spacing-8);
-  min-block-size: calc(var(--control-height-md) - (var(--spacing-2) * 2));
+  gap: var(--spacing-4);
+  min-block-size: calc(var(--control-height-sm) - (var(--spacing-2) * 2));
   min-inline-size: 0;
-  padding-inline: var(--control-padding-x-sm);
+  padding-inline: var(--control-padding-x-xs);
   border: var(--control-border-width) solid transparent;
   border-radius: calc(var(--radius-sm) - var(--spacing-2));
   background-color: transparent;

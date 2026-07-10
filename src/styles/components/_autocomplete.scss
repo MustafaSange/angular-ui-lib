@@ -152,9 +152,9 @@ ms-autocomplete {
 .autocomplete-option {
   display: flex;
   align-items: center;
-  gap: var(--spacing-8);
+  gap: var(--spacing-4);
   min-block-size: var(--_autocomplete-option-min-height);
-  padding: var(--spacing-8) var(--spacing-12);
+  padding: var(--spacing-4) var(--spacing-8);
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition:
@@ -204,12 +204,12 @@ ms-autocomplete {
 }
 
 .autocomplete-group {
-  padding: var(--spacing-8) var(--spacing-12) var(--spacing-4);
+  padding: var(--spacing-4) var(--spacing-8);
   font-weight: var(--font-weight-medium);
 }
 
 .autocomplete-status {
-  padding: var(--spacing-12);
+  padding: var(--spacing-8);
 }
 
 .autocomplete-selected-icon {

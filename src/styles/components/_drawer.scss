@@ -62,19 +62,19 @@ body.ms-drawer-open {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--spacing-12);
-  padding: var(--spacing-16);
+  gap: var(--spacing-8);
+  padding: var(--spacing-12);
 }
 
 .drawer-header {
-  min-block-size: var(--spacing-56);
+  min-block-size: var(--spacing-40);
   border-block-end: var(--border-width-sm) solid var(--color-border-muted);
 }
 
 .drawer-content {
   flex: 1 1 auto;
   min-block-size: 0;
-  padding: var(--spacing-12);
+  padding: var(--spacing-8);
   overflow: auto;
 }
 

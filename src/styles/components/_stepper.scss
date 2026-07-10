@@ -3,11 +3,11 @@ ms-stepper {
 }
 
 .stepper {
-  --_step-marker-size: 1.75rem;
+  --_step-marker-size: 1.5rem;
   --_step-padding-inline: var(--spacing-8);
 
   display: grid;
-  gap: var(--spacing-16);
+  gap: var(--spacing-12);
   min-inline-size: 0;
 }
 
@@ -26,8 +26,8 @@ ms-stepper {
   align-items: center;
   gap: var(--spacing-8);
   min-inline-size: 0;
-  min-block-size: var(--control-height-md);
-  padding-block: var(--spacing-8);
+  min-block-size: var(--control-height-sm);
+  padding-block: var(--spacing-4);
   padding-inline: var(--_step-padding-inline);
   border: 0;
   border-radius: var(--radius-md);
@@ -68,7 +68,7 @@ ms-stepper {
   border-radius: var(--radius-full);
   background-color: var(--color-surface);
   color: var(--color-text-secondary);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   line-height: 1;
   transition:
     background-color var(--transition-fast),
@@ -76,7 +76,7 @@ ms-stepper {
     color var(--transition-fast);
 
   .ms-icon {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-md);
   }
 }
 
@@ -92,9 +92,9 @@ ms-stepper {
 
 .step-panel {
   min-inline-size: 0;
-  padding: var(--spacing-16);
+  padding: var(--spacing-12);
   border: var(--border-width-sm) solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   background-color: var(--color-surface);
   color: var(--color-text-primary);
 }

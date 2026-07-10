@@ -60,7 +60,7 @@ body.ms-bottom-sheet-open {
   flex: 0 0 auto;
   inline-size: var(--spacing-40);
   block-size: var(--spacing-4);
-  margin-block: var(--spacing-8) var(--spacing-4);
+  margin-block: var(--spacing-4);
   margin-inline: auto;
   border-radius: var(--radius-pill);
   background-color: var(--color-border-strong);
@@ -71,13 +71,13 @@ body.ms-bottom-sheet-open {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
-  gap: var(--spacing-12);
-  padding-inline: var(--spacing-20);
+  gap: var(--spacing-8);
+  padding-inline: var(--spacing-16);
 }
 
 .bottom-sheet-header {
   justify-content: space-between;
-  min-block-size: var(--spacing-48);
+  min-block-size: var(--spacing-40);
   padding-block: 0;
   padding-inline-end: 0;
   border-block-end: var(--border-width-sm) solid var(--color-border-muted);
@@ -87,7 +87,7 @@ body.ms-bottom-sheet-open {
   display: flex;
   min-inline-size: 0;
   align-items: center;
-  gap: var(--spacing-12);
+  gap: var(--spacing-8);
 }
 
 .bottom-sheet-title {
@@ -114,9 +114,9 @@ body.ms-bottom-sheet-open {
 .bottom-sheet-close-button {
   flex: 0 0 auto;
   align-self: stretch;
-  inline-size: var(--spacing-48);
-  block-size: var(--spacing-48);
-  min-block-size: var(--spacing-48);
+  inline-size: var(--spacing-40);
+  block-size: var(--spacing-40);
+  min-block-size: var(--spacing-40);
   padding-inline: 0;
   border-radius: 0;
 
@@ -132,12 +132,12 @@ body.ms-bottom-sheet-open {
   flex: 1 1 auto;
   min-block-size: 0;
   overflow: auto;
-  padding: var(--spacing-20);
+  padding: var(--spacing-16);
 }
 
 .bottom-sheet-footer {
   justify-content: flex-end;
-  padding-block: var(--spacing-16) calc(var(--spacing-16) + var(--_bottom-sheet-safe-area-block-end));
+  padding-block: var(--spacing-12) calc(var(--spacing-12) + var(--_bottom-sheet-safe-area-block-end));
   border-block-start: var(--border-width-sm) solid var(--color-border-muted);
 
   &:empty {
