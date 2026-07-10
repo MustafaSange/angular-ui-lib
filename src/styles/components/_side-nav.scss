@@ -4,9 +4,9 @@ ms-side-nav {
 
 .side-nav {
   --_side-nav-width: 16rem;
-  --_side-nav-collapsed-width: 3.75rem;
+  --_side-nav-collapsed-width: 3rem;
   --_side-nav-flyout-width: 15rem;
-  --_side-nav-item-block-size: var(--control-height-lg);
+  --_side-nav-item-block-size: var(--control-height-md);
   --_side-nav-flyout-enter-translate: calc(var(--spacing-4) * -1);
 
   position: relative;
@@ -30,7 +30,7 @@ ms-side-nav {
 }
 
 .side-nav-list {
-  padding: var(--spacing-8);
+  padding: var(--spacing-4);
   border: var(--border-width-sm) solid var(--color-border-muted);
   border-radius: var(--radius-md);
   background-color: var(--color-surface);
@@ -47,11 +47,11 @@ ms-side-nav {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: var(--spacing-8);
+  gap: var(--spacing-4);
   min-block-size: var(--_side-nav-item-block-size);
   inline-size: 100%;
-  padding-block: var(--spacing-8);
-  padding-inline: var(--spacing-12);
+  padding-block: var(--spacing-4);
+  padding-inline: var(--spacing-8);
   border: 0;
   border-radius: var(--radius-sm);
   background-color: transparent;
@@ -142,7 +142,7 @@ ms-side-nav {
 .side-nav-panel {
   display: none;
   padding-block-start: var(--spacing-4);
-  padding-inline-start: var(--spacing-16);
+  padding-inline-start: var(--spacing-12);
 }
 
 .side-nav-section-open > .side-nav-panel {

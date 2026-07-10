@@ -19,7 +19,7 @@ ms-chip {
   display: inline-flex;
   align-items: center;
   max-inline-size: 100%;
-  min-block-size: var(--control-height-md);
+  min-block-size: var(--control-height-sm);
   border: var(--border-width-sm) solid transparent;
   border-radius: var(--_chip-radius);
   background-color: var(--_chip-surface);
@@ -84,9 +84,9 @@ ms-chip {
   display: inline-flex;
   align-items: center;
   min-inline-size: 0;
-  gap: var(--spacing-8);
-  padding-block: var(--spacing-4);
-  padding-inline: var(--spacing-12);
+  gap: var(--spacing-4);
+  padding-block: var(--spacing-2);
+  padding-inline: var(--spacing-8);
 }
 
 .chip-removable .chip-content {
@@ -95,7 +95,7 @@ ms-chip {
 
 .chip-content > .ms-icon {
   flex: 0 0 auto;
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
 }
 
 .chip-remove {
@@ -131,7 +131,7 @@ ms-chip {
 }
 
 .chip-remove-icon {
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
 }
 
 @mixin dark-chip-tones {

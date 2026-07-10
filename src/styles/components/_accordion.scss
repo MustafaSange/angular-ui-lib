@@ -30,11 +30,11 @@ ms-accordion {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--spacing-16);
+  gap: var(--spacing-12);
   inline-size: 100%;
-  min-block-size: var(--control-height-lg);
-  padding-block: var(--spacing-12);
-  padding-inline: var(--spacing-16);
+  min-block-size: var(--control-height-md);
+  padding-block: var(--spacing-8);
+  padding-inline: var(--spacing-12);
   border: 0;
   background: transparent;
   color: var(--color-text-primary);
@@ -67,7 +67,7 @@ ms-accordion {
 
 .accordion-icon {
   flex: 0 0 auto;
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-lg);
   transition:
     color var(--transition-fast),
     transform var(--transition-fast);
@@ -93,8 +93,8 @@ ms-accordion {
 }
 
 .accordion-panel {
-  padding-block: 0 var(--spacing-16);
-  padding-inline: var(--spacing-16);
+  padding-block: 0 var(--spacing-12);
+  padding-inline: var(--spacing-12);
   color: var(--color-text-secondary);
 }
 

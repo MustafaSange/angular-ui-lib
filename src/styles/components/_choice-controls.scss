@@ -3,7 +3,7 @@ ms-checkbox-group,
 ms-radio-group,
 ms-switch-group {
   display: grid;
-  gap: var(--spacing-10);
+  gap: var(--spacing-8);
   margin: 0;
   padding: 0;
   border: 0;
@@ -12,7 +12,7 @@ ms-switch-group {
 .choice-group-label,
 .choice-group legend {
   margin-block-end: var(--spacing-2);
-  color: var(--color-text-secondary);
+  color: var(--color-text-muted);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
 }
@@ -140,7 +140,8 @@ ms-switch-group {
 
 .choice-title,
 .switch-title {
-  font-size: var(--font-size-md);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-body);
 

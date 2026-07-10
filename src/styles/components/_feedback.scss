@@ -35,8 +35,8 @@ ms-alert {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: start;
-  gap: var(--spacing-12);
-  padding: var(--spacing-12) var(--spacing-16);
+  gap: var(--spacing-8);
+  padding: var(--spacing-8) var(--spacing-12);
   border-inline-start-width: var(--border-width-md);
   background-color: var(--_feedback-surface);
   color: var(--color-text-primary);
@@ -48,9 +48,9 @@ ms-alert {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  inline-size: var(--spacing-24);
-  min-inline-size: var(--spacing-24);
-  block-size: var(--spacing-24);
+  inline-size: var(--spacing-20);
+  min-inline-size: var(--spacing-20);
+  block-size: var(--spacing-20);
   border-radius: var(--radius-full);
   background-color: var(--_feedback-icon-background);
   color: var(--color-text-inverse);
@@ -59,7 +59,7 @@ ms-alert {
   line-height: var(--line-height-control);
 
   .ms-icon {
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-sm);
   }
 }
 
@@ -91,7 +91,7 @@ ms-alert {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-8);
-  margin-block-start: var(--spacing-8);
+  margin-block-start: var(--spacing-4);
 
   &:empty {
     display: none;
@@ -137,7 +137,7 @@ ms-alert {
   inset-inline-end: var(--spacing-16);
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-12);
+  gap: var(--spacing-8);
   inline-size: min(24rem, calc(100vw - (var(--spacing-16) * 2)));
   pointer-events: none;
 }
@@ -146,8 +146,8 @@ ms-alert {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: start;
-  gap: var(--spacing-12);
-  padding: var(--spacing-16);
+  gap: var(--spacing-8);
+  padding: var(--spacing-12);
   overflow: hidden;
   background-color: var(--_feedback-surface);
   box-shadow: var(--shadow-lg);

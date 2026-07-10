@@ -14,7 +14,7 @@ ms-select {
     align-items: stretch;
     inline-size: 100%;
     min-inline-size: 0;
-    min-block-size: var(--control-height-md);
+    min-block-size: calc(var(--control-height-sm) - (var(--control-border-width) * 2));
   }
 
   .select-values {
@@ -31,7 +31,7 @@ ms-select {
   input {
     flex: 1 1 8rem;
     min-inline-size: 6rem;
-    min-block-size: calc(var(--control-height-md) - (var(--control-border-width) * 2));
+    min-block-size: calc(var(--control-height-sm) - (var(--control-border-width) * 2));
     padding: 0;
     border: 0;
     background-color: transparent;
@@ -90,7 +90,7 @@ ms-select {
 
   .select-clear,
   .select-toggle {
-    min-inline-size: var(--control-height-md);
+    min-inline-size: var(--control-height-sm);
     border-inline-start: var(--control-border-width) solid var(--color-border);
   }
 
@@ -159,9 +159,9 @@ ms-select {
 .select-option {
   display: flex;
   align-items: center;
-  gap: var(--spacing-8);
+  gap: var(--spacing-4);
   min-block-size: var(--_select-option-min-height);
-  padding: var(--spacing-8) var(--spacing-12);
+  padding: var(--spacing-4) var(--spacing-8);
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition:
@@ -211,12 +211,12 @@ ms-select {
 }
 
 .select-group {
-  padding: var(--spacing-8) var(--spacing-12) var(--spacing-4);
+  padding: var(--spacing-4) var(--spacing-8);
   font-weight: var(--font-weight-medium);
 }
 
 .select-status {
-  padding: var(--spacing-12);
+  padding: var(--spacing-8);
 }
 
 .select-selected-icon {

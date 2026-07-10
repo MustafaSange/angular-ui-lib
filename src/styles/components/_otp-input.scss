@@ -8,20 +8,20 @@ ms-otp-input,
 .otp-group {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-8);
+  gap: var(--spacing-4);
   inline-size: 100%;
 }
 
 .otp-cell {
-  inline-size: var(--control-height-lg);
-  block-size: var(--control-height-lg);
+  inline-size: var(--control-height-md);
+  block-size: var(--control-height-md);
   padding: 0;
   border: var(--control-border-width) solid var(--color-border);
   border-radius: var(--radius-md);
   background-color: var(--color-surface);
   color: var(--color-text-primary);
   font: inherit;
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-md);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-control);
   text-align: center;
@@ -65,10 +65,10 @@ ms-otp-input,
 
 .form-field ms-otp-input .otp-cell,
 ms-signal-form-field ms-otp-input .otp-cell {
-  inline-size: var(--control-height-lg);
-  min-inline-size: var(--control-height-lg);
-  block-size: var(--control-height-lg);
-  min-block-size: var(--control-height-lg);
+  inline-size: var(--control-height-md);
+  min-inline-size: var(--control-height-md);
+  block-size: var(--control-height-md);
+  min-block-size: var(--control-height-md);
   padding: 0;
   border: var(--control-border-width) solid var(--color-border);
   border-radius: var(--radius-md);

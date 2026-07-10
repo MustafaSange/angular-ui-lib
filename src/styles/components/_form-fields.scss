@@ -2,7 +2,7 @@
 ms-signal-form-field {
   display: grid;
   align-content: start;
-  row-gap: var(--spacing-2);
+  // row-gap: var(--spacing-2);
 
   .form-field-label {
     display: grid;
@@ -13,7 +13,7 @@ ms-signal-form-field {
 
   label,
   .form-field-label {
-    color: var(--color-text-secondary);
+    color: var(--color-text-muted);
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-medium);
   }
@@ -21,7 +21,7 @@ ms-signal-form-field {
   .form-field-control {
     display: flex;
     align-items: stretch;
-    min-block-size: var(--control-height-md);
+    min-block-size: var(--control-height-sm);
     border: var(--control-border-width) solid var(--control-border-color);
     border-radius: var(--radius-sm);
     background-color: var(--color-surface);
@@ -62,7 +62,7 @@ ms-signal-form-field {
   }
 
   .form-field-action {
-    min-inline-size: var(--control-height-md);
+    min-inline-size: var(--control-height-sm);
     padding-inline: var(--control-padding-x-xs);
     border: 0;
     background-color: transparent;
@@ -113,11 +113,12 @@ ms-signal-form-field {
   textarea,
   select {
     min-inline-size: 0;
-    min-height: var(--control-height-md);
+    min-block-size: calc(var(--control-height-sm) - (var(--control-border-width) * 2));
     padding-inline: var(--control-padding-x-xs);
     border: 0;
     background-color: transparent;
     color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
 
     &:focus-visible {
       outline: 0;
@@ -130,12 +131,12 @@ ms-signal-form-field {
 
   input,
   select {
-    block-size: var(--control-height-md);
+    block-size: calc(var(--control-height-sm) - (var(--control-border-width) * 2));
   }
 
   textarea {
     min-block-size: calc(
-      var(--control-height-md) + var(--control-height-md) + var(--control-height-md)
+      var(--control-height-sm) + var(--control-height-sm) + var(--control-height-sm)
     );
     padding-block: var(--control-padding-y-md);
     resize: vertical;

@@ -19,8 +19,8 @@ export class BreadcrumbComponent {
     switch (this.size()) {
       case 'sm':
         return {
-          gap: 'var(--spacing-6)',
-          itemGap: 'var(--spacing-6)',
+          gap: 'var(--spacing-4)',
+          itemGap: 'var(--spacing-4)',
           fontSize: 'var(--font-size-xs)',
         };
       case 'md':

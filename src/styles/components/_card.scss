@@ -1,6 +1,6 @@
 .card {
-  --_card-padding: var(--spacing-20);
-  --_card-gap: var(--spacing-16);
+  --_card-padding: var(--spacing-16);
+  --_card-gap: var(--spacing-12);
   --_card-border: var(--color-border);
   --_card-surface: var(--color-surface);
   --_card-shadow: none;
@@ -9,7 +9,7 @@
   min-inline-size: 0;
   overflow: hidden;
   border: var(--border-width-sm) solid var(--_card-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   background-color: var(--_card-surface);
   color: var(--color-text-primary);
   box-shadow: var(--_card-shadow);
@@ -65,7 +65,7 @@
 
 .card-title {
   color: var(--color-text-primary);
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-md);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-heading);
 }

@@ -148,7 +148,7 @@ code {
 
   div {
     display: grid;
-    gap: var(--spacing-6);
+    gap: var(--spacing-4);
     padding: var(--spacing-16);
     border: var(--border-width-sm) solid var(--color-border);
     border-radius: var(--radius-md);
@@ -223,6 +223,6 @@ app-showcase-code {
 
   .class-row {
     grid-template-columns: 1fr;
-    gap: var(--spacing-6);
+    gap: var(--spacing-8);
   }
 }

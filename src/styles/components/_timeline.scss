@@ -27,8 +27,8 @@ ms-timeline {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  inline-size: 1.75rem;
-  block-size: 1.75rem;
+  inline-size: var(--control-height-sm);
+  block-size: var(--control-height-sm);
   border: var(--border-width-sm) solid var(--_timeline-status-border);
   border-radius: var(--radius-full);
   background-color: var(--_timeline-status-surface);
@@ -58,7 +58,7 @@ ms-timeline {
 
 .timeline-title {
   color: var(--color-text-primary);
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-heading);
 }
@@ -78,7 +78,7 @@ ms-timeline {
 }
 
 .timeline-body {
-  margin-block-start: var(--spacing-8);
+  margin-block-start: var(--spacing-4);
   color: var(--color-text-secondary);
 }
 
@@ -91,8 +91,8 @@ ms-timeline {
 
   .timeline-item {
     grid-template-columns: max-content minmax(0, 1fr);
-    column-gap: var(--spacing-12);
-    padding-block-end: var(--spacing-20);
+    column-gap: var(--spacing-8);
+    padding-block-end: var(--spacing-16);
   }
 
   .timeline-marker {
@@ -106,7 +106,7 @@ ms-timeline {
     justify-self: center;
     inline-size: var(--border-width-sm);
     min-block-size: 100%;
-    margin-block-start: 1.75rem;
+    margin-block-start: var(--control-height-sm);
   }
 
   .timeline-content {
@@ -129,7 +129,7 @@ ms-timeline {
     flex: 1 0 min(14rem, 80vw);
     grid-template-rows: max-content minmax(0, 1fr);
     row-gap: var(--spacing-12);
-    padding-inline-end: var(--spacing-20);
+    padding-inline-end: var(--spacing-16);
   }
 
   .timeline-marker {
@@ -141,9 +141,9 @@ ms-timeline {
     grid-column: 1;
     grid-row: 1;
     align-self: center;
-    inline-size: calc(100% - 1.75rem);
+    inline-size: calc(100% - var(--control-height-sm));
     block-size: var(--border-width-sm);
-    margin-inline-start: 1.75rem;
+    margin-inline-start: var(--control-height-sm);
   }
 
   .timeline-content {
