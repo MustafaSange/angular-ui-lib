@@ -1,18 +1,22 @@
-# Feature 006: Form Field Style Guide
+# Feature 006: Form Field Styles
 
 ## Goal
 
-Create a reusable SCSS style guide for form fields that aligns with the existing design system.
+Maintain the reusable SCSS contract for form fields so native controls, projected Angular
+components, and display-only values align with the existing design system.
 
 ## Context
 
 The project already contains a `styles` folder with shared tokens, variables, mixins, typography, spacing, colors, radius values, and existing component styles.
 
-The new form field style guide should follow the same visual language and avoid duplicating values that already exist.
+This file owns the visual styling contract. The Angular projection component contract lives in
+`context/008-signal-form-field.md`.
 
 ## Task
 
-Look into the existing SCSS style guide inside the `styles` folder and create a reusable form field style guide.
+Maintain the reusable form field styles in:
+
+`src/styles/components/_form-fields.scss`
 
 The form field should support:
 
@@ -20,6 +24,7 @@ The form field should support:
 - input
 - textarea
 - select
+- display-only value
 - prefix
 - suffix
 - passive adornments
@@ -90,14 +95,24 @@ Shared styles should be grouped where possible.
 
 Element-specific styles should only be added where behavior differs.
 
+The same style contract also applies to the `ms-signal-form-field` element selector and projected
+custom controls such as:
+
+- `ms-select`
+- `ms-autocomplete`
+- `ms-button-toggle-group`
+- `ms-slider`
+- `ms-otp-input`
+- `ms-readonly-value`
+
 Keep text, select, and autocomplete fields enterprise-dense:
 
 - The composed control row uses the small control height token, `--control-height-sm`, with a
   28px total block size including the form-field border.
 - Native `input` and `select` controls should fill the projected control row without increasing
   the total field height.
-- Projected custom controls such as `ms-select` and `ms-autocomplete` must align to the same
-  28px total control height when used inside `ms-signal-form-field`.
+- Projected custom controls such as `ms-select`, `ms-autocomplete`, and `ms-readonly-value` must
+  align to the same 28px total control height when used inside `ms-signal-form-field`.
 - Form-control text uses `--font-size-sm` (14px).
 - Field labels use `--color-text-muted` and the same compact label treatment as checkbox, radio,
   and switch labels.
@@ -163,6 +178,14 @@ If the field is disabled or readonly:
 - support native HTML attributes where applicable
 - support state classes where useful
 
+Display-only values use `ms-readonly-value` when projected inside `ms-signal-form-field`.
+
+- The default display value state is neither readonly nor disabled.
+- `readonly` applies the same readonly field treatment as native `[readonly]` controls.
+- `disabled` applies the same disabled field treatment as native `[disabled]` controls.
+- Empty display values use the projected `placeholder` text when present and receive muted
+  placeholder styling.
+
 ## Interaction States
 
 Include styles for:
@@ -213,6 +236,9 @@ Provide example markup for:
 - field with error
 - disabled field
 - readonly field
+- display value
+- readonly display value
+- disabled display value
 
 When examples are rendered in the Angular showcase:
 
@@ -267,6 +293,7 @@ After reviewing the existing style guide, suggest improvements if you find:
 - Error text replaces hint text when an error is active.
 - Hint and error are never visible at the same time.
 - Disabled and readonly states dim both label and control.
+- Display-only values align with the same dense field sizing and state styling as editable controls.
 - Angular showcase snippets match the behavior of their rendered visual examples.
 - Styling uses existing tokens, variables, mixins, and conventions.
 - The implementation is consistent with the existing style guide.
