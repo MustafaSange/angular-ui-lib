@@ -1,0 +1,20 @@
+<div class="showcase-preview">
+  <ms-signal-form-field>
+    <label>Display name</label>
+    <ms-readonly-value [value]="displayName()" />
+    <ms-hint>Display values can use the default field treatment.</ms-hint>
+  </ms-signal-form-field>
+
+  <ms-signal-form-field>
+    <label>Account ID</label>
+    <ms-readonly-value [value]="accountId()" readonly />
+    <ms-hint>This value is displayed with the readonly field treatment.</ms-hint>
+  </ms-signal-form-field>
+
+  <ms-signal-form-field>
+    <label>Status</label>
+    <ms-readonly-value [value]="archivedStatus()" disabled />
+    <ms-hint>Disabled display values use the same disabled treatment as inputs.</ms-hint>
+  </ms-signal-form-field>
+</div>
+<app-showcase-code label="Display values" [code]="snippet" />
