@@ -214,6 +214,10 @@ The upload control uses logical CSS properties, existing design tokens, and conc
 such as `.drop-zone`, `.drop-zone-content`, `.drop-zone-copy`, `.file-list`, `.file-chip`,
 `.file-name`, and `.file-size`.
 
+The drop zone stays enterprise-dense inside `ms-signal-form-field`: it uses
+`--control-height-sm`, zero block padding, and compact symmetric inline padding from
+`--spacing-2` so the upload row aligns with native inputs and other projected controls.
+
 ## Accessibility
 
 - The native file input remains in the DOM and is visually hidden.

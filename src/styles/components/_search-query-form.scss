@@ -5,8 +5,7 @@ ms-search-query-form {
 .search-query-form {
   display: flex;
   flex-direction: column;
-  padding: var(--spacing-8) var(--spacing-12);
-  padding-block-end: 0;
+  padding: var(--spacing-12);
   background-color: var(--color-surface);
   border-radius: var(--radius-sm);
   border: var(--border-width-sm) solid var(--color-border);
@@ -21,6 +20,8 @@ ms-search-query-form {
   .toolbar-actions {
     display: flex;
     gap: var(--spacing-8);
+    align-items: flex-end;
+    min-height: 100%;
   }
 
   .filter-list {
