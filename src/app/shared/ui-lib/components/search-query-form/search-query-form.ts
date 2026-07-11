@@ -257,9 +257,11 @@ export class SearchQueryFormComponent {
     }
 
     if (property.dataType === 'boolean') {
+      const useYesNoLabels = property.booleanLabels === 'yesNo';
+
       return [
-        { label: 'True', value: true },
-        { label: 'False', value: false },
+        { label: useYesNoLabels ? 'Yes' : 'True', value: true },
+        { label: useYesNoLabels ? 'No' : 'False', value: false },
       ];
     }
 

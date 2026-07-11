@@ -69,6 +69,13 @@ export class SearchQueryForm {
       label: 'Active',
       dataType: 'boolean',
       defaultOperator: 'eq',
+      booleanLabels: 'yesNo',
+    },
+    {
+      propertyName: 'isVerified',
+      label: 'Verified',
+      dataType: 'boolean',
+      defaultOperator: 'eq',
     },
     {
       propertyName: 'age',
@@ -184,6 +191,13 @@ export class UserSearchQueryExample {
     {
       propertyName: 'isActive',
       label: 'Active',
+      dataType: 'boolean',
+      defaultOperator: 'eq',
+      booleanLabels: 'yesNo',
+    },
+    {
+      propertyName: 'isVerified',
+      label: 'Verified',
       dataType: 'boolean',
       defaultOperator: 'eq',
     },
