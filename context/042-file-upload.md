@@ -17,8 +17,15 @@ Import public pieces from the folder barrel:
 ```ts
 import {
   FileUploadComponent,
+  FileUploadBaseConfig,
   FileUploadConfig,
+  FileUploadExtension,
   FileUploadItem,
+  FileUploadMultipleConfig,
+  FileUploadMultipleValue,
+  FileUploadSingleConfig,
+  FileUploadSingleValue,
+  FILE_UPLOAD_MIME_TYPES_BY_EXTENSION,
   FileUploadValidationError,
   FileUploadValue,
 } from '../../shared/ui-lib';
@@ -27,22 +34,40 @@ import {
 Public pieces:
 
 - `FileUploadComponent` with selector `ms-file-upload`
-- `FileUploadConfig` for accepted extensions, max size, multiple, disabled, and readonly options
+- `FileUploadBaseConfig` for shared extension, size, drag/drop, disabled, and readonly options
+- `FileUploadSingleConfig` for single-file uploads with `multiple?: false`
+- `FileUploadMultipleConfig` for multi-file uploads with `multiple: true` and `maxFiles`
+- `FileUploadConfig` as the compatibility union of single and multiple configs
+- `FileUploadExtension` for supported extension keys derived from the MIME map
+- `FILE_UPLOAD_MIME_TYPES_BY_EXTENSION` for reusable extension-to-MIME metadata
 - `FileUploadItem` for accepted files and sanitized file metadata
 - `FileUploadValidationError` for rejected-file detail messages
-- `FileUploadValue` for the signal-form value
+- `FileUploadSingleValue` for single-file signal-form values
+- `FileUploadMultipleValue` for multi-file signal-form values
+- `FileUploadValue` as the compatibility union of single and multiple values
 
 `FileUploadComponent` implements `FormValueControl<FileUploadValue>` and exposes the required
 internal `value` model used by Angular signal forms.
 
-`FileUploadConfig`:
+`FileUploadBaseConfig`:
 
-- `allowedExtensions?: readonly string[]`
+- `allowedExtensions?: readonly FileUploadExtension[]`
 - `maxFileSizeBytes?: number`
-- `multiple?: boolean`
 - `draggable?: boolean`
 - `disabled?: boolean`
 - `readonly?: boolean`
+
+Mode-specific config:
+
+- `FileUploadSingleConfig` adds `multiple?: false`
+- `FileUploadMultipleConfig` adds `multiple: true` and `maxFiles?: number`
+- `FileUploadConfig = FileUploadSingleConfig | FileUploadMultipleConfig`
+
+Mode-specific values:
+
+- `FileUploadSingleValue = FileUploadItem | null`
+- `FileUploadMultipleValue = readonly FileUploadItem[]`
+- `FileUploadValue = FileUploadSingleValue | FileUploadMultipleValue`
 
 Defaults:
 
@@ -50,7 +75,9 @@ Defaults:
 - `draggable` is `true`
 - minimum file size is always greater than `0`
 - max file size is unrestricted unless configured
+- max file count is unrestricted unless configured
 - allowed extensions are unrestricted unless configured
+- MIME validation is applied only for configured allowed extensions with a known MIME mapping
 
 ## Desired Usage
 
@@ -69,13 +96,13 @@ import { FormField, form, schema, validate } from '@angular/forms/signals';
 
 import {
   FileUploadComponent,
-  FileUploadConfig,
-  FileUploadValue,
+  FileUploadMultipleConfig,
+  FileUploadMultipleValue,
   SignalFormField,
 } from './shared/ui-lib';
 
 type UploadForm = {
-  attachments: FileUploadValue;
+  attachments: FileUploadMultipleValue;
 };
 
 @Component({
@@ -93,9 +120,10 @@ export class UploadExample {
     attachments: [],
   });
 
-  protected readonly uploadConfig: FileUploadConfig = {
+  protected readonly uploadConfig: FileUploadMultipleConfig = {
     allowedExtensions: ['pdf', 'png'],
     maxFileSizeBytes: 2 * 1024 * 1024,
+    maxFiles: 3,
     multiple: true,
   };
 
@@ -113,7 +141,7 @@ export class UploadExample {
 
         return files.length > 0
           ? undefined
-          : { kind: 'fileUpload', message: 'Upload at least one valid file.' };
+          : { kind: 'fileUpload', message: 'Upload a file.' };
       });
     }),
   );
@@ -130,6 +158,7 @@ The implementation lives in:
 The feature includes:
 
 - `FileUploadComponent`
+- `file-upload-meta.ts`
 - `file-upload-types.ts`
 - `index.ts`
 
@@ -140,13 +169,24 @@ The feature includes:
 - `draggable: false` disables drag/drop handling and uses button-only helper copy.
 - Single mode stores `FileUploadItem | null`.
 - Multiple mode stores `readonly FileUploadItem[]`.
+- Consumer code should prefer `FileUploadSingleValue`/`FileUploadSingleConfig` for single mode and
+  `FileUploadMultipleValue`/`FileUploadMultipleConfig` for multiple mode.
+- `FileUploadValue` and `FileUploadConfig` remain available as compatibility unions for generic
+  helpers and component input wiring.
+- Multiple mode appends accepted files and rejects files that exceed `maxFiles` when configured.
 - Invalid selected or dropped files are stored as errored `FileUploadItem` values so signal-form
   validation can display their messages in the form-field message row.
 - Accepted file items preserve the original immutable `File` and expose `originalName`, `safeName`,
   `extension`, `size`, and `errors`.
 - Sanitization does not mutate `File.name`; it produces `safeName` for display and upload metadata.
 - Validation rejects empty files, oversized files, disallowed extensions, unsafe names, deceptive
-  double extensions, multiple files in single mode, and duplicates.
+  double extensions, MIME mismatches for mapped allowed extensions, multiple files in single mode,
+  max-file-count overflow, and duplicates.
+- `FILE_UPLOAD_MIME_TYPES_BY_EXTENSION` is an `as const` map for common upload extensions such as
+  PDF, PNG, JPG/JPEG, GIF, WebP, DOC/DOCX, XLS/XLSX, PPT/PPTX, TXT, CSV, JSON, XML, ZIP, MP3, and
+  MP4.
+- `FileUploadExtension` is derived from the MIME map keys and is used by `allowedExtensions` for
+  strict extension configuration.
 - The component emits `touch` after selection, drop, removal, or native input blur.
 
 ## Validation And Error Display
@@ -157,6 +197,8 @@ The feature includes:
   rendering when no custom `<ms-error>` is projected.
 - Rejected-file details are exposed through `FileUploadItem.errors`; the surrounding form-field
   message row is controlled by signal-form errors.
+- Built-in upload validation messages should stay short, such as `Empty file.`, `Max 3 files.`,
+  `Type not allowed.`, `Duplicate file.`, and `Invalid name.`
 
 ## Styling
 
@@ -169,7 +211,8 @@ The styles are forwarded from:
 `src/styles/components/_index.scss`
 
 The upload control uses logical CSS properties, existing design tokens, and concise internal hooks
-such as `.drop-zone`, `.file-list`, `.file-item`, and `.file-rejections`.
+such as `.drop-zone`, `.drop-zone-content`, `.drop-zone-copy`, `.file-list`, `.file-chip`,
+`.file-name`, and `.file-size`.
 
 ## Accessibility
 
@@ -179,7 +222,7 @@ such as `.drop-zone`, `.file-list`, `.file-item`, and `.file-rejections`.
 - Selected files render as a semantic list.
 - Accepted files are displayed with extra-small removable `ms-chip` tokens.
 - Remove buttons include per-file accessible labels.
-- Rejected files are announced through a polite status region.
+- Rejected-file messages are surfaced through signal-form validation in the form-field message row.
 - Disabled and readonly states prevent file selection, drop, and removal.
 
 ## Showcase
@@ -192,8 +235,8 @@ schema validators that return `kind: 'fileUpload'` and specific messages.
 Showcase variants:
 
 - basic single upload
-- allowed extensions and max size
-- multiple upload
+- allowed extensions, MIME validation, and max size
+- multiple upload with max file count
 - button-only upload with `draggable: false`
 - disabled
 - readonly
@@ -214,6 +257,11 @@ Showcase variants:
 - `[formField]` syncs the upload value with the parent signal-form model.
 - Button-triggered selection and drag/drop use the same validation behavior.
 - Rejected files are represented as errored items so validators can surface their messages.
+- `allowedExtensions` is strictly typed from `FileUploadExtension`.
+- Showcase examples use mode-specific config and value types so single uploads cannot accidentally
+  use multiple-upload shapes.
+- Known allowed extensions validate exact browser-reported MIME types through
+  `FILE_UPLOAD_MIME_TYPES_BY_EXTENSION`.
 - File-upload schema errors display their specific `message`.
 - Styling is forwarded and works inside `ms-signal-form-field`.
 - The showcase demonstrates the core variants with matching copyable snippets.

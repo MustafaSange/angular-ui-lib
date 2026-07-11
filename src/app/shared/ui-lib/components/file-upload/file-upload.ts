@@ -18,6 +18,8 @@ import type {
   FileUploadValidationReason,
   FileUploadValue,
 } from './file-upload-types';
+import { FILE_UPLOAD_MIME_TYPES_BY_EXTENSION } from './file-upload-meta';
+import type { FileUploadExtension } from './file-upload-meta';
 import { ChipComponent, ChipRemoveDirective } from '../chip';
 
 type SanitizedFileName =
@@ -73,6 +75,14 @@ export class FileUploadComponent implements FormValueControl<FileUploadValue> {
   protected readonly uploadInputId = computed(() => this.id() ?? this.generatedId);
   protected readonly descriptionId = computed(() => `${this.uploadInputId()}-description`);
   protected readonly multiple = computed(() => this.config().multiple ?? false);
+  protected readonly maxFiles = computed(() => {
+    const config = this.config();
+    const maxFiles = config.multiple ? config.maxFiles : undefined;
+
+    return maxFiles === undefined || !Number.isFinite(maxFiles)
+      ? undefined
+      : Math.max(0, Math.floor(maxFiles));
+  });
   protected readonly isDraggable = computed(() => this.config().draggable ?? true);
   protected readonly isDisabled = computed(() => this.disabled() || this.config().disabled === true);
   protected readonly isReadonly = computed(() => this.readonly() || this.config().readonly === true);
@@ -93,12 +103,16 @@ export class FileUploadComponent implements FormValueControl<FileUploadValue> {
   protected readonly helperText = computed(() => {
     const extensions = this.acceptedExtensions();
     const maxFileSize = this.config().maxFileSizeBytes;
+    const maxFiles = this.maxFiles();
     const parts = [
       this.getPrimaryHelperText(),
       extensions.length > 0
         ? `Allowed: ${extensions.map((extension) => `.${extension}`).join(', ')}`
         : '',
       maxFileSize ? `Max ${this.formatFileSize(maxFileSize)}.` : '',
+      this.multiple() && maxFiles !== undefined
+        ? `Max ${maxFiles} ${maxFiles === 1 ? 'file' : 'files'}.`
+        : '',
     ];
 
     return parts.filter(Boolean).join(' ');
@@ -207,7 +221,27 @@ export class FileUploadComponent implements FormValueControl<FileUploadValue> {
         rejectedItems.push(
           this.createRejectedFileItem(
             file,
-            this.createError('multiple', file.name, 'Only one file can be uploaded.'),
+            this.createError('multiple', file.name, 'One file only.'),
+          ),
+        );
+        return;
+      }
+
+      const maxFiles = this.maxFiles();
+
+      if (
+        this.multiple() &&
+        maxFiles !== undefined &&
+        currentItems.length + acceptedItems.length >= maxFiles
+      ) {
+        rejectedItems.push(
+          this.createRejectedFileItem(
+            file,
+            this.createError(
+              'maxFiles',
+              file.name,
+              `Max ${maxFiles} ${maxFiles === 1 ? 'file' : 'files'}.`,
+            ),
           ),
         );
         return;
@@ -245,7 +279,7 @@ export class FileUploadComponent implements FormValueControl<FileUploadValue> {
     existingItems: readonly FileUploadItem[],
   ): FileUploadItem | { readonly error: FileUploadValidationError } {
     if (file.size <= 0) {
-      return { error: this.createError('empty', file.name, 'File must be larger than 0 bytes.') };
+      return { error: this.createError('empty', file.name, 'Empty file.') };
     }
 
     const maxFileSize = this.config().maxFileSizeBytes;
@@ -255,7 +289,7 @@ export class FileUploadComponent implements FormValueControl<FileUploadValue> {
         error: this.createError(
           'maxSize',
           file.name,
-          `File must be ${this.formatFileSize(maxFileSize)} or smaller.`,
+          `Max ${this.formatFileSize(maxFileSize)}.`,
         ),
       };
     }
@@ -267,24 +301,36 @@ export class FileUploadComponent implements FormValueControl<FileUploadValue> {
     }
 
     const allowedExtensions = this.acceptedExtensions();
+    const hasAllowedExtension =
+      this.isFileUploadExtension(sanitizedName.extension) &&
+      allowedExtensions.includes(sanitizedName.extension);
 
-    if (
-      allowedExtensions.length > 0 &&
-      (!sanitizedName.extension || !allowedExtensions.includes(sanitizedName.extension))
-    ) {
+    if (allowedExtensions.length > 0 && !hasAllowedExtension) {
       return {
         error: this.createError(
           'extension',
           file.name,
-          `.${sanitizedName.extension || 'unknown'} files are not allowed.`,
+          `.${sanitizedName.extension || 'unknown'} not allowed.`,
         ),
       };
+    }
+
+    const expectedMimeType = this.isFileUploadExtension(sanitizedName.extension)
+      ? FILE_UPLOAD_MIME_TYPES_BY_EXTENSION[sanitizedName.extension]
+      : undefined;
+
+    if (
+      allowedExtensions.length > 0 &&
+      expectedMimeType !== undefined &&
+      file.type.toLocaleLowerCase() !== expectedMimeType
+    ) {
+      return { error: this.createError('mimeType', file.name, 'Type not allowed.') };
     }
 
     const duplicateKey = this.fileKey(sanitizedName.safeName, file.size);
 
     if (existingItems.some((item) => this.fileKey(item.safeName, item.size) === duplicateKey)) {
-      return { error: this.createError('duplicate', file.name, 'This file has already been added.') };
+      return { error: this.createError('duplicate', file.name, 'Duplicate file.') };
     }
 
     return {
@@ -328,14 +374,14 @@ export class FileUploadComponent implements FormValueControl<FileUploadValue> {
     if (nameParts.length === 0) {
       return {
         valid: false,
-        error: this.createError('unsafeName', fileName, 'File name is not allowed.'),
+        error: this.createError('unsafeName', fileName, 'Invalid name.'),
       };
     }
 
     if (nameParts.length > 2) {
       return {
         valid: false,
-        error: this.createError('unsafeName', fileName, 'File name cannot contain multiple extensions.'),
+        error: this.createError('unsafeName', fileName, 'Invalid name.'),
       };
     }
 
@@ -345,7 +391,7 @@ export class FileUploadComponent implements FormValueControl<FileUploadValue> {
     if (!safeBaseName) {
       return {
         valid: false,
-        error: this.createError('unsafeName', fileName, 'File name is not allowed.'),
+        error: this.createError('unsafeName', fileName, 'Invalid name.'),
       };
     }
 
@@ -404,14 +450,20 @@ export class FileUploadComponent implements FormValueControl<FileUploadValue> {
     return Array.isArray(value);
   }
 
-  private normalizeExtensions(extensions: readonly string[]): readonly string[] {
+  private normalizeExtensions(extensions: readonly FileUploadExtension[]): readonly FileUploadExtension[] {
     return Array.from(
       new Set(
         extensions
           .map((extension) => extension.trim().replace(/^\./, '').toLocaleLowerCase())
-          .filter((extension) => extension.length > 0),
+          .filter((extension): extension is FileUploadExtension =>
+            this.isFileUploadExtension(extension),
+          )
       ),
     );
+  }
+
+  private isFileUploadExtension(extension: string): extension is FileUploadExtension {
+    return extension in FILE_UPLOAD_MIME_TYPES_BY_EXTENSION;
   }
 
   private fileKey(safeName: string, size: number): string {

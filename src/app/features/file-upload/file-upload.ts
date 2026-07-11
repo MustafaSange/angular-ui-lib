@@ -4,20 +4,23 @@ import { FormField, form, schema, validate } from '@angular/forms/signals';
 
 import {
   FileUploadComponent,
-  FileUploadConfig,
   FileUploadItem,
+  FileUploadMultipleConfig,
+  FileUploadMultipleValue,
+  FileUploadSingleConfig,
+  FileUploadSingleValue,
   FileUploadValue,
   SignalFormField,
 } from '../../shared/ui-lib';
 import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 
 type FileUploadShowcaseForm = {
-  single: FileUploadValue;
-  restricted: FileUploadValue;
-  multiple: FileUploadValue;
-  buttonOnly: FileUploadValue;
-  disabled: FileUploadValue;
-  readonly: FileUploadValue;
+  single: FileUploadSingleValue;
+  restricted: FileUploadSingleValue;
+  multiple: FileUploadMultipleValue;
+  buttonOnly: FileUploadSingleValue;
+  disabled: FileUploadSingleValue;
+  readonly: FileUploadSingleValue;
 };
 
 @Component({
@@ -36,23 +39,24 @@ export class FileUpload {
     readonly: this.createDemoItem('signed-contract.pdf', 186_000, 'pdf'),
   });
 
-  protected readonly basicConfig: FileUploadConfig = {};
-  protected readonly restrictedConfig: FileUploadConfig = {
+  protected readonly basicConfig: FileUploadSingleConfig = {};
+  protected readonly restrictedConfig: FileUploadSingleConfig = {
     allowedExtensions: ['pdf', 'png'],
     maxFileSizeBytes: 2 * 1024 * 1024,
   };
-  protected readonly multipleConfig: FileUploadConfig = {
+  protected readonly multipleConfig: FileUploadMultipleConfig = {
     allowedExtensions: ['pdf', 'png', 'jpg'],
     maxFileSizeBytes: 3 * 1024 * 1024,
+    maxFiles: 3,
     multiple: true,
   };
-  protected readonly buttonOnlyConfig: FileUploadConfig = {
+  protected readonly buttonOnlyConfig: FileUploadSingleConfig = {
     draggable: false,
   };
-  protected readonly disabledConfig: FileUploadConfig = {
+  protected readonly disabledConfig: FileUploadSingleConfig = {
     disabled: true,
   };
-  protected readonly readonlyConfig: FileUploadConfig = {
+  protected readonly readonlyConfig: FileUploadSingleConfig = {
     readonly: true,
   };
 
@@ -76,12 +80,12 @@ import { FormField, form, schema, validate } from '@angular/forms/signals';
 
 import {
   FileUploadComponent,
-  FileUploadValue,
+  FileUploadSingleValue,
   SignalFormField,
 } from './shared/ui-lib';
 
 type UploadForm = {
-  attachment: FileUploadValue;
+  attachment: FileUploadSingleValue;
 };
 
 @Component({
@@ -113,7 +117,7 @@ export class BasicUploadExample {
 
         return files.length > 0
           ? undefined
-          : { kind: 'fileUpload', message: 'Upload at least one valid file.' };
+          : { kind: 'fileUpload', message: 'Upload a file.' };
       });
     }),
   );
@@ -125,13 +129,13 @@ import { FormField, form, schema, validate } from '@angular/forms/signals';
 
 import {
   FileUploadComponent,
-  FileUploadConfig,
-  FileUploadValue,
+  FileUploadSingleConfig,
+  FileUploadSingleValue,
   SignalFormField,
 } from './shared/ui-lib';
 
 type UploadForm = {
-  attachment: FileUploadValue;
+  attachment: FileUploadSingleValue;
 };
 
 @Component({
@@ -153,7 +157,7 @@ export class RestrictedUploadExample {
     attachment: null,
   });
 
-  protected readonly uploadConfig: FileUploadConfig = {
+  protected readonly uploadConfig: FileUploadSingleConfig = {
     allowedExtensions: ['pdf', 'png'],
     maxFileSizeBytes: 2 * 1024 * 1024,
   };
@@ -172,7 +176,7 @@ export class RestrictedUploadExample {
 
         return files.length > 0
           ? undefined
-          : { kind: 'fileUpload', message: 'Upload a valid PDF or PNG file.' };
+          : { kind: 'fileUpload', message: 'Upload a PDF or PNG.' };
       });
     }),
   );
@@ -184,13 +188,13 @@ import { FormField, form, schema, validate } from '@angular/forms/signals';
 
 import {
   FileUploadComponent,
-  FileUploadConfig,
-  FileUploadValue,
+  FileUploadMultipleConfig,
+  FileUploadMultipleValue,
   SignalFormField,
 } from './shared/ui-lib';
 
 type UploadForm = {
-  attachments: FileUploadValue;
+  attachments: FileUploadMultipleValue;
 };
 
 @Component({
@@ -208,9 +212,10 @@ export class MultipleUploadExample {
     attachments: [],
   });
 
-  protected readonly uploadConfig: FileUploadConfig = {
+  protected readonly uploadConfig: FileUploadMultipleConfig = {
     allowedExtensions: ['pdf', 'png', 'jpg'],
     maxFileSizeBytes: 3 * 1024 * 1024,
+    maxFiles: 3,
     multiple: true,
   };
 
@@ -228,7 +233,7 @@ export class MultipleUploadExample {
 
         return files.length > 0
           ? undefined
-          : { kind: 'fileUpload', message: 'Upload at least one valid file.' };
+          : { kind: 'fileUpload', message: 'Upload a file.' };
       });
     }),
   );
@@ -240,14 +245,14 @@ import { FormField, form, schema } from '@angular/forms/signals';
 
 import {
   FileUploadComponent,
-  FileUploadConfig,
-  FileUploadValue,
+  FileUploadSingleConfig,
+  FileUploadSingleValue,
   SignalFormField,
 } from './shared/ui-lib';
 
 type UploadForm = {
-  disabled: FileUploadValue;
-  readonly: FileUploadValue;
+  disabled: FileUploadSingleValue;
+  readonly: FileUploadSingleValue;
 };
 
 @Component({
@@ -271,8 +276,8 @@ export class UploadStatesExample {
     readonly: null,
   });
 
-  protected readonly disabledConfig: FileUploadConfig = { disabled: true };
-  protected readonly readonlyConfig: FileUploadConfig = { readonly: true };
+  protected readonly disabledConfig: FileUploadSingleConfig = { disabled: true };
+  protected readonly readonlyConfig: FileUploadSingleConfig = { readonly: true };
   protected readonly form = form(this.model, schema<UploadForm>(() => {}));
   protected readonly disabledField = this.form.disabled;
   protected readonly readonlyField = this.form.readonly;
@@ -283,13 +288,13 @@ import { FormField, form, schema } from '@angular/forms/signals';
 
 import {
   FileUploadComponent,
-  FileUploadConfig,
-  FileUploadValue,
+  FileUploadSingleConfig,
+  FileUploadSingleValue,
   SignalFormField,
 } from './shared/ui-lib';
 
 type UploadForm = {
-  attachment: FileUploadValue;
+  attachment: FileUploadSingleValue;
 };
 
 @Component({
@@ -311,7 +316,7 @@ export class ButtonOnlyUploadExample {
     attachment: null,
   });
 
-  protected readonly uploadConfig: FileUploadConfig = {
+  protected readonly uploadConfig: FileUploadSingleConfig = {
     draggable: false,
   };
   protected readonly form = form(this.model, schema<UploadForm>(() => {}));
@@ -330,7 +335,7 @@ export class ButtonOnlyUploadExample {
 
     return files.length > 0
       ? undefined
-      : { kind: 'fileUpload', message: 'Upload at least one valid file.' };
+      : { kind: 'fileUpload', message: 'Upload a file.' };
   }
 
   private createDemoItem(fileName: string, size: number, extension: string): FileUploadItem {
