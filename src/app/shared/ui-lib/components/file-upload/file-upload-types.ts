@@ -1,9 +1,13 @@
+import type { FileUploadExtension } from './file-upload-meta';
+
 export type FileUploadValidationReason =
   | 'empty'
   | 'maxSize'
   | 'extension'
+  | 'mimeType'
   | 'unsafeName'
   | 'multiple'
+  | 'maxFiles'
   | 'duplicate';
 
 export interface FileUploadValidationError {
@@ -22,13 +26,27 @@ export interface FileUploadItem {
   readonly errors: readonly FileUploadValidationError[];
 }
 
-export type FileUploadValue = FileUploadItem | readonly FileUploadItem[] | null;
+export type FileUploadSingleValue = FileUploadItem | null;
 
-export interface FileUploadConfig {
-  readonly allowedExtensions?: readonly string[];
+export type FileUploadMultipleValue = readonly FileUploadItem[];
+
+export type FileUploadValue = FileUploadSingleValue | FileUploadMultipleValue;
+
+export interface FileUploadBaseConfig {
+  readonly allowedExtensions?: readonly FileUploadExtension[];
   readonly maxFileSizeBytes?: number;
-  readonly multiple?: boolean;
   readonly draggable?: boolean;
   readonly disabled?: boolean;
   readonly readonly?: boolean;
 }
+
+export interface FileUploadSingleConfig extends FileUploadBaseConfig {
+  readonly multiple?: false;
+}
+
+export interface FileUploadMultipleConfig extends FileUploadBaseConfig {
+  readonly multiple: true;
+  readonly maxFiles?: number;
+}
+
+export type FileUploadConfig = FileUploadSingleConfig | FileUploadMultipleConfig;
