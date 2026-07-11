@@ -333,6 +333,9 @@ contains:
 - a dedicated action column that renders a delete button for optional rows and reserved empty space
   for required rows
 
+The add-filter picker is rendered inside `ms-signal-form-field.add-filter.no-message` so it keeps
+the shared compact control treatment without reserving a message row in the toolbar.
+
 Shared reusable components use the `ms-` selector prefix. Internal styling hooks are
 `.search-query-form`, `.filter-list`, `.filter-row`, `.filter-property`, `.filter-operator`,
 `.filter-value`, `.filter-actions`, `.filter-toolbar`, `.add-filter`, `.toolbar-actions`,
@@ -469,7 +472,9 @@ Styling rules:
 - keep rows as a single grid container so property, operator, value, and actions fit on desktop and stack cleanly
   on mobile
 - render the filter toolbar below the filter rows
-- keep action buttons aligned with the add-property control in the bottom toolbar
+- keep the search-query surface padded with `--spacing-12`
+- keep action buttons aligned to the block-end of the add-property control in the bottom toolbar
+- let the toolbar action group fill the toolbar height so buttons align with compact form fields
 - keep required rows compact by hiding the delete action instead of rendering disabled controls
 - render action icons with `.ms-icon` or `.ms-icon-filled`
 - add every new Material Symbols ligature name to `MATERIAL_ICONS`

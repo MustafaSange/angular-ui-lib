@@ -75,6 +75,11 @@ Suggested state classes:
 - `.is-readonly`
 - `.is-segmented`
 
+Layout utility classes:
+
+- `.no-label`
+- `.no-message`
+
 ## Control Styling
 
 Do not create separate classes for each native control.
@@ -145,6 +150,8 @@ Rules:
 
 - Support labels for all field types.
 - Style both native `label` elements and `.form-field-label` within `.form-field`.
+- `.no-label` on the host `.form-field` or `ms-signal-form-field` hides the `.form-field-label`
+  row with `display: none` while leaving projected label content in the DOM.
 - If the field is required, display a red `*` after the label text.
 - The required marker should be implemented using SCSS.
 - Do not use inline styles.
@@ -162,6 +169,9 @@ Rules:
 - Show hint text by default if available.
 - When error state is active, hide the hint text.
 - Hint and error must never be visible at the same time.
+- `.no-message` on the host `.form-field` or `ms-signal-form-field` hides the
+  `.form-field-message` row with `display: none` while leaving projected hint or error content in
+  the DOM.
 - Error state should visually affect:
   - control border
   - focus styling
@@ -239,6 +249,9 @@ Provide example markup for:
 - display value
 - readonly display value
 - disabled display value
+- layout utility field with `.no-label`
+- layout utility field with `.no-message`
+- compact layout utility field with both `.no-label` and `.no-message`
 
 When examples are rendered in the Angular showcase:
 

@@ -27,8 +27,7 @@ ms-file-upload {
   gap: var(--spacing-4);
   min-block-size: var(--control-height-sm);
   padding-block: 0;
-  padding-inline-start: var(--control-padding-x-xs);
-  padding-inline-end: 1px;
+  padding-inline: var(--spacing-2);
   border: var(--control-border-width) dashed var(--control-border-color);
   border-radius: var(--radius-sm);
   background-color: var(--color-surface);

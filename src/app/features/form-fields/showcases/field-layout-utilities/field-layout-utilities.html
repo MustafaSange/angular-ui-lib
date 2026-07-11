@@ -1,0 +1,36 @@
+<p class="showcase-description">
+  Use these host classes when a field needs the shared control shell without reserving space for
+  the label row, message row, or both.
+</p>
+
+<div class="showcase-preview">
+  <ms-signal-form-field class="no-label">
+    <label for="compact-search">Compact search</label>
+    <input
+      id="compact-search"
+      type="search"
+      placeholder="Search"
+      aria-label="Compact search"
+      [formField]="compactSearchField"
+    />
+  </ms-signal-form-field>
+
+  <ms-signal-form-field class="no-message">
+    <label for="reference-code">Reference code</label>
+    <input id="reference-code" type="text" placeholder="INV-1042" [formField]="referenceCodeField" />
+    <ms-hint>Support text is projected but hidden by the no-message class.</ms-hint>
+  </ms-signal-form-field>
+
+  <ms-signal-form-field class="no-label no-message">
+    <label for="quick-filter">Quick filter</label>
+    <input
+      id="quick-filter"
+      type="text"
+      placeholder="Filter"
+      aria-label="Quick filter"
+      [formField]="quickFilterField"
+    />
+    <ms-hint>Both label and message rows are hidden.</ms-hint>
+  </ms-signal-form-field>
+</div>
+<app-showcase-code label="Layout utilities" [code]="snippet" />

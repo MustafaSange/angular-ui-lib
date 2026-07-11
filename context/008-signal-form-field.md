@@ -62,6 +62,22 @@ Use Angular 22 signal forms with `[formField]`.
 </ms-signal-form-field>
 ```
 
+Use host layout utility classes when a field needs the shared control shell without reserving space
+for the label row, message row, or both:
+
+```html
+<ms-signal-form-field class="no-label">
+  <label for="compact-search">Compact search</label>
+  <input id="compact-search" type="search" aria-label="Compact search" [formField]="searchField" />
+</ms-signal-form-field>
+
+<ms-signal-form-field class="no-message">
+  <label for="reference-code">Reference code</label>
+  <input id="reference-code" type="text" [formField]="referenceCodeField" />
+  <ms-hint>Support text is projected but hidden by the no-message class.</ms-hint>
+</ms-signal-form-field>
+```
+
 Display-only values use `ms-readonly-value` inside the field control row.
 
 ```html
@@ -143,6 +159,11 @@ projected display-value component for non-editing field rows.
 - The wrapper shows `ms-hint` before interaction and whenever no error is visible.
 - Initial invalid fields should not display errors until the field becomes touched or dirty.
 - The message row remains present so spacing does not jump.
+- `class="no-label"` hides the projected label row visually. Consumers should keep an accessible
+  name on the control, such as a native label association that remains valid or an `aria-label`
+  when the visual label row is hidden.
+- `class="no-message"` hides the message row visually. Projected hint or error content remains in
+  the DOM, but the row does not reserve layout space.
 - When `ms-readonly-value` is projected with `readonly`, the wrapper applies `is-readonly`.
 - When `ms-readonly-value` is projected with `disabled`, the wrapper applies `is-disabled`.
 - When `ms-readonly-value` is projected, the wrapper applies `has-readonly-value`.
@@ -161,6 +182,7 @@ The styles support both:
 - `ms-signal-form-field`, `ms-hint`, `ms-error`, and `ms-readonly-value` element selectors
 - a 2-column `.form-field-label` area using `1fr auto`
 - 2-column `ms-hint` and `ms-error` message layouts using `1fr auto`
+- host utility classes `.no-label` and `.no-message` for compact field layouts
 - logical block/inline layout behavior so label extras, message extras, prefixes, and suffixes
   mirror correctly in both `dir="ltr"` and `dir="rtl"`
 
@@ -193,7 +215,8 @@ Each form-field variant should render as a small vertical showcase item:
 Keep snippets hand-authored in each form-fields showcase component and make each snippet a full
 standalone Angular component example. Include separate snippets for individual variants such as text
 input, signal form field, required email, select, hint, textarea, prefix, suffix, search, actions,
-segmented suffix action, disabled, readonly, and display-value fields.
+segmented suffix action, disabled, readonly, display-value fields, and layout utilities such as
+`no-label` and `no-message`.
 
 The rendered showcase and its copyable snippet must stay behaviorally aligned:
 
@@ -237,6 +260,8 @@ Selection-control examples can stay grouped by control type, with each group fol
 - Hint and error are mutually exclusive.
 - Errors are gated by invalid plus touched or dirty state.
 - Existing `.form-field` examples and styling remain supported.
+- Host layout utility classes can hide label and message rows without changing the projection
+  contract.
 - Projected inline-start and inline-end content mirrors correctly in `dir="rtl"`.
 - The showcase uses the signal form field component and renders each form-field variant with its snippet directly below the visual example.
 - The showcase snippets and rendered examples match behavior, including validation, derived labels,

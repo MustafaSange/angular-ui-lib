@@ -11,6 +11,10 @@ ms-signal-form-field {
     gap: var(--spacing-8);
   }
 
+  &.no-label .form-field-label {
+    display: none;
+  }
+
   label,
   .form-field-label {
     color: var(--color-text-muted);
@@ -203,6 +207,10 @@ ms-signal-form-field {
     min-block-size: 1lh;
     color: var(--color-text-muted);
     font-size: var(--font-size-xs);
+  }
+
+  &.no-message .form-field-message {
+    display: none;
   }
 
   ms-hint,
