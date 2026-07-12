@@ -26,7 +26,7 @@ Public pieces:
 - `CopyButtonKind = 'ghost' | 'outline' | 'primary' | 'secondary'`
 - `CopyButtonSize = 'xs' | 'sm' | 'md' | 'lg'`
 
-Internal styling hooks remain concise and unprefixed: `.copy-button`, `.copy-icon`, `.copy-content`, `.copy-status`, `.copy-reveal`, `.copy-reveal-content`, and
+Internal styling hooks remain concise and unprefixed: `.copy-button`, `.copy-icon`, `.copy-content`, `.copy-status`, `.copy-reveal-content`, and
 `.copy-reveal-action`. Established public utility classes such as `.btn`, `.btn-icon`, `.ms-icon`, and `.ms-icon-filled` remain unchanged.
 
 Required component API:
@@ -155,9 +155,10 @@ The component renders one native button. The button contains a decorative Materi
 optional projected content container used only for fallback text, and an internal live status node
 for copied or failed announcements.
 
-`CopyRevealComponent` renders projected content and a copy action region. The copy action is visible
-when the wrapper is hovered, when focus is inside the wrapper, and when the internal copy button is
-in copied or failed state.
+`CopyRevealComponent` uses the `ms-copy-reveal` host as its reveal container. It renders one
+projected content span and one internal `ms-copy-button` with the `.copy-reveal-action` hook. The
+copy action is visible when the host is hovered, when focus is inside the host, and when the internal
+copy button is in copied or failed state.
 
 The showcase lives in:
 
@@ -223,7 +224,10 @@ Styling rules:
 - use logical CSS properties for hidden projected content and status text
 - use existing tokens for spacing, color, focus rings, motion, and disabled opacity
 - keep icon changes from resizing the button
-- reveal action opacity changes must not shift projected content
+- `ms-copy-reveal` is the positioning context for reveal layout
+- `.copy-reveal-action` is absolutely positioned at the host's block-start and inline-end edge with
+  `inset-inline-start: 100%` and a logical `margin-inline-start` gap
+- reveal action visibility changes must not reserve space or shift projected content
 - keep styles reusable across LTR and RTL without physical left/right placement
 
 ## Accessibility
