@@ -9,6 +9,7 @@ import {
   required,
   schema,
   submit,
+  validate,
 } from '@angular/forms/signals';
 
 import { buildSearchRequest, isBetweenValue } from './search-query-form-builder';
@@ -28,11 +29,19 @@ import type {
   SearchRequestValue,
   SearchScalarValue,
 } from './search-query-form-types';
-import { SignalFormField } from '../signal-form-field';
+import { SignalFormField, SignalReadonlyValue } from '../signal-form-field';
 import { SelectComponent, SelectOptionComponent } from '../select';
+import { ChipComponent, ChipRemoveDirective } from '../chip';
+import {
+  PopoverComponent,
+  PopoverPanelComponent,
+  PopoverTrigger,
+} from '../menu-popover';
 
 let nextFilterId = 0;
 const DEFAULT_STRING_MAX_LENGTH = 50;
+const DEFAULT_MAX_IN_VALUES = 50;
+const GUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i;
 
 interface SearchQueryFormFilterModel {
   readonly id: string;
@@ -42,6 +51,9 @@ interface SearchQueryFormFilterModel {
   readonly from: string;
   readonly to: string;
   readonly values: string[];
+  readonly customValues: string[];
+  readonly customValueInput: string;
+  readonly customValueStatus: string;
   readonly locked: boolean;
 }
 
@@ -51,12 +63,35 @@ interface SearchQueryFormModel {
 
 type SearchQueryFormValueFields = Pick<
   SearchQueryFormFilterModel,
-  'value' | 'from' | 'to' | 'values'
+  | 'value'
+  | 'from'
+  | 'to'
+  | 'values'
+  | 'customValues'
+  | 'customValueInput'
+  | 'customValueStatus'
 >;
+
+interface InValuePreviewItem {
+  readonly value: string;
+  readonly label: string;
+  readonly custom: boolean;
+}
 
 @Component({
   selector: 'ms-search-query-form',
-  imports: [FormField, SelectComponent, SelectOptionComponent, SignalFormField],
+  imports: [
+    ChipComponent,
+    ChipRemoveDirective,
+    FormField,
+    PopoverComponent,
+    PopoverPanelComponent,
+    PopoverTrigger,
+    SelectComponent,
+    SelectOptionComponent,
+    SignalFormField,
+    SignalReadonlyValue,
+  ],
   templateUrl: './search-query-form.html',
   host: {
     class: 'search-query-form-host',
@@ -64,6 +99,7 @@ type SearchQueryFormValueFields = Pick<
 })
 export class SearchQueryFormComponent {
   readonly properties = input.required<readonly SearchPropertyConfig[]>();
+  readonly maxFilters = input(10);
   readonly state = model<SearchQueryFormState>({ filters: [] });
   readonly requestChange = output<PaginatedSearchRequest>();
 
@@ -87,6 +123,24 @@ export class SearchQueryFormComponent {
                 )
               : undefined;
           });
+          validate(filter.value, ({ value, valueOf }) => {
+            const property = this.getProperty(valueOf(filter.property));
+            const operator = valueOf(filter.operator);
+
+            if (
+              !property ||
+              !value() ||
+              operator === 'between' ||
+              operator === 'in' ||
+              isValuelessSearchOperator(operator)
+            ) {
+              return undefined;
+            }
+
+            const message =
+              property.dataType === 'string' ? '' : this.typedScalarError(property, value());
+            return message ? { kind: 'searchValue', message } : undefined;
+          });
           required(filter.value, {
             message: 'Enter a value.',
             when: ({ valueOf }) => {
@@ -106,14 +160,59 @@ export class SearchQueryFormComponent {
             message: 'Enter a to value.',
             when: ({ valueOf }) => valueOf(filter.operator) === 'between',
           });
+          validate(filter.from, ({ value, valueOf }) => {
+            const property = this.getProperty(valueOf(filter.property));
+
+            if (!property || valueOf(filter.operator) !== 'between' || !value()) {
+              return undefined;
+            }
+
+            const message = this.typedScalarError(property, value());
+            return message ? { kind: 'searchValue', message } : undefined;
+          });
+          validate(filter.to, ({ value, valueOf }) => {
+            const property = this.getProperty(valueOf(filter.property));
+            const from = valueOf(filter.from);
+            const to = value();
+
+            if (!property || valueOf(filter.operator) !== 'between' || !to) {
+              return undefined;
+            }
+
+            const message = this.typedScalarError(property, to);
+            if (message) {
+              return { kind: 'searchValue', message };
+            }
+
+            if (
+              from &&
+              !this.typedScalarError(property, from) &&
+              this.isRangeReversed(property, from, to)
+            ) {
+              return {
+                kind: 'searchRange',
+                message: 'To must be greater than or equal to From.',
+              };
+            }
+
+            return undefined;
+          });
           required(filter.values, {
             message: 'Choose at least one value.',
-            when: ({ valueOf }) => valueOf(filter.operator) === 'in',
+            when: ({ valueOf }) =>
+              valueOf(filter.operator) === 'in' && valueOf(filter.customValues).length === 0,
           });
           minLength(filter.values, 1, {
             message: 'Choose at least one value.',
-            when: ({ valueOf }) => valueOf(filter.operator) === 'in',
+            when: ({ valueOf }) =>
+              valueOf(filter.operator) === 'in' && valueOf(filter.customValues).length === 0,
           });
+          maxLength(filter.values, ({ valueOf }) => {
+            const property = this.getProperty(valueOf(filter.property));
+            return valueOf(filter.operator) === 'in'
+              ? Math.max(0, this.maxInValues(property) - valueOf(filter.customValues).length)
+              : undefined;
+          }, { message: 'Too many values selected.' });
         }),
       );
     }),
@@ -135,7 +234,12 @@ export class SearchQueryFormComponent {
           .map((property) => property.propertyName),
       ),
   );
+  protected readonly filterLimit = computed(() => this.resolveFilterLimit(this.properties()));
   protected readonly availableProperties = computed(() => {
+    if (this.filters().length >= this.filterLimit()) {
+      return [];
+    }
+
     const selected = this.selectedPropertyNames();
     return this.properties().filter((property) => !selected.has(property.propertyName));
   });
@@ -164,7 +268,11 @@ export class SearchQueryFormComponent {
   protected addProperty(propertyName: string): void {
     const property = this.getProperty(propertyName);
 
-    if (!property || this.filters().some((filter) => filter.property === property.propertyName)) {
+    if (
+      !property ||
+      this.filters().length >= this.filterLimit() ||
+      this.filters().some((filter) => filter.property === property.propertyName)
+    ) {
       return;
     }
 
@@ -246,7 +354,11 @@ export class SearchQueryFormComponent {
   protected allowedOperators(property: SearchPropertyConfig): readonly SearchOperator[] {
     const compatibleOperators = getCompatibleSearchOperators(property.dataType);
     const allowedOperators = property.allowedOperators ?? compatibleOperators;
-    return allowedOperators.filter((operator) => compatibleOperators.includes(operator));
+    const canUseIn = this.hasOptions(property) || this.allowCustomInValues(property);
+
+    return allowedOperators.filter(
+      (operator) => compatibleOperators.includes(operator) && (operator !== 'in' || canUseIn),
+    );
   }
 
   protected propertyOptions(
@@ -272,6 +384,80 @@ export class SearchQueryFormComponent {
     return this.propertyOptions(property).length > 0;
   }
 
+  protected allowCustomInValues(property: SearchPropertyConfig | null): boolean {
+    return property?.allowCustomInValues === true;
+  }
+
+  protected maxInValues(property: SearchPropertyConfig | null): number {
+    if (!property || property.maxInValues === undefined || !Number.isFinite(property.maxInValues)) {
+      return DEFAULT_MAX_IN_VALUES;
+    }
+
+    return Math.max(1, Math.trunc(property.maxInValues));
+  }
+
+  protected totalInValues(filter: SearchQueryFormFilterModel): number {
+    return filter.values.length + filter.customValues.length;
+  }
+
+  protected inValuePreview(
+    filter: SearchQueryFormFilterModel,
+    property: SearchPropertyConfig | null,
+  ): readonly InValuePreviewItem[] {
+    const optionLabels = new Map(
+      this.propertyOptions(property).map((option) => [String(option.value), option.label]),
+    );
+
+    return [
+      ...filter.values.map((value) => ({
+        value,
+        label: optionLabels.get(value) ?? value,
+        custom: false,
+      })),
+      ...filter.customValues.map((value) => ({ value, label: value, custom: true })),
+    ].slice(0, 3);
+  }
+
+  protected isAtInValueLimit(
+    filter: SearchQueryFormFilterModel,
+    property: SearchPropertyConfig | null,
+  ): boolean {
+    return this.totalInValues(filter) >= this.maxInValues(property);
+  }
+
+  protected clipboardPasteAvailable(): boolean {
+    return typeof navigator !== 'undefined' && typeof navigator.clipboard?.readText === 'function';
+  }
+
+  protected customValueInputError(
+    property: SearchPropertyConfig | null,
+    rawValue: string,
+  ): string {
+    const value = rawValue.trim();
+
+    if (!property || !value) {
+      return '';
+    }
+
+    return this.typedScalarError(property, value);
+  }
+
+  protected handleInOptionValuesChange(
+    filter: SearchQueryFormFilterModel,
+    property: SearchPropertyConfig,
+    value: string | readonly string[] | null,
+  ): void {
+    const values = Array.isArray(value) ? [...value] : [];
+    const availableSlots = Math.max(0, this.maxInValues(property) - filter.customValues.length);
+    const capped = values.length > availableSlots;
+
+    this.replaceFilter(filter.id, {
+      ...filter,
+      values: values.slice(0, availableSlots),
+      customValueStatus: capped ? 'Value limit reached.' : '',
+    });
+  }
+
   protected isBetweenOperator(filter: SearchQueryFormFilterModel): boolean {
     return filter.operator === 'between';
   }
@@ -286,6 +472,121 @@ export class SearchQueryFormComponent {
 
   protected isFilterLocked(filter: SearchQueryFormFilterModel): boolean {
     return filter.locked === true || this.getProperty(filter.property)?.required === true;
+  }
+
+  protected addCustomValue(filter: SearchQueryFormFilterModel): void {
+    const property = this.getProperty(filter.property);
+
+    if (
+      !property ||
+      filter.customValueInput.trim().length === 0 ||
+      this.customValueInputError(property, filter.customValueInput).length > 0 ||
+      this.isAtInValueLimit(filter, property)
+    ) {
+      return;
+    }
+
+    this.addCustomValues(filter, [filter.customValueInput], property);
+  }
+
+  protected async pasteCustomValues(
+    filter: SearchQueryFormFilterModel,
+    input: HTMLInputElement,
+  ): Promise<void> {
+    const property = this.getProperty(filter.property);
+
+    if (!property) {
+      return;
+    }
+
+    try {
+      const clipboardText = await navigator.clipboard.readText();
+      this.addCustomValues(filter, this.tokenizeCustomValues(clipboardText), property);
+    } catch {
+      input.focus();
+      this.replaceFilter(filter.id, {
+        ...filter,
+        customValueStatus: 'Clipboard access blocked. Paste into the field.',
+      });
+    }
+  }
+
+  protected handleCustomValuePaste(
+    filter: SearchQueryFormFilterModel,
+    event: ClipboardEvent,
+  ): void {
+    const property = this.getProperty(filter.property);
+    const clipboardText = event.clipboardData?.getData('text');
+
+    if (!property || !clipboardText) {
+      return;
+    }
+
+    event.preventDefault();
+    this.addCustomValues(filter, this.tokenizeCustomValues(clipboardText), property);
+  }
+
+  protected handleCustomValuesPopover(
+    open: boolean,
+    input: HTMLInputElement,
+    trigger: HTMLButtonElement,
+  ): void {
+    queueMicrotask(() => (open ? input.focus() : trigger.focus()));
+  }
+
+  protected handleCustomValueInput(filter: SearchQueryFormFilterModel, event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.replaceFilter(filter.id, {
+      ...filter,
+      customValueInput: input.value,
+      customValueStatus: '',
+    });
+  }
+
+  protected handleCustomValueKeydown(
+    filter: SearchQueryFormFilterModel,
+    event: KeyboardEvent,
+  ): void {
+    if (event.key !== 'Enter') {
+      return;
+    }
+
+    event.preventDefault();
+    this.addCustomValue(filter);
+  }
+
+  protected removeCustomValue(filter: SearchQueryFormFilterModel, value: string): void {
+    this.replaceFilter(filter.id, {
+      ...filter,
+      customValues: filter.customValues.filter((item) => item !== value),
+      customValueStatus: '',
+    });
+  }
+
+  protected removeInValue(
+    filter: SearchQueryFormFilterModel,
+    value: string,
+    custom: boolean,
+  ): void {
+    if (custom) {
+      this.removeCustomValue(filter, value);
+      return;
+    }
+
+    this.replaceFilter(filter.id, {
+      ...filter,
+      values: filter.values.filter((item) => item !== value),
+      customValueStatus: '',
+    });
+  }
+
+  protected clearCustomValues(filter: SearchQueryFormFilterModel): void {
+    this.replaceFilter(filter.id, {
+      ...filter,
+      customValues: [],
+      customValueInput: '',
+      customValueStatus: 'Custom values cleared.',
+    });
   }
 
   protected inputType(property: SearchPropertyConfig | null): string {
@@ -369,6 +670,7 @@ export class SearchQueryFormComponent {
     const currentFilters = state.filters.filter((filter) => propertyMap.has(filter.property));
     const usedProperties = new Set<string>();
     const filters: SearchQueryFormFilter[] = [];
+    const filterLimit = this.resolveFilterLimit(properties);
 
     for (const property of properties.filter((item) => item.required)) {
       const currentFilter = currentFilters.find(
@@ -381,7 +683,7 @@ export class SearchQueryFormComponent {
     }
 
     for (const filter of currentFilters) {
-      if (usedProperties.has(filter.property)) {
+      if (usedProperties.has(filter.property) || filters.length >= filterLimit) {
         continue;
       }
 
@@ -396,6 +698,15 @@ export class SearchQueryFormComponent {
       ...state,
       filters,
     };
+  }
+
+  private resolveFilterLimit(properties: readonly SearchPropertyConfig[]): number {
+    const configuredLimit = Number.isFinite(this.maxFilters())
+      ? Math.max(1, Math.trunc(this.maxFilters()))
+      : 10;
+    const requiredCount = properties.filter((property) => property.required).length;
+
+    return Math.max(configuredLimit, requiredCount);
   }
 
   private createFilter(
@@ -496,7 +807,7 @@ export class SearchQueryFormComponent {
     }
 
     if (operator === 'in') {
-      return this.createInValueFields(nextValue);
+      return this.createInValueFields(property, nextValue);
     }
 
     if (isValuelessSearchOperator(operator)) {
@@ -519,15 +830,40 @@ export class SearchQueryFormComponent {
       from: this.stringifyScalar(between.from),
       to: this.stringifyScalar(between.to),
       values: [],
+      customValues: [],
+      customValueInput: '',
+      customValueStatus: '',
     };
   }
 
-  private createInValueFields(value: SearchRequestValue | null): SearchQueryFormValueFields {
+  private createInValueFields(
+    property: SearchPropertyConfig,
+    value: SearchRequestValue | null,
+  ): SearchQueryFormValueFields {
+    const values = Array.isArray(value) ? value.map((item) => this.stringifyScalar(item)) : [];
+    const optionValues = new Set(
+      this.propertyOptions(property).map((option) => String(option.value)),
+    );
+    const maxValues = this.maxInValues(property);
+    const selectedValues =
+      property.allowCustomInValues === true
+        ? values.filter((item) => optionValues.has(item)).slice(0, maxValues)
+        : values.slice(0, maxValues);
+    const customValues =
+      property.allowCustomInValues === true
+        ? values
+            .filter((item) => !optionValues.has(item))
+            .slice(0, Math.max(0, maxValues - selectedValues.length))
+        : [];
+
     return {
       value: '',
       from: '',
       to: '',
-      values: Array.isArray(value) ? value.map((item) => this.stringifyScalar(item)) : [],
+      values: selectedValues,
+      customValues,
+      customValueInput: '',
+      customValueStatus: '',
     };
   }
 
@@ -537,6 +873,9 @@ export class SearchQueryFormComponent {
       from: '',
       to: '',
       values: [],
+      customValues: [],
+      customValueInput: '',
+      customValueStatus: '',
     };
   }
 
@@ -611,7 +950,15 @@ export class SearchQueryFormComponent {
           operator,
           ...(property
             ? this.createValueFields(property, operator, filter.value)
-            : { value: '', from: '', to: '', values: [] }),
+            : {
+                value: '',
+                from: '',
+                to: '',
+                values: [],
+                customValues: [],
+                customValueInput: '',
+                customValueStatus: '',
+              }),
           locked: filter.locked === true,
         };
       }),
@@ -649,7 +996,9 @@ export class SearchQueryFormComponent {
     }
 
     if (filter.operator === 'in') {
-      return filter.values.map((value) => this.parseScalarValue(property, value));
+      return [...filter.values, ...filter.customValues]
+        .filter((value, index, values) => values.indexOf(value) === index)
+        .map((value) => this.parseScalarValue(property, value));
     }
 
     if (isValuelessSearchOperator(filter.operator)) {
@@ -681,5 +1030,166 @@ export class SearchQueryFormComponent {
       default:
         return value;
     }
+  }
+
+  private addCustomValues(
+    filter: SearchQueryFormFilterModel,
+    rawValues: readonly string[],
+    property: SearchPropertyConfig,
+  ): void {
+    const maxValues = this.maxInValues(property);
+    const selectedValues = new Set(filter.values);
+    const customValues = [...filter.customValues];
+    const customValueSet = new Set(customValues);
+    let addedCount = 0;
+    let duplicateCount = 0;
+    let invalidCount = 0;
+    let cappedCount = 0;
+
+    for (const rawValue of rawValues) {
+      const parsedValue = this.parseCustomInValue(property, rawValue);
+
+      if (parsedValue === null) {
+        invalidCount++;
+        continue;
+      }
+
+      const value = this.stringifyScalar(parsedValue);
+
+      if (selectedValues.has(value) || customValueSet.has(value)) {
+        duplicateCount++;
+        continue;
+      }
+
+      if (selectedValues.size + customValues.length >= maxValues) {
+        cappedCount++;
+        continue;
+      }
+
+      customValues.push(value);
+      customValueSet.add(value);
+      addedCount++;
+    }
+
+    this.replaceFilter(filter.id, {
+      ...filter,
+      customValues,
+      customValueInput: '',
+      customValueStatus: this.customValueStatus(
+        addedCount,
+        duplicateCount,
+        invalidCount,
+        cappedCount,
+      ),
+    });
+  }
+
+  private tokenizeCustomValues(value: string): readonly string[] {
+    return value
+      .split(/[\n,;\t]+/)
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+
+  private parseCustomInValue(
+    property: SearchPropertyConfig,
+    rawValue: string,
+  ): SearchScalarValue | null {
+    const value = rawValue.trim();
+
+    if (!value) {
+      return null;
+    }
+
+    if (this.typedScalarError(property, value)) {
+      return null;
+    }
+
+    switch (property.dataType) {
+      case 'int':
+      case 'long':
+        return Number.parseInt(value, 10);
+      case 'decimal':
+        return Number(value);
+      case 'guid':
+        return value;
+      case 'string':
+        return value;
+      case 'enum':
+        return value;
+      default:
+        return null;
+    }
+  }
+
+  private typedScalarError(property: SearchPropertyConfig, value: string): string {
+    switch (property.dataType) {
+      case 'guid':
+        return GUID_PATTERN.test(value) ? '' : 'Enter a valid GUID.';
+      case 'int':
+      case 'long':
+        if (!/^-?\d+$/.test(value)) {
+          return 'Enter a whole number.';
+        }
+
+        return Number.isSafeInteger(Number(value)) ? '' : 'Enter a safe whole number.';
+      case 'decimal':
+        return Number.isFinite(Number(value)) ? '' : 'Enter a valid number.';
+      case 'string': {
+        const maxLength = Math.min(
+          property.maxStringLength ?? DEFAULT_STRING_MAX_LENGTH,
+          DEFAULT_STRING_MAX_LENGTH,
+        );
+        return value.length <= maxLength ? '' : `Enter no more than ${maxLength} characters.`;
+      }
+      default:
+        return '';
+    }
+  }
+
+  private isRangeReversed(
+    property: SearchPropertyConfig,
+    from: string,
+    to: string,
+  ): boolean {
+    switch (property.dataType) {
+      case 'int':
+      case 'long':
+      case 'decimal':
+        return Number(from) > Number(to);
+      case 'date':
+      case 'time':
+      case 'dateTime':
+        return from > to;
+      default:
+        return false;
+    }
+  }
+
+  private customValueStatus(
+    addedCount: number,
+    duplicateCount: number,
+    invalidCount: number,
+    cappedCount: number,
+  ): string {
+    const messages: string[] = [];
+
+    if (addedCount > 0) {
+      messages.push(`${addedCount} ${addedCount === 1 ? 'value' : 'values'} added`);
+    }
+
+    if (duplicateCount > 0) {
+      messages.push(`${duplicateCount} duplicate${duplicateCount === 1 ? '' : 's'} skipped`);
+    }
+
+    if (invalidCount > 0) {
+      messages.push(`${invalidCount} invalid ${invalidCount === 1 ? 'value' : 'values'} skipped`);
+    }
+
+    if (cappedCount > 0) {
+      messages.push(`${cappedCount} over the limit skipped`);
+    }
+
+    return messages.join('. ');
   }
 }

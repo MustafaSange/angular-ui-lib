@@ -24,6 +24,13 @@ ms-search-query-form {
     min-height: 100%;
   }
 
+  .filter-count {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-regular);
+    white-space: nowrap;
+  }
+
   .filter-list {
     display: flex;
     flex-direction: column;
@@ -43,6 +50,100 @@ ms-search-query-form {
     >* {
       width: 100%;
     }
+  }
+
+  .in-values {
+    display: grid;
+    gap: var(--spacing-8);
+  }
+
+  .in-values-control {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--spacing-8);
+    align-items: stretch;
+
+    &.has-custom-values {
+      grid-template-columns: minmax(0, 1fr) var(--control-height-sm);
+    }
+  }
+
+  .custom-values-toggle-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: 100%;
+  }
+
+  .in-values-preview {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    min-inline-size: 0;
+    inline-size: 100%;
+    overflow: hidden;
+
+    ms-chip {
+      flex: 0 1 auto;
+      min-inline-size: 0;
+    }
+
+    .chip-content {
+      min-inline-size: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .in-values-placeholder,
+  .in-values-more {
+    flex: 0 0 auto;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    white-space: nowrap;
+  }
+
+  .custom-values-popover {
+    inline-size: anchor-size(inline);
+  }
+
+  .custom-values-editor {
+    display: grid;
+    gap: var(--spacing-8);
+  }
+
+  .custom-values-entry {
+    min-inline-size: 0;
+  }
+
+  .custom-values-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-8);
+    min-block-size: var(--control-height-sm);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+  }
+
+  .custom-values-input-error {
+    margin: 0;
+    color: var(--color-danger-text);
+    font-size: var(--font-size-xs);
+  }
+
+  .custom-values-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-4);
+    min-inline-size: 0;
+  }
+
+  .custom-values-status {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
   }
 
   .filter-actions {

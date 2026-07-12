@@ -25,6 +25,7 @@ ms-signal-form-field {
   .form-field-control {
     display: flex;
     align-items: stretch;
+    anchor-name: var(--form-field-control-anchor, none);
     min-block-size: var(--control-height-sm);
     border: var(--control-border-width) solid var(--control-border-color);
     border-radius: var(--radius-sm);
@@ -163,8 +164,32 @@ ms-signal-form-field {
     overflow-wrap: anywhere;
   }
 
+  .readonly-value-fallback {
+    display: contents;
+  }
+
   ms-readonly-value.is-placeholder {
     color: var(--color-text-muted);
+  }
+
+  ms-select .select-values {
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+
+  .form-field-control:has(> ms-select) {
+    block-size: var(--control-height-sm);
+  }
+
+  .form-field-control > ms-select {
+    block-size: calc(var(--control-height-sm) - (var(--control-border-width) * 2));
+
+    .select-control,
+    .select-values,
+    input {
+      min-block-size: 0;
+      block-size: 100%;
+    }
   }
 
   &:has(ms-otp-input) {
