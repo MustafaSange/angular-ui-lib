@@ -17,15 +17,8 @@ ms-copy-button {
 }
 
 ms-copy-reveal {
+  position: relative;
   display: inline-flex;
-  max-inline-size: 100%;
-}
-
-.copy-reveal {
-  display: inline-grid;
-  grid-template-columns: minmax(0, auto) auto;
-  align-items: center;
-  gap: var(--spacing-4);
   max-inline-size: 100%;
   border-radius: var(--radius-sm);
 }
@@ -35,7 +28,11 @@ ms-copy-reveal {
 }
 
 .copy-reveal-action {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 100%;
   display: inline-flex;
+  margin-inline-start: var(--spacing-4);
   opacity: 0;
   visibility: hidden;
   transition:
@@ -43,10 +40,10 @@ ms-copy-reveal {
     visibility var(--transition-fast);
 }
 
-.copy-reveal:hover .copy-reveal-action,
-.copy-reveal:focus-within .copy-reveal-action,
-.copy-reveal:has(ms-copy-button[data-copy-state='copied']) .copy-reveal-action,
-.copy-reveal:has(ms-copy-button[data-copy-state='failed']) .copy-reveal-action {
+ms-copy-reveal:hover .copy-reveal-action,
+ms-copy-reveal:focus-within .copy-reveal-action,
+ms-copy-reveal:has(ms-copy-button[data-copy-state='copied']) .copy-reveal-action,
+ms-copy-reveal:has(ms-copy-button[data-copy-state='failed']) .copy-reveal-action {
   opacity: 1;
   visibility: visible;
 }
