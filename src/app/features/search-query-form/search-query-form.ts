@@ -6,9 +6,12 @@ import {
   SearchQueryFormComponent,
   SearchQueryFormState,
   buildSearchRequest,
+  createTodayDateTimeRange,
   type PaginatedSearchRequest,
 } from '../../shared/ui-lib';
 import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
+
+const todayCreatedAtRange = createTodayDateTimeRange();
 
 @Component({
   selector: 'app-search-query-form',
@@ -62,6 +65,8 @@ export class SearchQueryForm {
       propertyName: 'createdAt',
       label: 'Created At',
       dataType: 'dateTime',
+      defaultOperator: 'between',
+      defaultValue: todayCreatedAtRange,
       allowedOperators: ['between', 'eq', 'gte', 'lte'],
     },
     {
@@ -93,6 +98,12 @@ export class SearchQueryForm {
         property: 'name',
         operator: 'isNullOrEmpty',
         value: null,
+      },
+      {
+        id: 'created-at-today',
+        property: 'createdAt',
+        operator: 'between',
+        value: todayCreatedAtRange,
       },
     ],
   });
@@ -138,8 +149,11 @@ import {
   SearchPropertyConfig,
   SearchQueryFormState,
   buildSearchRequest,
+  createTodayDateTimeRange,
   type PaginatedSearchRequest,
 } from './shared/ui-lib';
+
+const todayCreatedAtRange = createTodayDateTimeRange();
 
 @Component({
   selector: 'app-user-search-query-example',
@@ -186,6 +200,8 @@ export class UserSearchQueryExample {
       propertyName: 'createdAt',
       label: 'Created at',
       dataType: 'dateTime',
+      defaultOperator: 'between',
+      defaultValue: todayCreatedAtRange,
       allowedOperators: ['between', 'eq', 'gte', 'lte'],
     },
     {
@@ -210,6 +226,12 @@ export class UserSearchQueryExample {
         property: 'name',
         operator: 'isNullOrEmpty',
         value: null,
+      },
+      {
+        id: 'created-at-today',
+        property: 'createdAt',
+        operator: 'between',
+        value: todayCreatedAtRange,
       },
     ],
   });
