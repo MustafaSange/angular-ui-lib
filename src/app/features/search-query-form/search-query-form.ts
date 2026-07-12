@@ -55,11 +55,58 @@ export class SearchQueryForm {
       propertyName: 'status',
       label: 'Status',
       dataType: 'enum',
+      defaultOperator: 'in',
+      allowCustomInValues: true,
+      maxInValues: 50,
       options: [
         { label: 'Active', value: 'Active' },
         { label: 'Pending', value: 'Pending' },
         { label: 'Blocked', value: 'Blocked' },
       ],
+    },
+    {
+      propertyName: 'tags',
+      label: 'Tags',
+      dataType: 'string',
+      defaultOperator: 'in',
+      allowCustomInValues: true,
+      maxInValues: 50,
+    },
+    {
+      propertyName: 'department',
+      label: 'Department',
+      dataType: 'enum',
+      defaultOperator: 'in',
+      allowedOperators: ['in'],
+      options: [
+        { label: 'Engineering', value: 'Engineering' },
+        { label: 'Finance', value: 'Finance' },
+        { label: 'Operations', value: 'Operations' },
+      ],
+    },
+    {
+      propertyName: 'referenceIds',
+      label: 'Reference IDs',
+      dataType: 'guid',
+      defaultOperator: 'in',
+      allowedOperators: ['in'],
+      allowCustomInValues: true,
+    },
+    {
+      propertyName: 'quantities',
+      label: 'Quantities',
+      dataType: 'int',
+      defaultOperator: 'in',
+      allowedOperators: ['in'],
+      allowCustomInValues: true,
+    },
+    {
+      propertyName: 'amounts',
+      label: 'Amounts',
+      dataType: 'decimal',
+      defaultOperator: 'in',
+      allowedOperators: ['in'],
+      allowCustomInValues: true,
     },
     {
       propertyName: 'createdAt',
@@ -104,6 +151,42 @@ export class SearchQueryForm {
         property: 'createdAt',
         operator: 'between',
         value: todayCreatedAtRange,
+      },
+      {
+        id: 'status-in',
+        property: 'status',
+        operator: 'in',
+        value: ['Active', 'Escalated'],
+      },
+      {
+        id: 'tags-in',
+        property: 'tags',
+        operator: 'in',
+        value: ['Priority', 'External', 'Reviewed', 'Follow-up', 'Q3'],
+      },
+      {
+        id: 'department-in',
+        property: 'department',
+        operator: 'in',
+        value: ['Engineering', 'Operations'],
+      },
+      {
+        id: 'reference-ids-in',
+        property: 'referenceIds',
+        operator: 'in',
+        value: ['550e8400-e29b-41d4-a716-446655440000'],
+      },
+      {
+        id: 'quantities-in',
+        property: 'quantities',
+        operator: 'in',
+        value: [10, 25],
+      },
+      {
+        id: 'amounts-in',
+        property: 'amounts',
+        operator: 'in',
+        value: [12.5, 99.95],
       },
     ],
   });
@@ -161,6 +244,7 @@ const todayCreatedAtRange = createTodayDateTimeRange();
   template: \`
     <ms-search-query-form
       [properties]="properties"
+      [maxFilters]="10"
       [(state)]="searchState"
       (requestChange)="request.set($event)"
     />
@@ -185,16 +269,64 @@ export class UserSearchQueryExample {
       dataType: 'string',
       defaultOperator: 'contains',
       maxStringLength: 50,
+      placeholder: 'Search name',
     },
     {
       propertyName: 'status',
       label: 'Status',
       dataType: 'enum',
+      defaultOperator: 'in',
+      allowCustomInValues: true,
+      maxInValues: 50,
       options: [
         { label: 'Active', value: 'Active' },
         { label: 'Pending', value: 'Pending' },
         { label: 'Blocked', value: 'Blocked' },
       ],
+    },
+    {
+      propertyName: 'tags',
+      label: 'Tags',
+      dataType: 'string',
+      defaultOperator: 'in',
+      allowCustomInValues: true,
+      maxInValues: 50,
+    },
+    {
+      propertyName: 'department',
+      label: 'Department',
+      dataType: 'enum',
+      defaultOperator: 'in',
+      allowedOperators: ['in'],
+      options: [
+        { label: 'Engineering', value: 'Engineering' },
+        { label: 'Finance', value: 'Finance' },
+        { label: 'Operations', value: 'Operations' },
+      ],
+    },
+    {
+      propertyName: 'referenceIds',
+      label: 'Reference IDs',
+      dataType: 'guid',
+      defaultOperator: 'in',
+      allowedOperators: ['in'],
+      allowCustomInValues: true,
+    },
+    {
+      propertyName: 'quantities',
+      label: 'Quantities',
+      dataType: 'int',
+      defaultOperator: 'in',
+      allowedOperators: ['in'],
+      allowCustomInValues: true,
+    },
+    {
+      propertyName: 'amounts',
+      label: 'Amounts',
+      dataType: 'decimal',
+      defaultOperator: 'in',
+      allowedOperators: ['in'],
+      allowCustomInValues: true,
     },
     {
       propertyName: 'createdAt',
@@ -217,6 +349,12 @@ export class UserSearchQueryExample {
       dataType: 'boolean',
       defaultOperator: 'eq',
     },
+    {
+      propertyName: 'age',
+      label: 'Age',
+      dataType: 'int',
+      allowedOperators: ['between', 'eq', 'gte', 'lte'],
+    },
   ];
 
   readonly searchState = signal<SearchQueryFormState>({
@@ -232,6 +370,42 @@ export class UserSearchQueryExample {
         property: 'createdAt',
         operator: 'between',
         value: todayCreatedAtRange,
+      },
+      {
+        id: 'status-in',
+        property: 'status',
+        operator: 'in',
+        value: ['Active', 'Escalated'],
+      },
+      {
+        id: 'tags-in',
+        property: 'tags',
+        operator: 'in',
+        value: ['Priority', 'External', 'Reviewed', 'Follow-up', 'Q3'],
+      },
+      {
+        id: 'department-in',
+        property: 'department',
+        operator: 'in',
+        value: ['Engineering', 'Operations'],
+      },
+      {
+        id: 'reference-ids-in',
+        property: 'referenceIds',
+        operator: 'in',
+        value: ['550e8400-e29b-41d4-a716-446655440000'],
+      },
+      {
+        id: 'quantities-in',
+        property: 'quantities',
+        operator: 'in',
+        value: [10, 25],
+      },
+      {
+        id: 'amounts-in',
+        property: 'amounts',
+        operator: 'in',
+        value: [12.5, 99.95],
       },
     ],
   });

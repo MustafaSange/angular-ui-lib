@@ -90,7 +90,13 @@ type SearchOperator =
   | 'lt'
   | 'lte'
   | 'between'
-  | 'in';
+  | 'in'
+  | 'isNull'
+  | 'isEmpty'
+  | 'isNullOrEmpty'
+  | 'isNotNull'
+  | 'isNotEmpty'
+  | 'isNotNullOrEmpty';
 
 type SearchSortDirection = 0 | 1;
 
@@ -119,6 +125,8 @@ interface SearchPropertyConfig {
   options?: readonly SearchPropertyOption[];
   placeholder?: string;
   maxStringLength?: number;
+  allowCustomInValues?: boolean;
+  maxInValues?: number;
 }
 
 interface SearchQueryFormFilter {
@@ -156,6 +164,7 @@ interface SearchSortRequest {
 
 class SearchQueryFormComponent {
   readonly properties = input.required<readonly SearchPropertyConfig[]>();
+  readonly maxFilters = input(10);
   readonly state = model<SearchQueryFormState>({ filters: [] });
   readonly requestChange = output<PaginatedSearchRequest>();
 }
@@ -175,9 +184,17 @@ Defaults:
 - omitted `SearchPropertyConfig.required` defaults to `false`
 - omitted `SearchPropertyConfig.maxStringLength` defaults to `50` for `string` values
 - supplied `SearchPropertyConfig.maxStringLength` is capped at `50` for `string` values
+- omitted `SearchPropertyConfig.allowCustomInValues` defaults to `false`
+- omitted `SearchPropertyConfig.maxInValues` defaults to `50`; the limit counts selected options
+  and custom values together
 - omitted `SearchPropertyConfig.defaultOperator` falls back to the data-type default operator
 - omitted `SearchPropertyConfig.defaultValue` uses an empty value for the selected data type and
   operator
+- omitted `SearchQueryFormComponent.maxFilters` defaults to `10`
+- invalid `maxFilters` values fall back to `10`; finite values are truncated and clamped to at
+  least `1`
+- required properties count toward the limit and raise the effective minimum when their count is
+  greater than the configured limit
 
 Data-type default operators:
 
@@ -239,6 +256,7 @@ const todayCreatedAtRange = createTodayDateTimeRange();
   template: `
     <ms-search-query-form
       [properties]="properties"
+      [maxFilters]="10"
       [(state)]="searchState"
       (requestChange)="request.set($event)"
     />
@@ -268,6 +286,9 @@ export class UserSearchExample {
       propertyName: 'status',
       label: 'Status',
       dataType: 'enum',
+      defaultOperator: 'in',
+      allowCustomInValues: true,
+      maxInValues: 50,
       options: [
         { label: 'Active', value: 'Active' },
         { label: 'Pending', value: 'Pending' },
@@ -318,8 +339,8 @@ Example request emitted after a required tenant filter and a user-added status f
 }
 ```
 
-Example request emitted when the `status` enum uses the `in` operator and the user selects
-`Active` and `Pending`:
+Example request emitted when the `status` enum uses `in`, the user selects the configured `Active`
+option, and adds the custom `Escalated` value:
 
 ```json
 {
@@ -327,7 +348,7 @@ Example request emitted when the `status` enum uses the `in` operator and the us
     {
       "property": "status",
       "operator": "in",
-      "value": ["Active", "Pending"]
+      "value": ["Active", "Escalated"]
     }
   ]
 }
@@ -362,8 +383,9 @@ the shared compact control treatment without reserving a message row in the tool
 
 Shared reusable components use the `ms-` selector prefix. Internal styling hooks are
 `.search-query-form`, `.filter-list`, `.filter-row`, `.filter-property`, `.filter-operator`,
-`.filter-value`, `.filter-actions`, `.filter-toolbar`, `.add-filter`, `.toolbar-actions`,
-`.search-filters`, `.clear-filters`, and `.remove-filter`.
+`.filter-value`, `.in-values`, `.in-values-control`, `.in-values-preview`,
+`.custom-values-editor`, `.custom-values-list`, `.filter-actions`, `.filter-toolbar`,
+`.add-filter`, `.toolbar-actions`, `.search-filters`, `.clear-filters`, and `.remove-filter`.
 
 ## Behavior
 
@@ -378,11 +400,15 @@ Shared reusable components use the `ms-` selector prefix. Internal styling hooks
   operator.
 - Optional filters are displayed only when the user selects them through the add action or when
   they already exist in parent-owned `state`.
+- The component allows at most `maxFilters` total rows, counting required and optional filters.
+- Required rows are reconciled first and never dropped. Oversized parent state retains optional
+  filters in original order only while slots remain.
+- The Add picker is disabled and exposes no remaining properties after the effective limit is
+  reached. Its label displays the current and maximum filter count.
 - The editable filter row model is managed with Angular signal forms.
 - All rendered filter controls are bound with `[formField]`.
 - Required, disabled, and max-length rules are defined through the signal-form schema.
-- The `in` operator validates its selected values with a signal-form `minLength(1)` rule because an
-  empty array is not considered empty by signal-form `required()`.
+- The `in` operator requires at least one configured option or custom value.
 - Native validation attributes such as `required` and `maxlength` are not placed on controls that
   use `[formField]`.
 - The add action opens or displays a property picker containing filterable properties not already
@@ -395,6 +421,7 @@ Shared reusable components use the `ms-` selector prefix. Internal styling hooks
   operators.
 - If a property config does not define `allowedOperators`, the operator selector shows operators
   compatible with the property data type.
+- Hide `in` when a property has neither configured options nor `allowCustomInValues: true`.
 - If the current operator becomes invalid after a property change, reset it to the property default
   operator.
 - If the current value shape does not match the new operator, reset it to the property default
@@ -421,8 +448,37 @@ Operator behavior:
 
 - `between` renders two controls labeled `From` and `To`.
 - `between` emits a value object shaped as `{ "from": value, "to": value }`.
-- `in` renders a multi-value control when options exist.
-- `in` is intended for configured option sets in the current UI implementation.
+- `between` validates each endpoint with the property datatype rules and requires `To` to be
+  greater than or equal to `From` for numeric, date, time, and datetime values.
+- Option-only `in` renders the compact multiple `ms-select` directly in the Values field.
+- Custom-enabled `in` renders a readonly combined preview with up to three option and custom chips,
+  followed by plain `+N more` text.
+- Every visible combined-preview chip is removable. Option removal updates `ms-select`; custom
+  removal updates only the custom-value list.
+- The custom-values trigger opens a popover directly below the Values form control at its logical
+  inline start, with the same width. When options exist, their `ms-select` is rendered inside the
+  popover.
+- The popover supports manual entry, programmatic clipboard paste, native Ctrl/Cmd+V paste,
+  individual custom removal, custom-only clear, and a current/maximum value count.
+- Programmatic paste is disabled when clipboard reading is unavailable. Native paste remains
+  available and uses the same parsing pipeline.
+- Add and programmatic Paste are disabled when the combined option/custom limit is reached.
+- Configured-option changes are capped against the same combined limit; request emission never
+  silently drops visible selections.
+- Opening the popover focuses the custom input; closing restores focus to the trigger.
+- The custom-values trigger uses the primary button treatment whenever any option or custom value
+  is selected.
+- Pasted custom values split on newline, comma, semicolon, and tab. Values are trimmed, deduplicated
+  against both sources, and capped by `maxInValues`.
+- Custom `string` and `enum` values remain strings; `guid` requires a canonical GUID; `int` and
+  `long` require safe integers; `decimal` requires a finite number.
+- Invalid manual GUID, integer, decimal, and over-length string values show an inline accessible
+  validation message and disable Add. Invalid or over-length pasted values are skipped and
+  summarized.
+- The emitted `in` value is one deduplicated scalar array combining selected options and custom
+  values.
+- Valueless operators hide value controls, skip value validation, retain `null` state, and emit
+  `value: null`.
 - Non-`between` operators render a single value control.
 - Operator compatibility must match the backend:
 
@@ -448,8 +504,11 @@ Value editor behavior:
 - `boolean` renders a dropdown with `true` and `false` choices.
 - `enum` renders a dropdown when `options` exist.
 - `guid` renders a text input.
+- Scalar `guid`, `int`, `long`, and `decimal` inputs use the same datatype rules as custom values,
+  retain invalid user text, display a specific error, and prevent search submission until corrected.
 - Any property with `options` renders a dropdown for single-value operators.
 - Any property with `options` renders a multi-select dropdown for the `in` operator.
+- Multiple-select chips remain on one compact line inside the 28px form-field control.
 - Input values must be converted to the backend JSON-compatible shape before emission.
 
 ## Backend Mapping
@@ -478,6 +537,8 @@ Value editor behavior:
   required filters from `properties`.
 - Consumers should configure only API property names, never SQL column names.
 - Consumers should keep backend property config authoritative; frontend config is a mirrored UX aid.
+- Consumers must enforce an independent backend filter-count limit; the frontend input is a UX
+  constraint and is not database protection.
 
 ## Styling
 
@@ -501,6 +562,10 @@ Styling rules:
 - keep action buttons aligned to the block-end of the add-property control in the bottom toolbar
 - let the toolbar action group fill the toolbar height so buttons align with compact form fields
 - keep required rows compact by hiding the delete action instead of rendering disabled controls
+- use one Values grid column for option-only `in` and add the fixed trigger column only when custom
+  values are enabled
+- keep option, combined-preview, and custom chips compact and visually consistent through the
+  primary-subtle selected treatment and primary border
 - render action icons with `.ms-icon` or `.ms-icon-filled`
 - add every new Material Symbols ligature name to `MATERIAL_ICONS`
 - avoid hardcoded values when tokens exist
@@ -516,6 +581,8 @@ Styling rules:
 - Required locked filters must communicate that they cannot be removed.
 - Required locked filters must not render a misleading delete button.
 - Validation or incomplete-value messages must be associated with their controls.
+- Connect custom-value validation messages with `aria-describedby` and expose invalid input state
+  with `aria-invalid`.
 - Preserve visible focus indication on all interactive controls.
 - Keyboard users must be able to add filters, change operators, enter values, delete optional
   filters, clear optional filters, and submit search.
@@ -530,6 +597,13 @@ Add a dedicated `/search-query-form` page and home card demonstrating:
 - dropdown enum filter
 - `between` date or datetime filter with `from` and `to`
 - `in` filter with multiple dropdown selections
+- option-only `in` with removable `ms-select` chips
+- mixed configured-option and custom `in` values with a combined preview
+- custom-only string `in` values with first-three chips and `+N more`
+- valid custom GUID, integer, and decimal `in` rows that remain available for inline validation
+  demonstrations
+- custom-value popover count, maximum-state disabling, native/programmatic paste, and clear-custom
+- configurable `maxFilters` count and disabled Add state at the total filter limit
 - clear action that removes optional filters but keeps required filters
 - search action that emits `PaginatedSearchRequest`
 - emitted `PaginatedSearchRequest` preview
@@ -572,12 +646,23 @@ Render snippets near the matching visual example with `<app-showcase-code>`.
 - Clear removes optional filters and preserves required filters.
 - Clear resets required filters to configured defaults.
 - Add creates optional filters from the property config.
+- `maxFilters` defaults to `10`, counts required and optional filters, and prevents optional filters
+  from being added or reconciled beyond the effective limit.
 - Delete removes optional filters.
 - Operator dropdowns use configured `allowedOperators` or backend-compatible data-type operators.
 - Missing `defaultOperator` falls back to the documented data-type default operator.
 - `between` renders `from` and `to` controls and emits `{ from, to }`.
+- `between` rejects malformed endpoints and reversed numeric or temporal ranges.
 - Inputs match the selected property `dataType`.
 - Properties with `options` render dropdown controls.
+- Option-only `in` renders a compact direct multi-select without reserving a custom-trigger column.
+- Custom-enabled `in` combines option and custom values in its readonly preview and emitted array.
+- The combined preview shows at most three removable chips and a plain remaining-value count.
+- Option values remain controlled by `ms-select`; custom deletion never removes configured options.
+- Custom values are typed, trimmed, deduplicated, and capped by `maxInValues`, defaulting to `50`.
+- Manual GUID, integer, decimal, and string-length validation is displayed accessibly before Add.
+- Scalar GUID and numeric fields use the same canonical GUID, safe-integer, and finite-number rules.
+- Clipboard and manual entry use the same custom-value parsing rules.
 - String input length is capped at `50` characters.
 - Filter edits do not auto-trigger `requestChange`.
 - Search is disabled while any rendered filter control is invalid or pending.

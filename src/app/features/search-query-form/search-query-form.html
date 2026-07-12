@@ -26,14 +26,15 @@
   </section>
 
   <section class="search-query-form-section">
-    <h2>Required and optional filters</h2>
+    <h2>Required and multi-value filters</h2>
     <p class="section-copy">
-      Required filters render immediately and survive clear. Optional filters can be added, removed,
-      changed to dropdown or boolean values, and cleared.
+      Compare option-only, mixed option and custom, custom-only, and typed multi-value filters in
+      one backend-compatible request.
     </p>
     <div class="search-query-form-demo-panel">
       <ms-search-query-form
         [properties]="userProperties"
+        [maxFilters]="10"
         [(state)]="userState"
         (requestChange)="userRequest.set($event)"
       />

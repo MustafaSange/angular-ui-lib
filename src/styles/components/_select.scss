@@ -30,6 +30,7 @@ ms-select {
 
   input {
     flex: 1 1 8rem;
+    inline-size: auto;
     min-inline-size: 6rem;
     min-block-size: calc(var(--control-height-sm) - (var(--control-border-width) * 2));
     padding: 0;
@@ -45,14 +46,16 @@ ms-select {
   .select-chip {
     display: inline-flex;
     align-items: center;
-    gap: var(--spacing-4);
+    gap: var(--spacing-2);
     max-inline-size: 100%;
-    min-block-size: var(--control-height-sm);
-    padding-inline: var(--spacing-8);
+    min-block-size: calc(var(--control-height-xs) - (var(--control-border-width) * 2));
+    padding-inline: var(--spacing-4);
+    border: var(--border-width-sm) solid var(--color-primary-border);
     border-radius: var(--radius-sm);
     background-color: var(--color-primary-subtle);
     color: var(--color-primary-text);
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-xs);
+    line-height: var(--line-height-control);
   }
 
   .select-chip-remove,
@@ -83,9 +86,15 @@ ms-select {
   }
 
   .select-chip-remove {
-    margin-inline-end: calc(var(--spacing-4) * -1);
-    padding: var(--spacing-2);
+    inline-size: calc(var(--control-height-xs) - (var(--control-border-width) * 2));
+    block-size: calc(var(--control-height-xs) - (var(--control-border-width) * 2));
+    margin-inline-end: calc(var(--spacing-2) * -1);
+    padding: 0;
     border-radius: var(--radius-sm);
+
+    .ms-icon {
+      font-size: var(--font-size-sm);
+    }
   }
 
   .select-clear,

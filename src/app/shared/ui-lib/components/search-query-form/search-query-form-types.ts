@@ -93,6 +93,8 @@ export interface SearchPropertyConfigBase {
   readonly label?: string;
   readonly required?: boolean;
   readonly placeholder?: string;
+  readonly allowCustomInValues?: boolean;
+  readonly maxInValues?: number;
 }
 
 export interface SearchStringPropertyConfig extends SearchPropertyConfigBase {

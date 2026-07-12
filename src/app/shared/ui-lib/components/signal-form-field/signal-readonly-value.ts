@@ -12,10 +12,9 @@ import {
 @Component({
   selector: 'ms-readonly-value',
   template: `
-    @if (hasProjectedContent()) {
-      <ng-content />
-    } @else {
-      {{ displayValue() }}
+    <ng-content />
+    @if (!hasProjectedContent()) {
+      <span class="readonly-value-fallback">{{ displayValue() }}</span>
     }
   `,
   host: {
@@ -55,8 +54,9 @@ export class SignalReadonlyValue implements AfterContentInit {
 
   ngAfterContentInit(): void {
     const host = this.elementRef.nativeElement;
+    const fallback = host.querySelector(':scope > .readonly-value-fallback');
     const hasContent = Array.from(host.childNodes).some(
-      (node) => node.nodeType !== 8 && Boolean(node.textContent?.trim()),
+      (node) => node !== fallback && node.nodeType !== 8 && Boolean(node.textContent?.trim()),
     );
 
     this.hasProjectedContent.set(hasContent);
