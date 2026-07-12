@@ -32,9 +32,13 @@ Import search-query form APIs from the folder barrel:
 import {
   SearchQueryFormComponent,
   buildSearchRequest,
+  createDateOnly,
+  createTimeOnly,
+  createTodayDateTimeRange,
   getDefaultSearchOperator,
   type PaginatedSearchRequest,
   type SearchDataType,
+  type SearchDateTimeRange,
   type SearchFilterRequest,
   type SearchOperator,
   type SearchPropertyConfig,
@@ -55,6 +59,10 @@ Public pieces:
 - `getDefaultSearchOperator` returns the data-type default operator when a property does not define
   one.
 - `buildSearchRequest` converts form state into the backend-compatible request payload.
+- `createDateOnly` returns a local-date string formatted as `YYYY-MM-DD`.
+- `createTimeOnly` returns a time string formatted as `HH:mm:ss`.
+- `createTodayDateTimeRange` returns today's local full-day datetime-local range.
+- `SearchDateTimeRange` describes `{ from, to }` datetime-local range helper output.
 
 Required API:
 
@@ -218,9 +226,12 @@ import { Component, computed, signal } from '@angular/core';
 import {
   SearchQueryFormComponent,
   buildSearchRequest,
+  createTodayDateTimeRange,
   type SearchPropertyConfig,
   type SearchQueryFormState,
 } from './shared/ui-lib';
+
+const todayCreatedAtRange = createTodayDateTimeRange();
 
 @Component({
   selector: 'app-user-search-example',
@@ -267,11 +278,22 @@ export class UserSearchExample {
       propertyName: 'createdAt',
       label: 'Created at',
       dataType: 'dateTime',
+      defaultOperator: 'between',
+      defaultValue: todayCreatedAtRange,
       allowedOperators: ['between', 'eq', 'gte', 'lte'],
     },
   ];
 
-  readonly searchState = signal<SearchQueryFormState>({ filters: [] });
+  readonly searchState = signal<SearchQueryFormState>({
+    filters: [
+      {
+        id: 'created-at-today',
+        property: 'createdAt',
+        operator: 'between',
+        value: todayCreatedAtRange,
+      },
+    ],
+  });
   readonly request = signal(buildSearchRequest(this.searchState()));
   readonly requestJson = computed(() => JSON.stringify(this.request(), null, 2));
 }
@@ -321,6 +343,8 @@ The implementation lives in `src/app/shared/ui-lib/components/search-query-form`
   operator types.
 - `search-query-form-operators.ts` defines data-type default operators and compatible operators.
 - `search-query-form-builder.ts` converts valid form state to `PaginatedSearchRequest`.
+- `search-query-form-date-time.ts` exposes reusable date-only, time-only, and today full-day
+  datetime-local range helpers.
 - `index.ts` exposes the public API.
 
 The component renders a native `<form>` containing zero or more signal-form-backed grid rows and a
@@ -420,6 +444,7 @@ Value editor behavior:
 - `date` renders a date input.
 - `time` renders a time input.
 - `dateTime` renders a datetime-local input.
+- `time` and `dateTime` inputs use a `step` of `1` so seconds-level values are valid.
 - `boolean` renders a dropdown with `true` and `false` choices.
 - `enum` renders a dropdown when `options` exist.
 - `guid` renders a text input.
@@ -508,6 +533,8 @@ Add a dedicated `/search-query-form` page and home card demonstrating:
 - clear action that removes optional filters but keeps required filters
 - search action that emits `PaginatedSearchRequest`
 - emitted `PaginatedSearchRequest` preview
+- full showcase Created At defaults seeded through `createTodayDateTimeRange()` from local
+  `00:00:00` to `23:59:59`
 
 Showcase snippets should use `ShowcaseCode` from
 `src/app/shared/ui-lib/components/showcase-code`.
