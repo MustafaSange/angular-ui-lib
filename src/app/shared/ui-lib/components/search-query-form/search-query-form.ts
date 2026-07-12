@@ -318,7 +318,15 @@ export class SearchQueryFormComponent {
   }
 
   protected step(property: SearchPropertyConfig | null): string | null {
-    return property?.dataType === 'decimal' ? 'any' : null;
+    switch (property?.dataType) {
+      case 'decimal':
+        return 'any';
+      case 'time':
+      case 'dateTime':
+        return '1';
+      default:
+        return null;
+    }
   }
 
   protected filterField(index: number) {
