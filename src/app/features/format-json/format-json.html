@@ -1,0 +1,42 @@
+<main class="format-json-page showcase-page">
+  <header class="format-json-header showcase-header">
+    <a class="btn btn-ghost back-link" routerLink="/">&larr; Back to home</a>
+    <p class="eyebrow">Pipes</p>
+    <h1>Format JSON</h1>
+    <p class="description">
+      Render JSON strings and structured values with readable indentation while preserving invalid
+      input.
+    </p>
+  </header>
+
+  <section class="format-json-section showcase-section">
+    <h2>JSON string</h2>
+    <p class="section-copy">Parse a valid JSON string and display it with two-space indentation.</p>
+    <div class="showcase-demo-panel">
+      <pre class="json-output"><code>{{ jsonString | formatJson }}</code></pre>
+    </div>
+    <app-showcase-code label="Format a JSON string" [code]="jsonStringSnippet" />
+  </section>
+
+  <section class="format-json-section showcase-section">
+    <h2>Structured value</h2>
+    <p class="section-copy">
+      Serialize an object directly without converting it to a string first.
+    </p>
+    <div class="showcase-demo-panel">
+      <pre class="json-output"><code>{{ structuredValue | formatJson }}</code></pre>
+    </div>
+    <app-showcase-code label="Format a structured value" [code]="structuredValueSnippet" />
+  </section>
+
+  <section class="format-json-section showcase-section">
+    <h2>Invalid JSON</h2>
+    <p class="section-copy">Values that cannot be parsed as JSON pass through unchanged.</p>
+    <div class="showcase-demo-panel plain-output">
+      <p>
+        Output: <code>{{ invalidJson | formatJson }}</code>
+      </p>
+    </div>
+    <app-showcase-code label="Preserve invalid JSON" [code]="invalidJsonSnippet" />
+  </section>
+</main>
