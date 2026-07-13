@@ -1,0 +1,21 @@
+@use '../showcase-page' as showcase;
+
+@include showcase.shell;
+@include showcase.demo-panel;
+
+.json-output {
+  overflow: auto;
+  margin: 0;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-body);
+  white-space: pre;
+}
+
+.plain-output p {
+  margin: 0;
+}
+
+.plain-output code {
+  font-family: var(--font-family-mono);
+}
