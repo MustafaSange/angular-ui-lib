@@ -2,17 +2,17 @@
 
 ## Goal
 
-Create a reusable search-query form that renders filter controls from a search property
+Create a reusable search-query form that renders filter controls and optional ordered sorting from
 configuration and emits a backend-compatible `PaginatedSearchRequest`.
 
 The form maps to the backend `.NET` search library at:
 
 `/Users/msange/Documents/Sandbox/DotNet/DotNetSolutionApp/Shared/Search`
 
-The component should let consumers describe searchable properties once, then allow users to add,
-remove, clear, and edit filters without exposing SQL details. The generated request must match the
-backend request shape used by `PaginatedSearchRequest`, `SearchFilterRequest`, and
-`SearchSortRequest`.
+The component should let consumers describe searchable and sortable properties once, then allow
+users to add, remove, clear, and edit filters and sorts without exposing SQL details. The generated
+request must match the backend request shape used by `PaginatedSearchRequest`,
+`SearchFilterRequest`, and `SearchSortRequest`.
 
 ## Non-Goals
 
@@ -30,6 +30,7 @@ Import search-query form APIs from the folder barrel:
 
 ```ts
 import {
+  SEARCH_SORT_DIRECTION,
   SearchQueryFormComponent,
   buildSearchRequest,
   createDateOnly,
@@ -43,7 +44,10 @@ import {
   type SearchOperator,
   type SearchPropertyConfig,
   type SearchQueryFormState,
+  type SearchSortConfig,
   type SearchSortDirection,
+  type SearchSortOption,
+  type SearchSortRequest,
 } from '../../shared/ui-lib';
 ```
 
@@ -52,10 +56,13 @@ Public pieces:
 - `SearchQueryFormComponent` with selector `ms-search-query-form`.
 - `SearchPropertyConfig` defines each filterable field.
 - `SearchQueryFormState` is the parent-owned editable form state.
+- `SearchSortConfig` configures the available sort properties, ordered defaults, and active-sort
+  limit.
+- `SearchSortOption` describes one property shown in the Add sort selector.
 - `PaginatedSearchRequest`, `SearchFilterRequest`, and `SearchSortRequest` match the backend API
   payload.
-- `SearchDataType`, `SearchOperator`, and `SearchSortDirection` mirror backend enum concepts in a
-  frontend-safe shape.
+- `SearchDataType`, `SearchOperator`, `SEARCH_SORT_DIRECTION`, and `SearchSortDirection` mirror
+  backend enum concepts in a frontend-safe shape without unexplained numeric literals.
 - `getDefaultSearchOperator` returns the data-type default operator when a property does not define
   one.
 - `buildSearchRequest` converts form state into the backend-compatible request payload.
@@ -98,7 +105,17 @@ type SearchOperator =
   | 'isNotEmpty'
   | 'isNotNullOrEmpty';
 
-type SearchSortDirection = 0 | 1;
+const SEARCH_SORT_DIRECTION = {
+  ASCENDING: 0,
+  DESCENDING: 1,
+} as const;
+
+type SearchSortDirection = (typeof SEARCH_SORT_DIRECTION)[keyof typeof SEARCH_SORT_DIRECTION];
+
+interface SearchSortOption {
+  label: string;
+  value: string;
+}
 
 type SearchScalarValue = string | number | boolean;
 
@@ -114,20 +131,22 @@ interface SearchPropertyOption {
   value: SearchScalarValue;
 }
 
-interface SearchPropertyConfig {
+interface SearchPropertyConfigBase {
   propertyName: string;
   label?: string;
-  dataType: SearchDataType;
   required?: boolean;
-  defaultOperator?: SearchOperator;
-  defaultValue?: SearchRequestValue;
-  allowedOperators?: readonly SearchOperator[];
-  options?: readonly SearchPropertyOption[];
   placeholder?: string;
-  maxStringLength?: number;
   allowCustomInValues?: boolean;
   maxInValues?: number;
 }
+
+type SearchPropertyConfig =
+  | SearchStringPropertyConfig
+  | SearchNumericPropertyConfig
+  | SearchDatePropertyConfig
+  | SearchBooleanPropertyConfig
+  | SearchEnumPropertyConfig
+  | SearchGuidPropertyConfig;
 
 interface SearchQueryFormFilter {
   id: string;
@@ -154,7 +173,7 @@ interface PaginatedSearchRequest {
 interface SearchFilterRequest {
   property: string;
   operator: SearchOperator;
-  value: SearchRequestValue;
+  value: SearchRequestValue | null;
 }
 
 interface SearchSortRequest {
@@ -162,9 +181,16 @@ interface SearchSortRequest {
   direction: SearchSortDirection;
 }
 
+interface SearchSortConfig {
+  sortOptions: readonly SearchSortOption[];
+  defaultSorts?: readonly SearchSortRequest[];
+  maxSorts?: number;
+}
+
 class SearchQueryFormComponent {
   readonly properties = input.required<readonly SearchPropertyConfig[]>();
   readonly maxFilters = input(10);
+  readonly sortConfig = input<SearchSortConfig | null>(null);
   readonly state = model<SearchQueryFormState>({ filters: [] });
   readonly requestChange = output<PaginatedSearchRequest>();
 }
@@ -174,12 +200,18 @@ function getDefaultSearchOperator(dataType: SearchDataType): SearchOperator;
 function buildSearchRequest(state: SearchQueryFormState): PaginatedSearchRequest;
 ```
 
+`SearchPropertyConfig` is a strict discriminated union. Each variant narrows `dataType`,
+`defaultOperator`, `defaultValue`, `allowedOperators`, and `options` to compatible values.
+`maxStringLength` exists only on the string variant, while `booleanLabels` exists only on the
+boolean variant.
+
 Defaults:
 
 - omitted `state.filters` defaults to an empty list
 - omitted `state.page` is not emitted unless supplied by the parent
 - omitted `state.limit` is not emitted unless supplied by the parent
-- omitted `state.sort` is not emitted unless supplied by the parent
+- omitted `state.sort` is initialized from configured defaults when sorting is enabled; an explicit
+  empty array represents no active sorts and is omitted by `buildSearchRequest`
 - omitted `SearchPropertyConfig.label` displays `propertyName`
 - omitted `SearchPropertyConfig.required` defaults to `false`
 - omitted `SearchPropertyConfig.maxStringLength` defaults to `50` for `string` values
@@ -195,6 +227,13 @@ Defaults:
   least `1`
 - required properties count toward the limit and raise the effective minimum when their count is
   greater than the configured limit
+- omitted `SearchQueryFormComponent.sortConfig` hides all sorting UI and emits no sort
+- empty `SearchSortConfig.sortOptions` hides all sorting UI
+- omitted `SearchSortConfig.defaultSorts` falls back to the first valid sort option ascending
+- omitted or invalid `SearchSortConfig.maxSorts` defaults to `1`; finite values are truncated,
+  clamped to at least `1`, and capped by the number of unique valid sort options
+- invalid and duplicate sort options/defaults are removed during reconciliation while preserving
+  the configured order
 
 Data-type default operators:
 
@@ -209,31 +248,37 @@ Data-type default operators:
 
 Backend enum mapping:
 
-| Frontend value | Backend equivalent          |
-| -------------- | --------------------------- |
-| `'string'`     | `SearchDataType.String`     |
-| `'int'`        | `SearchDataType.Int`        |
-| `'long'`       | `SearchDataType.Long`       |
-| `'decimal'`    | `SearchDataType.Decimal`    |
-| `'date'`       | `SearchDataType.Date`       |
-| `'time'`       | `SearchDataType.Time`       |
-| `'dateTime'`   | `SearchDataType.DateTime`   |
-| `'boolean'`    | `SearchDataType.Boolean`    |
-| `'enum'`       | `SearchDataType.Enum`       |
-| `'guid'`       | `SearchDataType.Guid`       |
-| `'eq'`         | `SearchOperator.Eq`         |
-| `'neq'`        | `SearchOperator.Neq`        |
-| `'contains'`   | `SearchOperator.Contains`   |
-| `'startsWith'` | `SearchOperator.StartsWith` |
-| `'endsWith'`   | `SearchOperator.EndsWith`   |
-| `'gt'`         | `SearchOperator.Gt`         |
-| `'gte'`        | `SearchOperator.Gte`        |
-| `'lt'`         | `SearchOperator.Lt`         |
-| `'lte'`        | `SearchOperator.Lte`        |
-| `'between'`    | `SearchOperator.Between`    |
-| `'in'`         | `SearchOperator.In`         |
-| `0`            | `SearchSortDirection.Asc`   |
-| `1`            | `SearchSortDirection.Desc`  |
+| Frontend value       | Backend equivalent                |
+| -------------------- | --------------------------------- |
+| `'string'`           | `SearchDataType.String`           |
+| `'int'`              | `SearchDataType.Int`              |
+| `'long'`             | `SearchDataType.Long`             |
+| `'decimal'`          | `SearchDataType.Decimal`          |
+| `'date'`             | `SearchDataType.Date`             |
+| `'time'`             | `SearchDataType.Time`             |
+| `'dateTime'`         | `SearchDataType.DateTime`         |
+| `'boolean'`          | `SearchDataType.Boolean`          |
+| `'enum'`             | `SearchDataType.Enum`             |
+| `'guid'`             | `SearchDataType.Guid`             |
+| `'eq'`               | `SearchOperator.Eq`               |
+| `'neq'`              | `SearchOperator.Neq`              |
+| `'contains'`         | `SearchOperator.Contains`         |
+| `'startsWith'`       | `SearchOperator.StartsWith`       |
+| `'endsWith'`         | `SearchOperator.EndsWith`         |
+| `'gt'`               | `SearchOperator.Gt`               |
+| `'gte'`              | `SearchOperator.Gte`              |
+| `'lt'`               | `SearchOperator.Lt`               |
+| `'lte'`              | `SearchOperator.Lte`              |
+| `'between'`          | `SearchOperator.Between`          |
+| `'in'`               | `SearchOperator.In`               |
+| `'isNull'`           | `SearchOperator.IsNull`           |
+| `'isEmpty'`          | `SearchOperator.IsEmpty`          |
+| `'isNullOrEmpty'`    | `SearchOperator.IsNullOrEmpty`    |
+| `'isNotNull'`        | `SearchOperator.IsNotNull`        |
+| `'isNotEmpty'`       | `SearchOperator.IsNotEmpty`       |
+| `'isNotNullOrEmpty'` | `SearchOperator.IsNotNullOrEmpty` |
+| `0`                  | `SearchSortDirection.Asc`         |
+| `1`                  | `SearchSortDirection.Desc`        |
 
 ## Desired Usage
 
@@ -241,11 +286,13 @@ Backend enum mapping:
 import { Component, computed, signal } from '@angular/core';
 
 import {
+  SEARCH_SORT_DIRECTION,
   SearchQueryFormComponent,
   buildSearchRequest,
   createTodayDateTimeRange,
   type SearchPropertyConfig,
   type SearchQueryFormState,
+  type SearchSortConfig,
 } from './shared/ui-lib';
 
 const todayCreatedAtRange = createTodayDateTimeRange();
@@ -256,7 +303,8 @@ const todayCreatedAtRange = createTodayDateTimeRange();
   template: `
     <ms-search-query-form
       [properties]="properties"
-      [maxFilters]="10"
+      [maxFilters]="15"
+      [sortConfig]="sortConfig"
       [(state)]="searchState"
       (requestChange)="request.set($event)"
     />
@@ -265,6 +313,19 @@ const todayCreatedAtRange = createTodayDateTimeRange();
   `,
 })
 export class UserSearchExample {
+  readonly sortConfig: SearchSortConfig = {
+    sortOptions: [
+      { label: 'Name', value: 'name' },
+      { label: 'Created At', value: 'createdAt' },
+      { label: 'Status', value: 'status' },
+    ],
+    defaultSorts: [
+      { property: 'name', direction: SEARCH_SORT_DIRECTION.ASCENDING },
+      { property: 'createdAt', direction: SEARCH_SORT_DIRECTION.DESCENDING },
+    ],
+    maxSorts: 3,
+  };
+
   readonly properties: readonly SearchPropertyConfig[] = [
     {
       propertyName: 'tenantId',
@@ -280,6 +341,8 @@ export class UserSearchExample {
       label: 'Name',
       dataType: 'string',
       defaultOperator: 'contains',
+      allowCustomInValues: true,
+      maxInValues: 50,
       maxStringLength: 50,
     },
     {
@@ -314,6 +377,10 @@ export class UserSearchExample {
         value: todayCreatedAtRange,
       },
     ],
+    sort: [
+      { property: 'name', direction: SEARCH_SORT_DIRECTION.ASCENDING },
+      { property: 'createdAt', direction: SEARCH_SORT_DIRECTION.DESCENDING },
+    ],
   });
   readonly request = signal(buildSearchRequest(this.searchState()));
   readonly requestJson = computed(() => JSON.stringify(this.request(), null, 2));
@@ -335,12 +402,16 @@ Example request emitted after a required tenant filter and a user-added status f
       "operator": "eq",
       "value": "Active"
     }
+  ],
+  "sort": [
+    { "property": "name", "direction": 0 },
+    { "property": "createdAt", "direction": 1 }
   ]
 }
 ```
 
-Example request emitted when the `status` enum uses `in`, the user selects the configured `Active`
-option, and adds the custom `Escalated` value:
+Example filter-only request when sorting is not configured and the `status` enum uses `in`, the
+user selects the configured `Active` option, and adds the custom `Escalated` value:
 
 ```json
 {
@@ -358,18 +429,28 @@ option, and adds the custom `Escalated` value:
 
 The implementation lives in `src/app/shared/ui-lib/components/search-query-form`:
 
-- `SearchQueryFormComponent` renders the signal-form-backed filter list, add, search, delete, and
-  clear actions.
+- `SearchQueryFormComponent` coordinates signal-form state, filter interactions, compact multi-sort
+  chips, search, and clear actions.
 - `search-query-form-types.ts` defines form state, property config, request, response, value, and
   operator types.
+- `search-query-form-model.ts` defines private editable filter/sort form models.
+- `search-query-form-sort.ts` normalizes sort options, limits, defaults, directions, and ordered
+  request values.
+- `search-query-form-value.ts` owns typed input metadata, parsing, validation, and custom-value
+  status formatting.
+- `search-query-form-equality.ts` performs typed state, filter, nested-value, form-model, and ordered
+  sort comparisons without JSON serialization.
 - `search-query-form-operators.ts` defines data-type default operators and compatible operators.
 - `search-query-form-builder.ts` converts valid form state to `PaginatedSearchRequest`.
 - `search-query-form-date-time.ts` exposes reusable date-only, time-only, and today full-day
   datetime-local range helpers.
 - `index.ts` exposes the public API.
 
+The model, sort, value, and equality modules are component internals and are intentionally not
+re-exported from `index.ts`.
+
 The component renders a native `<form>` containing zero or more signal-form-backed grid rows and a
-bottom toolbar for adding filters, clearing optional filters, and submitting search. Each row
+bottom toolbar for adding filters and sorts, clearing optional filters, and submitting search. Each row
 contains:
 
 - a property selector bound with `[formField]`
@@ -381,11 +462,19 @@ contains:
 The add-filter picker is rendered inside `ms-signal-form-field.add-filter.no-message` so it keeps
 the shared compact control treatment without reserving a message row in the toolbar.
 
+Sorting is optional. When `sortConfig.sortOptions` contains valid options, the toolbar renders an
+Add sort picker. Active sorts render as extra-small removable chips in the Add sort label row. Each
+chip shows the property, registered `arrow_upward` or `arrow_downward` icon, and `ASC` or `DESC`;
+its direction button toggles the direction. Chip order is request priority. The active/max sort
+count follows the chip group, and the complete group remains aligned to the logical inline end
+without increasing the normal label height.
+
 Shared reusable components use the `ms-` selector prefix. Internal styling hooks are
 `.search-query-form`, `.filter-list`, `.filter-row`, `.filter-property`, `.filter-operator`,
 `.filter-value`, `.in-values`, `.in-values-control`, `.in-values-preview`,
 `.custom-values-editor`, `.custom-values-list`, `.filter-actions`, `.filter-toolbar`,
-`.add-filter`, `.toolbar-actions`, `.search-filters`, `.clear-filters`, and `.remove-filter`.
+`.add-filter`, `.add-sort`, `.sort-label-extra`, `.sort-chip-list`, `.sort-direction-toggle`,
+`.toolbar-actions`, `.search-filters`, `.clear-filters`, and `.remove-filter`.
 
 ## Behavior
 
@@ -444,6 +533,21 @@ Shared reusable components use the `ms-` selector prefix. Internal styling hooks
 - Invalid or incomplete filters remain visible in `state` and prevent search submission until they
   contain a value compatible with their data type and operator.
 
+Sort behavior:
+
+- Sort controls are hidden when `sortConfig` is absent or has no valid `sortOptions`.
+- The Add sort picker lists only unused sort properties and is disabled at `maxSorts`.
+- Selecting a property adds it ascending and creates one compact chip in the label row.
+- Clicking the chip direction control toggles `ASC` and `DESC`; the accessible name and tooltip use
+  the full direction names.
+- Removing a chip removes that active sort, including the final sort. Explicitly empty sort state is
+  preserved and omitted from `PaginatedSearchRequest`.
+- Sort properties are unique. Active sort array/chip order determines backend priority.
+- Invalid, duplicate, and over-limit parent sorts are removed while valid sort order is retained.
+- Clear restores `defaultSorts`; when none are configured, it restores the first valid option
+  ascending.
+- Sort changes update the internal form model but emit only on explicit Search, like filter changes.
+
 Operator behavior:
 
 - `between` renders two controls labeled `From` and `To`.
@@ -477,18 +581,20 @@ Operator behavior:
   summarized.
 - The emitted `in` value is one deduplicated scalar array combining selected options and custom
   values.
+- Incoming `in` arrays use the same typing, validation, deduplication, configured-option, and
+  `maxInValues` normalization rules before they reach editable form state.
 - Valueless operators hide value controls, skip value validation, retain `null` state, and emit
   `value: null`.
 - Non-`between` operators render a single value control.
 - Operator compatibility must match the backend:
 
-| Data type                  | Compatible operators                                    |
-| -------------------------- | ------------------------------------------------------- |
-| `string`                   | `eq`, `neq`, `contains`, `startsWith`, `endsWith`, `in` |
-| `int`, `long`, `decimal`   | `eq`, `neq`, `gt`, `gte`, `lt`, `lte`, `between`, `in`  |
-| `date`, `time`, `dateTime` | `eq`, `neq`, `gt`, `gte`, `lt`, `lte`, `between`        |
-| `boolean`                  | `eq`, `neq`                                             |
-| `enum`, `guid`             | `eq`, `neq`, `in`                                       |
+| Data type                  | Compatible operators                                                                                                                         |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `string`                   | `eq`, `neq`, `contains`, `startsWith`, `endsWith`, `in`, `isNull`, `isEmpty`, `isNullOrEmpty`, `isNotNull`, `isNotEmpty`, `isNotNullOrEmpty` |
+| `int`, `long`, `decimal`   | `eq`, `neq`, `gt`, `gte`, `lt`, `lte`, `between`, `in`, `isNull`, `isNotNull`                                                                |
+| `date`, `time`, `dateTime` | `eq`, `neq`, `gt`, `gte`, `lt`, `lte`, `between`, `in`, `isNull`, `isNotNull`                                                                |
+| `boolean`                  | `eq`, `neq`, `isNull`, `isNotNull`                                                                                                           |
+| `enum`, `guid`             | `eq`, `neq`, `in`, `isNull`, `isNotNull`                                                                                                     |
 
 Value editor behavior:
 
@@ -504,8 +610,11 @@ Value editor behavior:
 - `boolean` renders a dropdown with `true` and `false` choices.
 - `enum` renders a dropdown when `options` exist.
 - `guid` renders a text input.
-- Scalar `guid`, `int`, `long`, and `decimal` inputs use the same datatype rules as custom values,
-  retain invalid user text, display a specific error, and prevent search submission until corrected.
+- Scalar and custom `guid`, `int`, `long`, `decimal`, `date`, `time`, and `dateTime` values use the
+  same datatype rules. Invalid scalar text is retained, displays a specific error, and prevents
+  search submission until corrected.
+- Custom `in` entry uses native `number`, `date`, `time`, or `datetime-local` controls when those
+  data types are selected. Integer values still reject decimal input such as `1.2`.
 - Any property with `options` renders a dropdown for single-value operators.
 - Any property with `options` renders a multi-select dropdown for the `in` operator.
 - Multiple-select chips remain on one compact line inside the 28px form-field control.
@@ -533,8 +642,10 @@ Value editor behavior:
 - Consumers provide property configuration through the required `properties` input.
 - Consumers own state through `[(state)]`.
 - Consumers may listen to `requestChange` to trigger API calls or synchronize query state.
+- Consumers enable sorting with one `sortConfig` object containing `sortOptions`, optional
+  `defaultSorts`, and optional `maxSorts`.
 - Consumers may provide initial `state` with existing filters; the component must reconcile it with
-  required filters from `properties`.
+  required filters from `properties` and valid configured sorts.
 - Consumers should configure only API property names, never SQL column names.
 - Consumers should keep backend property config authoritative; frontend config is a mirrored UX aid.
 - Consumers must enforce an independent backend filter-count limit; the frontend input is a UX
@@ -561,6 +672,13 @@ Styling rules:
 - keep the search-query surface padded with `--spacing-12`
 - keep action buttons aligned to the block-end of the add-property control in the bottom toolbar
 - let the toolbar action group fill the toolbar height so buttons align with compact form fields
+- apply only the shared one-border-width optical block-end nudge to Search and Clear
+- render active sorts as extra-small chips inside the Add sort label-extra area; keep the chip group
+  and count together at the logical inline end without increasing the normal label height
+- keep sort chip internals compact: property label, registered direction icon, `ASC`/`DESC`, and
+  remove action; do not render numeric priority badges
+- preserve overflow access with a single-line horizontally scrollable chip list rather than growing
+  the toolbar label height
 - keep required rows compact by hiding the delete action instead of rendering disabled controls
 - use one Values grid column for option-only `in` and add the fixed trigger column only when custom
   values are enabled
@@ -585,7 +703,10 @@ Styling rules:
   with `aria-invalid`.
 - Preserve visible focus indication on all interactive controls.
 - Keyboard users must be able to add filters, change operators, enter values, delete optional
-  filters, clear optional filters, and submit search.
+  filters, add/remove sorts, toggle sort direction, clear, and submit search.
+- Sort direction controls use full accessible names and tooltips even though visible labels are
+  abbreviated to `ASC` and `DESC`.
+- Sort chips expose their current array order through DOM order and the Sort priority group label.
 
 ## Showcase
 
@@ -604,6 +725,9 @@ Add a dedicated `/search-query-form` page and home card demonstrating:
   demonstrations
 - custom-value popover count, maximum-state disabling, native/programmatic paste, and clear-custom
 - configurable `maxFilters` count and disabled Add state at the total filter limit
+- optional `sortConfig` with unique sort options, ordered defaults, and configurable `maxSorts`
+- compact active sort chips in the Add sort label with direction toggle, removal, active/max count,
+  and request priority matching chip order
 - clear action that removes optional filters but keeps required filters
 - search action that emits `PaginatedSearchRequest`
 - emitted `PaginatedSearchRequest` preview
@@ -648,6 +772,13 @@ Render snippets near the matching visual example with `<app-showcase-code>`.
 - Add creates optional filters from the property config.
 - `maxFilters` defaults to `10`, counts required and optional filters, and prevents optional filters
   from being added or reconciled beyond the effective limit.
+- Sorting is hidden without valid `sortOptions`; `maxSorts` defaults to `1`, prevents duplicates,
+  and caps active sorts by the unique option count.
+- Default sorts initialize and reset the form in configured order; Clear restores them.
+- The Add sort selector creates ascending chips, direction controls toggle `ASC`/`DESC`, and chip
+  removal supports an explicit empty sort list.
+- Emitted `sort` remains an ordered `SearchSortRequest[]`; empty sort arrays are omitted from the
+  paginated request.
 - Delete removes optional filters.
 - Operator dropdowns use configured `allowedOperators` or backend-compatible data-type operators.
 - Missing `defaultOperator` falls back to the documented data-type default operator.

@@ -1,4 +1,13 @@
-import { Component, computed, effect, input, model, output, signal, untracked } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  input,
+  model,
+  output,
+  signal,
+  untracked,
+} from '@angular/core';
 import {
   FormField,
   applyEach,
@@ -14,11 +23,32 @@ import {
 
 import { buildSearchRequest, isBetweenValue } from './search-query-form-builder';
 import {
+  areSearchQueryFormModelsEqual,
+  areSearchQueryStatesEqual,
+  areSearchSortModelsEqual,
+} from './search-query-form-equality';
+import {
   SEARCH_OPERATOR_LABELS,
   getCompatibleSearchOperators,
   getDefaultSearchOperator,
   isValuelessSearchOperator,
 } from './search-query-form-operators';
+import type {
+  SearchInValuePreviewItem,
+  SearchQueryFormFilterModel,
+  SearchQueryFormModel,
+  SearchQueryFormSortModel,
+  SearchQueryFormValueFields,
+} from './search-query-form-model';
+import {
+  normalizeSearchSortDirection,
+  normalizeSearchSortOptions,
+  normalizeSearchSorts,
+  resolveDefaultSearchSorts,
+  resolveSearchSortLimit,
+  toSearchSortModels,
+} from './search-query-form-sort';
+import { SEARCH_SORT_DIRECTION } from './search-query-form-types';
 import type {
   PaginatedSearchRequest,
   SearchOperator,
@@ -28,55 +58,29 @@ import type {
   SearchQueryFormState,
   SearchRequestValue,
   SearchScalarValue,
+  SearchSortConfig,
+  SearchSortRequest,
 } from './search-query-form-types';
+import {
+  DEFAULT_SEARCH_MAX_IN_VALUES,
+  DEFAULT_SEARCH_STRING_MAX_LENGTH,
+  createSearchValueStatus,
+  getSearchInputMode,
+  getSearchInputStep,
+  getSearchInputType,
+  getSearchScalarError,
+  isSearchRangeReversed,
+  parseCustomSearchValue,
+  parseSearchScalar,
+  stringifySearchScalar,
+  tokenizeSearchValues,
+} from './search-query-form-value';
 import { SignalFormField, SignalReadonlyValue } from '../signal-form-field';
 import { SelectComponent, SelectOptionComponent } from '../select';
 import { ChipComponent, ChipRemoveDirective } from '../chip';
-import {
-  PopoverComponent,
-  PopoverPanelComponent,
-  PopoverTrigger,
-} from '../menu-popover';
+import { PopoverComponent, PopoverPanelComponent, PopoverTrigger } from '../menu-popover';
 
 let nextFilterId = 0;
-const DEFAULT_STRING_MAX_LENGTH = 50;
-const DEFAULT_MAX_IN_VALUES = 50;
-const GUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i;
-
-interface SearchQueryFormFilterModel {
-  readonly id: string;
-  readonly property: string;
-  readonly operator: SearchOperator;
-  readonly value: string;
-  readonly from: string;
-  readonly to: string;
-  readonly values: string[];
-  readonly customValues: string[];
-  readonly customValueInput: string;
-  readonly customValueStatus: string;
-  readonly locked: boolean;
-}
-
-interface SearchQueryFormModel {
-  readonly filters: readonly SearchQueryFormFilterModel[];
-}
-
-type SearchQueryFormValueFields = Pick<
-  SearchQueryFormFilterModel,
-  | 'value'
-  | 'from'
-  | 'to'
-  | 'values'
-  | 'customValues'
-  | 'customValueInput'
-  | 'customValueStatus'
->;
-
-interface InValuePreviewItem {
-  readonly value: string;
-  readonly label: string;
-  readonly custom: boolean;
-}
 
 @Component({
   selector: 'ms-search-query-form',
@@ -100,10 +104,14 @@ interface InValuePreviewItem {
 export class SearchQueryFormComponent {
   readonly properties = input.required<readonly SearchPropertyConfig[]>();
   readonly maxFilters = input(10);
+  readonly sortConfig = input<SearchSortConfig | null>(null);
   readonly state = model<SearchQueryFormState>({ filters: [] });
   readonly requestChange = output<PaginatedSearchRequest>();
 
-  private readonly formModel = signal<SearchQueryFormModel>({ filters: [] });
+  private readonly formModel = signal<SearchQueryFormModel>({
+    filters: [],
+    sorts: [],
+  });
 
   protected readonly searchForm = form(
     this.formModel,
@@ -118,8 +126,8 @@ export class SearchQueryFormComponent {
             const property = this.getProperty(valueOf(filter.property));
             return property?.dataType === 'string'
               ? Math.min(
-                  property.maxStringLength ?? DEFAULT_STRING_MAX_LENGTH,
-                  DEFAULT_STRING_MAX_LENGTH,
+                  property.maxStringLength ?? DEFAULT_SEARCH_STRING_MAX_LENGTH,
+                  DEFAULT_SEARCH_STRING_MAX_LENGTH,
                 )
               : undefined;
           });
@@ -138,7 +146,7 @@ export class SearchQueryFormComponent {
             }
 
             const message =
-              property.dataType === 'string' ? '' : this.typedScalarError(property, value());
+              property.dataType === 'string' ? '' : getSearchScalarError(property, value());
             return message ? { kind: 'searchValue', message } : undefined;
           });
           required(filter.value, {
@@ -146,9 +154,7 @@ export class SearchQueryFormComponent {
             when: ({ valueOf }) => {
               const operator = valueOf(filter.operator);
               return (
-                operator !== 'between' &&
-                operator !== 'in' &&
-                !isValuelessSearchOperator(operator)
+                operator !== 'between' && operator !== 'in' && !isValuelessSearchOperator(operator)
               );
             },
           });
@@ -167,7 +173,7 @@ export class SearchQueryFormComponent {
               return undefined;
             }
 
-            const message = this.typedScalarError(property, value());
+            const message = getSearchScalarError(property, value());
             return message ? { kind: 'searchValue', message } : undefined;
           });
           validate(filter.to, ({ value, valueOf }) => {
@@ -179,15 +185,15 @@ export class SearchQueryFormComponent {
               return undefined;
             }
 
-            const message = this.typedScalarError(property, to);
+            const message = getSearchScalarError(property, to);
             if (message) {
               return { kind: 'searchValue', message };
             }
 
             if (
               from &&
-              !this.typedScalarError(property, from) &&
-              this.isRangeReversed(property, from, to)
+              !getSearchScalarError(property, from) &&
+              isSearchRangeReversed(property, from, to)
             ) {
               return {
                 kind: 'searchRange',
@@ -207,12 +213,23 @@ export class SearchQueryFormComponent {
             when: ({ valueOf }) =>
               valueOf(filter.operator) === 'in' && valueOf(filter.customValues).length === 0,
           });
-          maxLength(filter.values, ({ valueOf }) => {
-            const property = this.getProperty(valueOf(filter.property));
-            return valueOf(filter.operator) === 'in'
-              ? Math.max(0, this.maxInValues(property) - valueOf(filter.customValues).length)
-              : undefined;
-          }, { message: 'Too many values selected.' });
+          maxLength(
+            filter.values,
+            ({ valueOf }) => {
+              const property = this.getProperty(valueOf(filter.property));
+              return valueOf(filter.operator) === 'in'
+                ? Math.max(0, this.maxInValues(property) - valueOf(filter.customValues).length)
+                : undefined;
+            },
+            { message: 'Too many values selected.' },
+          );
+        }),
+      );
+      applyEach(
+        path.sorts,
+        schema<SearchQueryFormSortModel>((sort) => {
+          required(sort.property, { message: 'Choose a sort property.' });
+          required(sort.direction, { message: 'Choose a sort direction.' });
         }),
       );
     }),
@@ -220,6 +237,19 @@ export class SearchQueryFormComponent {
 
   protected readonly operatorLabels = SEARCH_OPERATOR_LABELS;
   protected readonly filters = computed(() => this.formModel().filters);
+  protected readonly sorts = computed(() => this.formModel().sorts);
+  protected readonly configuredSortOptions = computed(() =>
+    normalizeSearchSortOptions(this.sortConfig()),
+  );
+  protected readonly hasSortOptions = computed(() => this.configuredSortOptions().length > 0);
+  protected readonly sortLimit = computed(() => this.resolveSortLimit());
+  protected readonly availableSortOptions = computed(() => {
+    const selectedProperties = new Set(this.sorts().map((sort) => sort.property));
+    return this.configuredSortOptions().filter((option) => !selectedProperties.has(option.value));
+  });
+  protected readonly canAddSort = computed(
+    () => this.sorts().length < this.sortLimit() && this.availableSortOptions().length > 0,
+  );
   private readonly propertyMap = computed(
     () => new Map(this.properties().map((property) => [property.propertyName, property])),
   );
@@ -243,8 +273,10 @@ export class SearchQueryFormComponent {
     const selected = this.selectedPropertyNames();
     return this.properties().filter((property) => !selected.has(property.propertyName));
   });
-  protected readonly canClear = computed(() =>
-    this.filters().some((filter) => !this.isFilterLocked(filter)),
+  protected readonly canClear = computed(
+    () =>
+      this.filters().some((filter) => !this.isFilterLocked(filter)) ||
+      !this.isDefaultSortSelection(this.sorts()),
   );
   protected readonly isSearchDisabled = computed(
     () => this.searchForm().invalid() || this.searchForm().pending(),
@@ -288,7 +320,66 @@ export class SearchQueryFormComponent {
       filters: this.filters()
         .filter((filter) => requiredProperties.has(filter.property))
         .map((filter) => this.resetFilter(filter)),
+      sorts: this.defaultSortModels(),
     });
+  }
+
+  protected addSort(propertyName: string): void {
+    const option = this.availableSortOptions().find((item) => item.value === propertyName);
+
+    if (!option || !this.canAddSort()) {
+      return;
+    }
+
+    this.updateFormModel({
+      sorts: [
+        ...this.sorts(),
+        {
+          property: option.value,
+          direction: String(SEARCH_SORT_DIRECTION.ASCENDING),
+        },
+      ],
+    });
+  }
+
+  protected removeSort(index: number): void {
+    this.updateFormModel({
+      sorts: this.sorts().filter((_, sortIndex) => sortIndex !== index),
+    });
+  }
+
+  protected toggleSortDirection(index: number): void {
+    this.updateFormModel({
+      sorts: this.sorts().map((sort, sortIndex) =>
+        sortIndex === index
+          ? {
+              ...sort,
+              direction: String(
+                Number(sort.direction) === SEARCH_SORT_DIRECTION.ASCENDING
+                  ? SEARCH_SORT_DIRECTION.DESCENDING
+                  : SEARCH_SORT_DIRECTION.ASCENDING,
+              ),
+            }
+          : sort,
+      ),
+    });
+  }
+
+  protected handleAddSortChange(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    this.addSort(select.value);
+    select.value = '';
+  }
+
+  protected sortLabel(propertyName: string): string {
+    return (
+      this.configuredSortOptions().find((option) => option.value === propertyName)?.label ??
+      propertyName
+    );
+  }
+
+  protected isDescendingSort(sort: SearchQueryFormSortModel): boolean {
+    return Number(sort.direction) === SEARCH_SORT_DIRECTION.DESCENDING;
   }
 
   protected removeFilter(filter: SearchQueryFormFilterModel): void {
@@ -390,7 +481,7 @@ export class SearchQueryFormComponent {
 
   protected maxInValues(property: SearchPropertyConfig | null): number {
     if (!property || property.maxInValues === undefined || !Number.isFinite(property.maxInValues)) {
-      return DEFAULT_MAX_IN_VALUES;
+      return DEFAULT_SEARCH_MAX_IN_VALUES;
     }
 
     return Math.max(1, Math.trunc(property.maxInValues));
@@ -403,7 +494,7 @@ export class SearchQueryFormComponent {
   protected inValuePreview(
     filter: SearchQueryFormFilterModel,
     property: SearchPropertyConfig | null,
-  ): readonly InValuePreviewItem[] {
+  ): readonly SearchInValuePreviewItem[] {
     const optionLabels = new Map(
       this.propertyOptions(property).map((option) => [String(option.value), option.label]),
     );
@@ -429,17 +520,14 @@ export class SearchQueryFormComponent {
     return typeof navigator !== 'undefined' && typeof navigator.clipboard?.readText === 'function';
   }
 
-  protected customValueInputError(
-    property: SearchPropertyConfig | null,
-    rawValue: string,
-  ): string {
+  protected customValueInputError(property: SearchPropertyConfig | null, rawValue: string): string {
     const value = rawValue.trim();
 
     if (!property || !value) {
       return '';
     }
 
-    return this.typedScalarError(property, value);
+    return getSearchScalarError(property, value);
   }
 
   protected handleInOptionValuesChange(
@@ -501,7 +589,7 @@ export class SearchQueryFormComponent {
 
     try {
       const clipboardText = await navigator.clipboard.readText();
-      this.addCustomValues(filter, this.tokenizeCustomValues(clipboardText), property);
+      this.addCustomValues(filter, tokenizeSearchValues(clipboardText), property);
     } catch {
       input.focus();
       this.replaceFilter(filter.id, {
@@ -523,7 +611,7 @@ export class SearchQueryFormComponent {
     }
 
     event.preventDefault();
-    this.addCustomValues(filter, this.tokenizeCustomValues(clipboardText), property);
+    this.addCustomValues(filter, tokenizeSearchValues(clipboardText), property);
   }
 
   protected handleCustomValuesPopover(
@@ -589,46 +677,9 @@ export class SearchQueryFormComponent {
     });
   }
 
-  protected inputType(property: SearchPropertyConfig | null): string {
-    switch (property?.dataType) {
-      case 'int':
-      case 'long':
-      case 'decimal':
-        return 'number';
-      case 'date':
-        return 'date';
-      case 'time':
-        return 'time';
-      case 'dateTime':
-        return 'datetime-local';
-      default:
-        return 'text';
-    }
-  }
-
-  protected inputMode(property: SearchPropertyConfig | null): string | null {
-    switch (property?.dataType) {
-      case 'int':
-      case 'long':
-        return 'numeric';
-      case 'decimal':
-        return 'decimal';
-      default:
-        return null;
-    }
-  }
-
-  protected step(property: SearchPropertyConfig | null): string | null {
-    switch (property?.dataType) {
-      case 'decimal':
-        return 'any';
-      case 'time':
-      case 'dateTime':
-        return '1';
-      default:
-        return null;
-    }
-  }
+  protected readonly inputType = getSearchInputType;
+  protected readonly inputMode = getSearchInputMode;
+  protected readonly step = getSearchInputStep;
 
   protected filterField(index: number) {
     return this.searchForm.filters[index];
@@ -653,11 +704,16 @@ export class SearchQueryFormComponent {
     const reconciled = this.reconcileState(this.state(), this.properties());
     const nextFormModel = this.toFormModel(reconciled);
 
-    if (!this.areStatesEqual(reconciled, this.state())) {
+    if (!areSearchQueryStatesEqual(reconciled, this.state())) {
       queueMicrotask(() => this.state.set(reconciled));
     }
 
-    if (!this.areFormModelsEqual(nextFormModel, untracked(() => this.formModel()))) {
+    if (
+      !areSearchQueryFormModelsEqual(
+        nextFormModel,
+        untracked(() => this.formModel()),
+      )
+    ) {
       queueMicrotask(() => this.formModel.set(nextFormModel));
     }
   }
@@ -671,6 +727,7 @@ export class SearchQueryFormComponent {
     const usedProperties = new Set<string>();
     const filters: SearchQueryFormFilter[] = [];
     const filterLimit = this.resolveFilterLimit(properties);
+    const sort = this.resolveSorts(state.sort);
 
     for (const property of properties.filter((item) => item.required)) {
       const currentFilter = currentFilters.find(
@@ -697,7 +754,39 @@ export class SearchQueryFormComponent {
     return {
       ...state,
       filters,
+      sort: state.sort === undefined && sort.length === 0 ? undefined : sort,
     };
+  }
+
+  private resolveSorts(
+    sort: readonly SearchSortRequest[] | undefined,
+  ): readonly SearchSortRequest[] {
+    const normalizedSorts = normalizeSearchSorts(
+      sort,
+      this.configuredSortOptions(),
+      this.sortLimit(),
+    );
+    return sort === undefined ? this.configuredDefaultSorts() : normalizedSorts;
+  }
+
+  private configuredDefaultSorts(): readonly SearchSortRequest[] {
+    return resolveDefaultSearchSorts(
+      this.sortConfig(),
+      this.configuredSortOptions(),
+      this.sortLimit(),
+    );
+  }
+
+  private resolveSortLimit(): number {
+    return resolveSearchSortLimit(this.sortConfig(), this.configuredSortOptions().length);
+  }
+
+  private defaultSortModels(): readonly SearchQueryFormSortModel[] {
+    return toSearchSortModels(this.configuredDefaultSorts());
+  }
+
+  private isDefaultSortSelection(sorts: readonly SearchQueryFormSortModel[]): boolean {
+    return areSearchSortModelsEqual(sorts, this.defaultSortModels());
   }
 
   private resolveFilterLimit(properties: readonly SearchPropertyConfig[]): number {
@@ -750,9 +839,11 @@ export class SearchQueryFormComponent {
     const operator = allowedOperators.includes(filter.operator)
       ? filter.operator
       : this.defaultOperator(property);
-    const value = this.valueMatchesOperator(filter.value, operator)
+    const candidateValue = this.valueMatchesOperator(filter.value, operator)
       ? filter.value
       : this.createValue(property, operator);
+    const value =
+      operator === 'in' ? this.normalizeInValues(property, candidateValue) : candidateValue;
 
     return {
       ...filter,
@@ -817,18 +908,14 @@ export class SearchQueryFormComponent {
     return this.createScalarValueFields(nextValue);
   }
 
-  private createBetweenValueFields(
-    value: SearchRequestValue | null,
-  ): SearchQueryFormValueFields {
+  private createBetweenValueFields(value: SearchRequestValue | null): SearchQueryFormValueFields {
     const between =
-      value && !Array.isArray(value) && isBetweenValue(value)
-        ? value
-        : { from: null, to: null };
+      value && !Array.isArray(value) && isBetweenValue(value) ? value : { from: null, to: null };
 
     return {
       value: '',
-      from: this.stringifyScalar(between.from),
-      to: this.stringifyScalar(between.to),
+      from: stringifySearchScalar(between.from),
+      to: stringifySearchScalar(between.to),
       values: [],
       customValues: [],
       customValueInput: '',
@@ -840,21 +927,15 @@ export class SearchQueryFormComponent {
     property: SearchPropertyConfig,
     value: SearchRequestValue | null,
   ): SearchQueryFormValueFields {
-    const values = Array.isArray(value) ? value.map((item) => this.stringifyScalar(item)) : [];
+    const values = this.normalizeInValues(property, value).map((item) =>
+      stringifySearchScalar(item),
+    );
     const optionValues = new Set(
       this.propertyOptions(property).map((option) => String(option.value)),
     );
-    const maxValues = this.maxInValues(property);
-    const selectedValues =
-      property.allowCustomInValues === true
-        ? values.filter((item) => optionValues.has(item)).slice(0, maxValues)
-        : values.slice(0, maxValues);
+    const selectedValues = values.filter((item) => optionValues.has(item));
     const customValues =
-      property.allowCustomInValues === true
-        ? values
-            .filter((item) => !optionValues.has(item))
-            .slice(0, Math.max(0, maxValues - selectedValues.length))
-        : [];
+      property.allowCustomInValues === true ? values.filter((item) => !optionValues.has(item)) : [];
 
     return {
       value: '',
@@ -867,9 +948,52 @@ export class SearchQueryFormComponent {
     };
   }
 
+  private normalizeInValues(
+    property: SearchPropertyConfig,
+    value: SearchRequestValue | null,
+  ): readonly SearchScalarValue[] {
+    if (!Array.isArray(value)) {
+      return [];
+    }
+
+    const optionValues = new Map(
+      this.propertyOptions(property).map((option) => [String(option.value), option.value]),
+    );
+    const normalizedValues: SearchScalarValue[] = [];
+    const seenValues = new Set<string>();
+
+    for (const item of value) {
+      const rawValue = stringifySearchScalar(item);
+      const normalizedValue = optionValues.has(rawValue)
+        ? optionValues.get(rawValue)!
+        : property.allowCustomInValues === true
+          ? parseCustomSearchValue(property, rawValue)
+          : null;
+
+      if (normalizedValue === null) {
+        continue;
+      }
+
+      const valueKey = `${typeof normalizedValue}:${String(normalizedValue)}`;
+
+      if (seenValues.has(valueKey)) {
+        continue;
+      }
+
+      normalizedValues.push(normalizedValue);
+      seenValues.add(valueKey);
+
+      if (normalizedValues.length >= this.maxInValues(property)) {
+        break;
+      }
+    }
+
+    return normalizedValues;
+  }
+
   private createScalarValueFields(value: SearchRequestValue | null): SearchQueryFormValueFields {
     return {
-      value: this.stringifyScalar(this.asScalarValue(value)),
+      value: stringifySearchScalar(this.asScalarValue(value)),
       from: '',
       to: '',
       values: [],
@@ -926,15 +1050,9 @@ export class SearchQueryFormComponent {
     }));
   }
 
-  private areStatesEqual(a: SearchQueryFormState, b: SearchQueryFormState): boolean {
-    return JSON.stringify(a) === JSON.stringify(b);
-  }
-
-  private areFormModelsEqual(a: SearchQueryFormModel, b: SearchQueryFormModel): boolean {
-    return JSON.stringify(a) === JSON.stringify(b);
-  }
-
   private toFormModel(state: SearchQueryFormState): SearchQueryFormModel {
+    const sorts = this.resolveSorts(state.sort);
+
     return {
       filters: state.filters.map((filter) => {
         const property = this.getProperty(filter.property);
@@ -962,6 +1080,7 @@ export class SearchQueryFormComponent {
           locked: filter.locked === true,
         };
       }),
+      sorts: toSearchSortModels(sorts),
     };
   }
 
@@ -969,6 +1088,8 @@ export class SearchQueryFormComponent {
     formModel: SearchQueryFormModel,
     previousState: SearchQueryFormState,
   ): SearchQueryFormState {
+    const sort = this.toSortRequest(formModel.sorts);
+
     return {
       ...previousState,
       filters: formModel.filters.map((filter) => ({
@@ -978,7 +1099,19 @@ export class SearchQueryFormComponent {
         value: this.toRequestValue(filter),
         locked: filter.locked,
       })),
+      sort,
     };
+  }
+
+  private toSortRequest(sorts: readonly SearchQueryFormSortModel[]): readonly SearchSortRequest[] {
+    return normalizeSearchSorts(
+      sorts.map((sort) => ({
+        property: sort.property,
+        direction: normalizeSearchSortDirection(Number(sort.direction)),
+      })),
+      this.configuredSortOptions(),
+      this.sortLimit(),
+    );
   }
 
   private toRequestValue(filter: SearchQueryFormFilterModel): SearchRequestValue | null {
@@ -990,46 +1123,22 @@ export class SearchQueryFormComponent {
 
     if (filter.operator === 'between') {
       return {
-        from: this.parseScalarValue(property, filter.from),
-        to: this.parseScalarValue(property, filter.to),
+        from: parseSearchScalar(property, filter.from, this.propertyOptions(property)),
+        to: parseSearchScalar(property, filter.to, this.propertyOptions(property)),
       };
     }
 
     if (filter.operator === 'in') {
       return [...filter.values, ...filter.customValues]
         .filter((value, index, values) => values.indexOf(value) === index)
-        .map((value) => this.parseScalarValue(property, value));
+        .map((value) => parseSearchScalar(property, value, this.propertyOptions(property)));
     }
 
     if (isValuelessSearchOperator(filter.operator)) {
       return null;
     }
 
-    return this.parseScalarValue(property, filter.value);
-  }
-
-  private stringifyScalar(value: SearchScalarValue | null): string {
-    return value === null ? '' : String(value);
-  }
-
-  private parseScalarValue(property: SearchPropertyConfig, value: string): SearchScalarValue {
-    const option = this.propertyOptions(property).find((item) => String(item.value) === value);
-
-    if (option) {
-      return option.value;
-    }
-
-    switch (property.dataType) {
-      case 'boolean':
-        return value === 'true';
-      case 'int':
-      case 'long':
-        return Number.parseInt(value, 10);
-      case 'decimal':
-        return Number.parseFloat(value);
-      default:
-        return value;
-    }
+    return parseSearchScalar(property, filter.value, this.propertyOptions(property));
   }
 
   private addCustomValues(
@@ -1047,14 +1156,14 @@ export class SearchQueryFormComponent {
     let cappedCount = 0;
 
     for (const rawValue of rawValues) {
-      const parsedValue = this.parseCustomInValue(property, rawValue);
+      const parsedValue = parseCustomSearchValue(property, rawValue);
 
       if (parsedValue === null) {
         invalidCount++;
         continue;
       }
 
-      const value = this.stringifyScalar(parsedValue);
+      const value = stringifySearchScalar(parsedValue);
 
       if (selectedValues.has(value) || customValueSet.has(value)) {
         duplicateCount++;
@@ -1075,121 +1184,12 @@ export class SearchQueryFormComponent {
       ...filter,
       customValues,
       customValueInput: '',
-      customValueStatus: this.customValueStatus(
+      customValueStatus: createSearchValueStatus(
         addedCount,
         duplicateCount,
         invalidCount,
         cappedCount,
       ),
     });
-  }
-
-  private tokenizeCustomValues(value: string): readonly string[] {
-    return value
-      .split(/[\n,;\t]+/)
-      .map((item) => item.trim())
-      .filter(Boolean);
-  }
-
-  private parseCustomInValue(
-    property: SearchPropertyConfig,
-    rawValue: string,
-  ): SearchScalarValue | null {
-    const value = rawValue.trim();
-
-    if (!value) {
-      return null;
-    }
-
-    if (this.typedScalarError(property, value)) {
-      return null;
-    }
-
-    switch (property.dataType) {
-      case 'int':
-      case 'long':
-        return Number.parseInt(value, 10);
-      case 'decimal':
-        return Number(value);
-      case 'guid':
-        return value;
-      case 'string':
-        return value;
-      case 'enum':
-        return value;
-      default:
-        return null;
-    }
-  }
-
-  private typedScalarError(property: SearchPropertyConfig, value: string): string {
-    switch (property.dataType) {
-      case 'guid':
-        return GUID_PATTERN.test(value) ? '' : 'Enter a valid GUID.';
-      case 'int':
-      case 'long':
-        if (!/^-?\d+$/.test(value)) {
-          return 'Enter a whole number.';
-        }
-
-        return Number.isSafeInteger(Number(value)) ? '' : 'Enter a safe whole number.';
-      case 'decimal':
-        return Number.isFinite(Number(value)) ? '' : 'Enter a valid number.';
-      case 'string': {
-        const maxLength = Math.min(
-          property.maxStringLength ?? DEFAULT_STRING_MAX_LENGTH,
-          DEFAULT_STRING_MAX_LENGTH,
-        );
-        return value.length <= maxLength ? '' : `Enter no more than ${maxLength} characters.`;
-      }
-      default:
-        return '';
-    }
-  }
-
-  private isRangeReversed(
-    property: SearchPropertyConfig,
-    from: string,
-    to: string,
-  ): boolean {
-    switch (property.dataType) {
-      case 'int':
-      case 'long':
-      case 'decimal':
-        return Number(from) > Number(to);
-      case 'date':
-      case 'time':
-      case 'dateTime':
-        return from > to;
-      default:
-        return false;
-    }
-  }
-
-  private customValueStatus(
-    addedCount: number,
-    duplicateCount: number,
-    invalidCount: number,
-    cappedCount: number,
-  ): string {
-    const messages: string[] = [];
-
-    if (addedCount > 0) {
-      messages.push(`${addedCount} ${addedCount === 1 ? 'value' : 'values'} added`);
-    }
-
-    if (duplicateCount > 0) {
-      messages.push(`${duplicateCount} duplicate${duplicateCount === 1 ? '' : 's'} skipped`);
-    }
-
-    if (invalidCount > 0) {
-      messages.push(`${invalidCount} invalid ${invalidCount === 1 ? 'value' : 'values'} skipped`);
-    }
-
-    if (cappedCount > 0) {
-      messages.push(`${cappedCount} over the limit skipped`);
-    }
-
-    return messages.join('. ');
   }
 }
