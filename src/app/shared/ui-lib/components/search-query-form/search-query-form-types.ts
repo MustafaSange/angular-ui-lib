@@ -96,6 +96,8 @@ export interface SearchPropertyConfigBase {
   readonly propertyName: string;
   readonly label?: string;
   readonly required?: boolean;
+  /** Includes this optional property, with its configured defaults, when the form is reset. */
+  readonly visibleByDefault?: boolean;
   readonly placeholder?: string;
   readonly allowCustomInValues?: boolean;
   readonly maxInValues?: number;
@@ -173,7 +175,7 @@ export interface SearchSortRequest {
 
 export interface SearchSortConfig {
   readonly sortOptions: readonly SearchSortOption[];
-  /** Ordered sorts restored on initialization and Clear. Defaults to the first option ascending. */
+  /** Ordered sorts restored on initialization, Clear filters, and Reset defaults. Defaults to the first option ascending. */
   readonly defaultSorts?: readonly SearchSortRequest[];
   /** Maximum number of active sorts. Defaults to 1 and cannot exceed the option count. */
   readonly maxSorts?: number;

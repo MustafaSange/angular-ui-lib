@@ -21,6 +21,7 @@ import {
   SelectOption,
   SelectOptionComponent,
   SelectSearchSource,
+  SelectSelectedOptionContext,
 } from '../../shared/ui-lib';
 ```
 
@@ -33,6 +34,7 @@ Public exports:
 - `SelectAsyncResult<TValue>` for sync, promise, or observable source results
 - `SelectCompareWith<TValue>` for custom value comparison
 - `SelectDisplayWith<TValue>` for rendering selected values not present in loaded options
+- `SelectSelectedOptionContext<TValue>` for custom multiple-selection chip template context
 - `SelectValueSerializer<TValue>` for serializing hidden form input values
 
 `SelectComponent<TValue>` inputs and model:
@@ -54,8 +56,12 @@ class SelectComponent<TValue> {
   readonly name: InputSignal<string>;
   readonly compareWith: InputSignal<SelectCompareWith<TValue>>;
   readonly displayWith: InputSignal<SelectDisplayWith<TValue>>;
+  readonly selectedOptionTemplate: InputSignal<TemplateRef<
+    SelectSelectedOptionContext<TValue>
+  > | null>;
   readonly valueSerializer: InputSignal<SelectValueSerializer<TValue>>;
   readonly id: InputSignal<string | null>;
+  readonly ariaLabel: InputSignal<string>;
   readonly touch: OutputEmitterRef<void>;
 
   focus(options?: FocusOptions): void;
@@ -80,8 +86,11 @@ Defaults:
 - `name` is `''`
 - `compareWith` uses `Object.is`
 - `displayWith` stringifies the selected value
+- `selectedOptionTemplate` is `null` and renders the standard selected-option label
 - `valueSerializer` stringifies the selected value
 - `id` is `null` and falls back to a generated input id
+- `ariaLabel` is `''`; the `aria-label` input alias forwards a non-empty value to the internal
+  combobox input
 
 `SelectOptionComponent<TValue>` inputs:
 
@@ -109,6 +118,11 @@ interface SelectOption<TValue> {
   readonly icon?: string;
   readonly group?: string;
   readonly template?: TemplateRef<void>;
+}
+
+interface SelectSelectedOptionContext<TValue> {
+  readonly $implicit: SelectOption<TValue>;
+  readonly index: number;
 }
 ```
 
@@ -187,7 +201,12 @@ Async source:
 ```ts
 import { Component } from '@angular/core';
 
-import { SelectComponent, SelectOption, SelectSearchSource, SignalFormField } from './shared/ui-lib';
+import {
+  SelectComponent,
+  SelectOption,
+  SelectSearchSource,
+  SignalFormField,
+} from './shared/ui-lib';
 
 interface City {
   readonly id: string;
@@ -225,7 +244,9 @@ export class AsyncSelectExample {
     new Promise((resolve) => {
       window.setTimeout(() => {
         const normalizedQuery = query.toLocaleLowerCase();
-        resolve(this.cities.filter((city) => city.label.toLocaleLowerCase().includes(normalizedQuery)));
+        resolve(
+          this.cities.filter((city) => city.label.toLocaleLowerCase().includes(normalizedQuery)),
+        );
       }, 700);
     });
 
@@ -306,6 +327,8 @@ Selection behavior:
 - single-value mode commits one value and closes the panel
 - multiple mode toggles values in an array and keeps the panel open
 - multiple selected values render as removable chips
+- `selectedOptionTemplate` can replace each selected chip's label content; its implicit value is the
+  resolved `SelectOption`, and `index` is the selection-order index
 - disabled options cannot be selected
 - `clearable` shows a clear button when there is a value and the control is interactive
 - `clearSelection()` writes `null` in single mode and `[]` in multiple mode
@@ -364,11 +387,15 @@ Styling rules:
 - use popover anchor placement with logical fallback positions
 - keep projected source options hidden outside the rendered panel
 - render multiple selected values as compact chips with removable actions
+- keep selected chips visible when a non-searchable multiple select receives focus inside a clipped,
+  enterprise-dense form field; the internal focus target overlays the selected content instead of
+  horizontally scrolling it out of view
 - show a token-based loading spinner while options are loading
 
 ## Accessibility
 
 - the input uses `role="combobox"`
+- a supplied `aria-label` is forwarded to the internal combobox input
 - the panel uses `role="listbox"`
 - options use `role="option"`
 - multiple mode sets `aria-multiselectable`
@@ -418,6 +445,8 @@ public APIs through `./shared/ui-lib`, and are rendered near their matching visu
 - Async sources support array, promise, and observable results.
 - Debounced source loading, loading feedback, empty feedback, and error feedback are implemented.
 - Single mode commits one value; multiple mode commits an array.
+- Multiple mode supports custom selected-chip content through `selectedOptionTemplate` without
+  replacing the built-in remove action.
 - Disabled and readonly states prevent interaction.
 - The control implements signal form binding through `FormValueControl`.
 - Hidden form inputs are rendered when `name` is provided.

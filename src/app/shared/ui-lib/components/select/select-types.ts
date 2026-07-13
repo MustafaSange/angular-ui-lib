@@ -20,6 +20,11 @@ export interface SelectOption<TValue> {
   readonly template?: TemplateRef<void>;
 }
 
+export interface SelectSelectedOptionContext<TValue> {
+  readonly $implicit: SelectOption<TValue>;
+  readonly index: number;
+}
+
 export type SelectCompareWith<TValue> = (a: TValue, b: TValue) => boolean;
 export type SelectDisplayWith<TValue> = (value: TValue) => string;
 export type SelectValueSerializer<TValue> = (value: TValue) => string;

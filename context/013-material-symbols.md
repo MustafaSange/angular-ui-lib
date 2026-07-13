@@ -13,7 +13,7 @@ There is no Angular component API for icons. Consumer markup uses the global uti
 - `.ms-icon` for outlined Material Symbols
 - `.ms-icon-filled` for filled Material Symbols
 
-The icon registry and loader are application infrastructure rather than exported shared-component APIs:
+The icon registry and loader are exported infrastructure rather than Angular component APIs:
 
 - `MATERIAL_ICONS` is the allowlist of icon ligature names included in the loaded subset
 - `MaterialIconsService` adds the font stylesheet link once during app bootstrap
@@ -42,7 +42,7 @@ Use filled rendering for selected or emphasized icon states:
 
 The loading infrastructure lives in:
 
-`src/app/shared/services/material-icons`
+`src/app/shared/ui-lib/services/material-icons`
 
 It includes:
 
@@ -56,8 +56,9 @@ Icon font loading is non-critical presentation setup. The environment initialize
 stylesheet insertion without awaiting network completion, so initial application startup is not
 blocked by the Google Fonts request.
 
-The initial loaded icon subset supports shared feedback, modal controls, button showcases, tabs
-scroll controls, and the search field showcase.
+The loaded icon subset supports shared feedback, modal controls, button showcases, tabs scroll
+controls, search controls, and search-query Clear filters/Reset defaults actions. Those actions use
+the registered `clear_all` and `settings_backup_restore` ligatures.
 
 ## Behavior
 

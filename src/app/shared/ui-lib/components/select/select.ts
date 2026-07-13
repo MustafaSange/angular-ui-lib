@@ -12,6 +12,7 @@ import {
   model,
   output,
   signal,
+  type TemplateRef,
   viewChild,
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
@@ -23,6 +24,7 @@ import type {
   SelectDisplayWith,
   SelectOption,
   SelectSearchSource,
+  SelectSelectedOptionContext,
   SelectValueSerializer,
 } from './select-types';
 import { SelectOptionComponent } from './select-option';
@@ -50,6 +52,7 @@ let nextSelectId = 0;
     '[class.is-readonly]': 'readonly()',
     '[class.is-multiple]': 'multiple()',
     '[class.is-searchable]': 'searchable()',
+    '[class.has-selection]': 'hasSelection()',
     '[attr.formField]': 'true',
   },
 })
@@ -71,10 +74,14 @@ export class SelectComponent<TValue>
   readonly name = input('');
   readonly compareWith = input<SelectCompareWith<TValue>>((a, b) => Object.is(a, b));
   readonly displayWith = input<SelectDisplayWith<TValue>>((value) => String(value ?? ''));
+  readonly selectedOptionTemplate = input<TemplateRef<SelectSelectedOptionContext<TValue>> | null>(
+    null,
+  );
   readonly valueSerializer = input<SelectValueSerializer<TValue>>((value) =>
     String(value ?? ''),
   );
   readonly id = input<string | null>(null);
+  readonly ariaLabel = input('', { alias: 'aria-label' });
   readonly touch = output<void>();
 
   private readonly destroyRef = inject(DestroyRef);

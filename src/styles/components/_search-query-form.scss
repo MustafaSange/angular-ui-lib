@@ -24,75 +24,11 @@ ms-search-query-form {
     }
   }
 
-  .sort-control {
-    display: grid;
-    min-inline-size: 0;
-  }
-
-  .add-sort .form-field-label {
-    grid-template-columns: auto minmax(0, 1fr);
-    block-size: var(--spacing-20);
-    overflow: hidden;
-  }
-
-  .sort-label-extra {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: var(--spacing-4);
-    min-inline-size: 0;
-    block-size: var(--spacing-20);
-    overflow: hidden;
-  }
-
   .sort-count {
-    flex: 0 0 auto;
     color: var(--color-text-muted);
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-regular);
     white-space: nowrap;
-  }
-
-  .sort-chip-list {
-    display: flex;
-    flex: 0 1 auto;
-    align-items: center;
-    gap: var(--spacing-2);
-    min-inline-size: 0;
-    block-size: var(--spacing-20);
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  .sort-chip-list ms-chip {
-    flex: 0 1 auto;
-    max-inline-size: 9rem;
-
-    .chip {
-      min-block-size: var(--spacing-16);
-      font-size: var(--font-size-xs);
-      line-height: 1;
-    }
-
-    .chip-content {
-      gap: var(--spacing-2);
-      padding-block: 0;
-      padding-inline: var(--spacing-2);
-    }
-
-    .chip-remove {
-      inline-size: var(--spacing-16);
-      block-size: var(--spacing-16);
-    }
-
-    .chip-remove-icon {
-      font-size: var(--font-size-xs);
-    }
   }
 
   .sort-property {

@@ -243,12 +243,8 @@ export class SearchQueryFormComponent {
   );
   protected readonly hasSortOptions = computed(() => this.configuredSortOptions().length > 0);
   protected readonly sortLimit = computed(() => this.resolveSortLimit());
-  protected readonly availableSortOptions = computed(() => {
-    const selectedProperties = new Set(this.sorts().map((sort) => sort.property));
-    return this.configuredSortOptions().filter((option) => !selectedProperties.has(option.value));
-  });
-  protected readonly canAddSort = computed(
-    () => this.sorts().length < this.sortLimit() && this.availableSortOptions().length > 0,
+  protected readonly selectedSortProperties = computed(() =>
+    this.sorts().map((sort) => sort.property),
   );
   private readonly propertyMap = computed(
     () => new Map(this.properties().map((property) => [property.propertyName, property])),
@@ -263,6 +259,11 @@ export class SearchQueryFormComponent {
           .filter((property) => property.required)
           .map((property) => property.propertyName),
       ),
+  );
+  protected readonly hasVisibleDefaultProperties = computed(() =>
+    this.properties().some(
+      (property) => property.visibleByDefault === true && property.required !== true,
+    ),
   );
   protected readonly filterLimit = computed(() => this.resolveFilterLimit(this.properties()));
   protected readonly availableProperties = computed(() => {
@@ -324,31 +325,15 @@ export class SearchQueryFormComponent {
     });
   }
 
-  protected addSort(propertyName: string): void {
-    const option = this.availableSortOptions().find((item) => item.value === propertyName);
-
-    if (!option || !this.canAddSort()) {
-      return;
-    }
-
+  protected resetForm(): void {
     this.updateFormModel({
-      sorts: [
-        ...this.sorts(),
-        {
-          property: option.value,
-          direction: String(SEARCH_SORT_DIRECTION.ASCENDING),
-        },
-      ],
+      filters: this.defaultFilterProperties().map((property) => this.createFilter(property)),
+      sorts: this.defaultSortModels(),
     });
   }
 
-  protected removeSort(index: number): void {
-    this.updateFormModel({
-      sorts: this.sorts().filter((_, sortIndex) => sortIndex !== index),
-    });
-  }
-
-  protected toggleSortDirection(index: number): void {
+  protected toggleSortDirection(index: number, event: MouseEvent): void {
+    event.stopPropagation();
     this.updateFormModel({
       sorts: this.sorts().map((sort, sortIndex) =>
         sortIndex === index
@@ -365,10 +350,31 @@ export class SearchQueryFormComponent {
     });
   }
 
-  protected handleAddSortChange(event: Event): void {
-    const select = event.target as HTMLSelectElement;
-    this.addSort(select.value);
-    select.value = '';
+  protected handleSortSelectionChange(value: string | readonly string[] | null): void {
+    const selectedProperties = Array.isArray(value) ? value.slice(0, this.sortLimit()) : [];
+    const configuredProperties = new Set(
+      this.configuredSortOptions().map((option) => option.value),
+    );
+    const currentSorts = new Map(this.sorts().map((sort) => [sort.property, sort]));
+
+    this.updateFormModel({
+      sorts: selectedProperties
+        .filter((property) => configuredProperties.has(property))
+        .map(
+          (property): SearchQueryFormSortModel =>
+            currentSorts.get(property) ?? {
+              property,
+              direction: String(SEARCH_SORT_DIRECTION.ASCENDING),
+            },
+        ),
+    });
+  }
+
+  protected isSortOptionDisabled(propertyName: string): boolean {
+    return (
+      this.sorts().length >= this.sortLimit() &&
+      !this.sorts().some((sort) => sort.property === propertyName)
+    );
   }
 
   protected sortLabel(propertyName: string): string {
@@ -796,6 +802,17 @@ export class SearchQueryFormComponent {
     const requiredCount = properties.filter((property) => property.required).length;
 
     return Math.max(configuredLimit, requiredCount);
+  }
+
+  private defaultFilterProperties(): readonly SearchPropertyConfig[] {
+    const requiredProperties = this.properties().filter(
+      (property) => property.required === true,
+    );
+    const visibleDefaultProperties = this.properties().filter(
+      (property) => property.required !== true && property.visibleByDefault === true,
+    );
+
+    return [...requiredProperties, ...visibleDefaultProperties].slice(0, this.filterLimit());
   }
 
   private createFilter(
