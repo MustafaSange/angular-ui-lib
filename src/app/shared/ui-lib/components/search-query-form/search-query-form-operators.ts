@@ -36,6 +36,7 @@ const DATE_OPERATORS: readonly SearchOperator[] = [
   'lt',
   'lte',
   'between',
+  'in',
   'isNull',
   'isNotNull',
 ];

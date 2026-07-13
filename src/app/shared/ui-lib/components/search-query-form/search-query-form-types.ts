@@ -52,26 +52,32 @@ export type SearchNumericOperator = Extract<
 
 export type SearchDateOperator = Extract<
   SearchOperator,
-  'eq' | 'neq' | 'gt' | 'gte' | 'lt' | 'lte' | 'between' | 'isNull' | 'isNotNull'
+  'eq' | 'neq' | 'gt' | 'gte' | 'lt' | 'lte' | 'between' | 'in' | 'isNull' | 'isNotNull'
 >;
 
-export type SearchBooleanOperator = Extract<
-  SearchOperator,
-  'eq' | 'neq' | 'isNull' | 'isNotNull'
->;
+export type SearchBooleanOperator = Extract<SearchOperator, 'eq' | 'neq' | 'isNull' | 'isNotNull'>;
 
 export type SearchEnumOperator = Extract<
   SearchOperator,
   'eq' | 'neq' | 'in' | 'isNull' | 'isNotNull'
 >;
 
-export type SearchSortDirection = 0 | 1;
+export const SEARCH_SORT_DIRECTION = {
+  ASCENDING: 0,
+  DESCENDING: 1,
+} as const;
+
+export type SearchSortDirection =
+  (typeof SEARCH_SORT_DIRECTION)[keyof typeof SEARCH_SORT_DIRECTION];
+
+export interface SearchSortOption {
+  readonly label: string;
+  readonly value: string;
+}
 
 export type SearchScalarValue = string | number | boolean;
 
-export interface SearchBetweenValue<
-  T extends SearchScalarValue = SearchScalarValue,
-> {
+export interface SearchBetweenValue<T extends SearchScalarValue = SearchScalarValue> {
   readonly from: T | null;
   readonly to: T | null;
 }
@@ -81,9 +87,7 @@ export type SearchRequestValue =
   | readonly SearchScalarValue[]
   | SearchBetweenValue;
 
-export interface SearchPropertyOption<
-  T extends SearchScalarValue = SearchScalarValue,
-> {
+export interface SearchPropertyOption<T extends SearchScalarValue = SearchScalarValue> {
   readonly label: string;
   readonly value: T;
 }
@@ -117,7 +121,7 @@ export interface SearchNumericPropertyConfig extends SearchPropertyConfigBase {
 export interface SearchDatePropertyConfig extends SearchPropertyConfigBase {
   readonly dataType: 'date' | 'time' | 'dateTime';
   readonly defaultOperator?: SearchDateOperator;
-  readonly defaultValue?: string | SearchBetweenValue<string>;
+  readonly defaultValue?: string | readonly string[] | SearchBetweenValue<string>;
   readonly allowedOperators?: readonly SearchDateOperator[];
   readonly options?: readonly SearchPropertyOption<string>[];
 }
@@ -165,6 +169,14 @@ export interface SearchQueryFormFilter {
 export interface SearchSortRequest {
   readonly property: string;
   readonly direction: SearchSortDirection;
+}
+
+export interface SearchSortConfig {
+  readonly sortOptions: readonly SearchSortOption[];
+  /** Ordered sorts restored on initialization and Clear. Defaults to the first option ascending. */
+  readonly defaultSorts?: readonly SearchSortRequest[];
+  /** Maximum number of active sorts. Defaults to 1 and cannot exceed the option count. */
+  readonly maxSorts?: number;
 }
 
 export interface SearchQueryFormState {

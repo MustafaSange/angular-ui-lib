@@ -146,8 +146,8 @@
                               class="btn btn-icon"
                               type="button"
                               msPopoverTrigger
-                              aria-label="Manage custom values"
-                              title="Manage custom values"
+                              [attr.aria-label]="'Manage values for ' + propertyLabel(property)"
+                              [attr.title]="'Manage values for ' + propertyLabel(property)"
                               [class.btn-outline]="totalInValues(filter) === 0"
                               [class.btn-primary]="totalInValues(filter) > 0"
                             >
@@ -156,7 +156,7 @@
 
                             <ms-popover-panel
                               class="custom-values-popover"
-                              aria-label="Manage values"
+                              [attr.aria-label]="'Manage values for ' + propertyLabel(property)"
                               [style.position-anchor]="'--custom-values-' + filter.id"
                             >
                               <div class="custom-values-editor">
@@ -171,7 +171,10 @@
                                         handleInOptionValuesChange(filter, property, $event)
                                       "
                                     >
-                                      @for (option of propertyOptions(property); track option.value) {
+                                      @for (
+                                        option of propertyOptions(property);
+                                        track option.value
+                                      ) {
                                         <ms-select-option
                                           [value]="option.value.toString()"
                                           [label]="option.label"
@@ -188,8 +191,12 @@
                                 >
                                   <input
                                     #customValueInput
-                                    type="text"
-                                    aria-label="Custom value"
+                                    [type]="inputType(property)"
+                                    [inputMode]="inputMode(property)"
+                                    [step]="step(property)"
+                                    [attr.aria-label]="
+                                      'Custom value for ' + propertyLabel(property)
+                                    "
                                     [placeholder]="property.placeholder ?? 'Add value'"
                                     [value]="filter.customValueInput"
                                     [attr.aria-invalid]="
@@ -209,14 +216,12 @@
                                   <button
                                     class="form-field-suffix form-field-action"
                                     type="button"
-                                    aria-label="Add value"
-                                    title="Add value"
+                                    [attr.aria-label]="'Add value for ' + propertyLabel(property)"
+                                    [attr.title]="'Add value for ' + propertyLabel(property)"
                                     [disabled]="
                                       filter.customValueInput.trim().length === 0 ||
-                                      customValueInputError(
-                                        property,
-                                        filter.customValueInput
-                                      ).length > 0 ||
+                                      customValueInputError(property, filter.customValueInput)
+                                        .length > 0 ||
                                       isAtInValueLimit(filter, property)
                                     "
                                     (click)="addCustomValue(filter)"
@@ -226,10 +231,13 @@
                                   <button
                                     class="form-field-suffix form-field-action"
                                     type="button"
-                                    aria-label="Paste values from clipboard"
-                                    title="Paste values from clipboard"
+                                    [attr.aria-label]="
+                                      'Paste values for ' + propertyLabel(property)
+                                    "
+                                    [attr.title]="'Paste values for ' + propertyLabel(property)"
                                     [disabled]="
-                                      !clipboardPasteAvailable() || isAtInValueLimit(filter, property)
+                                      !clipboardPasteAvailable() ||
+                                      isAtInValueLimit(filter, property)
                                     "
                                     (click)="pasteCustomValues(filter, customValueInput)"
                                   >
@@ -340,7 +348,7 @@
     </div>
   }
 
-  <div class="filter-toolbar">
+  <div class="filter-toolbar" [class.has-sort-options]="hasSortOptions()">
     <ms-signal-form-field class="add-filter no-message">
       <label>Add filter</label>
       <span slot="label-extra" class="filter-count">
@@ -357,6 +365,60 @@
         }
       </select>
     </ms-signal-form-field>
+
+    @if (hasSortOptions()) {
+      <div class="sort-control">
+        <ms-signal-form-field class="add-sort no-message">
+          <label>Add sort</label>
+          <span slot="label-extra" class="sort-label-extra">
+            <span class="sort-chip-list" aria-label="Sort priority">
+              @for (sort of sorts(); track sort.property) {
+                <ms-chip size="xs" selected removable (removed)="removeSort($index)">
+                  <span class="sort-property">{{ sortLabel(sort.property) }}</span>
+                  <button
+                    class="sort-direction-toggle"
+                    type="button"
+                    [attr.aria-label]="
+                      'Change ' +
+                      sortLabel(sort.property) +
+                      ' sort direction. Current direction: ' +
+                      (isDescendingSort(sort) ? 'Descending' : 'Ascending')
+                    "
+                    [attr.title]="
+                      isDescendingSort(sort)
+                        ? 'Descending — change to ascending'
+                        : 'Ascending — change to descending'
+                    "
+                    (click)="toggleSortDirection($index)"
+                  >
+                    <span class="ms-icon" aria-hidden="true">
+                      {{ isDescendingSort(sort) ? 'arrow_downward' : 'arrow_upward' }}
+                    </span>
+                    {{ isDescendingSort(sort) ? 'DESC' : 'ASC' }}
+                  </button>
+                  <button
+                    type="button"
+                    msChipRemove
+                    [attr.aria-label]="'Remove ' + sortLabel(sort.property) + ' sort'"
+                  ></button>
+                </ms-chip>
+              }
+            </span>
+            <span class="sort-count">{{ sorts().length }} / {{ sortLimit() }} sorts</span>
+          </span>
+          <select
+            aria-label="Add sort"
+            [disabled]="!canAddSort()"
+            (change)="handleAddSortChange($event)"
+          >
+            <option value="">Choose sort property</option>
+            @for (option of availableSortOptions(); track option.value) {
+              <option [value]="option.value">{{ option.label }}</option>
+            }
+          </select>
+        </ms-signal-form-field>
+      </div>
+    }
 
     <div class="toolbar-actions">
       <button

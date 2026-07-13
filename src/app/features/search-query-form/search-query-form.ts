@@ -2,16 +2,35 @@ import { Component, computed, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import {
+  SEARCH_SORT_DIRECTION,
   SearchPropertyConfig,
   SearchQueryFormComponent,
   SearchQueryFormState,
   buildSearchRequest,
   createTodayDateTimeRange,
   type PaginatedSearchRequest,
+  type SearchSortConfig,
+  type SearchSortOption,
+  type SearchSortRequest,
 } from '../../shared/ui-lib';
 import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
 
 const todayCreatedAtRange = createTodayDateTimeRange();
+const commonSortOptions = [
+  { label: 'Name', value: 'name' },
+  { label: 'Created At', value: 'createdAt' },
+] as const satisfies readonly SearchSortOption[];
+const userSortOptions = [
+  ...commonSortOptions,
+  { label: 'Status', value: 'status' },
+] as const satisfies readonly SearchSortOption[];
+const defaultSorts = [
+  { property: 'name', direction: SEARCH_SORT_DIRECTION.ASCENDING },
+] as const satisfies readonly SearchSortRequest[];
+const userDefaultSorts = [
+  ...defaultSorts,
+  { property: 'createdAt', direction: SEARCH_SORT_DIRECTION.DESCENDING },
+] as const satisfies readonly SearchSortRequest[];
 
 @Component({
   selector: 'app-search-query-form',
@@ -20,16 +39,28 @@ const todayCreatedAtRange = createTodayDateTimeRange();
   styleUrl: './search-query-form.scss',
 })
 export class SearchQueryForm {
+  protected readonly emptySortConfig: SearchSortConfig = {
+    sortOptions: commonSortOptions,
+    defaultSorts,
+    maxSorts: 2,
+  };
+  protected readonly userSortConfig: SearchSortConfig = {
+    sortOptions: userSortOptions,
+    defaultSorts: userDefaultSorts,
+    maxSorts: 3,
+  };
   protected readonly emptyProperties: readonly SearchPropertyConfig[] = [
     {
       propertyName: 'name',
       label: 'Name',
       dataType: 'string',
+      allowCustomInValues: true,
     },
     {
       propertyName: 'createdAt',
       label: 'Created At',
       dataType: 'dateTime',
+      allowCustomInValues: true,
     },
   ];
 
@@ -48,6 +79,8 @@ export class SearchQueryForm {
       label: 'Name',
       dataType: 'string',
       defaultOperator: 'contains',
+      allowCustomInValues: true,
+      maxInValues: 50,
       maxStringLength: 50,
       placeholder: 'Search name',
     },
@@ -109,6 +142,15 @@ export class SearchQueryForm {
       allowCustomInValues: true,
     },
     {
+      propertyName: 'reviewDates',
+      label: 'Review Dates',
+      dataType: 'date',
+      defaultOperator: 'in',
+      allowedOperators: ['in'],
+      allowCustomInValues: true,
+      placeholder: 'YYYY-MM-DD',
+    },
+    {
       propertyName: 'createdAt',
       label: 'Created At',
       dataType: 'dateTime',
@@ -137,14 +179,24 @@ export class SearchQueryForm {
     },
   ];
 
-  protected readonly emptyState = signal<SearchQueryFormState>({ filters: [] });
+  protected readonly emptyState = signal<SearchQueryFormState>({
+    filters: [],
+    sort: defaultSorts,
+  });
   protected readonly userState = signal<SearchQueryFormState>({
     filters: [
       {
-        id: 'name-null-or-empty',
+        id: 'tenant-required',
+        property: 'tenantId',
+        operator: 'eq',
+        value: 'f2c09089-f857-4c42-857d-1c48e89f1107',
+        locked: true,
+      },
+      {
+        id: 'name-in',
         property: 'name',
-        operator: 'isNullOrEmpty',
-        value: null,
+        operator: 'in',
+        value: ['Aisha', 'Omar'],
       },
       {
         id: 'created-at-today',
@@ -188,7 +240,14 @@ export class SearchQueryForm {
         operator: 'in',
         value: [12.5, 99.95],
       },
+      {
+        id: 'review-dates-in',
+        property: 'reviewDates',
+        operator: 'in',
+        value: ['2026-07-13', '2026-07-20'],
+      },
     ],
+    sort: userDefaultSorts,
   });
   protected readonly emptyRequest = signal<PaginatedSearchRequest>(
     buildSearchRequest(this.emptyState()),
@@ -204,33 +263,65 @@ export class SearchQueryForm {
   protected readonly emptySnippet = `import { Component, signal } from '@angular/core';
 
 import {
+  SEARCH_SORT_DIRECTION,
   SearchQueryFormComponent,
   SearchPropertyConfig,
   SearchQueryFormState,
+  SearchSortConfig,
 } from './shared/ui-lib';
 
 @Component({
   selector: 'app-empty-search-query-example',
   imports: [SearchQueryFormComponent],
   template: \`
-    <ms-search-query-form [properties]="properties" [(state)]="searchState" />
+    <ms-search-query-form
+      [properties]="properties"
+      [sortConfig]="sortConfig"
+      [(state)]="searchState"
+    />
   \`,
 })
 export class EmptySearchQueryExample {
+  readonly sortConfig: SearchSortConfig = {
+    sortOptions: [
+      { label: 'Name', value: 'name' },
+      { label: 'Created At', value: 'createdAt' },
+    ],
+    defaultSorts: [
+      { property: 'name', direction: SEARCH_SORT_DIRECTION.ASCENDING },
+    ],
+    maxSorts: 2,
+  };
+
   readonly properties: readonly SearchPropertyConfig[] = [
-    { propertyName: 'name', label: 'Name', dataType: 'string' },
-    { propertyName: 'createdAt', label: 'Created at', dataType: 'dateTime' },
+    {
+      propertyName: 'name',
+      label: 'Name',
+      dataType: 'string',
+      allowCustomInValues: true,
+    },
+    {
+      propertyName: 'createdAt',
+      label: 'Created at',
+      dataType: 'dateTime',
+      allowCustomInValues: true,
+    },
   ];
 
-  readonly searchState = signal<SearchQueryFormState>({ filters: [] });
+  readonly searchState = signal<SearchQueryFormState>({
+    filters: [],
+    sort: [{ property: 'name', direction: SEARCH_SORT_DIRECTION.ASCENDING }],
+  });
 }`;
 
   protected readonly fullSnippet = `import { Component, computed, signal } from '@angular/core';
 
 import {
+  SEARCH_SORT_DIRECTION,
   SearchQueryFormComponent,
   SearchPropertyConfig,
   SearchQueryFormState,
+  SearchSortConfig,
   buildSearchRequest,
   createTodayDateTimeRange,
   type PaginatedSearchRequest,
@@ -244,7 +335,8 @@ const todayCreatedAtRange = createTodayDateTimeRange();
   template: \`
     <ms-search-query-form
       [properties]="properties"
-      [maxFilters]="10"
+      [maxFilters]="15"
+      [sortConfig]="sortConfig"
       [(state)]="searchState"
       (requestChange)="request.set($event)"
     />
@@ -253,6 +345,19 @@ const todayCreatedAtRange = createTodayDateTimeRange();
   \`,
 })
 export class UserSearchQueryExample {
+  readonly sortConfig: SearchSortConfig = {
+    sortOptions: [
+      { label: 'Name', value: 'name' },
+      { label: 'Created At', value: 'createdAt' },
+      { label: 'Status', value: 'status' },
+    ],
+    defaultSorts: [
+      { property: 'name', direction: SEARCH_SORT_DIRECTION.ASCENDING },
+      { property: 'createdAt', direction: SEARCH_SORT_DIRECTION.DESCENDING },
+    ],
+    maxSorts: 3,
+  };
+
   readonly properties: readonly SearchPropertyConfig[] = [
     {
       propertyName: 'tenantId',
@@ -268,6 +373,8 @@ export class UserSearchQueryExample {
       label: 'Name',
       dataType: 'string',
       defaultOperator: 'contains',
+      allowCustomInValues: true,
+      maxInValues: 50,
       maxStringLength: 50,
       placeholder: 'Search name',
     },
@@ -327,6 +434,15 @@ export class UserSearchQueryExample {
       defaultOperator: 'in',
       allowedOperators: ['in'],
       allowCustomInValues: true,
+    },
+    {
+      propertyName: 'reviewDates',
+      label: 'Review Dates',
+      dataType: 'date',
+      defaultOperator: 'in',
+      allowedOperators: ['in'],
+      allowCustomInValues: true,
+      placeholder: 'YYYY-MM-DD',
     },
     {
       propertyName: 'createdAt',
@@ -360,10 +476,17 @@ export class UserSearchQueryExample {
   readonly searchState = signal<SearchQueryFormState>({
     filters: [
       {
-        id: 'name-null-or-empty',
+        id: 'tenant-required',
+        property: 'tenantId',
+        operator: 'eq',
+        value: 'f2c09089-f857-4c42-857d-1c48e89f1107',
+        locked: true,
+      },
+      {
+        id: 'name-in',
         property: 'name',
-        operator: 'isNullOrEmpty',
-        value: null,
+        operator: 'in',
+        value: ['Aisha', 'Omar'],
       },
       {
         id: 'created-at-today',
@@ -407,6 +530,16 @@ export class UserSearchQueryExample {
         operator: 'in',
         value: [12.5, 99.95],
       },
+      {
+        id: 'review-dates-in',
+        property: 'reviewDates',
+        operator: 'in',
+        value: ['2026-07-13', '2026-07-20'],
+      },
+    ],
+    sort: [
+      { property: 'name', direction: SEARCH_SORT_DIRECTION.ASCENDING },
+      { property: 'createdAt', direction: SEARCH_SORT_DIRECTION.DESCENDING },
     ],
   });
   readonly request = signal<PaginatedSearchRequest>(buildSearchRequest(this.searchState()));
