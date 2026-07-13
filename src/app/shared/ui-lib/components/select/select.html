@@ -1,9 +1,16 @@
 <div class="select-control">
   <div class="select-values" (click)="focusInput()">
     @if (multiple()) {
-      @for (option of selectedOptions(); track optionId(option)) {
+      @for (option of selectedOptions(); track optionId(option); let index = $index) {
         <span class="select-chip">
-          {{ option.label }}
+          @if (selectedOptionTemplate(); as template) {
+            <ng-container
+              [ngTemplateOutlet]="template"
+              [ngTemplateOutletContext]="{ $implicit: option, index }"
+            />
+          } @else {
+            {{ option.label }}
+          }
           @if (!isInteractiveDisabled()) {
             <button
               class="select-chip-remove"
@@ -29,6 +36,7 @@
       [readonly]="readonly() || !searchable()"
       [required]="required()"
       [attr.aria-autocomplete]="searchable() ? 'list' : null"
+      [attr.aria-label]="ariaLabel() || null"
       [attr.aria-controls]="panelId"
       [attr.aria-expanded]="open()"
       [attr.aria-activedescendant]="activeOptionDomId()"

@@ -35,6 +35,7 @@ export const MATERIAL_ICONS = [
   'redo',
   'restart_alt',
   'settings',
+  'settings_backup_restore',
   'search',
   'skip_next',
   'sync',

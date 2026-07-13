@@ -367,60 +367,80 @@
     </ms-signal-form-field>
 
     @if (hasSortOptions()) {
-      <div class="sort-control">
-        <ms-signal-form-field class="add-sort no-message">
-          <label>Add sort</label>
-          <span slot="label-extra" class="sort-label-extra">
-            <span class="sort-chip-list" aria-label="Sort priority">
-              @for (sort of sorts(); track sort.property) {
-                <ms-chip size="xs" selected removable (removed)="removeSort($index)">
-                  <span class="sort-property">{{ sortLabel(sort.property) }}</span>
-                  <button
-                    class="sort-direction-toggle"
-                    type="button"
-                    [attr.aria-label]="
-                      'Change ' +
-                      sortLabel(sort.property) +
-                      ' sort direction. Current direction: ' +
-                      (isDescendingSort(sort) ? 'Descending' : 'Ascending')
-                    "
-                    [attr.title]="
-                      isDescendingSort(sort)
-                        ? 'Descending — change to ascending'
-                        : 'Ascending — change to descending'
-                    "
-                    (click)="toggleSortDirection($index)"
-                  >
-                    <span class="ms-icon" aria-hidden="true">
-                      {{ isDescendingSort(sort) ? 'arrow_downward' : 'arrow_upward' }}
-                    </span>
-                    {{ isDescendingSort(sort) ? 'DESC' : 'ASC' }}
-                  </button>
-                  <button
-                    type="button"
-                    msChipRemove
-                    [attr.aria-label]="'Remove ' + sortLabel(sort.property) + ' sort'"
-                  ></button>
-                </ms-chip>
-              }
-            </span>
-            <span class="sort-count">{{ sorts().length }} / {{ sortLimit() }} sorts</span>
-          </span>
-          <select
-            aria-label="Add sort"
-            [disabled]="!canAddSort()"
-            (change)="handleAddSortChange($event)"
-          >
-            <option value="">Choose sort property</option>
-            @for (option of availableSortOptions(); track option.value) {
-              <option [value]="option.value">{{ option.label }}</option>
-            }
-          </select>
-        </ms-signal-form-field>
-      </div>
+      <ms-signal-form-field class="add-sort no-message">
+        <label>Sort by</label>
+        <span slot="label-extra" class="sort-count">
+          {{ sorts().length }} / {{ sortLimit() }} sorts
+        </span>
+
+        <ng-template #selectedSortOption let-index="index">
+          @if (sorts()[index]; as sort) {
+            <span class="sort-property">{{ sortLabel(sort.property) }}</span>
+            <button
+              class="sort-direction-toggle"
+              type="button"
+              [attr.aria-label]="
+                'Change ' +
+                sortLabel(sort.property) +
+                ' sort direction. Current direction: ' +
+                (isDescendingSort(sort) ? 'Descending' : 'Ascending')
+              "
+              [attr.title]="
+                isDescendingSort(sort)
+                  ? 'Descending — change to ascending'
+                  : 'Ascending — change to descending'
+              "
+              (click)="toggleSortDirection(index, $event)"
+            >
+              <span class="ms-icon" aria-hidden="true">
+                {{ isDescendingSort(sort) ? 'arrow_downward' : 'arrow_upward' }}
+              </span>
+              {{ isDescendingSort(sort) ? 'DESC' : 'ASC' }}
+            </button>
+          }
+        </ng-template>
+
+        <ms-select
+          multiple
+          [searchable]="false"
+          [clearable]="false"
+          placeholder="Choose sort properties"
+          aria-label="Choose sort properties"
+          [value]="selectedSortProperties()"
+          [selectedOptionTemplate]="selectedSortOption"
+          (valueChange)="handleSortSelectionChange($event)"
+        >
+          @for (option of configuredSortOptions(); track option.value) {
+            <ms-select-option
+              [value]="option.value"
+              [label]="option.label"
+              [disabled]="isSortOptionDisabled(option.value)"
+            >
+              {{ option.label }}
+            </ms-select-option>
+          }
+        </ms-select>
+      </ms-signal-form-field>
     }
 
     <div class="toolbar-actions">
+      <button
+        class="btn btn-ghost btn-sm clear-filters"
+        type="button"
+        [disabled]="!canClear()"
+        (click)="clearOptionalFilters()"
+      >
+        <span class="ms-icon" aria-hidden="true">clear_all</span>
+        Clear filters
+      </button>
+
+      @if (hasVisibleDefaultProperties()) {
+        <button class="btn btn-outline btn-sm reset-filters" type="button" (click)="resetForm()">
+          <span class="ms-icon" aria-hidden="true">settings_backup_restore</span>
+          Reset defaults
+        </button>
+      }
+
       <button
         class="btn btn-primary btn-sm search-filters"
         type="submit"
@@ -428,16 +448,6 @@
       >
         <span class="ms-icon" aria-hidden="true">search</span>
         Search
-      </button>
-
-      <button
-        class="btn btn-outline btn-sm clear-filters"
-        type="button"
-        [disabled]="!canClear()"
-        (click)="clearOptionalFilters()"
-      >
-        <span class="ms-icon" aria-hidden="true">restart_alt</span>
-        Clear
       </button>
     </div>
   </div>

@@ -88,7 +88,9 @@ export class SearchQueryForm {
       propertyName: 'status',
       label: 'Status',
       dataType: 'enum',
+      visibleByDefault: true,
       defaultOperator: 'in',
+      defaultValue: ['Active'],
       allowCustomInValues: true,
       maxInValues: 50,
       options: [
@@ -112,9 +114,9 @@ export class SearchQueryForm {
       defaultOperator: 'in',
       allowedOperators: ['in'],
       options: [
-        { label: 'Engineering', value: 'Engineering' },
-        { label: 'Finance', value: 'Finance' },
-        { label: 'Operations', value: 'Operations' },
+        { label: 'Engineering', value: 'ENG' },
+        { label: 'Finance', value: 'FIN' },
+        { label: 'Operations', value: 'OPS' },
       ],
     },
     {
@@ -154,6 +156,7 @@ export class SearchQueryForm {
       propertyName: 'createdAt',
       label: 'Created At',
       dataType: 'dateTime',
+      visibleByDefault: true,
       defaultOperator: 'between',
       defaultValue: todayCreatedAtRange,
       allowedOperators: ['between', 'eq', 'gte', 'lte'],
@@ -220,7 +223,7 @@ export class SearchQueryForm {
         id: 'department-in',
         property: 'department',
         operator: 'in',
-        value: ['Engineering', 'Operations'],
+        value: ['ENG', 'OPS'],
       },
       {
         id: 'reference-ids-in',
@@ -382,7 +385,9 @@ export class UserSearchQueryExample {
       propertyName: 'status',
       label: 'Status',
       dataType: 'enum',
+      visibleByDefault: true,
       defaultOperator: 'in',
+      defaultValue: ['Active'],
       allowCustomInValues: true,
       maxInValues: 50,
       options: [
@@ -406,9 +411,9 @@ export class UserSearchQueryExample {
       defaultOperator: 'in',
       allowedOperators: ['in'],
       options: [
-        { label: 'Engineering', value: 'Engineering' },
-        { label: 'Finance', value: 'Finance' },
-        { label: 'Operations', value: 'Operations' },
+        { label: 'Engineering', value: 'ENG' },
+        { label: 'Finance', value: 'FIN' },
+        { label: 'Operations', value: 'OPS' },
       ],
     },
     {
@@ -448,6 +453,7 @@ export class UserSearchQueryExample {
       propertyName: 'createdAt',
       label: 'Created at',
       dataType: 'dateTime',
+      visibleByDefault: true,
       defaultOperator: 'between',
       defaultValue: todayCreatedAtRange,
       allowedOperators: ['between', 'eq', 'gte', 'lte'],
@@ -510,7 +516,7 @@ export class UserSearchQueryExample {
         id: 'department-in',
         property: 'department',
         operator: 'in',
-        value: ['Engineering', 'Operations'],
+        value: ['ENG', 'OPS'],
       },
       {
         id: 'reference-ids-in',

@@ -10,7 +10,7 @@ The form maps to the backend `.NET` search library at:
 `/Users/msange/Documents/Sandbox/DotNet/DotNetSolutionApp/Shared/Search`
 
 The component should let consumers describe searchable and sortable properties once, then allow
-users to add, remove, clear, and edit filters and sorts without exposing SQL details. The generated
+users to add, remove, clear, reset, and edit filters and sorts without exposing SQL details. The generated
 request must match the backend request shape used by `PaginatedSearchRequest`,
 `SearchFilterRequest`, and `SearchSortRequest`.
 
@@ -58,7 +58,7 @@ Public pieces:
 - `SearchQueryFormState` is the parent-owned editable form state.
 - `SearchSortConfig` configures the available sort properties, ordered defaults, and active-sort
   limit.
-- `SearchSortOption` describes one property shown in the Add sort selector.
+- `SearchSortOption` describes one property shown in the multiple sort selector.
 - `PaginatedSearchRequest`, `SearchFilterRequest`, and `SearchSortRequest` match the backend API
   payload.
 - `SearchDataType`, `SearchOperator`, `SEARCH_SORT_DIRECTION`, and `SearchSortDirection` mirror
@@ -135,6 +135,7 @@ interface SearchPropertyConfigBase {
   propertyName: string;
   label?: string;
   required?: boolean;
+  visibleByDefault?: boolean;
   placeholder?: string;
   allowCustomInValues?: boolean;
   maxInValues?: number;
@@ -214,6 +215,8 @@ Defaults:
   empty array represents no active sorts and is omitted by `buildSearchRequest`
 - omitted `SearchPropertyConfig.label` displays `propertyName`
 - omitted `SearchPropertyConfig.required` defaults to `false`
+- omitted `SearchPropertyConfig.visibleByDefault` defaults to `false`; optional properties marked
+  `true` are restored with their configured operator/value by Reset defaults
 - omitted `SearchPropertyConfig.maxStringLength` defaults to `50` for `string` values
 - supplied `SearchPropertyConfig.maxStringLength` is capped at `50` for `string` values
 - omitted `SearchPropertyConfig.allowCustomInValues` defaults to `false`
@@ -349,7 +352,9 @@ export class UserSearchExample {
       propertyName: 'status',
       label: 'Status',
       dataType: 'enum',
+      visibleByDefault: true,
       defaultOperator: 'in',
+      defaultValue: ['Active'],
       allowCustomInValues: true,
       maxInValues: 50,
       options: [
@@ -359,9 +364,22 @@ export class UserSearchExample {
       ],
     },
     {
+      propertyName: 'department',
+      label: 'Department',
+      dataType: 'enum',
+      defaultOperator: 'in',
+      allowedOperators: ['in'],
+      options: [
+        { label: 'Engineering', value: 'ENG' },
+        { label: 'Finance', value: 'FIN' },
+        { label: 'Operations', value: 'OPS' },
+      ],
+    },
+    {
       propertyName: 'createdAt',
       label: 'Created at',
       dataType: 'dateTime',
+      visibleByDefault: true,
       defaultOperator: 'between',
       defaultValue: todayCreatedAtRange,
       allowedOperators: ['between', 'eq', 'gte', 'lte'],
@@ -370,6 +388,12 @@ export class UserSearchExample {
 
   readonly searchState = signal<SearchQueryFormState>({
     filters: [
+      {
+        id: 'department-in',
+        property: 'department',
+        operator: 'in',
+        value: ['ENG', 'OPS'],
+      },
       {
         id: 'created-at-today',
         property: 'createdAt',
@@ -430,7 +454,7 @@ user selects the configured `Active` option, and adds the custom `Escalated` val
 The implementation lives in `src/app/shared/ui-lib/components/search-query-form`:
 
 - `SearchQueryFormComponent` coordinates signal-form state, filter interactions, compact multi-sort
-  chips, search, and clear actions.
+  selection, Clear filters, Reset defaults, and Search actions.
 - `search-query-form-types.ts` defines form state, property config, request, response, value, and
   operator types.
 - `search-query-form-model.ts` defines private editable filter/sort form models.
@@ -450,8 +474,8 @@ The model, sort, value, and equality modules are component internals and are int
 re-exported from `index.ts`.
 
 The component renders a native `<form>` containing zero or more signal-form-backed grid rows and a
-bottom toolbar for adding filters and sorts, clearing optional filters, and submitting search. Each row
-contains:
+bottom toolbar for adding filters and sorts, clearing optional filters, restoring configured defaults,
+and submitting search. Each row contains:
 
 - a property selector bound with `[formField]`
 - an operator selector bound with `[formField]`
@@ -462,19 +486,18 @@ contains:
 The add-filter picker is rendered inside `ms-signal-form-field.add-filter.no-message` so it keeps
 the shared compact control treatment without reserving a message row in the toolbar.
 
-Sorting is optional. When `sortConfig.sortOptions` contains valid options, the toolbar renders an
-Add sort picker. Active sorts render as extra-small removable chips in the Add sort label row. Each
-chip shows the property, registered `arrow_upward` or `arrow_downward` icon, and `ASC` or `DESC`;
-its direction button toggles the direction. Chip order is request priority. The active/max sort
-count follows the chip group, and the complete group remains aligned to the logical inline end
-without increasing the normal label height.
+Sorting is optional. When `sortConfig.sortOptions` contains valid options, the toolbar renders a
+non-searchable multiple `ms-select`. Active sorts use the select's removable chips and a custom
+selected-option template. Each chip shows the property, registered `arrow_upward` or
+`arrow_downward` icon, and `ASC` or `DESC`; its direction button toggles the direction. Chip order is
+request priority. The active/max sort count is rendered in the Sort by label-extra area.
 
 Shared reusable components use the `ms-` selector prefix. Internal styling hooks are
 `.search-query-form`, `.filter-list`, `.filter-row`, `.filter-property`, `.filter-operator`,
 `.filter-value`, `.in-values`, `.in-values-control`, `.in-values-preview`,
 `.custom-values-editor`, `.custom-values-list`, `.filter-actions`, `.filter-toolbar`,
-`.add-filter`, `.add-sort`, `.sort-label-extra`, `.sort-chip-list`, `.sort-direction-toggle`,
-`.toolbar-actions`, `.search-filters`, `.clear-filters`, and `.remove-filter`.
+`.add-filter`, `.add-sort`, `.sort-direction-toggle`, `.toolbar-actions`, `.search-filters`,
+`.clear-filters`, `.reset-filters`, and `.remove-filter`.
 
 ## Behavior
 
@@ -517,12 +540,20 @@ Shared reusable components use the `ms-` selector prefix. Internal styling hooks
   value or the empty value for the new data type and operator.
 - The delete action removes optional filter rows.
 - The delete action is hidden or disabled for required filter rows.
-- The clear action removes every optional filter row.
-- The clear action keeps every required filter row.
-- The clear action resets required filters to their configured `defaultOperator` and
+- Clear filters removes every optional filter row.
+- Clear filters keeps every required filter row.
+- Clear filters resets required filters to their configured `defaultOperator` and
   `defaultValue`.
-- The clear action must never delete a filter whose property config has `required: true`.
-- If all current filters are optional, clear returns the form to the default empty state.
+- Clear filters must never delete a filter whose property config has `required: true`.
+- If all current filters are optional, Clear filters returns the form to the default empty state.
+- Reset defaults is rendered only when at least one optional property has
+  `visibleByDefault: true`.
+- Reset defaults rebuilds required properties first, followed by optional `visibleByDefault`
+  properties while slots remain under `maxFilters`.
+- Reset defaults restores every rebuilt property's configured `defaultOperator` and `defaultValue`
+  and restores configured default sorts.
+- Clear filters, Reset defaults, and Search update only the editable form model until explicit
+  Search submission commits parent-owned state and emits `requestChange`.
 - Changing any property, operator, or value updates the internal signal-form model.
 - Parent-owned `state` is reconciled from parent input and committed from the current form model on
   explicit search submission.
@@ -536,16 +567,19 @@ Shared reusable components use the `ms-` selector prefix. Internal styling hooks
 Sort behavior:
 
 - Sort controls are hidden when `sortConfig` is absent or has no valid `sortOptions`.
-- The Add sort picker lists only unused sort properties and is disabled at `maxSorts`.
-- Selecting a property adds it ascending and creates one compact chip in the label row.
+- The multiple sort selector lists all valid configured sort properties.
+- At `maxSorts`, unselected sort options are disabled while selected options remain removable.
+- Selecting a property adds it ascending and creates one compact `ms-select` chip.
+- Selection changes retain the current direction of existing properties and preserve selected chip
+  order as backend sort priority.
 - Clicking the chip direction control toggles `ASC` and `DESC`; the accessible name and tooltip use
   the full direction names.
 - Removing a chip removes that active sort, including the final sort. Explicitly empty sort state is
   preserved and omitted from `PaginatedSearchRequest`.
 - Sort properties are unique. Active sort array/chip order determines backend priority.
 - Invalid, duplicate, and over-limit parent sorts are removed while valid sort order is retained.
-- Clear restores `defaultSorts`; when none are configured, it restores the first valid option
-  ascending.
+- Clear filters and Reset defaults restore `defaultSorts`; when none are configured, they restore
+  the first valid option ascending.
 - Sort changes update the internal form model but emit only on explicit Search, like filter changes.
 
 Operator behavior:
@@ -617,6 +651,9 @@ Value editor behavior:
   data types are selected. Integer values still reject decimal input such as `1.2`.
 - Any property with `options` renders a dropdown for single-value operators.
 - Any property with `options` renders a multi-select dropdown for the `in` operator.
+- `SearchPropertyOption.label` is rendered in dropdown options and selected chips, while
+  `SearchPropertyOption.value` is retained in form state and emitted requests. For example,
+  Engineering/Operations labels can emit `ENG`/`OPS` values.
 - Multiple-select chips remain on one compact line inside the 28px form-field control.
 - Input values must be converted to the backend JSON-compatible shape before emission.
 
@@ -672,13 +709,13 @@ Styling rules:
 - keep the search-query surface padded with `--spacing-12`
 - keep action buttons aligned to the block-end of the add-property control in the bottom toolbar
 - let the toolbar action group fill the toolbar height so buttons align with compact form fields
-- apply only the shared one-border-width optical block-end nudge to Search and Clear
-- render active sorts as extra-small chips inside the Add sort label-extra area; keep the chip group
-  and count together at the logical inline end without increasing the normal label height
-- keep sort chip internals compact: property label, registered direction icon, `ASC`/`DESC`, and
-  remove action; do not render numeric priority badges
-- preserve overflow access with a single-line horizontally scrollable chip list rather than growing
-  the toolbar label height
+- apply the shared one-border-width optical block-end nudge to the toolbar action group
+- use the shared multiple `ms-select` for active sort chips instead of custom chip-list alignment
+- keep sort chip internals compact through the select's selected-option template: property label,
+  registered direction icon, `ASC`/`DESC`, and built-in remove action
+- order actions logically as Clear filters, conditional Reset defaults, then primary Search so the
+  primary action remains at the logical inline end in LTR and RTL layouts
+- render Clear filters as ghost, Reset defaults as outline, and Search as primary
 - keep required rows compact by hiding the delete action instead of rendering disabled controls
 - use one Values grid column for option-only `in` and add the fixed trigger column only when custom
   values are enabled
@@ -694,7 +731,7 @@ Styling rules:
 - Every property selector, operator selector, and value input must have an accessible label.
 - For `between`, label the two value controls as `From` and `To` with the property label included
   in the accessible name.
-- Use native buttons for add, delete, and clear actions.
+- Use native buttons for add, delete, clear, reset, and search actions.
 - Icon-only buttons must have accessible names independent of the symbol.
 - Required locked filters must communicate that they cannot be removed.
 - Required locked filters must not render a misleading delete button.
@@ -703,10 +740,10 @@ Styling rules:
   with `aria-invalid`.
 - Preserve visible focus indication on all interactive controls.
 - Keyboard users must be able to add filters, change operators, enter values, delete optional
-  filters, add/remove sorts, toggle sort direction, clear, and submit search.
+  filters, add/remove sorts, toggle sort direction, clear filters, reset defaults, and submit search.
 - Sort direction controls use full accessible names and tooltips even though visible labels are
   abbreviated to `ASC` and `DESC`.
-- Sort chips expose their current array order through DOM order and the Sort priority group label.
+- Sort chips expose their current array order through the `ms-select` selection DOM order.
 
 ## Showcase
 
@@ -718,7 +755,7 @@ Add a dedicated `/search-query-form` page and home card demonstrating:
 - dropdown enum filter
 - `between` date or datetime filter with `from` and `to`
 - `in` filter with multiple dropdown selections
-- option-only `in` with removable `ms-select` chips
+- option-only `in` with removable `ms-select` chips and distinct display labels/backend values
 - mixed configured-option and custom `in` values with a combined preview
 - custom-only string `in` values with first-three chips and `+N more`
 - valid custom GUID, integer, and decimal `in` rows that remain available for inline validation
@@ -726,9 +763,11 @@ Add a dedicated `/search-query-form` page and home card demonstrating:
 - custom-value popover count, maximum-state disabling, native/programmatic paste, and clear-custom
 - configurable `maxFilters` count and disabled Add state at the total filter limit
 - optional `sortConfig` with unique sort options, ordered defaults, and configurable `maxSorts`
-- compact active sort chips in the Add sort label with direction toggle, removal, active/max count,
+- compact active sort `ms-select` chips with direction toggle, built-in removal, active/max count,
   and request priority matching chip order
-- clear action that removes optional filters but keeps required filters
+- Clear filters action that removes optional filters but keeps required filters
+- Reset defaults action that restores required and `visibleByDefault` properties plus default sorts
+- Reset defaults hidden when no optional property has `visibleByDefault: true`
 - search action that emits `PaginatedSearchRequest`
 - emitted `PaginatedSearchRequest` preview
 - full showcase Created At defaults seeded through `createTodayDateTimeRange()` from local
@@ -767,16 +806,20 @@ Render snippets near the matching visual example with `<app-showcase-code>`.
 - Properties with `required: true` render automatically.
 - Required filters cannot be deleted.
 - Required filters do not display a required chip or delete button.
-- Clear removes optional filters and preserves required filters.
-- Clear resets required filters to configured defaults.
+- Clear filters removes optional filters and preserves required filters.
+- Clear filters resets required filters to configured defaults.
+- Reset defaults is hidden with zero optional `visibleByDefault` properties.
+- Reset defaults restores required and `visibleByDefault` filters with configured defaults and
+  restores default sorts.
 - Add creates optional filters from the property config.
 - `maxFilters` defaults to `10`, counts required and optional filters, and prevents optional filters
   from being added or reconciled beyond the effective limit.
 - Sorting is hidden without valid `sortOptions`; `maxSorts` defaults to `1`, prevents duplicates,
   and caps active sorts by the unique option count.
-- Default sorts initialize and reset the form in configured order; Clear restores them.
-- The Add sort selector creates ascending chips, direction controls toggle `ASC`/`DESC`, and chip
-  removal supports an explicit empty sort list.
+- Default sorts initialize and reset the form in configured order; Clear filters and Reset defaults
+  restore them.
+- The multiple sort selector creates ascending chips, direction controls toggle `ASC`/`DESC`, and
+  built-in chip removal supports an explicit empty sort list.
 - Emitted `sort` remains an ordered `SearchSortRequest[]`; empty sort arrays are omitted from the
   paginated request.
 - Delete removes optional filters.
@@ -786,6 +829,8 @@ Render snippets near the matching visual example with `<app-showcase-code>`.
 - `between` rejects malformed endpoints and reversed numeric or temporal ranges.
 - Inputs match the selected property `dataType`.
 - Properties with `options` render dropdown controls.
+- Option labels are displayed while their distinct scalar values are preserved in state and emitted
+  requests.
 - Option-only `in` renders a compact direct multi-select without reserving a custom-trigger column.
 - Custom-enabled `in` combines option and custom values in its readonly preview and emitted array.
 - The combined preview shows at most three removable chips and a plain remaining-value count.
