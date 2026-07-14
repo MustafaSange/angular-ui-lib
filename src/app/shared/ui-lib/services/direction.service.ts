@@ -3,7 +3,7 @@ import { effect, inject, Service, signal } from '@angular/core';
 
 export type LayoutDirection = 'ltr' | 'rtl';
 
-const DIRECTION_STORAGE_KEY = 'ui-lib-direction';
+const DIRECTION_STORAGE_KEY = 'ms-direction';
 const LAYOUT_DIRECTIONS: readonly LayoutDirection[] = ['ltr', 'rtl'];
 
 @Service()

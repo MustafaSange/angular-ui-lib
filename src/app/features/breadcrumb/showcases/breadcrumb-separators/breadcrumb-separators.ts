@@ -5,7 +5,7 @@ import {
   BreadcrumbItemDirective,
   BreadcrumbSeparatorDirective,
 } from '../../../../shared/ui-lib/components/breadcrumb';
-import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
+import { ShowcaseCode } from '../../../../shared/showcase-code';
 
 @Component({
   selector: 'app-breadcrumb-separators-showcase',

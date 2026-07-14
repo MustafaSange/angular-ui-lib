@@ -18,7 +18,6 @@ export * from './menu-popover';
 export * from './modal';
 export * from './otp-input';
 export * from './pagination';
-export * from './showcase-code';
 export * from './side-nav';
 export * from './select';
 export * from './search-query-form';

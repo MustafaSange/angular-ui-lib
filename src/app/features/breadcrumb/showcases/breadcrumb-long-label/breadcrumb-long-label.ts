@@ -4,7 +4,7 @@ import {
   BreadcrumbComponent,
   BreadcrumbItemDirective,
 } from '../../../../shared/ui-lib/components/breadcrumb';
-import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
+import { ShowcaseCode } from '../../../../shared/showcase-code';
 
 @Component({
   selector: 'app-breadcrumb-long-label-showcase',

@@ -7,7 +7,7 @@ import {
   SideNavSectionComponent,
   SideNavTrigger,
 } from '../../shared/ui-lib/components/side-nav';
-import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
+import { ShowcaseCode } from '../../shared/showcase-code';
 
 @Component({
   selector: 'app-side-nav',

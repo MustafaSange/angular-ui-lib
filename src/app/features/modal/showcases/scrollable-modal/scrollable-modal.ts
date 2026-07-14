@@ -7,7 +7,7 @@ import {
   ModalRef,
   ModalService,
 } from '../../../../shared/ui-lib/components/modal';
-import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
+import { ShowcaseCode } from '../../../../shared/showcase-code';
 
 type ScrollableModalData = {
   itemCount: number;

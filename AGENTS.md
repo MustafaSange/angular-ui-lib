@@ -31,7 +31,7 @@ Use modern Angular patterns:
   - For `ms-search-query-form`, keep frontend search operators aligned with backend wire names. Operators that do not take user-entered values, such as `isNull`, `isEmpty`, `isNullOrEmpty`, `isNotNull`, `isNotEmpty`, and `isNotNullOrEmpty`, should hide value inputs, skip value validators, keep filter state value as `null`, and emit request filters with `value: null`.
 - Import reusable UI library APIs through the public `src/app/shared/ui-lib` barrel in showcase copy/paste snippets, such as `./shared/ui-lib`.
 - For new showcase pages under `src/app/features/`, include copyable examples using
-  `ShowcaseCode` from `src/app/shared/ui-lib/components/showcase-code`.
+  `ShowcaseCode` from `src/app/shared/showcase-code`; do not export it from `ui-lib` barrels.
   - Keep snippets hand-authored in the feature component `.ts` file.
   - Snippets should be full standalone Angular component examples that users can copy/paste.
   - Keep the rendered showcase behavior and the copyable snippet behavior in sync. If a snippet uses a signal form model, `[formField]`, computed display state, validators, toggles, or other interaction state, the live showcase component/template should use the same behavior instead of static placeholder markup.

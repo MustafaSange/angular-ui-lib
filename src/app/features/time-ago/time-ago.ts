@@ -1,7 +1,8 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { ShowcaseCode, TimeAgoPipe } from '../../shared/ui-lib';
+import { ShowcaseCode } from '../../shared/showcase-code';
+import { TimeAgoPipe } from '../../shared/ui-lib';
 
 @Component({
   selector: 'app-time-ago',

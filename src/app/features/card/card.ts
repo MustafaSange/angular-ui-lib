@@ -10,7 +10,7 @@ import {
   CardSubtitleDirective,
   CardTitleDirective,
 } from '../../shared/ui-lib/components/card';
-import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
+import { ShowcaseCode } from '../../shared/showcase-code';
 
 @Component({
   selector: 'app-card',

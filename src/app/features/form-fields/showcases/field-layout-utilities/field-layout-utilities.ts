@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { FormField, form, schema } from '@angular/forms/signals';
 
-import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
+import { ShowcaseCode } from '../../../../shared/showcase-code';
 import {
   SignalFormField,
   SignalFormHint,
