@@ -100,6 +100,31 @@ Display-only values use `ms-readonly-value` inside the field control row.
 </ms-signal-form-field>
 ```
 
+Date-only, time-only, and composed date-time controls use the same projection and Signal Forms
+contract:
+
+```html
+<ms-signal-form-field>
+  <label for="delivery-date">Delivery date</label>
+  <ms-date-picker id="delivery-date" [formField]="dateField" />
+  <ms-hint>Enter the date as DD-MM-YYYY.</ms-hint>
+</ms-signal-form-field>
+
+<ms-signal-form-field>
+  <label for="delivery-time">Delivery time</label>
+  <ms-time-picker id="delivery-time" [formField]="timeField" />
+</ms-signal-form-field>
+
+<ms-signal-form-field>
+  <label id="appointment-label">Appointment</label>
+  <ms-date-time-picker [formField]="appointmentField" aria-labelledby="appointment-label" />
+</ms-signal-form-field>
+```
+
+The picker APIs and their canonical model values are documented in
+`context/044-date-picker.md`, `context/045-time-picker.md`, and
+`context/046-date-time-picker.md`.
+
 Do not use `[field]`; this project uses the Angular signal forms `[formField]` directive.
 
 For validation, define rules in the signal-form `schema(...)` instead of native validation attributes
@@ -152,7 +177,8 @@ projected display-value component for non-editing field rows.
 - Optional inline-end error content uses `slot="error-extra"` inside `ms-error`.
 - The projected control remains fully owned by the consumer.
 - The control row projects `[formField]`, native controls, supported `ms-*` controls,
-  `ms-readonly-value`, and prefix/suffix/action content.
+  `ms-readonly-value`, and prefix/suffix/action content. Supported picker controls include
+  `ms-date-picker`, `ms-time-picker`, and `ms-date-time-picker`.
 - The wrapper detects projected `ms-hint`, `ms-error`, `ms-readonly-value`, and Angular signal
   `FormField`.
 - The wrapper shows `ms-error` only when an error component exists and the projected signal field is invalid and touched or dirty.
@@ -188,14 +214,18 @@ The styles support both:
 
 Dense form-field sizing is part of the component contract:
 
-- native `input` and `select` controls, `ms-select`, `ms-autocomplete`, and `ms-readonly-value` align to
-  `--control-height-sm` with a 28px total control height including the outer form-field border
+- native `input` and `select` controls, `ms-select`, `ms-autocomplete`, `ms-date-picker`,
+  `ms-time-picker`, `ms-date-time-picker`, and `ms-readonly-value` align to `--control-height-sm`
+  with a 28px total control height including the outer form-field border
 - control text uses `--font-size-sm` (14px)
 - labels use `--color-text-muted`
 - checkbox, radio, and switch labels should match that muted 14px label treatment when shown in
   the form-fields showcase
 - projected controls must account for wrapper borders so they do not increase the composed field
   height
+- composite picker controls keep unavailable internal calendar choices `aria-disabled` rather than
+  natively disabled, so nested choices do not cause the outer form field to adopt disabled styling;
+  the projected picker's actual disabled or readonly input remains the source of field state
 
 Do not add consumer-facing state inputs or `data-*` state attributes to `ms-signal-form-field`.
 Internal host classes may reflect projected component state, such as `is-readonly`, `is-disabled`,
@@ -237,6 +267,12 @@ Selection controls in the same showcase should use the projected choice-control 
 
 Selection-control examples can stay grouped by control type, with each group followed by its matching snippet.
 
+The picker family uses the same signal-form-field projection contract but is demonstrated on the
+dedicated `/date-time-pickers` showcase. Its live examples and snippets must keep `[formField]`,
+canonical model values, validation, display formats, and interaction state synchronized.
+Picker manual-entry parsing uses Angular's `transformedValue()` so format and constraint errors are
+part of the projected field state and appear in the standard message row after interaction.
+
 ## Angular Rules
 
 - Use standalone Angular APIs.
@@ -256,7 +292,8 @@ Selection-control examples can stay grouped by control type, with each group fol
 - `ms-readonly-value` is exported from the folder barrel and can render plain, readonly, or disabled
   display values.
 - Consumers import all signal form field pieces from the folder `index.ts`.
-- `[formField]` works with projected controls.
+- `[formField]` works with projected native and shared controls, including `ms-date-picker`,
+  `ms-time-picker`, and `ms-date-time-picker`.
 - Hint and error are mutually exclusive.
 - Errors are gated by invalid plus touched or dirty state.
 - Existing `.form-field` examples and styling remain supported.

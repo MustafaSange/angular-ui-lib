@@ -1,0 +1,180 @@
+<div class="date-picker-control">
+  <input
+    #dateInput
+    type="text"
+    inputmode="numeric"
+    autocomplete="off"
+    [id]="inputId()"
+    [name]="name()"
+    [value]="inputText()"
+    [placeholder]="effectivePlaceholder()"
+    [disabled]="disabled()"
+    [readOnly]="readonly()"
+    [required]="required()"
+    [attr.aria-label]="ariaLabel()"
+    [attr.aria-labelledby]="ariaLabelledby()"
+    [attr.aria-describedby]="ariaDescribedby()"
+    [attr.aria-controls]="panelId"
+    [attr.aria-expanded]="open()"
+    [attr.aria-invalid]="invalidInput()"
+    [attr.aria-haspopup]="'dialog'"
+    (input)="handleInput($event)"
+    (keydown)="handleInputKeydown($event)"
+    (blur)="handleBlur($event)"
+  />
+
+  @if (clearable() && value() && !disabled() && !readonly()) {
+    <button class="date-picker-clear" type="button" aria-label="Clear date" (click)="clear($event)">
+      <span class="ms-icon" aria-hidden="true">close</span>
+    </button>
+  }
+
+  <button
+    class="date-picker-toggle"
+    type="button"
+    aria-label="Choose date"
+    [disabled]="disabled()"
+    [attr.aria-disabled]="readonly()"
+    [attr.aria-controls]="panelId"
+    [attr.aria-expanded]="open()"
+    (click)="togglePanel()"
+  >
+    <span class="ms-icon" aria-hidden="true">calendar_month</span>
+  </button>
+</div>
+
+<div
+  #datePanel
+  class="date-picker-panel"
+  popover="auto"
+  role="dialog"
+  aria-modal="false"
+  aria-label="Choose date"
+  [id]="panelId"
+  (toggle)="handlePanelToggle($event)"
+>
+  <div class="calendar-header">
+    <button
+      type="button"
+      class="calendar-navigation"
+      [attr.aria-label]="previousNavigationLabel()"
+      (click)="navigatePrevious()"
+    >
+      <span class="ms-icon" aria-hidden="true">chevron_left</span>
+    </button>
+    <div class="calendar-period" aria-live="polite">
+      @switch (calendarView()) {
+        @case ('day') {
+          <button type="button" class="calendar-period-button" (click)="showMonthView()">
+            {{ monthLabel() }}
+          </button>
+          <button type="button" class="calendar-period-button" (click)="showYearView()">
+            {{ yearLabel() }}
+          </button>
+        }
+        @case ('month') {
+          <button type="button" class="calendar-period-button" (click)="showYearView()">
+            {{ yearLabel() }}
+          </button>
+        }
+        @case ('year') {
+          <strong>{{ yearRangeLabel() }}</strong>
+        }
+      }
+    </div>
+    <button
+      type="button"
+      class="calendar-navigation"
+      [attr.aria-label]="nextNavigationLabel()"
+      (click)="navigateNext()"
+    >
+      <span class="ms-icon" aria-hidden="true">chevron_right</span>
+    </button>
+  </div>
+
+  @switch (calendarView()) {
+    @case ('day') {
+      <div class="calendar-grid" role="grid" [attr.aria-label]="calendarLabel()">
+        <div class="calendar-weekdays" role="row">
+          @for (weekday of weekdayLabels(); track $index) {
+            <span role="columnheader" [attr.aria-label]="weekday">{{ weekday }}</span>
+          }
+        </div>
+
+        <div class="calendar-days" role="rowgroup">
+          @for (day of calendarDays(); track day.iso) {
+            <button
+              #dayButton
+              type="button"
+              role="gridcell"
+              class="calendar-day"
+              [class.is-outside-month]="!day.inCurrentMonth"
+              [class.is-selected]="isSelected(day.iso)"
+              [class.is-today]="isToday(day.iso)"
+              [class.is-disabled]="isDateDisabled(day.iso)"
+              [attr.data-date]="day.iso"
+              [attr.tabindex]="isActive(day.iso) ? 0 : -1"
+              [attr.aria-disabled]="isDateDisabled(day.iso)"
+              [attr.aria-label]="dayLabel(day.iso)"
+              [attr.aria-selected]="isSelected(day.iso)"
+              [attr.aria-current]="isToday(day.iso) ? 'date' : null"
+              (click)="selectDate(day.iso)"
+              (keydown)="handleDayKeydown($event)"
+            >
+              {{ day.day }}
+            </button>
+          }
+        </div>
+      </div>
+    }
+    @case ('month') {
+      <div
+        class="calendar-selection-grid"
+        role="grid"
+        [attr.aria-label]="'Choose month for ' + yearLabel()"
+      >
+        @for (month of monthOptions(); track month.value) {
+          <button
+            #monthButton
+            type="button"
+            role="gridcell"
+            class="calendar-selection"
+            [class.is-active]="month.value === visibleMonth()"
+            [class.is-disabled]="isMonthDisabled(month.value)"
+            [attr.data-month]="month.value"
+            [attr.tabindex]="month.value === visibleMonth() ? 0 : -1"
+            [attr.aria-disabled]="isMonthDisabled(month.value)"
+            [attr.aria-label]="month.ariaLabel + ' ' + yearLabel()"
+            [attr.aria-selected]="month.value === visibleMonth()"
+            (click)="selectMonth(month.value)"
+            (keydown)="handleMonthKeydown($event)"
+          >
+            {{ month.label }}
+          </button>
+        }
+      </div>
+    }
+    @case ('year') {
+      <div class="calendar-selection-grid" role="grid" aria-label="Choose year">
+        @for (year of yearOptions(); track year) {
+          <button
+            #yearButton
+            type="button"
+            role="gridcell"
+            class="calendar-selection"
+            [class.is-active]="year === visibleYear()"
+            [class.is-disabled]="isYearDisabled(year)"
+            [attr.data-year]="year"
+            [attr.tabindex]="year === visibleYear() ? 0 : -1"
+            [attr.aria-disabled]="isYearDisabled(year)"
+            [attr.aria-selected]="year === visibleYear()"
+            (click)="selectYear(year)"
+            (keydown)="handleYearKeydown($event)"
+          >
+            {{ year }}
+          </button>
+        }
+      </div>
+    }
+  }
+</div>

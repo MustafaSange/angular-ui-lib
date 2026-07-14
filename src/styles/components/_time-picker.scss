@@ -1,0 +1,165 @@
+ms-time-picker {
+  display: block;
+  flex: 1 1 8rem;
+  min-inline-size: 8rem;
+}
+
+.time-picker {
+  color: var(--color-text-primary);
+
+  .time-picker-control {
+    display: flex;
+    align-items: stretch;
+    inline-size: 100%;
+    min-block-size: calc(var(--control-height-sm) - (var(--control-border-width) * 2));
+  }
+
+  input {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    padding-inline: var(--control-padding-x-xs);
+    border: 0;
+    background-color: transparent;
+    color: inherit;
+    font-size: var(--font-size-sm);
+
+    &:focus-visible {
+      outline: 0;
+    }
+  }
+
+  .time-picker-clear,
+  .time-picker-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-inline-size: var(--control-height-sm);
+    padding: 0;
+    border: 0;
+    border-inline-start: var(--control-border-width) solid var(--color-border);
+    background-color: transparent;
+    color: var(--color-text-muted);
+    cursor: pointer;
+
+    &:hover:not(:disabled):not([aria-disabled='true']),
+    &:focus-visible {
+      outline: 0;
+      background-color: var(--color-primary-subtle);
+      color: var(--color-primary-text);
+    }
+
+    &:disabled,
+    &[aria-disabled='true'] {
+      cursor: not-allowed;
+      opacity: var(--opacity-disabled);
+    }
+  }
+
+  &.is-disabled,
+  &.is-readonly {
+    color: var(--color-text-muted);
+  }
+
+  &.is-invalid-input input {
+    color: var(--color-danger);
+  }
+}
+
+.time-picker-panel[popover] {
+  position: fixed;
+  position-area: block-end span-inline-end;
+  position-try-fallbacks:
+    block-end span-inline-start,
+    block-start span-inline-end,
+    block-start span-inline-start;
+  z-index: var(--z-index-dropdown);
+  inset: auto;
+  max-inline-size: calc(100dvi - (var(--spacing-16) * 2));
+  margin: var(--spacing-8) 0;
+  overflow: auto;
+  padding: var(--spacing-4);
+  border: var(--border-width-sm) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-overlay);
+  box-shadow: var(--shadow-lg);
+  color: var(--color-text-primary);
+
+  &:popover-open {
+    display: grid;
+    gap: var(--spacing-12);
+    animation: ms-floating-surface-enter var(--transition-fast);
+  }
+
+  .time-picker-selectors {
+    display: flex;
+    align-items: end;
+    gap: var(--spacing-4);
+  }
+
+  .time-picker-segment {
+    display: grid;
+    flex: 0 0 auto;
+    gap: var(--spacing-4);
+    inline-size: auto;
+
+    &::after {
+      display: none;
+      content: none;
+    }
+
+    > span {
+      color: var(--color-text-muted);
+      font-size: var(--font-size-xs);
+    }
+  }
+
+  select {
+    flex: 0 0 auto;
+    inline-size: auto;
+    min-inline-size: 4rem;
+    block-size: var(--control-height-sm);
+    min-block-size: var(--control-height-sm);
+    padding-inline: var(--control-padding-x-xs);
+    border: var(--control-border-width) solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: var(--focus-ring-width) solid var(--color-focus-ring);
+      outline-offset: var(--spacing-2);
+    }
+  }
+
+  .time-picker-period select {
+    min-inline-size: 4.5rem;
+  }
+
+  .time-picker-separator {
+    align-self: flex-end;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    block-size: var(--control-height-sm);
+    min-block-size: 0;
+    padding: 0;
+    color: var(--color-text-muted);
+    font-weight: var(--font-weight-medium);
+    line-height: 1;
+  }
+
+  .time-picker-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding-block-start: var(--spacing-8);
+    border-block-start: var(--border-width-sm) solid var(--color-border-muted);
+  }
+}
+
+@media (max-width: 24rem) {
+  .time-picker-panel .time-picker-selectors {
+    flex-wrap: wrap;
+  }
+}
