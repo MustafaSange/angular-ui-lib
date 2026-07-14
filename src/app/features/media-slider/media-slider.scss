@@ -84,7 +84,6 @@ h2 {
 
 .photo,
 .alignment-tile,
-.mixed-card,
 .feature-frame,
 .aspect-frame {
   display: grid;
@@ -92,8 +91,7 @@ h2 {
 }
 
 .photo,
-.alignment-tile,
-.mixed-card {
+.alignment-tile {
   min-block-size: 16rem;
 }
 
@@ -154,7 +152,6 @@ h2 {
 }
 
 .alignment-tile,
-.mixed-card,
 .feature-frame,
 .aspect-frame {
   padding: var(--spacing-20);
@@ -193,17 +190,13 @@ h2 {
     var(--color-surface-muted);
 }
 
-.mixed-card {
-  align-content: center;
-  gap: var(--spacing-8);
-  border: var(--border-width-sm) solid var(--color-border);
-  background-color: var(--color-surface-raised);
-
-  span {
-    color: var(--color-text-secondary);
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-regular);
-  }
+.media-panel {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  background: var(--color-surface-muted);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-semibold);
 }
 
 .rtl-demo {

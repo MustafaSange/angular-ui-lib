@@ -2,6 +2,12 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import {
+  CardComponent,
+  CardContentDirective,
+  CardHeaderDirective,
+  CardTitleDirective,
+} from '../../shared/ui-lib/components/card';
+import {
   MediaCaptionDirective,
   MediaSlideComponent,
   MediaSliderComponent,
@@ -12,6 +18,10 @@ import { ShowcaseCode } from '../../shared/showcase-code';
   selector: 'app-media-slider',
   imports: [
     RouterLink,
+    CardComponent,
+    CardContentDirective,
+    CardHeaderDirective,
+    CardTitleDirective,
     MediaSliderComponent,
     MediaSlideComponent,
     MediaCaptionDirective,

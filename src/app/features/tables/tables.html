@@ -9,6 +9,143 @@
     </p>
   </header>
 
+  <section class="tables-section data-grid-section">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Interactive preview</p>
+        <h2>Data grid</h2>
+        <p class="section-description">
+          Search, filter, sort, select, and paginate while preserving the native table foundation.
+        </p>
+      </div>
+      <button class="btn btn-outline btn-sm" type="button" (click)="clearGrid()">
+        <span class="ms-icon" aria-hidden="true">restart_alt</span>
+        Reset
+      </button>
+    </div>
+
+    <div class="data-grid" role="region" aria-label="Invoice data grid">
+      <div class="data-grid-toolbar">
+        <ms-signal-form-field class="no-message search-control">
+          <label for="invoice-search">Search invoices</label>
+          <span class="form-field-prefix" aria-hidden="true">
+            <span class="ms-icon">search</span>
+          </span>
+          <input
+            id="invoice-search"
+            type="search"
+            placeholder="Invoice or customer"
+            [value]="query()"
+            (input)="updateQuery($event)"
+          />
+        </ms-signal-form-field>
+
+        <ms-signal-form-field class="no-message status-control">
+          <label for="invoice-status">Status</label>
+          <ms-select
+            id="invoice-status"
+            aria-label="Filter invoices by status"
+            [options]="statusOptions"
+            [value]="statusFilter()"
+            [searchable]="false"
+            [clearable]="false"
+            (valueChange)="updateStatus($event)"
+          />
+        </ms-signal-form-field>
+
+        <p class="result-count" aria-live="polite">
+          {{ filteredRows().length }} {{ filteredRows().length === 1 ? 'result' : 'results' }}
+        </p>
+      </div>
+
+      <div class="table-wrapper data-grid-table-wrapper">
+        <table class="table table-hover data-grid-table">
+          <caption>
+            Invoice results
+          </caption>
+          <thead>
+            <tr>
+              <th class="selection-column" scope="col">
+                <ms-checkbox-control class="grid-checkbox">
+                  <input
+                    type="checkbox"
+                    aria-label="Select all invoices on this page"
+                    [checked]="allVisibleSelected()"
+                    [indeterminate]="someVisibleSelected()"
+                    [disabled]="pagedRows().length === 0"
+                    (change)="toggleVisibleRows($event)"
+                  />
+                  <label>Select all invoices on this page</label>
+                </ms-checkbox-control>
+              </th>
+              @for (column of columns; track column.key) {
+                <th
+                  scope="col"
+                  [class.text-start]="column.key !== 'amount'"
+                  [class.text-end]="column.key === 'amount'"
+                  [attr.aria-sort]="ariaSort(column.key)"
+                >
+                  <button
+                    class="sort-button"
+                    type="button"
+                    [class.sort-button-end]="column.key === 'amount'"
+                    [attr.aria-label]="sortAriaLabel(column)"
+                    (click)="sortBy(column.key)"
+                  >
+                    {{ column.label }}
+                    <span class="ms-icon" aria-hidden="true">{{ sortIcon(column.key) }}</span>
+                  </button>
+                </th>
+              }
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of pagedRows(); track row.id) {
+              <tr [class.is-selected]="selectedIds().has(row.id)">
+                <td class="selection-column">
+                  <ms-checkbox-control class="grid-checkbox">
+                    <input
+                      type="checkbox"
+                      [attr.aria-label]="'Select ' + row.invoice"
+                      [checked]="selectedIds().has(row.id)"
+                      (change)="toggleRow(row.id, $event)"
+                    />
+                    <label>Select {{ row.invoice }}</label>
+                  </ms-checkbox-control>
+                </td>
+                <th class="text-start invoice-cell" scope="row">{{ row.invoice }}</th>
+                <td class="text-start">{{ row.customer }}</td>
+                <td class="text-start">
+                  <ms-badge [kind]="statusKind(row.status)" dot>{{ row.status }}</ms-badge>
+                </td>
+                <td class="text-start">{{ row.due }}</td>
+                <td class="text-end amount-cell">{{ formatAmount(row.amount) }}</td>
+              </tr>
+            } @empty {
+              <tr>
+                <td class="table-empty" colspan="6">
+                  No invoices match the current search and status filter.
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="data-grid-footer">
+        <p class="selection-summary" aria-live="polite">
+          @if (selectedIds().size > 0) {
+            <strong>{{ selectedIds().size }}</strong> selected
+          } @else {
+            Select rows for bulk actions
+          }
+        </p>
+        <ms-pagination [state]="pagination()" (stateChange)="updatePagination($event)" />
+      </div>
+    </div>
+    <app-showcase-code label="Interactive data grid" [code]="snippets.dataGrid" />
+  </section>
+
   <section class="tables-section">
     <h2>Basic table</h2>
     <div class="table-wrapper">
