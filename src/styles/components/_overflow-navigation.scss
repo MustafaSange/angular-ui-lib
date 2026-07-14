@@ -1,0 +1,46 @@
+.overflow-navigation-viewport.is-enabled {
+  min-inline-size: 0;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.overflow-navigation-button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--control-height-sm);
+  min-block-size: calc(var(--control-height-sm) - (var(--control-border-width) * 2));
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+
+  &.is-backward {
+    border-inline-end: var(--control-border-width) solid var(--color-border);
+  }
+
+  &.is-forward {
+    border-inline-start: var(--control-border-width) solid var(--color-border);
+  }
+
+  &:hover,
+  &:focus-visible {
+    outline: 0;
+    background-color: var(--color-primary-subtle);
+    color: var(--color-primary-text);
+  }
+
+  &:dir(rtl) .ms-icon {
+    transform: scaleX(-1);
+  }
+}

@@ -164,6 +164,27 @@ ms-signal-form-field {
     overflow-wrap: anywhere;
   }
 
+  .readonly-value-content {
+    min-inline-size: 0;
+  }
+
+  ms-readonly-value.has-overflow-navigation {
+    padding-inline: 0;
+
+    .readonly-value-content {
+      display: inline-flex;
+      flex: 1 1 auto;
+      gap: var(--spacing-4);
+      padding-inline: var(--control-padding-x-xs);
+      overflow-wrap: normal;
+      white-space: nowrap;
+
+      > * {
+        flex: 0 0 auto;
+      }
+    }
+  }
+
   .readonly-value-fallback {
     display: contents;
   }
@@ -172,7 +193,7 @@ ms-signal-form-field {
     color: var(--color-text-muted);
   }
 
-  ms-select .select-values {
+  ms-select .select-values:not(.is-enabled) {
     flex-wrap: nowrap;
     overflow: hidden;
   }

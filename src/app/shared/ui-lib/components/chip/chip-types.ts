@@ -1,4 +1,4 @@
-import type { NeutralSemanticKind } from '../../semantic-types';
+import type { NeutralSemanticKind } from '../../types';
 
 export type ChipKind = NeutralSemanticKind;
 export type ChipAppearance = 'soft' | 'outline';

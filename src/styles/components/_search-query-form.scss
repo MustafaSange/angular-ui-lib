@@ -149,6 +149,15 @@ ms-search-query-form {
     }
   }
 
+  ms-readonly-value.has-overflow-navigation .in-values-preview {
+    inline-size: max-content;
+    overflow: visible;
+
+    ms-chip {
+      flex: 0 0 auto;
+    }
+  }
+
   .in-values-placeholder,
   .in-values-more {
     flex: 0 0 auto;

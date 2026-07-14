@@ -85,6 +85,7 @@
                         @if (!allowCustomInValues(property) && hasOptions(property)) {
                           <ms-select
                             multiple
+                            overflowNavigation
                             [searchable]="false"
                             [formField]="field.values"
                             (valueChange)="handleInOptionValuesChange(filter, property, $event)"
@@ -99,7 +100,7 @@
                             }
                           </ms-select>
                         } @else {
-                          <ms-readonly-value readonly>
+                          <ms-readonly-value readonly overflowNavigation>
                             <span class="in-values-preview">
                               @if (totalInValues(filter) === 0) {
                                 <span class="in-values-placeholder">Add values</span>
@@ -165,6 +166,7 @@
                                     <label>Options</label>
                                     <ms-select
                                       multiple
+                                      overflowNavigation
                                       [searchable]="false"
                                       [formField]="field.values"
                                       (valueChange)="
@@ -402,6 +404,7 @@
 
         <ms-select
           multiple
+          overflowNavigation
           [searchable]="false"
           [clearable]="false"
           placeholder="Choose sort properties"

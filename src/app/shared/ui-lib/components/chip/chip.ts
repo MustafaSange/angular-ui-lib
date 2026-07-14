@@ -1,6 +1,6 @@
 import { Component, booleanAttribute, computed, input, output } from '@angular/core';
 
-import { shapeRadiusValue, type ShapeRadius } from '../../shape-types';
+import { shapeRadiusValue, type ShapeRadius } from '../../types';
 import type { ChipAppearance, ChipKind, ChipSize } from './chip-types';
 
 @Component({

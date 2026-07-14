@@ -1,5 +1,21 @@
 <div class="select-control">
-  <div class="select-values" (click)="focusInput()">
+  @let overflow = navigation.state();
+
+  @if (overflow.hasOverflow && overflow.canScrollBackward) {
+    <button
+      msOverflowNavigationButton="backward"
+      aria-label="Scroll selected values backward"
+      (click)="navigation.scroll('backward')"
+    ></button>
+  }
+
+  <div
+    #navigation="overflowNavigation"
+    class="select-values"
+    [msOverflowNavigation]="showOverflowNavigation()"
+    [msOverflowScrollRatio]="overflowScrollRatio()"
+    (click)="focusInput()"
+  >
     @if (multiple()) {
       @for (option of selectedOptions(); track optionId(option); let index = $index) {
         <span class="select-chip">
@@ -48,6 +64,14 @@
       (keydown)="handleKeydown($event)"
     />
   </div>
+
+  @if (overflow.hasOverflow && overflow.canScrollForward) {
+    <button
+      msOverflowNavigationButton="forward"
+      aria-label="Scroll selected values forward"
+      (click)="navigation.scroll('forward')"
+    ></button>
+  }
 
   @if (loading()) {
     <span class="select-progress" aria-label="Loading options" role="status"></span>

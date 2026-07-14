@@ -1,17 +1,21 @@
 <div class="tabs">
   <div class="tab-header">
-    @if (hasOverflow() && canScrollBackward()) {
+    @let overflow = navigation.state();
+
+    @if (overflow.hasOverflow && overflow.canScrollBackward) {
       <button
-        class="tab-scroll-button"
-        type="button"
+        msOverflowNavigationButton="backward"
         aria-label="Scroll tabs backward"
-        (click)="scrollTabs('backward')"
-      >
-        <span class="ms-icon" aria-hidden="true">chevron_left</span>
-      </button>
+        (click)="navigation.scroll('backward')"
+      ></button>
     }
 
-    <div #tabList class="tab-list" role="tablist" (scroll)="updateScrollState()">
+    <div
+      #navigation="overflowNavigation"
+      class="tab-list"
+      role="tablist"
+      [msOverflowNavigation]="true"
+    >
       @for (tab of tabs(); track tab; let index = $index) {
         <button
           #tabButton
@@ -35,15 +39,12 @@
       }
     </div>
 
-    @if (hasOverflow() && canScrollForward()) {
+    @if (overflow.hasOverflow && overflow.canScrollForward) {
       <button
-        class="tab-scroll-button"
-        type="button"
+        msOverflowNavigationButton="forward"
         aria-label="Scroll tabs forward"
-        (click)="scrollTabs('forward')"
-      >
-        <span class="ms-icon" aria-hidden="true">chevron_right</span>
-      </button>
+        (click)="navigation.scroll('forward')"
+      ></button>
     }
   </div>
 

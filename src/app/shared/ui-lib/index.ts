@@ -1,5 +1,5 @@
 export * from './components';
+export * from './directives';
 export * from './pipes';
-export * from './semantic-types';
 export * from './services';
-export * from './shape-types';
+export * from './types';

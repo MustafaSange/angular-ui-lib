@@ -1,4 +1,4 @@
-import type { SemanticKind } from '../../semantic-types';
+import type { SemanticKind } from '../../types';
 
 export type FeedbackKind = SemanticKind;
 

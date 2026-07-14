@@ -143,6 +143,14 @@ ms-select {
       pointer-events: none;
     }
   }
+
+  &.has-overflow-navigation .select-values {
+    flex-wrap: nowrap;
+
+    .select-chip {
+      flex: 0 0 auto;
+    }
+  }
 }
 
 .select-option-source,
