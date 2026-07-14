@@ -1,0 +1,104 @@
+<div
+  #treeElement
+  class="tree-node"
+  role="treeitem"
+  [class.tree-node-selected]="selected()"
+  [class.tree-node-disabled]="disabled()"
+  [class.tree-node-expanded]="expanded()"
+  [attr.data-tree-node-id]="nodeId()"
+  [attr.aria-label]="accessibleLabel()"
+  [attr.aria-level]="level()"
+  [attr.aria-selected]="selected()"
+  [attr.aria-disabled]="disabled() ? true : null"
+  [attr.aria-expanded]="expandable() ? expanded() : null"
+  [attr.aria-busy]="loading() ? true : null"
+  [attr.aria-controls]="hasBodyContent() ? contentId : null"
+  [attr.tabindex]="!disabled() && state.focusedId() === nodeId() ? 0 : -1"
+  (focus)="handleFocus()"
+  (keydown)="handleKeydown($event)"
+>
+  <div class="tree-row" (click)="handleRowClick()">
+    <span
+      class="tree-toggle ms-icon"
+      [class.tree-toggle-empty]="!expandable()"
+      aria-hidden="true"
+      (click)="toggle($event)"
+      >chevron_right</span
+    >
+
+    @if (icon()) {
+      <span class="tree-icon ms-icon" aria-hidden="true">{{ icon() }}</span>
+    }
+
+    <span class="tree-label" [id]="labelId">
+      <ng-content select="[msTreeNodeLabel]" />
+
+      @if (!projectedLabel()) {
+        @if (keyedLabelTemplate(); as labelTemplate) {
+          <ng-container
+            [ngTemplateOutlet]="labelTemplate"
+            [ngTemplateOutletContext]="templateContext()"
+          />
+        } @else {
+          {{ label() }}
+        }
+      }
+    </span>
+  </div>
+
+  <div #collapsibleContent class="tree-collapsible" [hidden]="!expanded()">
+    @if (hasBodyContent()) {
+      <div class="tree-content" role="region" [id]="contentId" [attr.aria-labelledby]="labelId">
+        <ng-content select="[msTreeNodeContent]" />
+
+        @if (!projectedContent()) {
+          @if (keyedContentTemplate(); as contentTemplate) {
+            <ng-container
+              [ngTemplateOutlet]="contentTemplate"
+              [ngTemplateOutletContext]="templateContext()"
+            />
+          } @else {
+            {{ content() }}
+          }
+        }
+      </div>
+    }
+
+    @if (loading()) {
+      <div class="tree-load-state" role="status">Loading items…</div>
+    } @else if (loadError()) {
+      <div class="tree-load-state tree-load-error" role="status">
+        <span>Couldn’t load items.</span>
+        <button class="btn btn-ghost btn-sm" type="button" (click)="retry($event)">Retry</button>
+      </div>
+    }
+
+    <div
+      class="tree-children"
+      role="group"
+      [class.tree-projected-first]="mixedOrder() === 'projected-first'"
+      [class.tree-data-first]="mixedOrder() === 'data-first'"
+    >
+      <div class="tree-projected-nodes" role="presentation">
+        <ng-content select="ms-tree-node" />
+      </div>
+
+      <div class="tree-data-nodes" role="presentation">
+        @for (node of resolvedNodes(); track node.id) {
+          <ms-tree-node
+            [nodeId]="node.id"
+            [label]="node.label"
+            [content]="node.content ?? ''"
+            [icon]="node.icon ?? ''"
+            [disabled]="node.disabled ?? false"
+            [hasChildren]="node.hasChildren ?? false"
+            [nodes]="node.children ?? []"
+            [data]="node.data"
+            [treeLevel]="level() + 1"
+            [parentNodeId]="nodeId()"
+          />
+        }
+      </div>
+    </div>
+  </div>
+</div>

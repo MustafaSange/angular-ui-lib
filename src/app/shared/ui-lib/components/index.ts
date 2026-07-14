@@ -31,5 +31,6 @@ export * from './tabs';
 export * from './theme-customizer';
 export * from './theme-switcher';
 export * from './timeline';
+export * from './tree';
 export * from './time-picker';
 export * from './tooltip';

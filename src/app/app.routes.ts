@@ -154,6 +154,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/timeline/timeline').then((m) => m.Timeline),
   },
   {
+    path: 'tree',
+    loadComponent: () => import('./features/tree/tree').then((m) => m.Tree),
+  },
+  {
     path: 'time-ago',
     loadComponent: () => import('./features/time-ago/time-ago').then((m) => m.TimeAgo),
   },

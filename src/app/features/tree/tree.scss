@@ -1,0 +1,85 @@
+@use '../showcase-page' as showcase;
+
+@include showcase.shell;
+@include showcase.demo-panel;
+
+.tree-demo {
+  max-inline-size: 32rem;
+}
+
+.tree-state {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-4) var(--spacing-16);
+  margin-block-start: var(--spacing-12);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.tree-guide {
+  margin-block-start: var(--spacing-16);
+  padding: var(--spacing-12);
+  border-inline-start: var(--border-width-md) solid var(--color-primary);
+  background-color: var(--color-primary-subtle);
+
+  h3 {
+    margin: 0 0 var(--spacing-8);
+    font-size: var(--font-size-md);
+  }
+
+  dl,
+  ol,
+  dd {
+    margin: 0;
+  }
+
+  ol {
+    display: grid;
+    gap: var(--spacing-4);
+    padding-inline-start: var(--spacing-20);
+    color: var(--color-text-secondary);
+  }
+
+  dl {
+    display: grid;
+    gap: var(--spacing-8);
+  }
+
+  dl > div {
+    display: grid;
+    grid-template-columns: minmax(8rem, auto) minmax(0, 1fr);
+    gap: var(--spacing-8);
+  }
+
+  dt {
+    font-weight: var(--font-weight-medium);
+  }
+
+  dd {
+    color: var(--color-text-secondary);
+  }
+}
+
+.tree-source-example {
+  margin-block-start: var(--spacing-24);
+  padding-block-start: var(--spacing-20);
+  border-block-start: var(--border-width-sm) solid var(--color-border-muted);
+}
+
+.tree-source-example h3,
+.tree-section > h3 {
+  margin: 0;
+  font-size: var(--font-size-md);
+}
+
+.source-copy {
+  margin-block: var(--spacing-4) var(--spacing-12);
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 36rem) {
+  .tree-guide dl > div {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-2);
+  }
+}
