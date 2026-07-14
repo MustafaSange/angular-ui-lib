@@ -36,7 +36,9 @@
 
   <section class="media-slider-section">
     <h2>Large single-slide view</h2>
-    <p class="section-copy">Use `slideSize="90%"` when one large slide should dominate the track.</p>
+    <p class="section-copy">
+      Use `slideSize="90%"` when one large slide should dominate the track.
+    </p>
     <div class="media-slider-demo">
       <ms-media-slider slideSize="90%" aria-label="Large feature slides">
         <ms-media-slide>
@@ -98,7 +100,9 @@
 
   <section class="media-slider-section">
     <h2>Optional captions</h2>
-    <p class="section-copy">Caption space appears only on slides that project `[msMediaCaption]`.</p>
+    <p class="section-copy">
+      Caption space appears only on slides that project `[msMediaCaption]`.
+    </p>
     <div class="media-slider-demo">
       <ms-media-slider aria-label="Gallery with captions">
         <ms-media-slide>
@@ -121,7 +125,9 @@
 
   <section class="media-slider-section">
     <h2>Start and end snap alignment</h2>
-    <p class="section-copy">Set `snapAlign` when a layout should snap to an edge instead of center.</p>
+    <p class="section-copy">
+      Set `snapAlign` when a layout should snap to an edge instead of center.
+    </p>
     <div class="media-slider-demo alignment-demo">
       <ms-media-slider snapAlign="start" aria-label="Start aligned photos">
         <ms-media-slide>
@@ -156,19 +162,23 @@
     <div class="media-slider-demo">
       <ms-media-slider aria-label="Mixed media cards">
         <ms-media-slide>
-          <div class="mixed-card">
-            <strong>Campaign frame</strong>
-            <span>Use any projected content as a snapped slide.</span>
-          </div>
+          <ms-card>
+            <header msCardHeader>
+              <h2 msCardTitle>Campaign frame</h2>
+            </header>
+            <section msCardContent>
+              <p>Use any projected content as a snapped slide.</p>
+            </section>
+          </ms-card>
           <p msMediaCaption>Projected card content.</p>
         </ms-media-slide>
 
         <ms-media-slide>
-          <div class="alignment-tile tile-green">Video preview</div>
+          <div class="media-panel">Video preview</div>
         </ms-media-slide>
 
         <ms-media-slide>
-          <div class="alignment-tile tile-blue">Product crop</div>
+          <div class="media-panel">Product crop</div>
           <p msMediaCaption>Caption text stays optional per slide.</p>
         </ms-media-slide>
       </ms-media-slider>
@@ -178,7 +188,9 @@
 
   <section class="media-slider-section">
     <h2>RTL mirroring</h2>
-    <p class="section-copy">Controls and scroll behavior remain usable in right-to-left containers.</p>
+    <p class="section-copy">
+      Controls and scroll behavior remain usable in right-to-left containers.
+    </p>
     <div class="media-slider-demo rtl-demo" dir="rtl">
       <ms-media-slider aria-label="معرض الصور">
         <ms-media-slide>

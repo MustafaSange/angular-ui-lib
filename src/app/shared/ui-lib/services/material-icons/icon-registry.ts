@@ -41,5 +41,6 @@ export const MATERIAL_ICONS = [
   'schedule',
   'skip_next',
   'sync',
+  'unfold_more',
   'upload_file',
 ] as const;
