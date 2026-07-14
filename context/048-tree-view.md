@@ -68,6 +68,10 @@ type TreeChildrenLoader<T = unknown> = (node: TreeNode<T>) => TreeChildrenSource
 
 - `nodes`, defaulting to an empty array
 - `ariaLabel`, defaulting to `Tree`
+- `emptyText`, defaulting to `No items`
+- `loadingText`, defaulting to `Loading items…`
+- `loadErrorText`, defaulting to `Couldn’t load items.`
+- `retryText`, defaulting to `Retry`
 - `mixedOrder`, defaulting to `projected-first`
 - optional `loadChildren`
 - two-way `selectedId`, defaulting to `null`
@@ -182,9 +186,15 @@ Resolution rules:
 - Clicking an enabled row focuses, selects, and emits activation for the node.
 - Enter selects and activates; Space selects without activation.
 - Up and Down move through visible enabled nodes; Home and End move to the visible boundaries.
+- Typing characters moves focus to the next visible enabled node whose accessible label starts with
+  the buffered text. Matching wraps, and repeating one character cycles matching nodes.
 - Logical inline-end expands a closed branch or enters its first child. Logical inline-start
   collapses an open branch or focuses its parent. These keys mirror in RTL.
 - Disabled nodes remain visible but cannot receive tree focus, select, activate, or expand.
+- Initialize the roving tab stop from the selected visible node, or the first enabled visible node
+  when there is no visible selection.
+- If the focused node is removed, disabled, or hidden by a collapsed branch, move the roving tab
+  stop to the nearest enabled visible node.
 - Render expanded body content before child nodes.
 - If collapse hides focused body content, move focus back to its owning tree item.
 - Keep selected and expanded state controlled through their model signals.
@@ -208,6 +218,7 @@ Resolution rules:
   projected children.
 - On rejection, retain the branch and render an accessible error with a Retry action.
 - Retry clears the error and invokes the loader again.
+- Allow consumers to customize empty, loading, load-error, and retry text at the tree level.
 
 ## Styling
 
@@ -219,6 +230,10 @@ style index.
 - Use `.tree-*` internal hooks and keep Material Symbols on the established `.ms-icon` utility.
 - Use logical indentation and margins so hierarchy mirrors naturally in RTL.
 - Rotate disclosure chevrons according to direction and expanded state.
+- Extend each disclosure chevron's pointer target to the 28px small-control size without changing
+  its compact 20px visual footprint or the dense row height.
+- Use the body line-height for node labels and expanded content so glyphs remain unclipped while
+  rows retain the 28px dense-control height.
 - Use subtle primary selection, visible focus, muted icons, disabled presentation, and truncated
   labels.
 - Keep projected content visually subordinate to its owning row and indent it with the hierarchy.

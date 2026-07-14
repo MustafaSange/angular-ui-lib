@@ -316,6 +316,9 @@ import { TreeComponent, TreeNode } from './shared/ui-lib';
       ariaLabel="Service resources"
       [nodes]="nodes"
       [loadChildren]="loadChildren"
+      loadingText="Fetching services…"
+      loadErrorText="Services are temporarily unavailable."
+      retryText="Try again"
       [(expandedIds)]="expandedIds"
     />
   \`,

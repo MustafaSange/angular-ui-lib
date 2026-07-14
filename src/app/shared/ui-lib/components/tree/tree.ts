@@ -32,6 +32,10 @@ export class TreeComponent<T = unknown> {
 
   readonly nodes = input<readonly TreeNode<T>[]>([]);
   readonly ariaLabel = input('Tree');
+  readonly emptyText = input('No items');
+  readonly loadingText = input('Loading items…');
+  readonly loadErrorText = input('Couldn’t load items.');
+  readonly retryText = input('Retry');
   readonly mixedOrder = input<TreeMixedOrder>('projected-first');
   readonly loadChildren = input<TreeChildrenLoader<T> | null>(null);
   readonly selectedId = model<string | null>(null);
@@ -51,6 +55,12 @@ export class TreeComponent<T = unknown> {
     effect(() => {
       const loader = this.loadChildren();
       this.state.dataLoader.set(loader as TreeChildrenLoader | null);
+    });
+
+    effect(() => {
+      this.state.loadingText.set(this.loadingText());
+      this.state.loadErrorText.set(this.loadErrorText());
+      this.state.retryText.set(this.retryText());
     });
 
     effect(() => {

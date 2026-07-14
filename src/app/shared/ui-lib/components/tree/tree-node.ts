@@ -1,6 +1,7 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   Component,
+  DestroyRef,
   ElementRef,
   booleanAttribute,
   computed,
@@ -44,6 +45,7 @@ type TreeLoadStatus = 'idle' | 'loading' | 'loaded' | 'error';
 export class TreeNodeComponent<T = unknown> {
   protected readonly state = inject(TreeState);
   private readonly childrenResolver = inject(TreeChildrenResolver);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly generatedId = `ms-tree-node-${nextTreeNodeId++}`;
   private readonly assignedLevel = signal<number | null>(null);
   private readonly assignedParentId = signal<string | null>(null);
@@ -134,6 +136,8 @@ export class TreeNodeComponent<T = unknown> {
     this.syncFocusableNode();
     this.syncProjectedChildHierarchy();
     this.watchExpansion();
+
+    this.destroyRef.onDestroy(() => this.state.removeFocusable(this.nodeId()));
   }
 
   assignHierarchy(level: number, parentId: string | null): void {
@@ -206,7 +210,11 @@ export class TreeNodeComponent<T = unknown> {
         this.state.select(this.sourceNode(), false);
         break;
       default:
-        this.handleInlineNavigation(event, treeElement, inlineStartKey, inlineEndKey);
+        if (this.state.focusByTypeahead(treeElement, event)) {
+          event.preventDefault();
+        } else {
+          this.handleInlineNavigation(event, treeElement, inlineStartKey, inlineEndKey);
+        }
     }
   }
 
@@ -239,6 +247,7 @@ export class TreeNodeComponent<T = unknown> {
         untracked(() => void this.loadLazyChildren());
       } else if (wasExpanded && !expanded) {
         this.restoreFocusToNode();
+        this.state.reconcileFocusableNodes();
       }
 
       wasExpanded = expanded;

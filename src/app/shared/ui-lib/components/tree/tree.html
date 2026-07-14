@@ -26,6 +26,6 @@
   </div>
 
   @if (nodes().length === 0 && projectedNodes().length === 0) {
-    <div class="tree-empty">No items</div>
+    <div class="tree-empty">{{ emptyText() }}</div>
   }
 </div>

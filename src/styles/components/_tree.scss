@@ -51,7 +51,14 @@ ms-tree-node {
   background-color: var(--color-surface-muted);
 }
 
+.tree-node:focus {
+  position: relative;
+  z-index: 1;
+}
+
 .tree-node:focus > .tree-row {
+  position: relative;
+  z-index: 1;
   box-shadow: var(--control-focus-ring);
 }
 
@@ -78,6 +85,7 @@ ms-tree-node {
 }
 
 .tree-toggle {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -88,6 +96,12 @@ ms-tree-node {
   transition:
     background-color var(--transition-fast),
     transform var(--transition-fast);
+}
+
+.tree-toggle:not(.tree-toggle-empty)::before {
+  position: absolute;
+  inset: calc(-1 * var(--spacing-4));
+  content: '';
 }
 
 .tree-toggle:hover:not(.tree-toggle-empty) {
@@ -120,6 +134,7 @@ ms-tree-node {
   gap: var(--spacing-4);
   min-inline-size: 0;
   overflow: hidden;
+  line-height: var(--line-height-body);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -131,6 +146,7 @@ ms-tree-node {
   border-inline-start: var(--border-width-sm) solid var(--color-border-muted);
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
+  line-height: var(--line-height-body);
 }
 
 .tree-content :where(p) {
