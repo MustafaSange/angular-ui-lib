@@ -72,6 +72,8 @@
           name="cities"
           placeholder="Choose cities"
           multiple
+          overflowNavigation
+          [overflowScrollRatio]="0.6"
           [(value)]="selectedCities"
         >
           @for (option of cityOptions; track option.value) {

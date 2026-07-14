@@ -42,7 +42,13 @@ export class Select {
 
   protected readonly role = signal<string | null>('developer');
   protected readonly status = signal<string | null>('active');
-  protected readonly selectedCities = signal<string[]>(['doha']);
+  protected readonly selectedCities = signal<string[]>([
+    'doha',
+    'dubai',
+    'riyadh',
+    'london',
+    'madrid',
+  ]);
   protected readonly disabledValue = signal<string | null>('developer');
   protected readonly signalForm = form(
     this.signalFormModel,
@@ -190,7 +196,15 @@ import { SelectComponent, SelectOptionComponent, SignalFormField } from './share
   template: \`
     <ms-signal-form-field>
       <label for="cities">Cities</label>
-      <ms-select id="cities" name="cities" placeholder="Choose cities" multiple [(value)]="cities">
+      <ms-select
+        id="cities"
+        name="cities"
+        placeholder="Choose cities"
+        multiple
+        overflowNavigation
+        [overflowScrollRatio]="0.6"
+        [(value)]="cities"
+      >
         <ms-select-option value="doha" group="Middle East">Doha</ms-select-option>
         <ms-select-option value="dubai" group="Middle East">Dubai</ms-select-option>
         <ms-select-option value="riyadh" group="Middle East">Riyadh</ms-select-option>
@@ -201,7 +215,7 @@ import { SelectComponent, SelectOptionComponent, SignalFormField } from './share
   \`,
 })
 export class MultipleSelectExample {
-  readonly cities = signal<string[]>(['doha']);
+  readonly cities = signal<string[]>(['doha', 'dubai', 'riyadh', 'london', 'madrid']);
 }`;
 
   protected readonly asyncSnippet = `import { Component } from '@angular/core';

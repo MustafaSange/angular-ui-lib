@@ -19,6 +19,7 @@ import { NgTemplateOutlet } from '@angular/common';
 import type { FormValueControl } from '@angular/forms/signals';
 import { Observable, Subscription, isObservable } from 'rxjs';
 
+import { OverflowNavigation, OverflowNavigationButton } from '../../directives';
 import type {
   SelectCompareWith,
   SelectDisplayWith,
@@ -43,7 +44,7 @@ let nextSelectId = 0;
 
 @Component({
   selector: 'ms-select',
-  imports: [NgTemplateOutlet],
+  imports: [NgTemplateOutlet, OverflowNavigation, OverflowNavigationButton],
   templateUrl: './select.html',
   host: {
     class: 'select',
@@ -53,6 +54,7 @@ let nextSelectId = 0;
     '[class.is-multiple]': 'multiple()',
     '[class.is-searchable]': 'searchable()',
     '[class.has-selection]': 'hasSelection()',
+    '[class.has-overflow-navigation]': 'showOverflowNavigation()',
     '[attr.formField]': 'true',
   },
 })
@@ -69,6 +71,8 @@ export class SelectComponent<TValue>
   readonly readonly = input(false, { transform: booleanAttribute });
   readonly required = input(false, { transform: booleanAttribute });
   readonly clearable = input(true, { transform: booleanAttribute });
+  readonly overflowNavigation = input(false, { transform: booleanAttribute });
+  readonly overflowScrollRatio = input(0.75);
   readonly debounceMs = input(250);
   readonly minQueryLength = input(0);
   readonly name = input('');
@@ -180,6 +184,9 @@ export class SelectComponent<TValue>
   );
 
   protected readonly hasSelection = computed(() => this.selectedValues().length > 0);
+  protected readonly showOverflowNavigation = computed(
+    () => this.overflowNavigation() && this.multiple(),
+  );
 
   constructor() {
     effect(() => {

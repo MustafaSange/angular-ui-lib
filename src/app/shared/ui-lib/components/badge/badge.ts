@@ -1,6 +1,6 @@
 import { Component, booleanAttribute, computed, input } from '@angular/core';
 
-import { shapeRadiusValue, type ShapeRadius } from '../../shape-types';
+import { shapeRadiusValue, type ShapeRadius } from '../../types';
 import type { BadgeAppearance, BadgeKind } from './badge-types';
 
 @Component({

@@ -18,6 +18,9 @@ export class DisplayValuesShowcase {
   protected readonly displayName = signal('Ada Lovelace');
   protected readonly accountId = signal('ACCT-2048');
   protected readonly archivedStatus = signal('Archived');
+  protected readonly permissions = signal(
+    'Administrator · Billing manager · User provisioning · Audit log reviewer · Support escalation',
+  );
 
   protected readonly snippet = `import { Component, signal } from '@angular/core';
 
@@ -44,11 +47,24 @@ import { SignalFormField, SignalFormHint, SignalReadonlyValue } from './shared/u
       <ms-readonly-value [value]="archivedStatus()" disabled />
       <ms-hint>Disabled display values use the same disabled treatment as inputs.</ms-hint>
     </ms-signal-form-field>
+
+    <ms-signal-form-field>
+      <label>Permissions</label>
+      <ms-readonly-value
+        [value]="permissions()"
+        overflowNavigation
+        [overflowScrollRatio]="0.6"
+      />
+      <ms-hint>Overflow navigation keeps long values on one compact line.</ms-hint>
+    </ms-signal-form-field>
   \`,
 })
 export class DisplayValuesExample {
   protected readonly displayName = signal('Ada Lovelace');
   protected readonly accountId = signal('ACCT-2048');
   protected readonly archivedStatus = signal('Archived');
+  protected readonly permissions = signal(
+    'Administrator · Billing manager · User provisioning · Audit log reviewer · Support escalation',
+  );
 }`;
 }

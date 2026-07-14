@@ -16,5 +16,11 @@
     <ms-readonly-value [value]="archivedStatus()" disabled />
     <ms-hint>Disabled display values use the same disabled treatment as inputs.</ms-hint>
   </ms-signal-form-field>
+
+  <ms-signal-form-field>
+    <label>Permissions</label>
+    <ms-readonly-value [value]="permissions()" overflowNavigation [overflowScrollRatio]="0.6" />
+    <ms-hint>Overflow navigation keeps long values on one compact line.</ms-hint>
+  </ms-signal-form-field>
 </div>
 <app-showcase-code label="Display values" [code]="snippet" />
