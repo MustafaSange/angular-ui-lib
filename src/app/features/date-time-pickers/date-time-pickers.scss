@@ -1,0 +1,19 @@
+@use '../showcase-page' as showcase;
+
+@include showcase.shell;
+@include showcase.demo-panel;
+
+.form-demo {
+  display: grid;
+  gap: var(--spacing-12);
+
+  ms-signal-form-field {
+    inline-size: min(100%, 28rem);
+  }
+
+  p {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+  }
+}

@@ -96,6 +96,11 @@ export const routes: Routes = [
     loadComponent: () => import('./features/drawer/drawer').then((m) => m.Drawer),
   },
   {
+    path: 'date-time-pickers',
+    loadComponent: () =>
+      import('./features/date-time-pickers/date-time-pickers').then((m) => m.DateTimePickers),
+  },
+  {
     path: 'pagination',
     loadComponent: () => import('./features/pagination/pagination').then((m) => m.Pagination),
   },
