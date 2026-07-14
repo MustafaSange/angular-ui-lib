@@ -1,0 +1,4 @@
+interface:
+  display_name: "Publish Feature Branch"
+  short_description: "Branch, commit, and push all feature changes"
+  default_prompt: "Use $git-publish-feature to create a feature branch, stage all changes, commit them with a clear subject and description, and push it."

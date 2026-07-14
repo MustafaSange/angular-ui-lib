@@ -1,0 +1,4 @@
+interface:
+  display_name: "Commit and Push Changes"
+  short_description: "Stage, commit, and push the current branch"
+  default_prompt: "Use $git-commit-and-push to stage all current changes, create a concise commit, and push the current branch."
