@@ -73,6 +73,8 @@ export function parseSearchScalar(
       return Number.parseInt(value, 10);
     case 'decimal':
       return Number(value);
+    case 'enum':
+      return value;
     default:
       return value;
   }

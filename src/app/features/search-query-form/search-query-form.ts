@@ -94,6 +94,7 @@ export class SearchQueryForm {
       allowCustomInValues: true,
       maxInValues: 50,
       options: [
+        // Labels are display text; values are backend enum strings.
         { label: 'Active', value: 'Active' },
         { label: 'Pending', value: 'Pending' },
         { label: 'Blocked', value: 'Blocked' },
@@ -114,6 +115,7 @@ export class SearchQueryForm {
       defaultOperator: 'in',
       allowedOperators: ['in'],
       options: [
+        // Labels are display text; values are backend enum strings.
         { label: 'Engineering', value: 'ENG' },
         { label: 'Finance', value: 'FIN' },
         { label: 'Operations', value: 'OPS' },
@@ -391,6 +393,7 @@ export class UserSearchQueryExample {
       allowCustomInValues: true,
       maxInValues: 50,
       options: [
+        // Labels are display text; values are backend enum strings.
         { label: 'Active', value: 'Active' },
         { label: 'Pending', value: 'Pending' },
         { label: 'Blocked', value: 'Blocked' },
@@ -411,6 +414,7 @@ export class UserSearchQueryExample {
       defaultOperator: 'in',
       allowedOperators: ['in'],
       options: [
+        // Labels are display text; values are backend enum strings.
         { label: 'Engineering', value: 'ENG' },
         { label: 'Finance', value: 'FIN' },
         { label: 'Operations', value: 'OPS' },
