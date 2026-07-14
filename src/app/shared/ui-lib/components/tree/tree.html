@@ -1,0 +1,31 @@
+<div
+  class="tree"
+  role="tree"
+  [class.tree-projected-first]="mixedOrder() === 'projected-first'"
+  [class.tree-data-first]="mixedOrder() === 'data-first'"
+  [attr.aria-label]="ariaLabel()"
+>
+  <div class="tree-projected-nodes" role="presentation">
+    <ng-content select="ms-tree-node" />
+  </div>
+
+  <div class="tree-data-nodes" role="presentation">
+    @for (node of nodes(); track node.id) {
+      <ms-tree-node
+        [nodeId]="node.id"
+        [label]="node.label"
+        [content]="node.content ?? ''"
+        [icon]="node.icon ?? ''"
+        [disabled]="node.disabled ?? false"
+        [hasChildren]="node.hasChildren ?? false"
+        [nodes]="node.children ?? []"
+        [data]="node.data"
+        [treeLevel]="1"
+      />
+    }
+  </div>
+
+  @if (nodes().length === 0 && projectedNodes().length === 0) {
+    <div class="tree-empty">No items</div>
+  }
+</div>
