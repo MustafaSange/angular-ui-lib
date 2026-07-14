@@ -139,9 +139,9 @@ export interface SearchBooleanPropertyConfig extends SearchPropertyConfigBase {
 export interface SearchEnumPropertyConfig extends SearchPropertyConfigBase {
   readonly dataType: 'enum';
   readonly defaultOperator?: SearchEnumOperator;
-  readonly defaultValue?: string | number | readonly (string | number)[];
+  readonly defaultValue?: string | readonly string[];
   readonly allowedOperators?: readonly SearchEnumOperator[];
-  readonly options?: readonly SearchPropertyOption<string | number>[];
+  readonly options?: readonly SearchPropertyOption<string>[];
 }
 
 export interface SearchGuidPropertyConfig extends SearchPropertyConfigBase {
@@ -204,7 +204,7 @@ export interface SearchFilterRequest {
 export interface PaginatedResponse<T> {
   readonly page: number;
   readonly limit: number;
-  readonly counts: number;
+  readonly totalCount: number;
   readonly pages: number;
   readonly hasNextPage: boolean;
   readonly hasPreviousPage: boolean;
