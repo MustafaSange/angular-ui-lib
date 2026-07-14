@@ -65,11 +65,13 @@
     }
 
     @if (loading()) {
-      <div class="tree-load-state" role="status">Loading items…</div>
+      <div class="tree-load-state" role="status">{{ state.loadingText() }}</div>
     } @else if (loadError()) {
       <div class="tree-load-state tree-load-error" role="status">
-        <span>Couldn’t load items.</span>
-        <button class="btn btn-ghost btn-sm" type="button" (click)="retry($event)">Retry</button>
+        <span>{{ state.loadErrorText() }}</span>
+        <button class="btn btn-ghost btn-sm" type="button" (click)="retry($event)">
+          {{ state.retryText() }}
+        </button>
       </div>
     }
 

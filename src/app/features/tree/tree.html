@@ -135,13 +135,17 @@
 
     <h3>Promise</h3>
     <p class="source-copy">
-      Resolve to child nodes or reject to show Retry. Failed jobs intentionally rejects once.
+      Resolve to child nodes or reject to show a configurable error and retry action. The Failed
+      jobs node intentionally rejects once.
     </p>
     <div class="tree-demo showcase-demo-panel">
       <ms-tree
         ariaLabel="Service resources"
         [nodes]="lazyNodes"
         [loadChildren]="loadChildren"
+        loadingText="Fetching services…"
+        loadErrorText="Services are temporarily unavailable."
+        retryText="Try again"
         [(expandedIds)]="lazyExpandedIds"
       />
     </div>
@@ -181,7 +185,8 @@
   <section class="tree-section showcase-section">
     <h2>Keyboard, disabled, and RTL</h2>
     <p class="section-copy">
-      Arrow keys follow logical direction. Disabled nodes remain visible but are skipped by focus.
+      Arrow keys follow logical direction. Type characters to find visible nodes by label. Disabled
+      nodes remain visible but are skipped by focus and type-ahead.
     </p>
     <div class="tree-demo showcase-demo-panel rtl-demo" dir="rtl">
       <span class="rtl-label">RTL context</span>
