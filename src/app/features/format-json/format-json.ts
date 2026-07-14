@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { FormatJsonPipe, ShowcaseCode } from '../../shared/ui-lib';
+import { ShowcaseCode } from '../../shared/showcase-code';
+import { FormatJsonPipe } from '../../shared/ui-lib';
 
 @Component({
   selector: 'app-format-json',

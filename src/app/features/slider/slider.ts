@@ -2,7 +2,7 @@ import { Component, signal } from '@angular/core';
 import { FormField, form, max, min, schema } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
 
-import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
+import { ShowcaseCode } from '../../shared/showcase-code';
 import { SignalFormField, SignalFormHint } from '../../shared/ui-lib/components/signal-form-field';
 import { SliderComponent } from '../../shared/ui-lib/components/slider';
 

@@ -1,7 +1,7 @@
 import { Component, computed, signal } from '@angular/core';
 import { FormField, form, required, schema } from '@angular/forms/signals';
 
-import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
+import { ShowcaseCode } from '../../../../shared/showcase-code';
 import { SignalFormField } from '../../../../shared/ui-lib/components/signal-form-field';
 
 type FieldActionsForm = {

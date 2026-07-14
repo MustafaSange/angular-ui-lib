@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { BadgeComponent } from '../../shared/ui-lib/components/badge';
-import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
+import { ShowcaseCode } from '../../shared/showcase-code';
 
 @Component({
   selector: 'app-badge',

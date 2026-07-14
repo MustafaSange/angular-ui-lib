@@ -7,7 +7,7 @@ import {
   SwitchControl,
   SwitchGroup,
 } from '../../shared/ui-lib/components/choice-controls';
-import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
+import { ShowcaseCode } from '../../shared/showcase-code';
 
 @Component({
   selector: 'app-switch',

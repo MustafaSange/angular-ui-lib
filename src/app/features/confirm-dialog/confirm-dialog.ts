@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { ConfirmDialogService } from '../../shared/ui-lib/components/confirm-dialog';
-import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
+import { ShowcaseCode } from '../../shared/showcase-code';
 
 @Component({
   selector: 'app-confirm-dialog',

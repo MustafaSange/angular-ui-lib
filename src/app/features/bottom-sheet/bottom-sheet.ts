@@ -11,7 +11,7 @@ import {
   BottomSheetService,
   BottomSheetTrigger,
 } from '../../shared/ui-lib/components/bottom-sheet';
-import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
+import { ShowcaseCode } from '../../shared/showcase-code';
 
 type ShareSheetData = {
   projectId: string;

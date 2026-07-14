@@ -1,0 +1,4 @@
+interface:
+  display_name: "Publish Enhancement Branch"
+  short_description: "Branch, commit, and push all project changes"
+  default_prompt: "Use $git-publish-enhancement to create an enhancement branch, stage all changes, commit them with a clear subject and description, and push it."

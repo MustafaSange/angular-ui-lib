@@ -6,7 +6,7 @@ import {
   MediaSlideComponent,
   MediaSliderComponent,
 } from '../../shared/ui-lib/components/media-slider';
-import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
+import { ShowcaseCode } from '../../shared/showcase-code';
 
 @Component({
   selector: 'app-media-slider',

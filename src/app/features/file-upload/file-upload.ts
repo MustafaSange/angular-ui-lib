@@ -12,7 +12,7 @@ import {
   FileUploadValue,
   SignalFormField,
 } from '../../shared/ui-lib';
-import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
+import { ShowcaseCode } from '../../shared/showcase-code';
 
 type FileUploadShowcaseForm = {
   single: FileUploadSingleValue;

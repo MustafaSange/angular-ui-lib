@@ -1,7 +1,8 @@
 import { Component, computed, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { BadgeComponent, DrawerClose, DrawerComponent, ShowcaseCode } from '../../shared/ui-lib';
+import { ShowcaseCode } from '../../shared/showcase-code';
+import { BadgeComponent, DrawerClose, DrawerComponent } from '../../shared/ui-lib';
 
 type UtilityDemo =
   | 'display'

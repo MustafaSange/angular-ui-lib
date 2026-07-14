@@ -4,10 +4,10 @@ import { RouterLink } from '@angular/router';
 
 import {
   OtpInputComponent,
-  ShowcaseCode,
   SignalFormField,
   SignalFormHint,
 } from '../../shared/ui-lib';
+import { ShowcaseCode } from '../../shared/showcase-code';
 
 type VerificationForm = {
   code: string;

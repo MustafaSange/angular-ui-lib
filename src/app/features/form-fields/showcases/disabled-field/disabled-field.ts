@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { ShowcaseCode } from '../../../../shared/ui-lib/components/showcase-code';
+import { ShowcaseCode } from '../../../../shared/showcase-code';
 import { SignalFormField } from '../../../../shared/ui-lib/components/signal-form-field';
 
 @Component({

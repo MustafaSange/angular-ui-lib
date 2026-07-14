@@ -8,7 +8,7 @@ import {
   AutocompleteOption,
   AutocompleteSearchSource,
 } from '../../shared/ui-lib/components/autocomplete';
-import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
+import { ShowcaseCode } from '../../shared/showcase-code';
 import { SignalFormField } from '../../shared/ui-lib/components/signal-form-field';
 
 interface City {

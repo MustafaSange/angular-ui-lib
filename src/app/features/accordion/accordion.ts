@@ -7,7 +7,7 @@ import {
   AccordionTitleDirective,
 } from '../../shared/ui-lib/components/accordion';
 import { BadgeComponent } from '../../shared/ui-lib/components/badge';
-import { ShowcaseCode } from '../../shared/ui-lib/components/showcase-code';
+import { ShowcaseCode } from '../../shared/showcase-code';
 
 @Component({
   selector: 'app-accordion',
