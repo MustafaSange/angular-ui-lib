@@ -1,0 +1,77 @@
+@use '../showcase-page' as showcase;
+
+@include showcase.shell;
+@include showcase.demo-panel;
+
+.progress-demo,
+.spinner-demo,
+.progress-stack,
+.progress-stack > div {
+  display: grid;
+  gap: var(--spacing-12);
+}
+
+.progress-example-header,
+.progress-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+.progress-example-header {
+  justify-content: space-between;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+
+  strong {
+    color: var(--color-text-primary);
+  }
+}
+
+.progress-actions {
+  justify-content: flex-end;
+}
+
+.progress-stack > div > span {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.spinner-demo {
+  justify-items: start;
+}
+
+.spinner-group {
+  display: grid;
+  gap: var(--spacing-8);
+
+  h3,
+  p {
+    margin: 0;
+  }
+
+  h3 {
+    font-size: var(--font-size-sm);
+  }
+
+  p {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+}
+
+.spinner-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--spacing-16);
+}
+
+.spinner-option {
+  display: grid;
+  justify-items: center;
+  gap: var(--spacing-8);
+  min-inline-size: var(--spacing-48);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}

@@ -105,6 +105,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/pagination/pagination').then((m) => m.Pagination),
   },
   {
+    path: 'progress',
+    loadComponent: () => import('./features/progress/progress').then((m) => m.Progress),
+  },
+  {
     path: 'radio',
     loadComponent: () => import('./features/radio/radio').then((m) => m.Radio),
   },

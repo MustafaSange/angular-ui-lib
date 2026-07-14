@@ -1,0 +1,147 @@
+<main class="progress-page showcase-page">
+  <header class="progress-header showcase-header">
+    <a class="btn btn-ghost back-link" routerLink="/">← Back to home</a>
+    <p class="eyebrow">Components</p>
+    <h1>Progress indicator and spinner</h1>
+    <p class="description">
+      Accessible determinate progress and indeterminate loading feedback with semantic colors and
+      compact sizes.
+    </p>
+  </header>
+
+  <section class="progress-section showcase-section">
+    <h2>Determinate progress</h2>
+    <p class="section-copy">Bind a value and maximum when completion can be measured.</p>
+    <div class="progress-demo showcase-demo-panel">
+      <div class="progress-example-header">
+        <strong>Uploading documents</strong>
+        <span>{{ uploadedFiles() }} of {{ totalFiles }} files</span>
+      </div>
+      <ms-progress-indicator
+        [value]="uploadedFiles()"
+        [max]="totalFiles"
+        ariaLabel="Files uploaded"
+        [ariaValueText]="uploadedFiles() + ' of ' + totalFiles + ' files'"
+      />
+      <div class="progress-actions">
+        <button
+          class="btn btn-outline"
+          type="button"
+          [disabled]="uploadedFiles() === 0"
+          (click)="changeProgress(-1)"
+        >
+          Previous
+        </button>
+        <button
+          class="btn btn-primary"
+          type="button"
+          [disabled]="uploadedFiles() === totalFiles"
+          (click)="changeProgress(1)"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+    <app-showcase-code label="Determinate progress" [code]="determinateSnippet" />
+  </section>
+
+  <section class="progress-section showcase-section">
+    <h2>Indeterminate progress</h2>
+    <p class="section-copy">Omit the value when work is active but completion is unknown.</p>
+    <div class="progress-demo showcase-demo-panel">
+      <p id="report-progress-label">Preparing report…</p>
+      <ms-progress-indicator ariaLabelledby="report-progress-label" />
+    </div>
+    <app-showcase-code label="Indeterminate progress" [code]="indeterminateSnippet" />
+  </section>
+
+  <section class="progress-section showcase-section">
+    <h2>Sizes and semantic kinds</h2>
+    <p class="section-copy">Match the visual emphasis to the status and surrounding density.</p>
+    <div class="progress-demo progress-stack showcase-demo-panel">
+      <div>
+        <span>Primary · small</span>
+        <ms-progress-indicator size="sm" [value]="30" ariaLabel="Primary progress" />
+      </div>
+      <div>
+        <span>Success · medium</span>
+        <ms-progress-indicator kind="success" [value]="55" ariaLabel="Successful progress" />
+      </div>
+      <div>
+        <span>Warning · medium</span>
+        <ms-progress-indicator kind="warning" [value]="75" ariaLabel="Warning progress" />
+      </div>
+      <div>
+        <span>Danger · large</span>
+        <ms-progress-indicator kind="danger" size="lg" [value]="90" ariaLabel="Danger progress" />
+      </div>
+    </div>
+    <app-showcase-code label="Progress sizes and kinds" [code]="kindsSnippet" />
+  </section>
+
+  <section class="progress-section showcase-section">
+    <h2>Spinner</h2>
+    <p class="section-copy">
+      Spinners indicate that work is in progress when the completion time is unknown. Pair them with
+      visible loading text when possible.
+    </p>
+    <div class="spinner-demo showcase-demo-panel">
+      <div class="spinner-group">
+        <h3>Sizes</h3>
+        <div class="spinner-options">
+          <div class="spinner-option">
+            <ms-spinner size="sm" ariaLabel="Loading small example" />
+            <span>Small</span>
+          </div>
+          <div class="spinner-option">
+            <ms-spinner ariaLabel="Loading medium example" />
+            <span>Medium</span>
+          </div>
+          <div class="spinner-option">
+            <ms-spinner size="lg" ariaLabel="Loading large example" />
+            <span>Large</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="spinner-group">
+        <h3>Semantic context</h3>
+        <p>Use a semantic color only when it matches the operation's context.</p>
+        <div class="spinner-options">
+          <div class="spinner-option">
+            <ms-spinner ariaLabel="Loading data" />
+            <span>Primary</span>
+          </div>
+          <div class="spinner-option">
+            <ms-spinner kind="success" ariaLabel="Completing validation" />
+            <span>Success</span>
+          </div>
+          <div class="spinner-option">
+            <ms-spinner kind="warning" ariaLabel="Waiting for approval" />
+            <span>Warning</span>
+          </div>
+          <div class="spinner-option">
+            <ms-spinner kind="danger" ariaLabel="Retrying failed operation" />
+            <span>Danger</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" type="button" disabled>
+        <ms-spinner size="sm" kind="inherit" ariaLabel="" />
+        Saving…
+      </button>
+    </div>
+    <app-showcase-code label="Spinner sizes and composition" [code]="spinnerSnippet" />
+  </section>
+
+  <section class="progress-section showcase-section">
+    <h2>RTL layout</h2>
+    <p class="section-copy">The fill begins at logical inline-start and mirrors automatically.</p>
+    <div class="progress-demo showcase-demo-panel" dir="rtl">
+      <p id="rtl-progress-label">اكتمل ٦٠٪</p>
+      <ms-progress-indicator kind="success" [value]="60" ariaLabelledby="rtl-progress-label" />
+    </div>
+    <app-showcase-code label="RTL progress" [code]="rtlSnippet" />
+  </section>
+</main>

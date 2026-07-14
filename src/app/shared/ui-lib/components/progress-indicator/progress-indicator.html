@@ -1,0 +1,25 @@
+<div
+  class="progress-indicator"
+  role="progressbar"
+  [class.progress-indicator-sm]="size() === 'sm'"
+  [class.progress-indicator-md]="size() === 'md'"
+  [class.progress-indicator-lg]="size() === 'lg'"
+  [class.progress-indicator-primary]="kind() === 'primary'"
+  [class.progress-indicator-success]="kind() === 'success'"
+  [class.progress-indicator-warning]="kind() === 'warning'"
+  [class.progress-indicator-danger]="kind() === 'danger'"
+  [class.progress-indicator-inherit]="kind() === 'inherit'"
+  [class.is-indeterminate]="normalizedValue() === null"
+  [attr.aria-label]="ariaLabelledby() ? null : ariaLabel()"
+  [attr.aria-labelledby]="ariaLabelledby() || null"
+  [attr.aria-valuemin]="0"
+  [attr.aria-valuemax]="normalizedMax()"
+  [attr.aria-valuenow]="normalizedValue()"
+  [attr.aria-valuetext]="ariaValueText() || null"
+>
+  <span
+    class="progress-indicator-fill"
+    aria-hidden="true"
+    [style.--_progress-percent.%]="percentage()"
+  ></span>
+</div>
