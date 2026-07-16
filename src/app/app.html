@@ -1,4 +1,24 @@
 <div class="preview-controls">
+  <div class="density-switcher" role="group" aria-label="Interface density">
+    <button
+      type="button"
+      class="density-option"
+      [class.is-active]="density() === 'default'"
+      [attr.aria-pressed]="density() === 'default'"
+      (click)="setDensity('default')"
+    >
+      Default
+    </button>
+    <button
+      type="button"
+      class="density-option"
+      [class.is-active]="density() === 'compact'"
+      [attr.aria-pressed]="density() === 'compact'"
+      (click)="setDensity('compact')"
+    >
+      Compact
+    </button>
+  </div>
   <ms-theme-customizer />
   <ms-theme-switcher />
   <ms-direction-switcher />

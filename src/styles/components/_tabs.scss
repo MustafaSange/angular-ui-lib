@@ -4,7 +4,7 @@ ms-tabs {
 
 .tabs {
   display: grid;
-  gap: var(--spacing-12);
+  gap: var(--control-choice-column-gap);
   min-inline-size: 0;
 }
 
@@ -30,7 +30,7 @@ ms-tabs {
   align-items: center;
   justify-content: center;
   min-block-size: var(--control-height-sm);
-  padding-block: var(--spacing-4);
+  padding-block: var(--control-item-padding-block);
   padding-inline: var(--spacing-8);
   border: 0;
   border-block-end: var(--border-width-md) solid transparent;

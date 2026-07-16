@@ -33,7 +33,7 @@ ms-accordion {
   gap: var(--spacing-12);
   inline-size: 100%;
   min-block-size: var(--control-height-md);
-  padding-block: var(--spacing-8);
+  padding-block: var(--control-section-padding-block);
   padding-inline: var(--spacing-12);
   border: 0;
   background: transparent;
@@ -102,7 +102,7 @@ ms-accordion {
   .accordion-trigger {
     min-block-size: var(--control-height-md);
     gap: var(--spacing-12);
-    padding-block: var(--spacing-8);
+    padding-block: var(--control-section-padding-block);
     padding-inline: var(--spacing-12);
     font-size: var(--font-size-sm);
   }

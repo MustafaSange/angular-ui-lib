@@ -142,6 +142,12 @@ const SHOWCASES: readonly ShowcaseItem[] = [
     description: 'Button-controlled slide navigation with logical LTR and RTL placement.',
   },
   {
+    name: 'Interface density',
+    type: 'Utilities',
+    path: '/density',
+    description: 'Global default and compact control sizing with local subtree overrides.',
+  },
+  {
     name: 'Date and time pickers',
     type: 'Components',
     path: '/date-time-pickers',

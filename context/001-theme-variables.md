@@ -27,9 +27,16 @@ Create the foundational design-token system for the Angular UI library.
   - layout and z-index
   - containers and breakpoints, including scalar width tokens, generated exact-range Sass media aliases, and separately retained threshold media aliases for future opt-in use
   - UI states
-  - form controls, including size-based height and padding tokens
+  - form controls, including size-based height, padding, grouped-control, calendar, and table tokens
+  - global `default` and `compact` control-density values selected through `data-density`
 - Keep tokens grouped by domain and document non-obvious usage with concise comments.
 - Do not add component styles.
+
+Default density preserves the existing `24px`, `28px`, `32px`, and `48px` control height tiers.
+Compact density uses `24px`, `24px`, `28px`, and `40px` tiers and reduces related control spacing.
+Local density scopes redefine the same CSS custom properties so descendants inherit the nearest
+`data-density` value. Follow `context/049-interface-density.md` for the Angular configuration and
+override contract.
 
 ## Acceptance Criteria
 
@@ -37,3 +44,4 @@ Create the foundational design-token system for the Angular UI library.
 - Token files compile through Sass.
 - Palette tokens are emitted before semantic aliases that reference them.
 - Breakpoint CSS variables and exact-range responsive media aliases are generated from shared Sass definitions.
+- Omitting density configuration produces the existing default control values.

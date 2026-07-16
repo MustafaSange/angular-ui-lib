@@ -150,7 +150,7 @@ $button-variants: primary, secondary, success, danger;
   inline-size: max-content;
   max-inline-size: 100%;
   min-block-size: var(--control-height-md);
-  padding-block: var(--spacing-4);
+  padding-block: var(--control-item-padding-block);
   padding-inline: var(--spacing-4) var(--spacing-12);
   border-color: var(--color-border);
   border-radius: var(--radius-full);

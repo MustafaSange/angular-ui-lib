@@ -55,7 +55,10 @@ Public classes:
 - Tables use native semantics: `<table>`, `<caption>`, `<thead>`, `<tbody>`, `<tr>`, `<th>`, and
   `<td>`.
 - Wide tables scroll inside `.table-wrapper`; the page layout should not overflow horizontally.
-- Default density is comfortable. Compact density is opt-in through `.table-compact`.
+- Default density preserves the existing cell padding. Global or local compact density reduces
+  caption, header, and body cell padding through shared table control tokens.
+- `.table-compact` remains an explicit table-only compact override and can be used independently of
+  the global density setting.
 - Alignment uses logical `text-align: start` and `text-align: end`, so text and numeric cells
   mirror in RTL.
 - Empty and loading states are represented by regular table rows with a spanning cell.
@@ -67,6 +70,8 @@ Feature styles live in `src/styles/components/_tables.scss` and are forwarded fr
 `src/styles/components/_index.scss`.
 
 - Use existing color, surface, border, spacing, radius, typography, and motion tokens.
+- Use `--control-table-cell-padding-block` and `--control-table-cell-padding-inline` so table cells
+  follow the nearest density scope.
 - Use logical block/inline properties and logical text alignment.
 - Keep selectors scoped to the public table classes and native table descendants.
 - Keep the system reusable across future projects.
@@ -112,6 +117,7 @@ Each visual example renders a matching hand-authored, full standalone Angular ex
 - `.table-wrapper` handles wide table overflow.
 - `.table-compact`, `.table-striped`, `.table-hover`, `.table-empty`, and `.table-loading` behave
   as documented.
+- Tables respond to the global `default` and `compact` density modes without per-table setup.
 - Showcase examples use existing `.text-start` and `.text-end` logical alignment utilities.
 - RTL examples align logical-end cells correctly.
 - No Angular table component, directive, sorting behavior, or tests are added.

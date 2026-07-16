@@ -24,7 +24,7 @@ ms-media-slider,
   display: flex;
   gap: var(--_media-slider-gap);
   min-inline-size: 0;
-  padding-block: var(--spacing-4);
+  padding-block: var(--control-item-padding-block);
   padding-inline: var(--_media-slider-track-padding-inline);
   overflow-x: auto;
   overscroll-behavior-inline: contain;
@@ -54,8 +54,7 @@ ms-media-slider,
   inline-size: var(--control-height-md);
   block-size: var(--control-height-lg);
   padding: 0;
-  border: var(--control-border-width) solid
-    color-mix(in srgb, var(--color-border) 52%, transparent);
+  border: var(--control-border-width) solid color-mix(in srgb, var(--color-border) 52%, transparent);
   border-radius: var(--radius-sm);
   background-color: color-mix(in srgb, var(--color-surface) 56%, transparent);
   color: var(--color-text-secondary);
