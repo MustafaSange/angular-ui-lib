@@ -24,6 +24,7 @@ export * from './progress-indicator';
 export * from './side-nav';
 export * from './select';
 export * from './search-query-form';
+export * from './table-search';
 export * from './signal-form-field';
 export * from './slider';
 export * from './stepper';

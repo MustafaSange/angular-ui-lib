@@ -1,11 +1,15 @@
-import { SEARCH_SORT_DIRECTION } from './search-query-form-types';
+import { SEARCH_SORT_DIRECTION } from './search-query-types';
 import type {
   SearchSortConfig,
   SearchSortDirection,
   SearchSortOption,
   SearchSortRequest,
-} from './search-query-form-types';
-import type { SearchQueryFormSortModel } from './search-query-form-model';
+} from './search-query-types';
+
+export interface SearchSortDraft {
+  readonly property: string;
+  readonly direction: string;
+}
 
 export function normalizeSearchSortOptions(
   config: SearchSortConfig | null,
@@ -92,7 +96,7 @@ export function resolveDefaultSearchSorts(
 
 export function toSearchSortModels(
   sorts: readonly SearchSortRequest[],
-): readonly SearchQueryFormSortModel[] {
+): readonly SearchSortDraft[] {
   return sorts.map((sort) => ({
     property: sort.property,
     direction: String(sort.direction),

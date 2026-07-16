@@ -1,0 +1,344 @@
+<ms-popover placement="bottom-start" [open]="open()" (openChange)="handleOpenChange($event)">
+  <button
+    #trigger
+    class="btn btn-ghost btn-icon btn-xs table-search-trigger"
+    type="button"
+    msPopoverTrigger
+    aria-haspopup="dialog"
+    [class.is-active]="active()"
+    [class.is-error]="error()"
+    [disabled]="table.disabled()"
+    [attr.aria-label]="panelLabel()"
+    [attr.aria-invalid]="error() ? 'true' : null"
+    [attr.aria-describedby]="descriptionId"
+    [attr.title]="panelLabel()"
+  >
+    <span class="ms-icon" [class.ms-icon-filled]="active() || error()" aria-hidden="true">
+      filter_list
+    </span>
+  </button>
+
+  <span class="visually-hidden" [id]="descriptionId">
+    {{ triggerDescription() }}
+  </span>
+
+  <ms-popover-panel class="filter-panel" role="dialog" [attr.aria-label]="panelLabel()">
+    @if (open()) {
+      <form #filterEditorForm class="table-search-form" (submit)="apply($event)">
+        <header class="table-search-panel-header table-search-dialog-header">
+          <h3 class="table-search-panel-title">{{ label() }}</h3>
+          <button
+            class="btn btn-ghost btn-icon table-search-panel-close-button"
+            type="button"
+            aria-label="Cancel filter editing"
+            title="Cancel"
+            (click)="cancel()"
+          >
+            <span class="ms-icon" aria-hidden="true">close</span>
+          </button>
+        </header>
+
+        <div class="table-search-panel-body filter-editor">
+          <ms-signal-form-field>
+            <label>Operator</label>
+            <select
+              #firstControl
+              data-filter-control="operator"
+              [formField]="filterForm.operator"
+              (change)="handleOperatorChange($event)"
+            >
+              @for (operator of allowedOperators(); track operator) {
+                <option [value]="operator">{{ operatorLabels[operator] }}</option>
+              }
+            </select>
+          </ms-signal-form-field>
+
+          @if (isBetween()) {
+            <div class="filter-range" [class.is-stacked]="property().dataType === 'dateTime'">
+              <ms-signal-form-field>
+                <label>From</label>
+                @if (propertyOptions().length > 0) {
+                  <select data-filter-control="from" [formField]="filterForm.from">
+                    <option value="">Choose from</option>
+                    @for (option of propertyOptions(); track option.value) {
+                      <option [value]="option.value">{{ option.label }}</option>
+                    }
+                  </select>
+                } @else {
+                  <input
+                    [type]="inputType(property())"
+                    [inputMode]="inputMode(property())"
+                    [step]="step(property())"
+                    data-filter-control="from"
+                    [placeholder]="property().placeholder ?? ''"
+                    [formField]="filterForm.from"
+                  />
+                }
+              </ms-signal-form-field>
+              <ms-signal-form-field>
+                <label>To</label>
+                @if (propertyOptions().length > 0) {
+                  <select data-filter-control="to" [formField]="filterForm.to">
+                    <option value="">Choose to</option>
+                    @for (option of propertyOptions(); track option.value) {
+                      <option [value]="option.value">{{ option.label }}</option>
+                    }
+                  </select>
+                } @else {
+                  <input
+                    [type]="inputType(property())"
+                    [inputMode]="inputMode(property())"
+                    [step]="step(property())"
+                    data-filter-control="to"
+                    [placeholder]="property().placeholder ?? ''"
+                    [formField]="filterForm.to"
+                  />
+                }
+              </ms-signal-form-field>
+            </div>
+          } @else if (isIn()) {
+            <div class="table-filter-in-values">
+              <div
+                class="table-filter-in-values-control"
+                [class.has-custom-values]="allowCustomInValues()"
+              >
+                <ms-signal-form-field [style.--form-field-control-anchor]="customValuesAnchor">
+                  <label>Values</label>
+                  @if (!allowCustomInValues() && propertyOptions().length > 0) {
+                    <ms-select
+                      data-filter-control="values"
+                      multiple
+                      overflowNavigation
+                      [searchable]="false"
+                      [formField]="filterForm.values"
+                      (valueChange)="handleInOptionValuesChange($event)"
+                    >
+                      @for (option of propertyOptions(); track option.value) {
+                        <ms-select-option [value]="option.value.toString()" [label]="option.label">
+                          {{ option.label }}
+                        </ms-select-option>
+                      }
+                    </ms-select>
+                  } @else {
+                    <ms-readonly-value readonly overflowNavigation>
+                      <span class="table-filter-in-values-preview">
+                        @if (totalInValues() === 0) {
+                          <span class="table-filter-in-values-placeholder">Add values</span>
+                        } @else {
+                          @for (item of inValuePreview(); track item.custom + '-' + item.value) {
+                            <ms-chip size="xs" selected removable>
+                              {{ item.label }}
+                              <button
+                                msChipRemove
+                                type="button"
+                                [attr.aria-label]="'Remove value ' + item.label"
+                                (click)="removeInValue(item.value, item.custom)"
+                              ></button>
+                            </ms-chip>
+                          }
+                          @if (totalInValues() > 3) {
+                            <span class="table-filter-in-values-more">
+                              +{{ totalInValues() - 3 }} more
+                            </span>
+                          }
+                        }
+                      </span>
+                    </ms-readonly-value>
+                  }
+                </ms-signal-form-field>
+
+                @if (allowCustomInValues()) {
+                  <ms-popover
+                    placement="bottom-start"
+                    (openChange)="
+                      handleCustomValuesPopover($event, customValueInput, customValuesTrigger)
+                    "
+                  >
+                    <button
+                      #customValuesTrigger
+                      data-filter-control="values"
+                      class="btn btn-icon"
+                      type="button"
+                      msPopoverTrigger
+                      [attr.aria-label]="'Manage values for ' + label()"
+                      [attr.title]="'Manage values for ' + label()"
+                      [class.btn-outline]="totalInValues() === 0"
+                      [class.btn-primary]="totalInValues() > 0"
+                    >
+                      <span class="ms-icon" aria-hidden="true">playlist_add</span>
+                    </button>
+
+                    <ms-popover-panel
+                      class="table-filter-custom-values-popover"
+                      [attr.aria-label]="'Manage values for ' + label()"
+                      [style.position-anchor]="customValuesAnchor"
+                    >
+                      <div class="table-filter-custom-values-editor">
+                        @if (propertyOptions().length > 0) {
+                          <ms-signal-form-field class="no-message">
+                            <label>Options</label>
+                            <ms-select
+                              multiple
+                              overflowNavigation
+                              [searchable]="false"
+                              [formField]="filterForm.values"
+                              (valueChange)="handleInOptionValuesChange($event)"
+                            >
+                              @for (option of propertyOptions(); track option.value) {
+                                <ms-select-option
+                                  [value]="option.value.toString()"
+                                  [label]="option.label"
+                                >
+                                  {{ option.label }}
+                                </ms-select-option>
+                              }
+                            </ms-select>
+                          </ms-signal-form-field>
+                        }
+
+                        <ms-signal-form-field class="no-label no-message">
+                          <input
+                            #customValueInput
+                            [type]="inputType(property())"
+                            [inputMode]="inputMode(property())"
+                            [step]="step(property())"
+                            [attr.aria-label]="'Custom value for ' + label()"
+                            [placeholder]="property().placeholder ?? 'Add value'"
+                            [value]="draft().customValueInput"
+                            [attr.aria-invalid]="customValueInputError() ? 'true' : null"
+                            [attr.aria-describedby]="
+                              customValueInputError() ? descriptionId + '-custom-value-error' : null
+                            "
+                            (input)="handleCustomValueInput($event)"
+                            (keydown)="handleCustomValueKeydown($event)"
+                            (paste)="handleCustomValuePaste($event)"
+                          />
+                          <button
+                            class="form-field-suffix form-field-action"
+                            type="button"
+                            [attr.aria-label]="'Add value for ' + label()"
+                            [attr.title]="'Add value for ' + label()"
+                            [disabled]="
+                              !draft().customValueInput.trim() ||
+                              customValueInputError() ||
+                              isAtInValueLimit()
+                            "
+                            (click)="addCustomValue()"
+                          >
+                            <span class="ms-icon" aria-hidden="true">add</span>
+                          </button>
+                          <button
+                            class="form-field-suffix form-field-action"
+                            type="button"
+                            [attr.aria-label]="'Paste values for ' + label()"
+                            [attr.title]="'Paste values for ' + label()"
+                            [disabled]="!clipboardPasteAvailable() || isAtInValueLimit()"
+                            (click)="pasteCustomValues(customValueInput)"
+                          >
+                            <span class="ms-icon" aria-hidden="true">content_paste</span>
+                          </button>
+                        </ms-signal-form-field>
+
+                        @if (customValueInputError(); as inputError) {
+                          <p
+                            class="table-filter-custom-values-input-error"
+                            [id]="descriptionId + '-custom-value-error'"
+                            aria-live="polite"
+                          >
+                            {{ inputError }}
+                          </p>
+                        }
+
+                        <div class="table-filter-custom-values-meta">
+                          <span>{{ totalInValues() }} / {{ maxInValues() }} values</span>
+                          @if (draft().customValues.length > 0) {
+                            <button
+                              class="btn btn-ghost btn-sm"
+                              type="button"
+                              (click)="clearCustomValues()"
+                            >
+                              <span class="ms-icon" aria-hidden="true">clear_all</span>
+                              Clear custom
+                            </button>
+                          }
+                        </div>
+
+                        @if (draft().customValues.length > 0) {
+                          <div class="table-filter-custom-values-list" aria-label="Custom values">
+                            @for (value of draft().customValues; track value) {
+                              <ms-chip removable size="xs" selected>
+                                {{ value }}
+                                <button
+                                  msChipRemove
+                                  type="button"
+                                  [attr.aria-label]="'Remove custom value ' + value"
+                                  (click)="removeInValue(value, true)"
+                                ></button>
+                              </ms-chip>
+                            }
+                          </div>
+                        }
+
+                        @if (draft().customValueStatus) {
+                          <p class="table-filter-custom-values-status" aria-live="polite">
+                            {{ draft().customValueStatus }}
+                          </p>
+                        }
+                      </div>
+                    </ms-popover-panel>
+                  </ms-popover>
+                }
+              </div>
+            </div>
+          } @else if (!isValueless()) {
+            <ms-signal-form-field>
+              <label>Value</label>
+              @if (propertyOptions().length > 0) {
+                <select data-filter-control="value" [formField]="filterForm.value">
+                  <option value="">Choose value</option>
+                  @for (option of propertyOptions(); track option.value) {
+                    <option [value]="option.value">{{ option.label }}</option>
+                  }
+                </select>
+              } @else {
+                <input
+                  [type]="inputType(property())"
+                  [inputMode]="inputMode(property())"
+                  [step]="step(property())"
+                  data-filter-control="value"
+                  [placeholder]="property().placeholder ?? ''"
+                  [formField]="filterForm.value"
+                />
+              }
+            </ms-signal-form-field>
+          }
+
+          @if (!otherRequiredFiltersValid()) {
+            <p class="table-search-blocked-note" role="status">
+              Complete the other required filters before applying this filter.
+            </p>
+          }
+        </div>
+
+        <footer class="table-search-panel-footer">
+          @if (canClear()) {
+            <button class="btn btn-ghost btn-sm" type="button" (click)="clear()">
+              Clear filter
+            </button>
+          }
+          <span class="table-search-footer-spacer"></span>
+          <button class="btn btn-outline btn-sm" type="button" (click)="cancel()">Cancel</button>
+          <button
+            class="btn btn-primary btn-sm"
+            type="submit"
+            [disabled]="
+              filterForm().invalid() || filterForm().pending() || !otherRequiredFiltersValid()
+            "
+          >
+            Apply
+          </button>
+        </footer>
+      </form>
+    }
+  </ms-popover-panel>
+</ms-popover>

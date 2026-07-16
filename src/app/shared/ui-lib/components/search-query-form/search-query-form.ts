@@ -21,10 +21,11 @@ import {
   validate,
 } from '@angular/forms/signals';
 
-import { buildSearchRequest, isBetweenValue } from './search-query-form-builder';
+import { buildSearchRequest, isBetweenValue } from '../../search-query/search-query-builder';
+import { reconcileSearchState } from '../../search-query/search-query-reconciliation';
+import { areSearchQueryStatesEqual } from '../../search-query/search-query-equality';
 import {
   areSearchQueryFormModelsEqual,
-  areSearchQueryStatesEqual,
   areSearchSortModelsEqual,
 } from './search-query-form-equality';
 import {
@@ -32,7 +33,7 @@ import {
   getCompatibleSearchOperators,
   getDefaultSearchOperator,
   isValuelessSearchOperator,
-} from './search-query-form-operators';
+} from '../../search-query/search-query-operators';
 import type {
   SearchInValuePreviewItem,
   SearchQueryFormFilterModel,
@@ -47,20 +48,19 @@ import {
   resolveDefaultSearchSorts,
   resolveSearchSortLimit,
   toSearchSortModels,
-} from './search-query-form-sort';
-import { SEARCH_SORT_DIRECTION } from './search-query-form-types';
+} from '../../search-query/search-query-sort';
+import { SEARCH_SORT_DIRECTION } from '../../search-query/search-query-types';
 import type {
   PaginatedSearchRequest,
   SearchOperator,
   SearchPropertyConfig,
   SearchPropertyOption,
-  SearchQueryFormFilter,
   SearchQueryFormState,
   SearchRequestValue,
   SearchScalarValue,
   SearchSortConfig,
   SearchSortRequest,
-} from './search-query-form-types';
+} from '../../search-query/search-query-types';
 import {
   DEFAULT_SEARCH_MAX_IN_VALUES,
   DEFAULT_SEARCH_STRING_MAX_LENGTH,
@@ -69,12 +69,13 @@ import {
   getSearchInputStep,
   getSearchInputType,
   getSearchScalarError,
+  isSearchOptionInputValue,
   isSearchRangeReversed,
   parseCustomSearchValue,
   parseSearchScalar,
   stringifySearchScalar,
   tokenizeSearchValues,
-} from './search-query-form-value';
+} from '../../search-query/search-query-value';
 import { SignalFormField, SignalReadonlyValue } from '../signal-form-field';
 import { SelectComponent, SelectOptionComponent } from '../select';
 import { ChipComponent, ChipRemoveDirective } from '../chip';
@@ -147,7 +148,12 @@ export class SearchQueryFormComponent {
 
             const message =
               property.dataType === 'string' ? '' : getSearchScalarError(property, value());
-            return message ? { kind: 'searchValue', message } : undefined;
+            if (message) {
+              return { kind: 'searchValue', message };
+            }
+            return isSearchOptionInputValue(this.propertyOptions(property), value())
+              ? undefined
+              : { kind: 'searchOption', message: 'Choose a configured value.' };
           });
           required(filter.value, {
             message: 'Enter a value.',
@@ -174,7 +180,12 @@ export class SearchQueryFormComponent {
             }
 
             const message = getSearchScalarError(property, value());
-            return message ? { kind: 'searchValue', message } : undefined;
+            if (message) {
+              return { kind: 'searchValue', message };
+            }
+            return isSearchOptionInputValue(this.propertyOptions(property), value())
+              ? undefined
+              : { kind: 'searchOption', message: 'Choose a configured value.' };
           });
           validate(filter.to, ({ value, valueOf }) => {
             const property = this.getProperty(valueOf(filter.property));
@@ -188,6 +199,9 @@ export class SearchQueryFormComponent {
             const message = getSearchScalarError(property, to);
             if (message) {
               return { kind: 'searchValue', message };
+            }
+            if (!isSearchOptionInputValue(this.propertyOptions(property), to)) {
+              return { kind: 'searchOption', message: 'Choose a configured value.' };
             }
 
             if (
@@ -223,6 +237,20 @@ export class SearchQueryFormComponent {
             },
             { message: 'Too many values selected.' },
           );
+          validate(filter.customValueInput, ({ value, valueOf }) => {
+            const property = this.getProperty(valueOf(filter.property));
+            if (!property || valueOf(filter.operator) !== 'in' || !value().trim()) {
+              return undefined;
+            }
+            const message = getSearchScalarError(property, value().trim());
+            if (message) {
+              return { kind: 'searchValue', message };
+            }
+            return valueOf(filter.values).length + valueOf(filter.customValues).length >=
+              this.maxInValues(property)
+              ? { kind: 'maxValues', message: 'Value limit reached.' }
+              : undefined;
+          });
         }),
       );
       applyEach(
@@ -289,6 +317,8 @@ export class SearchQueryFormComponent {
 
   protected async submitSearch(event: Event): Promise<void> {
     event.preventDefault();
+
+    this.commitPendingCustomValues();
 
     await submit(this.searchForm, async () => {
       const submittedState = this.toState(this.formModel(), this.state());
@@ -526,14 +556,21 @@ export class SearchQueryFormComponent {
     return typeof navigator !== 'undefined' && typeof navigator.clipboard?.readText === 'function';
   }
 
-  protected customValueInputError(property: SearchPropertyConfig | null, rawValue: string): string {
+  protected customValueInputError(
+    property: SearchPropertyConfig | null,
+    filter: SearchQueryFormFilterModel,
+  ): string {
+    const rawValue = filter.customValueInput;
     const value = rawValue.trim();
 
     if (!property || !value) {
       return '';
     }
 
-    return getSearchScalarError(property, value);
+    return (
+      getSearchScalarError(property, value) ||
+      (this.isAtInValueLimit(filter, property) ? 'Value limit reached.' : '')
+    );
   }
 
   protected handleInOptionValuesChange(
@@ -574,7 +611,7 @@ export class SearchQueryFormComponent {
     if (
       !property ||
       filter.customValueInput.trim().length === 0 ||
-      this.customValueInputError(property, filter.customValueInput).length > 0 ||
+      this.customValueInputError(property, filter).length > 0 ||
       this.isAtInValueLimit(filter, property)
     ) {
       return;
@@ -728,40 +765,9 @@ export class SearchQueryFormComponent {
     state: SearchQueryFormState,
     properties: readonly SearchPropertyConfig[],
   ): SearchQueryFormState {
-    const propertyMap = new Map(properties.map((property) => [property.propertyName, property]));
-    const currentFilters = state.filters.filter((filter) => propertyMap.has(filter.property));
-    const usedProperties = new Set<string>();
-    const filters: SearchQueryFormFilter[] = [];
-    const filterLimit = this.resolveFilterLimit(properties);
-    const sort = this.resolveSorts(state.sort);
-
-    for (const property of properties.filter((item) => item.required)) {
-      const currentFilter = currentFilters.find(
-        (filter) => filter.property === property.propertyName,
-      );
-      filters.push(
-        this.normalizeFilter(currentFilter ?? this.createFilter(property), property, true),
-      );
-      usedProperties.add(property.propertyName);
-    }
-
-    for (const filter of currentFilters) {
-      if (usedProperties.has(filter.property) || filters.length >= filterLimit) {
-        continue;
-      }
-
-      const property = propertyMap.get(filter.property);
-
-      if (property) {
-        filters.push(this.normalizeFilter(filter, property, false));
-      }
-    }
-
-    return {
-      ...state,
-      filters,
-      sort: state.sort === undefined && sort.length === 0 ? undefined : sort,
-    };
+    return reconcileSearchState(state, properties, this.sortConfig(), {
+      maxFilters: this.resolveFilterLimit(properties),
+    });
   }
 
   private resolveSorts(
@@ -805,9 +811,7 @@ export class SearchQueryFormComponent {
   }
 
   private defaultFilterProperties(): readonly SearchPropertyConfig[] {
-    const requiredProperties = this.properties().filter(
-      (property) => property.required === true,
-    );
+    const requiredProperties = this.properties().filter((property) => property.required === true);
     const visibleDefaultProperties = this.properties().filter(
       (property) => property.required !== true && property.visibleByDefault === true,
     );
@@ -844,30 +848,6 @@ export class SearchQueryFormComponent {
       operator,
       ...this.createValueFields(property, operator, property.defaultValue),
       locked: property.required === true,
-    };
-  }
-
-  private normalizeFilter(
-    filter: SearchQueryFormFilter,
-    property: SearchPropertyConfig,
-    locked: boolean,
-  ): SearchQueryFormFilter {
-    const allowedOperators = this.allowedOperators(property);
-    const operator = allowedOperators.includes(filter.operator)
-      ? filter.operator
-      : this.defaultOperator(property);
-    const candidateValue = this.valueMatchesOperator(filter.value, operator)
-      ? filter.value
-      : this.createValue(property, operator);
-    const value =
-      operator === 'in' ? this.normalizeInValues(property, candidateValue) : candidateValue;
-
-    return {
-      ...filter,
-      property: property.propertyName,
-      operator,
-      value,
-      locked,
     };
   }
 
@@ -1156,6 +1136,20 @@ export class SearchQueryFormComponent {
     }
 
     return parseSearchScalar(property, filter.value, this.propertyOptions(property));
+  }
+
+  private commitPendingCustomValues(): void {
+    for (const filter of this.filters()) {
+      const property = this.getProperty(filter.property);
+      if (
+        property &&
+        filter.operator === 'in' &&
+        filter.customValueInput.trim() &&
+        !this.customValueInputError(property, filter)
+      ) {
+        this.addCustomValues(filter, [filter.customValueInput], property);
+      }
+    }
   }
 
   private addCustomValues(

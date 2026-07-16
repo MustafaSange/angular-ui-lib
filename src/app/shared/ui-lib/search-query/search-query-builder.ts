@@ -4,8 +4,8 @@ import type {
   SearchQueryFormState,
   SearchRequestValue,
   SearchScalarValue,
-} from './search-query-form-types';
-import { isValuelessSearchOperator } from './search-query-form-operators';
+} from './search-query-types';
+import { isValuelessSearchOperator } from './search-query-operators';
 
 export function buildSearchRequest(state: SearchQueryFormState): PaginatedSearchRequest {
   const filters = state.filters

@@ -216,6 +216,12 @@ const SHOWCASES: readonly ShowcaseItem[] = [
     description: 'Native table styling with density, responsive overflow, and data states.',
   },
   {
+    name: 'Table search',
+    type: 'Components',
+    path: '/table-search',
+    description: 'Typed column filters and ordered multi-sort popovers for native table headers.',
+  },
+  {
     name: 'Tabs',
     type: 'Components',
     path: '/tabs',

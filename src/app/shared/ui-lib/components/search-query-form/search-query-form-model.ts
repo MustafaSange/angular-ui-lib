@@ -1,4 +1,4 @@
-import type { SearchOperator } from './search-query-form-types';
+import type { SearchOperator } from '../../search-query/search-query-types';
 
 export interface SearchQueryFormFilterModel {
   readonly id: string;

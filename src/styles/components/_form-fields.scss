@@ -71,7 +71,7 @@ ms-signal-form-field {
       border-color var(--transition-fast),
       box-shadow var(--transition-fast);
 
-    &:hover:not(:has(:disabled)):not(:has([readonly])):not(:focus-within) {
+    &:hover:not(:has(:disabled:not(option))):not(:has([readonly])):not(:focus-within) {
       border-color: var(--color-control-border-hover);
     }
 
@@ -258,7 +258,7 @@ ms-signal-form-field {
       overflow: visible;
       transition: none;
 
-      &:hover:not(:has(:disabled)):not(:has([readonly])):not(:focus-within),
+      &:hover:not(:has(:disabled:not(option))):not(:has([readonly])):not(:focus-within),
       &:focus-within {
         border-color: transparent;
         box-shadow: none;
@@ -276,7 +276,7 @@ ms-signal-form-field {
       overflow: visible;
       transition: none;
 
-      &:hover:not(:has(:disabled)):not(:has([readonly])):not(:focus-within),
+      &:hover:not(:has(:disabled:not(option))):not(:has([readonly])):not(:focus-within),
       &:focus-within {
         border-color: transparent;
         box-shadow: none;
@@ -325,7 +325,7 @@ ms-signal-form-field {
     .form-field-control {
       border-color: var(--color-danger);
 
-      &:hover:not(:has(:disabled)):not(:has([readonly])) {
+      &:hover:not(:has(:disabled:not(option))):not(:has([readonly])) {
         border-color: var(--color-danger);
       }
 
@@ -349,7 +349,7 @@ ms-signal-form-field {
   }
 
   &.is-disabled,
-  &:has(:disabled) {
+  &:has(:disabled:not(option)) {
     label,
     .form-field-label {
       color: var(--color-text-muted);

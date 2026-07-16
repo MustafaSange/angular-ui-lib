@@ -1,0 +1,146 @@
+<ms-popover placement="bottom-end" [open]="open()" (openChange)="handleOpenChange($event)">
+  <button
+    #trigger
+    class="btn btn-ghost btn-icon btn-xs table-search-trigger"
+    type="button"
+    msPopoverTrigger
+    aria-haspopup="dialog"
+    [class.is-active]="active()"
+    [disabled]="table.disabled()"
+    aria-label="Edit table sorting"
+    [attr.aria-describedby]="descriptionId"
+    title="Edit table sorting"
+  >
+    <span class="ms-icon" [class.ms-icon-filled]="active()" aria-hidden="true">
+      {{ triggerIcon() }}
+    </span>
+    @if (activeSort(); as currentSort) {
+      <span class="table-search-sort-priority" aria-hidden="true">{{ currentSort.index + 1 }}</span>
+    }
+  </button>
+
+  <span class="visually-hidden" [id]="descriptionId">
+    {{ description() }}
+  </span>
+
+  <ms-popover-panel class="sort-panel" role="dialog" aria-label="Edit table sorting">
+    @if (open()) {
+      <form class="table-search-form" (submit)="apply($event)">
+        <header class="table-search-panel-header table-search-dialog-header">
+          <h3 class="table-search-panel-title">Sort properties</h3>
+          <button
+            class="btn btn-ghost btn-icon table-search-panel-close-button"
+            type="button"
+            aria-label="Cancel sort editing"
+            title="Cancel"
+            (click)="cancel()"
+          >
+            <span class="ms-icon" aria-hidden="true">close</span>
+          </button>
+        </header>
+
+        <div class="table-search-panel-body sort-editor">
+          <p class="sort-help">
+            Order controls precedence. The first property is the primary sort.
+          </p>
+
+          <div class="sort-list" aria-label="Active sorts">
+            @for (sort of sorts(); track sort.id) {
+              @let rowField = field($index);
+              <div class="sort-row" (dragover)="allowDrop($event)" (drop)="drop($index, $event)">
+                <button
+                  class="btn btn-ghost btn-icon btn-sm drag-handle"
+                  type="button"
+                  draggable="true"
+                  [attr.aria-label]="
+                    'Reorder ' + sortLabel(sort.property) + ', position ' + ($index + 1)
+                  "
+                  title="Drag or use Alt+Arrow keys to reorder"
+                  (dragstart)="startDrag($index, $event)"
+                  (keydown)="handleReorderKey($index, $event)"
+                >
+                  <span class="ms-icon" aria-hidden="true">drag_indicator</span>
+                </button>
+
+                <ms-signal-form-field class="sort-property no-message">
+                  <label>Property {{ $index + 1 }}</label>
+                  <select #firstControl [formField]="rowField.property">
+                    @for (option of table.sortOptions(); track option.value) {
+                      <option
+                        [value]="option.value"
+                        [disabled]="optionDisabled(option.value, $index)"
+                      >
+                        {{ option.label }}
+                      </option>
+                    }
+                  </select>
+                </ms-signal-form-field>
+
+                <ms-signal-form-field class="sort-direction no-message">
+                  <label>Direction</label>
+                  <select [formField]="rowField.direction">
+                    <option [value]="SEARCH_SORT_DIRECTION.ASCENDING">Ascending</option>
+                    <option [value]="SEARCH_SORT_DIRECTION.DESCENDING">Descending</option>
+                  </select>
+                </ms-signal-form-field>
+
+                <button
+                  class="btn btn-outline-danger btn-icon btn-sm remove-sort"
+                  type="button"
+                  [attr.aria-label]="'Remove ' + sortLabel(sort.property) + ' sort'"
+                  title="Remove sort"
+                  (click)="remove($index)"
+                >
+                  <span class="ms-icon" aria-hidden="true">delete</span>
+                </button>
+              </div>
+            } @empty {
+              <p class="sort-empty">No sorting will be applied.</p>
+            }
+          </div>
+
+          <button
+            class="btn btn-outline btn-sm add-sort"
+            type="button"
+            [disabled]="!canAdd()"
+            (click)="add()"
+          >
+            <span class="ms-icon" aria-hidden="true">add</span>
+            Add sort
+          </button>
+          @if (!table.requiredFiltersValid()) {
+            <p class="table-search-blocked-note" role="status">
+              Complete all required filters before applying table sorting.
+            </p>
+          }
+          <p class="visually-hidden" aria-live="polite">{{ liveMessage() }}</p>
+        </div>
+
+        <footer class="table-search-panel-footer">
+          <button class="btn btn-outline btn-sm" type="button" (click)="cancel()">Cancel</button>
+          <span class="table-search-footer-spacer"></span>
+          <button
+            class="btn btn-ghost btn-sm"
+            type="button"
+            [disabled]="sorts().length === 0"
+            (click)="clear()"
+          >
+            Clear
+          </button>
+          <button
+            class="btn btn-primary btn-sm"
+            type="submit"
+            [disabled]="
+              sortForm().invalid() ||
+              sortForm().pending() ||
+              hasDuplicates() ||
+              !table.requiredFiltersValid()
+            "
+          >
+            Apply
+          </button>
+        </footer>
+      </form>
+    }
+  </ms-popover-panel>
+</ms-popover>

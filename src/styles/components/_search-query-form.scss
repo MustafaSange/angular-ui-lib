@@ -262,10 +262,6 @@ ms-search-query-form {
 
   .filter-actions {
     text-align: center;
-
-    button {
-      color: var(--color-danger);
-    }
   }
 
   @container search-query-form (max-width: 56rem) {
