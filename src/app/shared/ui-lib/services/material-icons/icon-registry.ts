@@ -1,6 +1,7 @@
 export const MATERIAL_ICONS = [
   'add',
   'archive',
+  'arrow_back',
   'arrow_downward',
   'arrow_upward',
   'bar_chart',
