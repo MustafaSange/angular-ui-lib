@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review and Optimize Code"
+  short_description: "Review code and apply practical safe improvements"
+  default_prompt: "Use $review-and-optimize-code to review this code, prioritize findings, and safely apply worthwhile improvements."

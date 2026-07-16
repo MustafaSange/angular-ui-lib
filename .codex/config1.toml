@@ -1,4 +1,0 @@
-model = "gpt-5-codex"
-
-[[skills.config]]
-path = ".codex/skills/angular-shared-feature-spec"
