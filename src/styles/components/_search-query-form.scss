@@ -1,11 +1,13 @@
 ms-search-query-form {
   display: block;
+  container-name: search-query-form;
+  container-type: inline-size;
 }
 
 .search-query-form {
   display: flex;
   flex-direction: column;
-  padding: var(--spacing-12);
+  padding: 0;
   background-color: var(--color-surface);
   border-radius: var(--radius-sm);
   border: var(--border-width-sm) solid var(--color-border);
@@ -15,6 +17,20 @@ ms-search-query-form {
     grid-template-columns: minmax(12rem, 1fr) auto;
     align-items: start;
     gap: var(--spacing-8);
+    padding-block: var(--spacing-12);
+    padding-inline: var(--spacing-16);
+    background-color: var(--color-surface-muted);
+    border-end-start-radius: var(--radius-sm);
+    border-end-end-radius: var(--radius-sm);
+
+    > * {
+      min-inline-size: 0;
+    }
+
+    &:first-child {
+      border-start-start-radius: var(--radius-sm);
+      border-start-end-radius: var(--radius-sm);
+    }
 
     &.has-sort-options {
       grid-template-columns:
@@ -22,6 +38,10 @@ ms-search-query-form {
         minmax(20rem, 1.5fr)
         auto;
     }
+  }
+
+  .filter-list + .filter-toolbar {
+    border-block-start: var(--border-width-sm) solid var(--color-border);
   }
 
   .sort-count {
@@ -67,14 +87,12 @@ ms-search-query-form {
   }
 
   .toolbar-actions {
-    position: relative;
-    inset-block-start: var(--control-border-width);
     display: flex;
     gap: var(--spacing-8);
     align-items: flex-end;
     align-self: stretch;
     min-height: 100%;
-    padding-block-end: var(--spacing-2);
+    justify-content: flex-end;
   }
 
   .filter-count {
@@ -92,16 +110,50 @@ ms-search-query-form {
   .filter-row {
     display: grid;
     grid-template-columns: 1fr 1fr 2fr var(--control-height-sm);
+    grid-template-areas: 'property operator value actions';
     gap: var(--spacing-8);
     align-items: center;
+    padding-block: var(--spacing-12);
+    padding-inline: var(--spacing-16);
+
+    > * {
+      min-inline-size: 0;
+    }
+
+    &:nth-child(odd) {
+      background-color: var(--color-surface-muted);
+    }
+
+    & + & {
+      border-block-start: var(--border-width-sm) solid var(--color-border-muted);
+    }
+
+    &:first-child {
+      border-start-start-radius: var(--radius-sm);
+      border-start-end-radius: var(--radius-sm);
+    }
+
+    .filter-property {
+      grid-area: property;
+    }
+
+    .filter-operator {
+      grid-area: operator;
+    }
+
+    .filter-actions {
+      grid-area: actions;
+    }
   }
 
   .filter-value {
+    grid-area: value;
     display: flex;
     gap: var(--spacing-8);
 
     > * {
-      width: 100%;
+      min-inline-size: 0;
+      inline-size: 100%;
     }
   }
 
@@ -216,25 +268,75 @@ ms-search-query-form {
     }
   }
 
-  @media (max-width: 56rem) {
-    .filter-toolbar,
+  @container search-query-form (max-width: 56rem) {
+    .filter-toolbar {
+      grid-template-columns: 1fr;
+    }
+
     .filter-toolbar.has-sort-options {
       grid-template-columns: 1fr 1fr;
     }
 
+    .filter-row {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) var(--control-height-sm);
+      grid-template-areas:
+        'property operator actions'
+        'value value value';
+      column-gap: var(--spacing-8);
+      row-gap: 0;
+      align-items: start;
+    }
+
+    .filter-actions {
+      align-self: center;
+      justify-self: end;
+      text-align: end;
+    }
+
     .toolbar-actions {
+      grid-column: 1 / -1;
+      align-items: center;
+      inline-size: 100%;
       min-block-size: var(--control-height-sm);
+      justify-content: flex-start;
+    }
+
+    .search-filters {
+      margin-inline-start: auto;
     }
   }
 
-  @media (max-width: 36rem) {
+  @container search-query-form (max-width: 36rem) {
     .filter-toolbar,
     .filter-toolbar.has-sort-options {
       grid-template-columns: 1fr;
     }
 
+    .filter-row {
+      grid-template-columns: minmax(0, 1fr) var(--control-height-sm);
+      grid-template-areas:
+        'property actions'
+        'operator operator'
+        'value value';
+    }
+
+    .filter-value {
+      flex-direction: column;
+    }
+
     .toolbar-actions {
       flex-wrap: wrap;
+      align-items: stretch;
+      min-block-size: 0;
+
+      > .btn {
+        flex: 1 1 auto;
+      }
+
+      .search-filters {
+        flex-basis: 100%;
+        margin-inline-start: 0;
+      }
     }
   }
 }
