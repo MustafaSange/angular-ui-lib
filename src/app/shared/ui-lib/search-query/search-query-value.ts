@@ -2,7 +2,7 @@ import type {
   SearchPropertyConfig,
   SearchPropertyOption,
   SearchScalarValue,
-} from './search-query-form-types';
+} from './search-query-types';
 
 export const DEFAULT_SEARCH_STRING_MAX_LENGTH = 50;
 export const DEFAULT_SEARCH_MAX_IN_VALUES = 50;
@@ -52,6 +52,13 @@ export function getSearchInputStep(property: SearchPropertyConfig | null): strin
 
 export function stringifySearchScalar(value: SearchScalarValue | null): string {
   return value === null ? '' : String(value);
+}
+
+export function isSearchOptionInputValue(
+  options: readonly SearchPropertyOption[],
+  value: string,
+): boolean {
+  return options.length === 0 || options.some((option) => String(option.value) === value);
 }
 
 export function parseSearchScalar(

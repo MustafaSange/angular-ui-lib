@@ -1,4 +1,4 @@
-import type { SearchDataType, SearchOperator } from './search-query-form-types';
+import type { SearchDataType, SearchOperator } from './search-query-types';
 
 const STRING_OPERATORS: readonly SearchOperator[] = [
   'eq',

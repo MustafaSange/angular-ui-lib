@@ -150,6 +150,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/tables/tables').then((m) => m.Tables),
   },
   {
+    path: 'table-search',
+    loadComponent: () => import('./features/table-search/table-search').then((m) => m.TableSearch),
+  },
+  {
     path: 'tabs',
     loadComponent: () => import('./features/tabs/tabs').then((m) => m.Tabs),
   },

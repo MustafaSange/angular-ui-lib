@@ -1,0 +1,90 @@
+<main class="table-search-page">
+  <header class="table-search-page-header">
+    <a class="btn btn-ghost back-link" routerLink="/">
+      <span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span>
+      <span>Back to home</span>
+    </a>
+    <p class="eyebrow">Components</p>
+    <h1>Table search</h1>
+    <p class="description">
+      Data-type-aware column filters and ordered multi-sort controls attached directly to native
+      table headers.
+    </p>
+  </header>
+
+  <section class="table-search-section">
+    <h2>Filters and ordered multi-sort</h2>
+    <p class="section-copy">
+      The table configures every supported data type and operator family. Invoice is required and
+      starts with a valid default so every editor can be exercised immediately. Applying a filter or
+      sort updates both the request preview and the local rows. Required or invalid drafts explain
+      why Apply is unavailable.
+    </p>
+
+    <div class="table-search-demo-panel">
+      <div class="table-wrapper">
+        <table
+          class="table table-hover table-search-demo"
+          msTableSearch
+          [properties]="properties"
+          [sortConfig]="sortConfig"
+          [(state)]="state"
+          (requestChange)="handleRequest($event)"
+        >
+          <caption>
+            Searchable invoice results
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col" class="text-start" msTableSearchColumn="invoice">
+                Invoice reference
+              </th>
+              <th scope="col" class="text-start" msTableSearchColumn="customer">Customer</th>
+              <th scope="col" class="text-start" msTableSearchColumn="status">Status</th>
+              <th scope="col" class="text-start" msTableSearchColumn="due">Due date</th>
+              <th scope="col" class="text-end" msTableSearchColumn="amount">
+                <span align="end">Amount</span>
+              </th>
+              <th scope="col" class="text-end" msTableSearchColumn="itemCount">
+                <span align="end">Items</span>
+              </th>
+              <th scope="col" class="text-end" msTableSearchColumn="sequence">
+                <span align="end">Sequence</span>
+              </th>
+              <th scope="col" class="text-start" msTableSearchColumn="issuedOn">Issued</th>
+              <th scope="col" class="text-start" msTableSearchColumn="dueTime">Due time</th>
+              <th scope="col" class="text-start" msTableSearchColumn="accountId">Account ID</th>
+              <th scope="col" class="text-start" msTableSearchColumn="paid">Paid?</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of rows(); track row.id) {
+              <tr>
+                <th class="text-start invoice-cell" scope="row">{{ row.invoice }}</th>
+                <td class="text-start">{{ row.customer }}</td>
+                <td class="text-start">
+                  <ms-badge [kind]="statusKind(row.status)" dot>{{ row.status }}</ms-badge>
+                </td>
+                <td class="text-start">{{ row.due }}</td>
+                <td class="text-end amount-cell">{{ formatAmount(row.amount) }}</td>
+                <td class="text-end">{{ row.itemCount }}</td>
+                <td class="text-end">{{ row.sequence }}</td>
+                <td class="text-start">{{ row.issuedOn }}</td>
+                <td class="text-start">{{ row.dueTime }}</td>
+                <td class="text-start guid-cell">{{ row.accountId }}</td>
+                <td class="text-start">{{ row.paid ? 'Yes' : 'No' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="request-preview">
+        <strong>Latest applied request</strong>
+        <pre aria-live="polite">{{ requestJson() }}</pre>
+      </div>
+    </div>
+
+    <app-showcase-code label="Table search" [code]="snippet" />
+  </section>
+</main>

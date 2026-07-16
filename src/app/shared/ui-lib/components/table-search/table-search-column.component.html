@@ -1,0 +1,10 @@
+<div class="table-search-header">
+  <span class="table-search-label"><ng-content /></span>
+  <span class="table-search-actions">
+    <ms-table-filter-popover [property]="property()" />
+    @if (table.hasSortOptions()) {
+      <ms-table-sort-popover [property]="property()" />
+    }
+  </span>
+  <ng-content select="[align='end']" />
+</div>

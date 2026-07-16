@@ -19,6 +19,7 @@ export const MATERIAL_ICONS = [
   'delete',
   'dashboard',
   'description',
+  'drag_indicator',
   'edit',
   'error',
   'expand_more',

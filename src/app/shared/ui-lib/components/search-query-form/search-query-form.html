@@ -202,12 +202,10 @@
                                     [placeholder]="property.placeholder ?? 'Add value'"
                                     [value]="filter.customValueInput"
                                     [attr.aria-invalid]="
-                                      customValueInputError(property, filter.customValueInput)
-                                        ? 'true'
-                                        : null
+                                      customValueInputError(property, filter) ? 'true' : null
                                     "
                                     [attr.aria-describedby]="
-                                      customValueInputError(property, filter.customValueInput)
+                                      customValueInputError(property, filter)
                                         ? 'custom-value-error-' + filter.id
                                         : null
                                     "
@@ -222,8 +220,7 @@
                                     [attr.title]="'Add value for ' + propertyLabel(property)"
                                     [disabled]="
                                       filter.customValueInput.trim().length === 0 ||
-                                      customValueInputError(property, filter.customValueInput)
-                                        .length > 0 ||
+                                      customValueInputError(property, filter).length > 0 ||
                                       isAtInValueLimit(filter, property)
                                     "
                                     (click)="addCustomValue(filter)"
@@ -247,10 +244,7 @@
                                   </button>
                                 </ms-signal-form-field>
 
-                                @if (
-                                  customValueInputError(property, filter.customValueInput);
-                                  as inputError
-                                ) {
+                                @if (customValueInputError(property, filter); as inputError) {
                                   <p
                                     class="custom-values-input-error"
                                     [id]="'custom-value-error-' + filter.id"
