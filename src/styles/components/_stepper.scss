@@ -7,7 +7,7 @@ ms-stepper {
   --_step-padding-inline: var(--spacing-8);
 
   display: grid;
-  gap: var(--spacing-12);
+  gap: var(--control-section-gap);
   min-inline-size: 0;
 }
 
@@ -24,10 +24,10 @@ ms-stepper {
 .step {
   display: inline-flex;
   align-items: center;
-  gap: var(--spacing-8);
+  gap: var(--control-row-gap);
   min-inline-size: 0;
   min-block-size: var(--control-height-sm);
-  padding-block: var(--spacing-4);
+  padding-block: var(--control-item-padding-block);
   padding-inline: var(--_step-padding-inline);
   border: 0;
   border-radius: var(--radius-md);

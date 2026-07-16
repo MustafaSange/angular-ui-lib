@@ -100,13 +100,14 @@ The calendar remains internal in v1 and is not exported as `ms-calendar`.
 ## Styling and Accessibility
 
 Styles live in `src/styles/components/_date-picker.scss`, are forwarded from the component style
-index, use existing tokens and logical properties, and keep the projected control at the 28px dense
-form-field height. Calendar hooks are concise and unprefixed.
+index, use existing tokens and logical properties, and keep the projected control at the shared
+small-control height: 28px in default density and 24px in compact density. Calendar hooks are
+concise and unprefixed.
 
 The text input exposes its label relationships, expanded state, dialog relationship, invalid state,
 and format placeholder. The calendar uses dialog and grid semantics, roving focus, full-date day
 labels, `aria-selected`, and `aria-current="date"`. Decorative icons are hidden and icon-only
-buttons have accessible names. Month and year choices use the same 32px block size as day cells
+buttons have accessible names. Month, year, and day cell sizing follows the density calendar tokens
 inside stable four-row selection grids. Previous/next glyphs mirror in RTL.
 
 ## Showcase

@@ -69,8 +69,9 @@ types and internal pure parsing/formatting helpers.
 ## Styling and Accessibility
 
 Styles live in `src/styles/components/_time-picker.scss`, use tokens and logical properties, and
-fit the 28px dense form-field control. The popup uses dialog semantics, visible labels for each time
-part, native select behavior, accessible icon buttons, and visible focus treatment. Outer
+fit the shared 28px default or 24px compact form-field control height. Popup spacing follows the
+nearest density scope. The popup uses dialog semantics, visible labels for each time part, native
+select behavior, accessible icon buttons, and visible focus treatment. Outer
 form-field required state applies only to the main field label; it does not add required markers to
 the internal selector labels. Hour/minute/second separators align vertically with the selector
 controls.

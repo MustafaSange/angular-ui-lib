@@ -1,0 +1,106 @@
+<main class="density-page">
+  <header class="density-header">
+    <a class="btn btn-ghost back-link" routerLink="/">
+      <span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span>
+      <span>Back to home</span>
+    </a>
+    <p class="eyebrow">Foundation</p>
+    <h1>Interface density</h1>
+    <p class="description">
+      Configure density once for the application, then override a control or subtree only when its
+      workflow needs different spacing.
+    </p>
+  </header>
+
+  <section class="density-comparison" aria-label="Density comparison">
+    <article class="density-sample" msDensity="default">
+      <div class="sample-header">
+        <h2>Default</h2>
+        <span>Current library sizing</span>
+      </div>
+      <div class="sample-controls">
+        <label class="form-field">
+          <span class="form-field-label">Project name</span>
+          <span class="form-field-control">
+            <input type="text" placeholder="Operations dashboard" />
+          </span>
+        </label>
+        <label class="form-field">
+          <span class="form-field-label">Region</span>
+          <span class="form-field-control">
+            <select>
+              <option>Europe</option>
+              <option>Middle East</option>
+              <option>Asia Pacific</option>
+            </select>
+          </span>
+        </label>
+        <button class="btn btn-primary" type="button">Save project</button>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Service</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Identity</td>
+            <td>Healthy</td>
+          </tr>
+          <tr>
+            <td>Reporting</td>
+            <td>Healthy</td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+
+    <article class="density-sample" msDensity="compact">
+      <div class="sample-header">
+        <h2>Compact</h2>
+        <span>Dense enterprise workflows</span>
+      </div>
+      <div class="sample-controls">
+        <label class="form-field">
+          <span class="form-field-label">Project name</span>
+          <span class="form-field-control">
+            <input type="text" placeholder="Operations dashboard" />
+          </span>
+        </label>
+        <label class="form-field">
+          <span class="form-field-label">Region</span>
+          <span class="form-field-control">
+            <select>
+              <option>Europe</option>
+              <option>Middle East</option>
+              <option>Asia Pacific</option>
+            </select>
+          </span>
+        </label>
+        <button class="btn btn-primary" type="button">Save project</button>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Service</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Identity</td>
+            <td>Healthy</td>
+          </tr>
+          <tr>
+            <td>Reporting</td>
+            <td>Healthy</td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+  </section>
+
+  <app-showcase-code label="Local density override" [code]="localOverrideSnippet" />
+</main>

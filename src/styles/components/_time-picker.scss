@@ -86,7 +86,7 @@ ms-time-picker {
 
   &:popover-open {
     display: grid;
-    gap: var(--spacing-12);
+    gap: var(--control-section-gap);
     animation: ms-floating-surface-enter var(--transition-fast);
   }
 

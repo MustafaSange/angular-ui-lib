@@ -16,6 +16,7 @@ The showcase currently includes feature pages for:
 - Menu and popover
 - Tooltip
 - Tabs
+- Interface density
 
 Each feature page is discoverable from one central place, and users can return there without relying on browser navigation.
 
@@ -42,6 +43,7 @@ Create:
 - Keep the Menu and Popover feature at `/menu-popover`.
 - Keep the Tooltip feature at `/tooltip`.
 - Keep the Tabs feature at `/tabs`.
+- Keep the Interface Density feature at `/density`.
 
 ## Home page
 
@@ -57,6 +59,7 @@ The showcase landing page includes:
 - a card or link for the Menu and Popover showcase
 - a card or link for the Tooltip showcase
 - a card or link for the Tabs showcase
+- a card or link for the Interface Density showcase under Utilities
 - a compact theme preview that demonstrates palette-backed background, surface, muted-surface, border, and text relationships across light and dark modes
 
 Selecting a showcase item should navigate to its page.
@@ -97,6 +100,7 @@ New feature showcase pages should include copyable full-component examples using
 
 - Visiting `/` shows the Home page.
 - The Home page links to Buttons, Grid, Form Fields, Modal, Feedback, Menu and Popover, Tooltip, and Tabs.
+- The Home page exposes the `/density` showcase as `Interface density`.
 - Home page showcase links are ordered alphabetically by displayed component name.
 - The Home page includes a theme preview for the current structural color system.
 - Feature showcase pages provide a visible path back to Home.

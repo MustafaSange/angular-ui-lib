@@ -180,10 +180,11 @@ The showcase lives in:
 - Use `.button-toggle-group` for the segmented container and `.button-toggle` for projected native
   buttons.
 - The base group renders as an `inline-flex` content-width control with `max-inline-size: 100%`.
-- Parent layout can still stretch the group, such as CSS grid containers with default
-  `justify-items: stretch`.
+- `inline-size: fit-content` keeps standalone groups from stretching across grid or block layouts.
 - Signal form-field layout intentionally makes `ms-button-toggle-group` fill the control row with
   `inline-size: 100%`.
+- The group inset follows `--control-group-inset`; compact density reduces the inset to the control
+  border width while each toggle keeps a 24px minimum block size and aligned inner corners.
 - Selected state uses `.is-selected` with primary color tokens: `--color-primary`,
   `--color-primary-hover`, `--color-primary-active`, and `--color-primary-contrast`.
 - Selected disabled state uses primary subtle/border/text tokens and does not dim the whole button
@@ -241,6 +242,8 @@ Render snippets near the matching visual example with `<app-showcase-code>`.
 - Selected disabled state remains visibly selected and readable.
 - RTL arrow behavior mirrors correctly.
 - `ms-button-toggle-group` renders inside `ms-signal-form-field` as a visual form-field control.
+- Standalone groups remain content-width in both densities, while form-field groups fill the field.
+- Compact density preserves a visible outer inset and aligned selected-state corners.
 - Styles are token-based and forwarded through the component styles index.
 - The `/button-toggle` route and home card expose copyable demonstrations of core behavior.
 - No tests are added or updated for this feature.

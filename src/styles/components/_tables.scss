@@ -16,7 +16,7 @@
 }
 
 .table caption {
-  padding: var(--spacing-8) var(--spacing-12);
+  padding: var(--control-table-cell-padding-block) var(--control-table-cell-padding-inline);
   border-block-end: var(--border-width-sm) solid var(--color-border);
   color: var(--color-text-secondary);
   font-weight: var(--font-weight-medium);
@@ -25,7 +25,7 @@
 
 .table th,
 .table td {
-  padding: var(--spacing-8) var(--spacing-12);
+  padding: var(--control-table-cell-padding-block) var(--control-table-cell-padding-inline);
   border-block-end: var(--border-width-sm) solid var(--color-border);
   vertical-align: middle;
 }

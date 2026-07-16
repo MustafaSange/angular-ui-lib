@@ -1,4 +1,5 @@
-:root {
+:root,
+[data-density='default'] {
   /* Form controls */
   --control-height-xs: 1.5rem; /* 24px */
   --control-height-sm: 1.75rem; /* 28px */
@@ -14,7 +15,46 @@
   --control-padding-y-sm: var(--spacing-4);
   --control-padding-y-md: var(--spacing-8);
   --control-padding-y-lg: var(--spacing-12);
+  --control-group-inset: var(--spacing-2);
+  --control-item-padding-block: var(--spacing-4);
+  --control-section-padding-block: var(--spacing-8);
+  --control-panel-padding-block: var(--spacing-12);
+  --control-panel-padding-inline: var(--spacing-16);
+  --control-row-gap: var(--spacing-8);
+  --control-section-gap: var(--spacing-12);
+  --control-choice-column-gap: var(--spacing-12);
+  --control-calendar-cell-size: var(--spacing-32);
+  --control-calendar-selection-row-size: 3.5rem;
+  --control-table-cell-padding-block: var(--spacing-8);
+  --control-table-cell-padding-inline: var(--spacing-12);
   --control-border-width: var(--border-width-sm);
   --control-border-color: var(--color-control-border);
   --control-focus-ring: 0 0 0 1px var(--color-focus-ring);
+}
+
+[data-density='compact'] {
+  --control-height-xs: 1.5rem; /* 24px accessibility floor */
+  --control-height-sm: 1.5rem; /* 24px */
+  --control-height-md: 1.75rem; /* 28px */
+  --control-height-lg: 2.5rem; /* 40px */
+  --control-padding-x-xs: var(--spacing-8);
+  --control-padding-x-sm: var(--spacing-8);
+  --control-padding-x-md: var(--spacing-12);
+  --control-padding-x-lg: var(--spacing-16);
+  --control-padding-y-xs: var(--spacing-0);
+  --control-padding-y-sm: var(--spacing-2);
+  --control-padding-y-md: var(--spacing-4);
+  --control-padding-y-lg: var(--spacing-8);
+  --control-group-inset: var(--control-border-width);
+  --control-item-padding-block: var(--spacing-2);
+  --control-section-padding-block: var(--spacing-4);
+  --control-panel-padding-block: var(--spacing-8);
+  --control-panel-padding-inline: var(--spacing-12);
+  --control-row-gap: var(--spacing-4);
+  --control-section-gap: var(--spacing-8);
+  --control-choice-column-gap: var(--spacing-8);
+  --control-calendar-cell-size: var(--spacing-28);
+  --control-calendar-selection-row-size: 3rem;
+  --control-table-cell-padding-block: var(--spacing-4);
+  --control-table-cell-padding-inline: var(--spacing-8);
 }

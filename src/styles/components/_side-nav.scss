@@ -50,7 +50,7 @@ ms-side-nav {
   gap: var(--spacing-4);
   min-block-size: var(--_side-nav-item-block-size);
   inline-size: 100%;
-  padding-block: var(--spacing-4);
+  padding-block: var(--control-item-padding-block);
   padding-inline: var(--spacing-8);
   border: 0;
   border-radius: var(--radius-sm);
@@ -128,8 +128,7 @@ ms-side-nav {
 .side-nav-item-active,
 .side-nav-item.is-active,
 .side-nav-section-active > .side-nav-section-trigger,
-.side-nav-section:has(.side-nav-item-active, .side-nav-item.is-active)
-  > .side-nav-section-trigger {
+.side-nav-section:has(.side-nav-item-active, .side-nav-item.is-active) > .side-nav-section-trigger {
   background-color: var(--color-primary-subtle);
   color: var(--color-primary-text);
   font-weight: var(--font-weight-semibold);
@@ -158,11 +157,19 @@ ms-side-nav {
 }
 
 .side-nav-collapsed > .side-nav-list > .side-nav-item .side-nav-label,
-.side-nav-collapsed > .side-nav-list > .side-nav-section > .side-nav-section-trigger .side-nav-label {
+.side-nav-collapsed
+  > .side-nav-list
+  > .side-nav-section
+  > .side-nav-section-trigger
+  .side-nav-label {
   display: none;
 }
 
-.side-nav-collapsed > .side-nav-list > .side-nav-section > .side-nav-section-trigger .side-nav-arrow {
+.side-nav-collapsed
+  > .side-nav-list
+  > .side-nav-section
+  > .side-nav-section-trigger
+  .side-nav-arrow {
   position: absolute;
   inset-block-start: 50%;
   right: var(--spacing-2);

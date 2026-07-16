@@ -35,7 +35,7 @@ ms-tree-node {
   gap: var(--spacing-4);
   min-block-size: var(--control-height-sm);
   min-inline-size: 0;
-  padding-block: var(--spacing-2);
+  padding-block: var(--control-item-padding-block);
   padding-inline: var(--spacing-4) var(--spacing-8);
   border-radius: var(--radius-sm);
   font-size: var(--font-size-sm);

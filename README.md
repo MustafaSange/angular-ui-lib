@@ -27,8 +27,9 @@ copy/paste snippets should use the top-level barrel:
 import { ButtonToggleGroup, ButtonToggleDirective } from './shared/ui-lib';
 ```
 
-The top-level UI library barrel exports the public shared component and service folders, including
-copyable showcase helpers such as `ShowcaseCode`.
+The top-level UI library barrel exports the public shared component, directive, service, pipe, and
+type folders. The app-only `ShowcaseCode` helper remains under `src/app/shared/showcase-code` and is
+not part of the reusable library API.
 
 ## Available shared components
 
@@ -74,6 +75,78 @@ contexts.
 Material Symbols support is handled by `MaterialIconsService`, which injects the configured Google
 Fonts stylesheet for the icons listed in
 `src/app/shared/ui-lib/services/material-icons/icon-registry.ts`.
+
+## Interface density
+
+The library supports `default` and `compact` density modes. Default density preserves the existing
+control sizes. Compact density reduces common 28px controls to 24px while keeping control text at
+14px and interactive targets at or above the WCAG 2.2 minimum target size.
+
+Configure density once when the application starts:
+
+```ts
+import { ApplicationConfig } from '@angular/core';
+
+import { provideUiLib } from './shared/ui-lib';
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideUiLib({ density: 'compact' })],
+};
+```
+
+Applications can also change density at runtime. The service intentionally does not persist the
+selection; applications can connect it to their own user or tenant preference storage.
+
+```ts
+import { Component, inject } from '@angular/core';
+
+import { DensityService } from './shared/ui-lib';
+
+@Component({
+  selector: 'app-density-control',
+  template: `
+    <button class="btn btn-outline" type="button" (click)="useCompactDensity()">
+      Use compact density
+    </button>
+  `,
+})
+export class DensityControl {
+  private readonly densityService = inject(DensityService);
+
+  useCompactDensity(): void {
+    this.densityService.setDensity('compact');
+  }
+}
+```
+
+Use `msDensity` to override one control or a complete subtree. The nearest override wins.
+
+```ts
+import { Component } from '@angular/core';
+
+import { DensityDirective } from './shared/ui-lib';
+
+@Component({
+  selector: 'app-density-override',
+  imports: [DensityDirective],
+  template: `
+    <section msDensity="compact">
+      <button class="btn btn-primary" type="button">Compact action</button>
+
+      <div msDensity="default">
+        <button class="btn btn-outline" type="button">Default-size exception</button>
+      </div>
+    </section>
+  `,
+})
+export class DensityOverride {}
+```
+
+Density applies to form controls, buttons, pickers, option lists, navigation controls, and tables.
+Existing `size` inputs and classes continue to select a relative size tier within the active
+density. General page, card, drawer, and dialog spacing is not reduced automatically. Keep default
+density for touch-heavy interfaces; compact density is intended for data-dense enterprise
+workflows.
 
 ## Showcase examples
 

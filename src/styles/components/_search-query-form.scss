@@ -16,9 +16,9 @@ ms-search-query-form {
     display: grid;
     grid-template-columns: minmax(12rem, 1fr) auto;
     align-items: start;
-    gap: var(--spacing-8);
-    padding-block: var(--spacing-12);
-    padding-inline: var(--spacing-16);
+    gap: var(--control-row-gap);
+    padding-block: var(--control-panel-padding-block);
+    padding-inline: var(--control-panel-padding-inline);
     background-color: var(--color-surface-muted);
     border-end-start-radius: var(--radius-sm);
     border-end-end-radius: var(--radius-sm);
@@ -88,7 +88,7 @@ ms-search-query-form {
 
   .toolbar-actions {
     display: flex;
-    gap: var(--spacing-8);
+    gap: var(--control-row-gap);
     align-items: flex-end;
     align-self: stretch;
     min-height: 100%;
@@ -111,10 +111,10 @@ ms-search-query-form {
     display: grid;
     grid-template-columns: 1fr 1fr 2fr var(--control-height-sm);
     grid-template-areas: 'property operator value actions';
-    gap: var(--spacing-8);
+    gap: var(--control-row-gap);
     align-items: center;
-    padding-block: var(--spacing-12);
-    padding-inline: var(--spacing-16);
+    padding-block: var(--control-panel-padding-block);
+    padding-inline: var(--control-panel-padding-inline);
 
     > * {
       min-inline-size: 0;
@@ -149,7 +149,7 @@ ms-search-query-form {
   .filter-value {
     grid-area: value;
     display: flex;
-    gap: var(--spacing-8);
+    gap: var(--control-row-gap);
 
     > * {
       min-inline-size: 0;
@@ -159,13 +159,13 @@ ms-search-query-form {
 
   .in-values {
     display: grid;
-    gap: var(--spacing-8);
+    gap: var(--control-row-gap);
   }
 
   .in-values-control {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--spacing-8);
+    gap: var(--control-row-gap);
     align-items: stretch;
 
     &.has-custom-values {

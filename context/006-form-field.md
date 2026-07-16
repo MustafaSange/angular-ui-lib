@@ -113,7 +113,8 @@ custom controls such as:
 Keep text, select, and autocomplete fields enterprise-dense:
 
 - The composed control row uses the small control height token, `--control-height-sm`, with a
-  28px total block size including the form-field border.
+  28px total block size including the form-field border in default density and 24px in compact
+  density.
 - Native `input` and `select` controls should fill the projected control row without increasing
   the total field height.
 - Projected custom controls such as `ms-select`, `ms-autocomplete`, and `ms-readonly-value` must
@@ -123,6 +124,8 @@ Keep text, select, and autocomplete fields enterprise-dense:
   and switch labels.
 - Account for wrapper borders and internal padding when sizing projected controls so nested
   controls do not make the field taller than the shared compact height.
+- Inherit global or local density through the shared control tokens; do not require a form-field
+  density input. Follow `context/049-interface-density.md`.
 
 ## Prefix and Suffix Behavior
 
@@ -150,6 +153,8 @@ Rules:
 
 - Support labels for all field types.
 - Style both native `label` elements and `.form-field-label` within `.form-field`.
+- Style a projected button with `slot="label-action"` as a compact, focus-visible label-side action
+  suitable for behavior such as password generation. Keep `slot="label-extra"` passive.
 - `.no-label` on the host `.form-field` or `ms-signal-form-field` hides the `.form-field-label`
   row with `display: none` while leaving projected label content in the DOM.
 - If the field is required, display a red `*` after the label text.
@@ -302,6 +307,7 @@ After reviewing the existing style guide, suggest improvements if you find:
 - The composed control uses one shared outer border with internal separators.
 - Prefix and suffix adornments, including segmented actions, mirror correctly in `dir="rtl"`.
 - Required fields show a red `*`.
+- Projected `slot="label-action"` buttons have readable hover, focus, and disabled states.
 - Hint text is shown by default.
 - Error text replaces hint text when an error is active.
 - Hint and error are never visible at the same time.

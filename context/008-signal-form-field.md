@@ -173,6 +173,8 @@ projected display-value component for non-editing field rows.
 - Label, control, hint, and error are all passed through content projection.
 - The label area projects the native `label` at inline-start.
 - Optional inline-end label content uses `slot="label-extra"` or `slot="label-action"`.
+- `slot="label-action"` is an interactive native button treatment with compact padding, visible
+  focus, and disabled styling; `slot="label-extra"` remains passive projected content.
 - Optional inline-end hint content uses `slot="hint-extra"` inside `ms-hint`.
 - Optional inline-end error content uses `slot="error-extra"` inside `ms-error`.
 - The projected control remains fully owned by the consumer.
@@ -207,6 +209,7 @@ The styles support both:
 - legacy `.form-field` markup
 - `ms-signal-form-field`, `ms-hint`, `ms-error`, and `ms-readonly-value` element selectors
 - a 2-column `.form-field-label` area using `1fr auto`
+- a compact label-side button treatment for `[slot='label-action']`
 - 2-column `ms-hint` and `ms-error` message layouts using `1fr auto`
 - host utility classes `.no-label` and `.no-message` for compact field layouts
 - logical block/inline layout behavior so label extras, message extras, prefixes, and suffixes
@@ -286,6 +289,8 @@ part of the projected field state and appear in the standard message row after i
 
 - `ms-signal-form-field` renders label, control, and message rows.
 - Label-side content can be projected with `slot="label-extra"` or `slot="label-action"`.
+- Label actions expose hover, focus-visible, and disabled treatments without increasing field
+  control height.
 - Hint-side content can be projected with `slot="hint-extra"`.
 - Error-side content can be projected with `slot="error-extra"`.
 - `ms-hint` and `ms-error` are projected components in separate folders.

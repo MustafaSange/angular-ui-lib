@@ -154,7 +154,7 @@ ms-autocomplete {
   align-items: center;
   gap: var(--spacing-4);
   min-block-size: var(--_autocomplete-option-min-height);
-  padding: var(--spacing-4) var(--spacing-8);
+  padding: var(--control-item-padding-block) var(--spacing-8);
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition:

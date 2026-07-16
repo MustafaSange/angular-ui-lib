@@ -71,9 +71,10 @@ calendar, popup, or keyboard logic.
 ## Styling and Accessibility
 
 Styles live in `src/styles/components/_date-time-picker.scss`. The two controls share one dense
-form-field surface with a logical separator, mirror in RTL, and stack responsively on narrow
-viewports. The host is an accessible group; consumers provide a group label while child inputs have
-independent `Date` and `Time` names by default.
+form-field surface with a logical separator, inherit the global or local density tokens, mirror in
+RTL, and stack responsively on narrow viewports. Default density is 28px; compact density is 24px.
+The host is an accessible group; consumers provide a group label while child inputs have independent
+`Date` and `Time` names by default.
 
 ## Showcase
 
