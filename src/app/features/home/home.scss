@@ -39,6 +39,75 @@ h1 {
   color: var(--color-text-secondary);
 }
 
+.showcase-browser {
+  margin-block-end: var(--spacing-20);
+}
+
+.showcase-browser-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--spacing-16);
+  margin-block-end: var(--spacing-16);
+}
+
+.result-summary {
+  flex: 0 0 auto;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.search-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  input {
+    inline-size: 100%;
+    min-block-size: var(--control-height-lg);
+    padding-block: var(--spacing-8);
+    padding-inline: var(--spacing-48);
+    border: var(--control-border-width) solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    font: inherit;
+
+    &::placeholder {
+      color: var(--color-text-muted);
+    }
+
+    &::-webkit-search-cancel-button {
+      appearance: none;
+    }
+
+    &:focus {
+      outline: 0;
+      border-color: var(--color-button-primary-border);
+      box-shadow: var(--control-focus-ring);
+    }
+  }
+}
+
+.search-icon,
+.clear-search {
+  position: absolute;
+  z-index: 1;
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+}
+
+.search-icon {
+  inset-inline-start: var(--spacing-16);
+  color: var(--color-primary-text);
+  font-size: var(--font-size-xl);
+  pointer-events: none;
+}
+
+.clear-search {
+  inset-inline-end: var(--spacing-8);
+}
+
 .showcase-grid {
   display: grid;
   gap: var(--spacing-16);
@@ -54,10 +123,6 @@ h1 {
   background-color: var(--color-surface);
   color: inherit;
   text-decoration: none;
-  transition:
-    background-color var(--transition-fast),
-    border-color var(--transition-fast),
-    box-shadow var(--transition-fast);
 
   &:hover {
     border-color: var(--color-primary-border);
@@ -83,6 +148,27 @@ h1 {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   text-transform: uppercase;
+}
+
+.empty-state {
+  display: grid;
+  justify-items: center;
+  gap: var(--spacing-8);
+  padding: var(--spacing-32) var(--spacing-20);
+  border: var(--border-width-sm) solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background-color: var(--color-surface);
+  text-align: center;
+
+  > .ms-icon {
+    color: var(--color-primary-text);
+    font-size: var(--font-size-xl);
+  }
+
+  p {
+    margin-block-end: var(--spacing-8);
+    color: var(--color-text-secondary);
+  }
 }
 
 .theme-preview {

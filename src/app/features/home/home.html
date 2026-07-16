@@ -7,245 +7,62 @@
     </p>
   </header>
 
-  <section class="showcase-grid" aria-label="Showcases">
-    <a class="showcase-card" routerLink="/accordion">
-      <span class="showcase-type">Components</span>
-      <strong>Accordion</strong>
-      <span>Disclosure groups with rich titles, disabled items, and keyboard navigation.</span>
-    </a>
+  <section class="showcase-browser" aria-labelledby="showcase-browser-title">
+    <div class="showcase-browser-header">
+      <div>
+        <p class="eyebrow">Library</p>
+        <h2 id="showcase-browser-title">Find a control</h2>
+      </div>
 
-    <a class="showcase-card" routerLink="/autocomplete">
-      <span class="showcase-type">Components</span>
-      <strong>Autocomplete</strong>
-      <span>Search-backed option picking with async sources and multiple values.</span>
-    </a>
+      <span class="result-summary" aria-live="polite">{{ resultSummary() }}</span>
+    </div>
 
-    <a class="showcase-card" routerLink="/feedback">
-      <span class="showcase-type">Components</span>
-      <strong>Alerts and toasts</strong>
-      <span>Inline messages, transient notifications, actions, and feedback kinds.</span>
-    </a>
+    <div class="search-field">
+      <span class="ms-icon search-icon" aria-hidden="true">search</span>
+      <input
+        #searchInput
+        id="showcase-search"
+        type="search"
+        aria-label="Search showcases"
+        placeholder="Search by control, category, or capability…"
+        autocomplete="off"
+        [value]="searchQuery()"
+        (input)="updateSearch($event)"
+      />
 
-    <a class="showcase-card" routerLink="/badge">
-      <span class="showcase-type">Components</span>
-      <strong>Badge</strong>
-      <span>Compact status, count, dot, and icon metadata treatments.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/bottom-sheet">
-      <span class="showcase-type">Components</span>
-      <strong>Bottom sheet</strong>
-      <span>Mobile-friendly action, form, and service-opened contextual overlays.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/breadcrumb">
-      <span class="showcase-type">Components</span>
-      <strong>Breadcrumb</strong>
-      <span>Location trails with native links, current-page state, and RTL-safe separators.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/buttons">
-      <span class="showcase-type">Components</span>
-      <strong>Buttons</strong>
-      <span>Variants, sizes, states, and icon-only controls.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/button-toggle">
-      <span class="showcase-type">Components</span>
-      <strong>Button toggle</strong>
-      <span>Single-select segmented button groups with projected native controls.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/card">
-      <span class="showcase-type">Components</span>
-      <strong>Card</strong>
-      <span>Semantic containers with media, actions, and surface treatments.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/chip">
-      <span class="showcase-type">Components</span>
-      <strong>Chip</strong>
-      <span>Projected labels, selected states, removable tokens, and disabled chips.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/checkbox">
-      <span class="showcase-type">Components</span>
-      <strong>Checkbox</strong>
-      <span>Projected checkbox groups with hints, errors, disabled, and label-before states.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/clipboard">
-      <span class="showcase-type">Components</span>
-      <strong>Clipboard copy</strong>
-      <span>Icon copy actions, reveal-on-hover rows, and reusable clipboard helpers.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/confirm-dialog">
-      <span class="showcase-type">Components</span>
-      <strong>Confirmation dialog</strong>
-      <span>Service-opened yes-or-no dialogs with semantic intent and boolean results.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/form-fields">
-      <span class="showcase-type">Components</span>
-      <strong>Form fields</strong>
-      <span>Labels, native controls, support text, and field states.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/file-upload">
-      <span class="showcase-type">Components</span>
-      <strong>File upload</strong>
-      <span>Signal-form file picking with drag and drop, validation, and safe names.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/format-json">
-      <span class="showcase-type">Pipes</span>
-      <strong>Format JSON</strong>
-      <span>Readable JSON strings and structured values with safe pass-through behavior.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/grid">
-      <span class="showcase-type">Layout</span>
-      <strong>Grid system</strong>
-      <span>Columns, responsive spans, row gaps, and containers.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/menu-popover">
-      <span class="showcase-type">Components</span>
-      <strong>Menu and popover</strong>
-      <span>Anchored action menus and floating content using native platform APIs.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/modal">
-      <span class="showcase-type">Components</span>
-      <strong>Modal system</strong>
-      <span>Dynamic dialogs, typed results, stacked overlays, and focus behavior.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/otp-input">
-      <span class="showcase-type">Components</span>
-      <strong>OTP input</strong>
-      <span>Configurable one-time-code fields with paste handling and completion events.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/media-slider">
-      <span class="showcase-type">Components</span>
-      <strong>Media slider</strong>
-      <span>Native snap scrolling for photos, projected media, controls, and captions.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/drawer">
-      <span class="showcase-type">Components</span>
-      <strong>Navigation drawer</strong>
-      <span>Button-controlled slide navigation with logical LTR and RTL placement.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/date-time-pickers">
-      <span class="showcase-type">Components</span>
-      <strong>Date and time pickers</strong>
-      <span>Manual and popup selection for canonical dates, times, and composed local values.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/pagination">
-      <span class="showcase-type">Components</span>
-      <strong>Pagination</strong>
-      <span>Controlled page navigation with ranges, ellipses, and disabled states.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/progress">
-      <span class="showcase-type">Components</span>
-      <strong>Progress indicator and spinner</strong>
-      <span>Determinate task completion and accessible indeterminate loading feedback.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/radio">
-      <span class="showcase-type">Components</span>
-      <strong>Radio</strong>
-      <span
-        >Projected radio groups with hints, errors, disabled, and label placement variants.</span
-      >
-    </a>
-
-    <a class="showcase-card" routerLink="/side-nav">
-      <span class="showcase-type">Components</span>
-      <strong>Side navigation menu</strong>
-      <span>Icon rail navigation with expandable groups, flyouts, and current states.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/select">
-      <span class="showcase-type">Components</span>
-      <strong>Select</strong>
-      <span>Searchable single and multiple value pickers with async source support.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/search-query-form">
-      <span class="showcase-type">Components</span>
-      <strong>Search query form</strong>
-      <span>Config-driven backend search filters with required rows and typed values.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/slider">
-      <span class="showcase-type">Components</span>
-      <strong>Slider</strong>
-      <span>Native range controls with value binding, disabled state, and RTL-safe fill.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/stepper">
-      <span class="showcase-type">Components</span>
-      <strong>Stepper</strong>
-      <span>Horizontal and vertical multi-step workflows with optional linear progression.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/switch">
-      <span class="showcase-type">Components</span>
-      <strong>Switch</strong>
-      <span>Projected binary preference controls with hint, error, and disabled states.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/tables">
-      <span class="showcase-type">Components</span>
-      <strong>Tables</strong>
-      <span>Native table styling with density, responsive overflow, and data states.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/tabs">
-      <span class="showcase-type">Components</span>
-      <strong>Tabs</strong>
-      <span>Projected panels with simple labels, rich titles, and keyboard navigation.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/timeline">
-      <span class="showcase-type">Components</span>
-      <strong>Timeline</strong>
-      <span>Connected workflow markers with statuses, projected content, and neutral rails.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/tree">
-      <span class="showcase-type">Components</span>
-      <strong>Tree view</strong>
-      <span
-        >Hierarchical navigation with projected content, lazy children, and keyboard focus.</span
-      >
-    </a>
-
-    <a class="showcase-card" routerLink="/time-ago">
-      <span class="showcase-type">Pipes</span>
-      <strong>Time ago</strong>
-      <span>Static and live locale-aware relative dates for past and future timestamps.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/tooltip">
-      <span class="showcase-type">Components</span>
-      <strong>Tooltip</strong>
-      <span>Native anchored hints for brief descriptions and contextual guidance.</span>
-    </a>
-
-    <a class="showcase-card" routerLink="/utilities">
-      <span class="showcase-type">Utilities</span>
-      <strong>Utilities</strong>
-      <span>Layout, spacing, typography, color, surface, and state helper classes.</span>
-    </a>
+      @if (searchQuery()) {
+        <button
+          class="btn btn-ghost btn-icon clear-search"
+          type="button"
+          aria-label="Clear showcase search"
+          (click)="clearSearch(searchInput)"
+        >
+          <span class="ms-icon" aria-hidden="true">close</span>
+        </button>
+      }
+    </div>
   </section>
+
+  @if (filteredShowcases().length) {
+    <section class="showcase-grid" aria-label="Showcases">
+      @for (showcase of filteredShowcases(); track showcase.path) {
+        <a class="showcase-card" [routerLink]="showcase.path">
+          <span class="showcase-type">{{ showcase.type }}</span>
+          <strong>{{ showcase.name }}</strong>
+          <span>{{ showcase.description }}</span>
+        </a>
+      }
+    </section>
+  } @else {
+    <section class="empty-state" aria-live="polite">
+      <span class="ms-icon" aria-hidden="true">search</span>
+      <h2>No showcases found</h2>
+      <p>Try a different control name, category, or capability.</p>
+      <button class="btn btn-outline" type="button" (click)="clearSearch(searchInput)">
+        Clear search
+      </button>
+    </section>
+  }
 
   <section class="theme-preview" aria-labelledby="theme-preview-title">
     <div class="theme-preview-header">
