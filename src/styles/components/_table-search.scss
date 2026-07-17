@@ -82,7 +82,7 @@ ms-table-sort-popover {
 
 .filter-panel.popover-panel[popover],
 .sort-panel.popover-panel[popover] {
-  --_table-search-panel-inline-size: 20rem;
+  --_table-search-panel-inline-size: 26rem;
 
   inline-size: min(var(--_table-search-panel-inline-size), calc(100dvi - var(--spacing-32)));
   max-block-size: min(36rem, calc(100dvb - var(--spacing-32)));
@@ -97,6 +97,8 @@ ms-table-sort-popover {
   text-align: start;
   text-transform: none;
   white-space: normal;
+  container-name: table-search-panel;
+  container-type: inline-size;
 }
 
 .sort-panel.popover-panel[popover] {
@@ -171,11 +173,21 @@ ms-table-sort-popover {
 }
 
 .table-search-panel-footer {
+  flex-wrap: nowrap;
+  justify-content: space-between;
   border-block-start: var(--border-width-sm) solid var(--color-border);
 }
 
-.table-search-footer-spacer {
-  flex: 1;
+.table-search-footer-actions {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--spacing-8);
+  min-inline-size: 0;
+}
+
+.table-search-footer-actions-end {
+  justify-content: flex-end;
+  margin-inline-start: auto;
 }
 
 .filter-editor {
@@ -232,7 +244,10 @@ ms-readonly-value.has-overflow-navigation .table-filter-in-values-preview {
 }
 
 .table-filter-custom-values-popover.popover-panel[popover] {
-  inline-size: min(20rem, calc(100dvi - var(--spacing-32)));
+  inline-size: min(
+    calc(var(--_table-search-panel-inline-size) - var(--spacing-12) - var(--spacing-12)),
+    calc(100dvi - var(--spacing-32))
+  );
 }
 
 .table-filter-custom-values-editor {
@@ -276,6 +291,7 @@ ms-readonly-value.has-overflow-navigation .table-filter-in-values-preview {
 
   &.is-stacked {
     grid-template-columns: minmax(0, 1fr);
+    gap: 0;
   }
 }
 
@@ -306,7 +322,7 @@ ms-readonly-value.has-overflow-navigation .table-filter-in-values-preview {
 
 .sort-row {
   display: grid;
-  grid-template-columns: auto minmax(8rem, 1fr) minmax(6.5rem, 0.55fr) auto;
+  grid-template-columns: minmax(8rem, 1fr) minmax(6.5rem, 0.55fr) auto;
   align-items: end;
   gap: var(--spacing-8);
   padding: var(--spacing-8);
@@ -321,6 +337,18 @@ ms-readonly-value.has-overflow-navigation .table-filter-in-values-preview {
   &:active {
     cursor: grabbing;
   }
+}
+
+.sort-reorder-actions {
+  display: flex;
+  align-items: center;
+}
+
+.sort-row-actions {
+  display: flex;
+  align-items: center;
+  align-self: end;
+  gap: var(--spacing-12);
 }
 
 .add-sort {
@@ -341,17 +369,37 @@ ms-readonly-value.has-overflow-navigation .table-filter-in-values-preview {
   white-space: nowrap;
 }
 
-@media screen and (max-width: 36rem) {
-  .filter-range,
+@container table-search-panel (max-width: 25rem) {
   .sort-row {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .drag-handle {
-    justify-self: start;
+  .sort-row-actions {
+    justify-self: end;
+  }
+}
+
+@container table-search-panel (max-width: 22rem) {
+  .filter-range {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@container table-search-panel (max-width: 24rem) {
+  .table-search-panel-footer {
+    flex-wrap: wrap;
   }
 
-  .remove-sort {
-    justify-self: end;
+  .table-search-footer-actions {
+    flex: 1 1 100%;
+    flex-wrap: wrap;
+
+    > .btn {
+      flex: 1 1 auto;
+    }
+  }
+
+  .table-search-footer-actions-end {
+    margin-inline-start: 0;
   }
 }

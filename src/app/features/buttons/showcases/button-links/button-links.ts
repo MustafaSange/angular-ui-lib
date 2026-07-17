@@ -18,9 +18,9 @@ export class ButtonLinksShowcase {
   selector: 'app-button-links-example',
   template: \`
     <a href="#">Plain link</a>
-    <a class="btn btn-primary" href="#">Primary link button</a>
-    <a class="btn btn-outline" href="#">Outline link button</a>
-    <a class="btn btn-ghost" href="#">Ghost link button</a>
+    <a class="btn btn-primary" href="#">Primary Link Button</a>
+    <a class="btn btn-outline" href="#">Outline Link Button</a>
+    <a class="btn btn-ghost" href="#">Ghost Link Button</a>
   \`,
 })
 export class ButtonLinksExample {}`;

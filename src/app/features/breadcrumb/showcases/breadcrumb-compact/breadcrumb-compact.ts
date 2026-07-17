@@ -24,7 +24,7 @@ import { BreadcrumbComponent, BreadcrumbItemDirective } from './shared/ui-lib';
   selector: 'app-compact-breadcrumb-example',
   imports: [BreadcrumbComponent, BreadcrumbItemDirective],
   template: \`
-    <ms-breadcrumb label="Documentation path" size="sm">
+    <ms-breadcrumb label="Documentation Path" size="sm">
       <a msBreadcrumbItem href="/docs">Docs</a>
       <a msBreadcrumbItem href="/docs/components">Components</a>
       <span msBreadcrumbItem current>Breadcrumb</span>

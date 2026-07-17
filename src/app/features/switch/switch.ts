@@ -40,25 +40,25 @@ import {
 
       <ms-switch-control>
         <input type="checkbox" role="switch" />
-        <label>Compact mode</label>
+        <label>Compact Mode</label>
         <ms-choice-hint>Reduce spacing in dense views.</ms-choice-hint>
       </ms-switch-control>
 
       <ms-switch-control>
         <input type="checkbox" role="switch" disabled />
-        <label>Audit logging</label>
+        <label>Audit Logging</label>
         <ms-choice-hint>Available on enterprise plans.</ms-choice-hint>
       </ms-switch-control>
 
       <ms-switch-control>
         <input type="checkbox" role="switch" />
-        <label>Public profile</label>
+        <label>Public Profile</label>
         <ms-choice-error>Review visibility settings before enabling.</ms-choice-error>
       </ms-switch-control>
 
       <ms-switch-control slot="label-before">
         <input type="checkbox" role="switch" />
-        <label>Label before</label>
+        <label>Label Before</label>
         <ms-choice-hint>Places text before the switch.</ms-choice-hint>
       </ms-switch-control>
     </ms-switch-group>

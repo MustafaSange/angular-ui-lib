@@ -30,11 +30,11 @@ import { AccordionComponent, AccordionItemComponent } from './shared/ui-lib';
 @Component({
   selector: 'app-basic-accordion-example', imports: [AccordionComponent, AccordionItemComponent], template: \`
     <ms-accordion>
-      <ms-accordion-item title="Account settings" [expanded]="true">
+      <ms-accordion-item title="Account Settings" [expanded]="true">
         <p>Manage profile details, sign-in methods, and notification preferences.</p>
       </ms-accordion-item>
 
-      <ms-accordion-item title="Workspace access">
+      <ms-accordion-item title="Workspace Access">
         <p>Review member roles, pending invites, and approval requirements.</p>
       </ms-accordion-item>
 

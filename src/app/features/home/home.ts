@@ -22,7 +22,7 @@ const SHOWCASES: readonly ShowcaseItem[] = [
     description: 'Search-backed option picking with async sources and multiple values.',
   },
   {
-    name: 'Alerts and toasts',
+    name: 'Alerts and Toasts',
     type: 'Components',
     path: '/feedback',
     description: 'Inline messages, transient notifications, actions, and feedback kinds.',
@@ -34,7 +34,7 @@ const SHOWCASES: readonly ShowcaseItem[] = [
     description: 'Compact status, count, dot, and icon metadata treatments.',
   },
   {
-    name: 'Bottom sheet',
+    name: 'Bottom Sheet',
     type: 'Components',
     path: '/bottom-sheet',
     description: 'Mobile-friendly action, form, and service-opened contextual overlays.',
@@ -52,7 +52,7 @@ const SHOWCASES: readonly ShowcaseItem[] = [
     description: 'Variants, sizes, states, and icon-only controls.',
   },
   {
-    name: 'Button toggle',
+    name: 'Button Toggle',
     type: 'Components',
     path: '/button-toggle',
     description: 'Single-select segmented button groups with projected native controls.',
@@ -76,25 +76,25 @@ const SHOWCASES: readonly ShowcaseItem[] = [
     description: 'Projected checkbox groups with hints, errors, disabled, and label-before states.',
   },
   {
-    name: 'Clipboard copy',
+    name: 'Clipboard Copy',
     type: 'Components',
     path: '/clipboard',
     description: 'Icon copy actions, reveal-on-hover rows, and reusable clipboard helpers.',
   },
   {
-    name: 'Confirmation dialog',
+    name: 'Confirmation Dialog',
     type: 'Components',
     path: '/confirm-dialog',
     description: 'Service-opened yes-or-no dialogs with semantic intent and boolean results.',
   },
   {
-    name: 'Form fields',
+    name: 'Form Fields',
     type: 'Components',
     path: '/form-fields',
     description: 'Labels, native controls, support text, and field states.',
   },
   {
-    name: 'File upload',
+    name: 'File Upload',
     type: 'Components',
     path: '/file-upload',
     description: 'Signal-form file picking with drag and drop, validation, and safe names.',
@@ -106,49 +106,49 @@ const SHOWCASES: readonly ShowcaseItem[] = [
     description: 'Readable JSON strings and structured values with safe pass-through behavior.',
   },
   {
-    name: 'Grid system',
+    name: 'Grid System',
     type: 'Layout',
     path: '/grid',
     description: 'Columns, responsive spans, row gaps, and containers.',
   },
   {
-    name: 'Menu and popover',
+    name: 'Menu and Popover',
     type: 'Components',
     path: '/menu-popover',
     description: 'Anchored action menus and floating content using native platform APIs.',
   },
   {
-    name: 'Modal system',
+    name: 'Modal System',
     type: 'Components',
     path: '/modal',
     description: 'Dynamic dialogs, typed results, stacked overlays, and focus behavior.',
   },
   {
-    name: 'OTP input',
+    name: 'OTP Input',
     type: 'Components',
     path: '/otp-input',
     description: 'Configurable one-time-code fields with paste handling and completion events.',
   },
   {
-    name: 'Media slider',
+    name: 'Media Slider',
     type: 'Components',
     path: '/media-slider',
     description: 'Native snap scrolling for photos, projected media, controls, and captions.',
   },
   {
-    name: 'Navigation drawer',
+    name: 'Navigation Drawer',
     type: 'Components',
     path: '/drawer',
     description: 'Button-controlled slide navigation with logical LTR and RTL placement.',
   },
   {
-    name: 'Interface density',
+    name: 'Interface Density',
     type: 'Utilities',
     path: '/density',
     description: 'Global default and compact control sizing with local subtree overrides.',
   },
   {
-    name: 'Date and time pickers',
+    name: 'Date and Time Pickers',
     type: 'Components',
     path: '/date-time-pickers',
     description:
@@ -161,7 +161,7 @@ const SHOWCASES: readonly ShowcaseItem[] = [
     description: 'Controlled page navigation with ranges, ellipses, and disabled states.',
   },
   {
-    name: 'Progress indicator and spinner',
+    name: 'Progress Indicator and Spinner',
     type: 'Components',
     path: '/progress',
     description: 'Determinate task completion and accessible indeterminate loading feedback.',
@@ -174,7 +174,7 @@ const SHOWCASES: readonly ShowcaseItem[] = [
       'Projected radio groups with hints, errors, disabled, and label placement variants.',
   },
   {
-    name: 'Side navigation menu',
+    name: 'Side Navigation Menu',
     type: 'Components',
     path: '/side-nav',
     description: 'Icon rail navigation with expandable groups, flyouts, and current states.',
@@ -186,7 +186,7 @@ const SHOWCASES: readonly ShowcaseItem[] = [
     description: 'Searchable single and multiple value pickers with async source support.',
   },
   {
-    name: 'Search query form',
+    name: 'Search Query Form',
     type: 'Components',
     path: '/search-query-form',
     description: 'Config-driven backend search filters with required rows and typed values.',
@@ -216,7 +216,7 @@ const SHOWCASES: readonly ShowcaseItem[] = [
     description: 'Native table styling with density, responsive overflow, and data states.',
   },
   {
-    name: 'Table search',
+    name: 'Table Search',
     type: 'Components',
     path: '/table-search',
     description: 'Typed column filters and ordered multi-sort popovers for native table headers.',
@@ -234,14 +234,14 @@ const SHOWCASES: readonly ShowcaseItem[] = [
     description: 'Connected workflow markers with statuses, projected content, and neutral rails.',
   },
   {
-    name: 'Tree view',
+    name: 'Tree View',
     type: 'Components',
     path: '/tree',
     description:
       'Hierarchical navigation with projected content, lazy children, and keyboard focus.',
   },
   {
-    name: 'Time ago',
+    name: 'Time Ago',
     type: 'Pipes',
     path: '/time-ago',
     description: 'Static and live locale-aware relative dates for past and future timestamps.',

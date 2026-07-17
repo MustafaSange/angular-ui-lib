@@ -1,6 +1,6 @@
 <main class="format-json-page showcase-page">
   <header class="format-json-header showcase-header">
-    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to home</span></a>
+    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to Home</span></a>
     <p class="eyebrow">Pipes</p>
     <h1>Format JSON</h1>
     <p class="description">
@@ -10,23 +10,23 @@
   </header>
 
   <section class="format-json-section showcase-section">
-    <h2>JSON string</h2>
+    <h2>JSON String</h2>
     <p class="section-copy">Parse a valid JSON string and display it with two-space indentation.</p>
     <div class="showcase-demo-panel">
       <pre class="json-output"><code>{{ jsonString | formatJson }}</code></pre>
     </div>
-    <app-showcase-code label="Format a JSON string" [code]="jsonStringSnippet" />
+    <app-showcase-code label="Format a JSON String" [code]="jsonStringSnippet" />
   </section>
 
   <section class="format-json-section showcase-section">
-    <h2>Structured value</h2>
+    <h2>Structured Value</h2>
     <p class="section-copy">
       Serialize an object directly without converting it to a string first.
     </p>
     <div class="showcase-demo-panel">
       <pre class="json-output"><code>{{ structuredValue | formatJson }}</code></pre>
     </div>
-    <app-showcase-code label="Format a structured value" [code]="structuredValueSnippet" />
+    <app-showcase-code label="Format a Structured Value" [code]="structuredValueSnippet" />
   </section>
 
   <section class="format-json-section showcase-section">
@@ -37,6 +37,6 @@
         Output: <code>{{ invalidJson | formatJson }}</code>
       </p>
     </div>
-    <app-showcase-code label="Preserve invalid JSON" [code]="invalidJsonSnippet" />
+    <app-showcase-code label="Preserve Invalid JSON" [code]="invalidJsonSnippet" />
   </section>
 </main>

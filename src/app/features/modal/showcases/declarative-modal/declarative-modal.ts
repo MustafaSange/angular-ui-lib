@@ -92,7 +92,7 @@ import { ModalService } from './shared/ui-lib';
   selector: 'app-dashboard-page',
   template: \`
     <button class="btn btn-primary" type="button" (click)="openModal()">
-      Open modal
+      Open Modal
     </button>
   \`,
 })

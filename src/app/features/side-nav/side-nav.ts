@@ -108,7 +108,7 @@ import {
         <a msSideNavItem routerLink="/projects/active" routerLinkActive="is-active">
           Active projects
         </a>
-        <button type="button" msSideNavItem [active]="true">Pinned review</button>
+        <button type="button" msSideNavItem [active]="true">Pinned Review</button>
       </ms-side-nav-section>
     </ms-side-nav>
   \`,

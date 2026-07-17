@@ -255,7 +255,7 @@ export class SpacingUtilitiesExample {}`,
   template: \`
     <article>
       <p class="m-0 text-sm text-muted text-uppercase">Release</p>
-      <h2 class="m-0 text-xl fw-semibold">Typography utilities</h2>
+      <h2 class="m-0 text-xl fw-semibold">Typography Utilities</h2>
       <p class="mt-8 text-secondary">Use token-backed type helpers for compact UI copy.</p>
     </article>
   \`,

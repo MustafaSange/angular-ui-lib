@@ -55,7 +55,7 @@ type CompactFieldsForm = {
   imports: [FormField, SignalFormField, SignalFormHint],
   template: \`
     <ms-signal-form-field class="no-label">
-      <label for="compact-search">Compact search</label>
+      <label for="compact-search">Compact Search</label>
       <input
         id="compact-search"
         type="search"
@@ -66,13 +66,13 @@ type CompactFieldsForm = {
     </ms-signal-form-field>
 
     <ms-signal-form-field class="no-message">
-      <label for="reference-code">Reference code</label>
+      <label for="reference-code">Reference Code</label>
       <input id="reference-code" type="text" placeholder="INV-1042" [formField]="referenceCodeField" />
       <ms-hint>Support text is projected but hidden by the no-message class.</ms-hint>
     </ms-signal-form-field>
 
     <ms-signal-form-field class="no-label no-message">
-      <label for="quick-filter">Quick filter</label>
+      <label for="quick-filter">Quick Filter</label>
       <input
         id="quick-filter"
         type="text"

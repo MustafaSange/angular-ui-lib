@@ -100,7 +100,7 @@ import {
 @Component({
   selector: 'app-form-field-button-toggle-example', imports: [ButtonToggleGroup, ButtonToggleDirective, SignalFormField, SignalFormHint], template: \`
     <ms-signal-form-field>
-      <label id="view-mode-label">View mode</label>
+      <label id="view-mode-label">View Mode</label>
 
       <ms-button-toggle-group [(value)]="view" aria-labelledby="view-mode-label">
         <button type="button" msButtonToggleValue="list">List</button>

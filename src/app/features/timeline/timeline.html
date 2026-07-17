@@ -1,6 +1,6 @@
 <main class="timeline-page showcase-page">
   <header class="timeline-header showcase-header">
-    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to home</span></a>
+    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to Home</span></a>
     <p class="eyebrow">Components</p>
     <h1>Timeline</h1>
     <p class="description">
@@ -10,28 +10,28 @@
   </header>
 
   <section class="timeline-section showcase-section">
-    <h2>Vertical workflow</h2>
+    <h2>Vertical Workflow</h2>
     <p class="section-copy">Use workflow statuses to show completed, current, and waiting steps.</p>
     <div class="timeline-demo showcase-demo-panel">
       <ms-timeline ariaLabel="Purchase request workflow">
-        <ms-timeline-item status="done" title="Request submitted" meta="Today, 09:10">
+        <ms-timeline-item status="done" title="Request Submitted" meta="Today, 09:10">
           <p>The purchase request was sent to the approval queue.</p>
         </ms-timeline-item>
 
-        <ms-timeline-item status="in-progress" title="Manager review" meta="Today, 10:25">
+        <ms-timeline-item status="in-progress" title="Manager Review" meta="Today, 10:25">
           <p>The team manager is reviewing budget and priority.</p>
         </ms-timeline-item>
 
-        <ms-timeline-item status="pending" title="Finance review">
+        <ms-timeline-item status="pending" title="Finance Review">
           <p>Finance review begins after manager approval.</p>
         </ms-timeline-item>
       </ms-timeline>
     </div>
-    <app-showcase-code label="Vertical timeline" [code]="verticalSnippet" />
+    <app-showcase-code label="Vertical Timeline" [code]="verticalSnippet" />
   </section>
 
   <section class="timeline-section showcase-section">
-    <h2>Horizontal workflow</h2>
+    <h2>Horizontal Workflow</h2>
     <p class="section-copy">Switch orientation when the stages should scan left to right.</p>
     <div class="timeline-demo showcase-demo-panel">
       <ms-timeline orientation="horizontal" ariaLabel="Deployment workflow">
@@ -41,11 +41,11 @@
         <ms-timeline-item status="pending" title="Verify" subtitle="Waiting" />
       </ms-timeline>
     </div>
-    <app-showcase-code label="Horizontal timeline" [code]="horizontalSnippet" />
+    <app-showcase-code label="Horizontal Timeline" [code]="horizontalSnippet" />
   </section>
 
   <section class="timeline-section showcase-section">
-    <h2>Projected content</h2>
+    <h2>Projected Content</h2>
     <p class="section-copy">Project rich title, subtitle, meta, and body content into each item.</p>
     <div class="timeline-demo showcase-demo-panel">
       <ms-timeline ariaLabel="Approval timeline">
@@ -59,28 +59,28 @@
           <p>Budget and delivery impact were approved.</p>
         </ms-timeline-item>
 
-        <ms-timeline-item status="blocked" title="Legal approval" subtitle="Missing vendor terms">
-          <button class="btn btn-outline-primary" type="button">Upload terms</button>
+        <ms-timeline-item status="blocked" title="Legal Approval" subtitle="Missing vendor terms">
+          <button class="btn btn-outline-primary" type="button">Upload Terms</button>
         </ms-timeline-item>
       </ms-timeline>
     </div>
-    <app-showcase-code label="Projected timeline" [code]="projectedSnippet" />
+    <app-showcase-code label="Projected Timeline" [code]="projectedSnippet" />
   </section>
 
   <section class="timeline-section showcase-section">
-    <h2>Custom icon</h2>
+    <h2>Custom Icon</h2>
     <p class="section-copy">Override the marker icon while keeping the workflow status color.</p>
     <div class="timeline-demo showcase-demo-panel">
       <ms-timeline ariaLabel="Document workflow">
-        <ms-timeline-item status="skipped" icon="redo" title="Secondary review skipped">
+        <ms-timeline-item status="skipped" icon="redo" title="Secondary Review Skipped">
           <p>The requester selected the fast-track policy.</p>
         </ms-timeline-item>
 
-        <ms-timeline-item status="cancelled" title="Archive cancelled">
+        <ms-timeline-item status="cancelled" title="Archive Cancelled">
           <p>The archive job was cancelled by an administrator.</p>
         </ms-timeline-item>
       </ms-timeline>
     </div>
-    <app-showcase-code label="Custom icon timeline" [code]="customIconSnippet" />
+    <app-showcase-code label="Custom Icon Timeline" [code]="customIconSnippet" />
   </section>
 </main>

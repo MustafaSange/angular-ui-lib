@@ -307,7 +307,7 @@ export class EmptySearchQueryExample {
     },
     {
       propertyName: 'createdAt',
-      label: 'Created at',
+      label: 'Created At',
       dataType: 'dateTime',
       allowCustomInValues: true,
     },
@@ -455,7 +455,7 @@ export class UserSearchQueryExample {
     },
     {
       propertyName: 'createdAt',
-      label: 'Created at',
+      label: 'Created At',
       dataType: 'dateTime',
       visibleByDefault: true,
       defaultOperator: 'between',

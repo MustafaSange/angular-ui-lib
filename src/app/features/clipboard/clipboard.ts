@@ -59,7 +59,7 @@ import { copyTextToClipboard } from './shared/ui-lib';
 @Component({
   selector: 'app-copy-helper-example', template: \`
     <button class="btn btn-outline" type="button" (click)="copyReference()">
-      Copy reference
+      Copy Reference
     </button>
     <p>{{ result() }}</p>
   \`, })

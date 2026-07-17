@@ -1,22 +1,22 @@
 <main class="showcase-page">
   <header class="showcase-header">
-    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to home</span></a>
+    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to Home</span></a>
     <p class="eyebrow">Components</p>
-    <h1>Date and time pickers</h1>
+    <h1>Date and Time Pickers</h1>
     <p class="description">
       Dense date-only, time-only, and composed local date-time controls with canonical model values.
     </p>
   </header>
 
   <section class="showcase-section">
-    <h2>Date picker with Signal Forms</h2>
+    <h2>Date Picker with Signal Forms</h2>
     <p class="section-copy">
       Manual entry defaults to DD-MM-YYYY while the form model stores YYYY-MM-DD. Use the calendar
       header to switch directly between day, month, and year selection.
     </p>
     <div class="showcase-demo-panel form-demo">
       <ms-signal-form-field>
-        <label for="delivery-date">Delivery date</label>
+        <label for="delivery-date">Delivery Date</label>
         <ms-date-picker id="delivery-date" [formField]="dateField" />
         <ms-hint>Enter the date as DD-MM-YYYY.</ms-hint>
       </ms-signal-form-field>
@@ -24,17 +24,17 @@
         Model value: <code>{{ dateField().value() ?? 'null' }}</code>
       </p>
     </div>
-    <app-showcase-code label="Signal Forms date picker" [code]="signalFormSnippet" />
+    <app-showcase-code label="Signal Forms Date Picker" [code]="signalFormSnippet" />
   </section>
 
   <section class="showcase-section">
-    <h2>Display format</h2>
+    <h2>Display Format</h2>
     <p class="section-copy">
       The visible and typed format can change without changing ISO model semantics.
     </p>
     <div class="showcase-demo-panel form-demo">
       <ms-signal-form-field>
-        <label for="report-date">Report date</label>
+        <label for="report-date">Report Date</label>
         <ms-date-picker
           id="report-date"
           displayFormat="yyyy-MM-dd"
@@ -45,17 +45,17 @@
         Model value: <code>{{ formattedDateField().value() ?? 'null' }}</code>
       </p>
     </div>
-    <app-showcase-code label="Date display format" [code]="formatSnippet" />
+    <app-showcase-code label="Date Display Format" [code]="formatSnippet" />
   </section>
 
   <section class="showcase-section">
-    <h2>Date constraints</h2>
+    <h2>Date Constraints</h2>
     <p class="section-copy">
       Minimum, maximum, and predicate rules prevent unavailable selections.
     </p>
     <div class="showcase-demo-panel form-demo">
       <ms-signal-form-field>
-        <label for="work-date">Working day in July 2026</label>
+        <label for="work-date">Working Day in July 2026</label>
         <ms-date-picker
           id="work-date"
           minDate="2026-07-01"
@@ -68,17 +68,17 @@
         Model value: <code>{{ constrainedDateField().value() ?? 'null' }}</code>
       </p>
     </div>
-    <app-showcase-code label="Constrained date picker" [code]="constrainedSnippet" />
+    <app-showcase-code label="Constrained Date Picker" [code]="constrainedSnippet" />
   </section>
 
   <section class="showcase-section">
-    <h2>Time picker</h2>
+    <h2>Time Picker</h2>
     <p class="section-copy">
       Inline hour, minute, second, and AM/PM selectors store a canonical 24-hour HH:mm:ss value.
     </p>
     <div class="showcase-demo-panel form-demo">
       <ms-signal-form-field>
-        <label for="meeting-time">Meeting time</label>
+        <label for="meeting-time">Meeting Time</label>
         <ms-time-picker
           id="meeting-time"
           displayFormat="12-hour"
@@ -94,28 +94,28 @@
         Model value: <code>{{ timeField().value() ?? 'null' }}</code>
       </p>
     </div>
-    <app-showcase-code label="Time picker" [code]="timeSnippet" />
+    <app-showcase-code label="Time Picker" [code]="timeSnippet" />
   </section>
 
   <section class="showcase-section">
-    <h2>Minute-level time picker</h2>
+    <h2>Minute-Level Time Picker</h2>
     <p class="section-copy">
       Set the step to one when every minute must be available in the selection list.
     </p>
     <div class="showcase-demo-panel form-demo">
       <ms-signal-form-field>
-        <label for="precise-time">Precise time</label>
+        <label for="precise-time">Precise Time</label>
         <ms-time-picker id="precise-time" [minuteStep]="1" [formField]="minuteTimeField" />
       </ms-signal-form-field>
       <p>
         Model value: <code>{{ minuteTimeField().value() ?? 'null' }}</code>
       </p>
     </div>
-    <app-showcase-code label="One-minute time picker" [code]="minuteTimeSnippet" />
+    <app-showcase-code label="One-Minute Time Picker" [code]="minuteTimeSnippet" />
   </section>
 
   <section class="showcase-section">
-    <h2>Composed date and time</h2>
+    <h2>Composed Date and Time</h2>
     <p class="section-copy">
       The two editors produce one canonical local YYYY-MM-DDTHH:mm form value without converting it
       to UTC.
@@ -134,11 +134,11 @@
         <code>{{ appointmentField().value() ?? 'null' }}</code>
       </p>
     </div>
-    <app-showcase-code label="Date-time picker" [code]="dateTimeSnippet" />
+    <app-showcase-code label="Date-Time Picker" [code]="dateTimeSnippet" />
   </section>
 
   <section class="showcase-section">
-    <h2>RTL composition</h2>
+    <h2>RTL Composition</h2>
     <p class="section-copy">
       Logical placement, calendar navigation, and the combined layout mirror in RTL.
     </p>
@@ -153,6 +153,6 @@
         />
       </ms-signal-form-field>
     </div>
-    <app-showcase-code label="RTL date-time picker" [code]="rtlSnippet" />
+    <app-showcase-code label="RTL Date-Time Picker" [code]="rtlSnippet" />
   </section>
 </main>

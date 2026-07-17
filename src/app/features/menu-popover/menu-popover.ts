@@ -56,9 +56,9 @@ import { MenuComponent, MenuItem, MenuPanelComponent, MenuTrigger, } from './sha
       </button>
 
       <ms-menu-panel aria-label="Workspace actions">
-        <button type="button" msMenuItem>Open dashboard</button>
-        <button type="button" msMenuItem>Invite members</button>
-        <button type="button" msMenuItem>Manage billing</button>
+        <button type="button" msMenuItem>Open Dashboard</button>
+        <button type="button" msMenuItem>Invite Members</button>
+        <button type="button" msMenuItem>Manage Billing</button>
       </ms-menu-panel>
     </ms-menu>
   \`, })
@@ -89,11 +89,11 @@ import { MenuComponent, MenuDividerComponent, MenuItem, MenuPanelComponent, Menu
           <span class="ms-icon" aria-hidden="true">archive</span>
           Archive project
         </a>
-        <button type="button" msMenuItem disabled>Transfer ownership</button>
+        <button type="button" msMenuItem disabled>Transfer Ownership</button>
         <ms-menu-divider />
         <button type="button" msMenuItem (click)="result.set('Deleted project.')">
           <span class="ms-icon" aria-hidden="true">delete</span>
-          Delete project
+          Delete Project
         </button>
       </ms-menu-panel>
     </ms-menu>
@@ -128,12 +128,12 @@ import { MenuComponent, MenuItem, MenuPanelComponent, MenuTrigger } from './shar
         </button>
 
         <ms-menu-panel aria-label="Save options">
-          <button type="button" msMenuItem (click)="save('Saved as draft.')">Save draft</button>
+          <button type="button" msMenuItem (click)="save('Saved as draft.')">Save Draft</button>
           <button type="button" msMenuItem (click)="save('Saved as template.')">
-            Save as template
+            Save as Template
           </button>
           <button type="button" msMenuItem (click)="save('Saved and published.')">
-            Save and publish
+            Save and Publish
           </button>
         </ms-menu-panel>
       </ms-menu>
@@ -171,8 +171,8 @@ import { MenuComponent, MenuItem, MenuPanelComponent, MenuTrigger, } from './sha
         </button>
 
         <ms-menu-panel aria-label="Release actions">
-          <button type="button" msMenuItem>Download report</button>
-          <button type="button" msMenuItem>Share activity</button>
+          <button type="button" msMenuItem>Download Report</button>
+          <button type="button" msMenuItem>Share Activity</button>
         </ms-menu-panel>
       </ms-menu>
     </div>
@@ -258,7 +258,7 @@ import {
       <ms-popover-panel aria-label="Edit project name">
         <form class="inline-editor" (submit)="saveRename($event)">
           <ms-signal-form-field>
-            <label for="project-name">Project name</label>
+            <label for="project-name">Project Name</label>
             <input
               id="project-name"
               type="text"
@@ -333,10 +333,10 @@ import {
   imports: [PopoverClose, PopoverComponent, PopoverPanelComponent, PopoverTrigger],
   template: \`
     <ms-popover placement="end-top">
-      <button class="btn btn-outline" type="button" msPopoverTrigger>View details</button>
+      <button class="btn btn-outline" type="button" msPopoverTrigger>View Details</button>
 
       <ms-popover-panel aria-label="Release details">
-        <h2>Release ready</h2>
+        <h2>Release Ready</h2>
         <p>Checks passed and the package is ready to publish.</p>
         <button class="btn btn-primary btn-sm" type="button" msPopoverClose>Done</button>
       </ms-popover-panel>
@@ -345,10 +345,10 @@ import {
     <div dir="rtl">
       <span>Scoped RTL context</span>
       <ms-popover placement="end-top">
-        <button class="btn btn-outline" type="button" msPopoverTrigger>View details</button>
+        <button class="btn btn-outline" type="button" msPopoverTrigger>View Details</button>
 
         <ms-popover-panel aria-label="Release details in RTL context">
-          <h2>Release ready</h2>
+          <h2>Release Ready</h2>
           <p>Checks passed and the package is ready to publish.</p>
           <button class="btn btn-primary btn-sm" type="button" msPopoverClose>Done</button>
         </ms-popover-panel>

@@ -62,7 +62,7 @@ type ProfileForm = {
   imports: [FormField, SignalFormField, SignalFormHint],
   template: \`
     <ms-signal-form-field>
-      <label for="email">Email address</label>
+      <label for="email">Email Address</label>
       <input
         id="email"
         type="email"

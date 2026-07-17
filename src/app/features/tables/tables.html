@@ -1,6 +1,6 @@
 <main class="tables-page">
   <header class="tables-header">
-    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to home</span></a>
+    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to Home</span></a>
     <p class="eyebrow">Components</p>
     <h1>Tables</h1>
     <p class="description">
@@ -13,7 +13,7 @@
     <div class="section-heading">
       <div>
         <p class="eyebrow">Interactive preview</p>
-        <h2>Data grid</h2>
+        <h2>Data Grid</h2>
         <p class="section-description">
           Search, filter, sort, select, and paginate while preserving the native table foundation.
         </p>
@@ -27,7 +27,7 @@
     <div class="data-grid" role="region" aria-label="Invoice data grid">
       <div class="data-grid-toolbar">
         <ms-signal-form-field class="no-message search-control">
-          <label for="invoice-search">Search invoices</label>
+          <label for="invoice-search">Search Invoices</label>
           <span class="form-field-prefix" aria-hidden="true">
             <span class="ms-icon">search</span>
           </span>
@@ -61,7 +61,7 @@
       <div class="table-wrapper data-grid-table-wrapper">
         <table class="table table-hover data-grid-table">
           <caption>
-            Invoice results
+            Invoice Results
           </caption>
           <thead>
             <tr>
@@ -75,7 +75,7 @@
                     [disabled]="pagedRows().length === 0"
                     (change)="toggleVisibleRows($event)"
                   />
-                  <label>Select all invoices on this page</label>
+                  <label>Select All Invoices on This Page</label>
                 </ms-checkbox-control>
               </th>
               @for (column of columns; track column.key) {
@@ -143,15 +143,15 @@
         <ms-pagination [state]="pagination()" (stateChange)="updatePagination($event)" />
       </div>
     </div>
-    <app-showcase-code label="Interactive data grid" [code]="snippets.dataGrid" />
+    <app-showcase-code label="Interactive Data Grid" [code]="snippets.dataGrid" />
   </section>
 
   <section class="tables-section">
-    <h2>Basic table</h2>
+    <h2>Basic Table</h2>
     <div class="table-wrapper">
       <table class="table demo-wide-table">
         <caption>
-          Recent invoices
+          Recent Invoices
         </caption>
         <thead>
           <tr>
@@ -177,15 +177,15 @@
         </tbody>
       </table>
     </div>
-    <app-showcase-code label="Basic table" [code]="snippets.basic" />
+    <app-showcase-code label="Basic Table" [code]="snippets.basic" />
   </section>
 
   <section class="tables-section">
-    <h2>Compact density</h2>
+    <h2>Compact Density</h2>
     <div class="table-wrapper">
       <table class="table table-compact">
         <caption>
-          Compact queue
+          Compact Queue
         </caption>
         <thead>
           <tr>
@@ -208,15 +208,15 @@
         </tbody>
       </table>
     </div>
-    <app-showcase-code label="Compact table" [code]="snippets.compact" />
+    <app-showcase-code label="Compact Table" [code]="snippets.compact" />
   </section>
 
   <section class="tables-section">
-    <h2>Striped and hover rows</h2>
+    <h2>Striped and Hover Rows</h2>
     <div class="table-wrapper">
       <table class="table table-striped table-hover">
         <caption>
-          Team availability
+          Team Availability
         </caption>
         <thead>
           <tr>
@@ -244,15 +244,15 @@
         </tbody>
       </table>
     </div>
-    <app-showcase-code label="Striped hover table" [code]="snippets.stripedHover" />
+    <app-showcase-code label="Striped Hover Table" [code]="snippets.stripedHover" />
   </section>
 
   <section class="tables-section">
-    <h2>Numeric alignment</h2>
+    <h2>Numeric Alignment</h2>
     <div class="table-wrapper">
       <table class="table">
         <caption>
-          Plan usage
+          Plan Usage
         </caption>
         <thead>
           <tr>
@@ -278,11 +278,11 @@
         </tbody>
       </table>
     </div>
-    <app-showcase-code label="Numeric table" [code]="snippets.numeric" />
+    <app-showcase-code label="Numeric Table" [code]="snippets.numeric" />
   </section>
 
   <section class="tables-section">
-    <h2>Empty state</h2>
+    <h2>Empty State</h2>
     <div class="table-wrapper">
       <table class="table">
         <caption>
@@ -302,15 +302,15 @@
         </tbody>
       </table>
     </div>
-    <app-showcase-code label="Empty table" [code]="snippets.empty" />
+    <app-showcase-code label="Empty Table" [code]="snippets.empty" />
   </section>
 
   <section class="tables-section">
-    <h2>Loading state</h2>
+    <h2>Loading State</h2>
     <div class="table-wrapper">
       <table class="table">
         <caption>
-          Sync history
+          Sync History
         </caption>
         <thead>
           <tr>
@@ -326,11 +326,11 @@
         </tbody>
       </table>
     </div>
-    <app-showcase-code label="Loading table" [code]="snippets.loading" />
+    <app-showcase-code label="Loading Table" [code]="snippets.loading" />
   </section>
 
   <section class="tables-section">
-    <h2>RTL table</h2>
+    <h2>RTL Table</h2>
     <div class="table-wrapper" dir="rtl">
       <table class="table">
         <caption>
@@ -357,6 +357,6 @@
         </tbody>
       </table>
     </div>
-    <app-showcase-code label="RTL table" [code]="snippets.rtl" />
+    <app-showcase-code label="RTL Table" [code]="snippets.rtl" />
   </section>
 </main>

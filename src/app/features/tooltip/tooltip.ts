@@ -78,7 +78,7 @@ import {
       <ms-tooltip-panel>Read the publishing checklist.</ms-tooltip-panel>
     </ms-tooltip>
 
-    <label for="build-tag">Build tag</label>
+    <label for="build-tag">Build Tag</label>
     <ms-tooltip placement="bottom">
       <input
         id="build-tag"

@@ -1,8 +1,8 @@
 <main class="search-query-form-page">
   <header class="search-query-form-header">
-    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to home</span></a>
+    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to Home</span></a>
     <p class="eyebrow">Components</p>
-    <h1>Search query form</h1>
+    <h1>Search Query Form</h1>
     <p class="description">
       Config-driven filters and optional sorting that emit the same paginated search request shape
       used by the backend.
@@ -10,7 +10,7 @@
   </header>
 
   <section class="search-query-form-section">
-    <h2>Empty by default</h2>
+    <h2>Empty by Default</h2>
     <p class="section-copy">
       Optional properties stay hidden until a user adds them. With no required config, the emitted
       request has no filters. Name and Created At allow custom In values and are also available in
@@ -26,11 +26,11 @@
       />
       <pre aria-label="Empty search request">{{ emptyRequestJson() }}</pre>
     </div>
-    <app-showcase-code label="Empty search query form" [code]="emptySnippet" />
+    <app-showcase-code label="Empty Search Query Form" [code]="emptySnippet" />
   </section>
 
   <section class="search-query-form-section">
-    <h2>Required and multi-value filters</h2>
+    <h2>Required and Multi-Value Filters</h2>
     <p class="section-copy">
       The Name filter demonstrates custom string values with the In operator alongside option-only,
       mixed option and custom, and other typed multi-value filters in one backend-compatible
@@ -51,6 +51,6 @@
       />
       <pre aria-label="User search request">{{ userRequestJson() }}</pre>
     </div>
-    <app-showcase-code label="Search query form with required filters" [code]="fullSnippet" />
+    <app-showcase-code label="Search Query Form with Required Filters" [code]="fullSnippet" />
   </section>
 </main>

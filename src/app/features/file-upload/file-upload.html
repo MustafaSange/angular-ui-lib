@@ -1,8 +1,8 @@
 <main class="file-upload-page">
   <header class="file-upload-header">
-    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to home</span></a>
+    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to Home</span></a>
     <p class="eyebrow">Components</p>
-    <h1>File upload</h1>
+    <h1>File Upload</h1>
     <p class="description">
       Signal-form file selection with button activation, drag and drop, validation, and sanitized
       file metadata.
@@ -10,7 +10,7 @@
   </header>
 
   <section class="file-upload-section">
-    <h2>Basic upload</h2>
+    <h2>Basic Upload</h2>
     <p class="section-copy">A single upload stores one accepted file item in the signal-form model.</p>
     <div class="file-upload-demo">
       <ms-signal-form-field>
@@ -18,7 +18,7 @@
         <ms-file-upload id="single-upload" [formField]="singleField" [config]="basicConfig" />
       </ms-signal-form-field>
     </div>
-    <app-showcase-code label="Basic file upload" [code]="basicSnippet" />
+    <app-showcase-code label="Basic File Upload" [code]="basicSnippet" />
   </section>
 
   <section class="file-upload-section">
@@ -34,11 +34,11 @@
         />
       </ms-signal-form-field>
     </div>
-    <app-showcase-code label="Restricted file upload" [code]="restrictedSnippet" />
+    <app-showcase-code label="Restricted File Upload" [code]="restrictedSnippet" />
   </section>
 
   <section class="file-upload-section">
-    <h2>Multiple upload</h2>
+    <h2>Multiple Upload</h2>
     <p class="section-copy">Multiple mode appends accepted files, enforces a limit, and rejects duplicates.</p>
     <div class="file-upload-demo">
       <ms-signal-form-field>
@@ -50,7 +50,7 @@
         />
       </ms-signal-form-field>
     </div>
-    <app-showcase-code label="Multiple file upload" [code]="multipleSnippet" />
+    <app-showcase-code label="Multiple File Upload" [code]="multipleSnippet" />
   </section>
 
   <section class="file-upload-section">
@@ -58,7 +58,7 @@
     <p class="section-copy">Disabled and readonly uploads stay visible but prevent selection, drop, and removal.</p>
     <div class="file-upload-demo state-demo">
       <ms-signal-form-field>
-        <label for="disabled-upload">Disabled upload</label>
+        <label for="disabled-upload">Disabled Upload</label>
         <ms-file-upload
           id="disabled-upload"
           [formField]="disabledField"
@@ -67,7 +67,7 @@
       </ms-signal-form-field>
 
       <ms-signal-form-field>
-        <label for="readonly-upload">Readonly upload</label>
+        <label for="readonly-upload">Readonly Upload</label>
         <ms-file-upload
           id="readonly-upload"
           [formField]="readonlyField"
@@ -75,11 +75,11 @@
         />
       </ms-signal-form-field>
     </div>
-    <app-showcase-code label="Disabled and readonly uploads" [code]="statesSnippet" />
+    <app-showcase-code label="Disabled and Readonly Uploads" [code]="statesSnippet" />
   </section>
 
   <section class="file-upload-section">
-    <h2>Button only</h2>
+    <h2>Button Only</h2>
     <p class="section-copy">Disable drag and drop when uploads should happen only through the button.</p>
     <div class="file-upload-demo">
       <ms-signal-form-field>
@@ -91,6 +91,6 @@
         />
       </ms-signal-form-field>
     </div>
-    <app-showcase-code label="Button-only upload" [code]="buttonOnlySnippet" />
+    <app-showcase-code label="Button-Only Upload" [code]="buttonOnlySnippet" />
   </section>
 </main>

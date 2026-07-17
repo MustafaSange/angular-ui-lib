@@ -1,8 +1,8 @@
 <main class="otp-page">
   <header class="otp-header">
-    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to home</span></a>
+    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to Home</span></a>
     <p class="eyebrow">Components</p>
-    <h1>OTP input</h1>
+    <h1>OTP Input</h1>
     <p class="description">
       Configurable one-time-code inputs with paste handling, signal-friendly binding, and completion
       events.
@@ -10,7 +10,7 @@
   </header>
 
   <section class="otp-section">
-    <h2>Numeric verification</h2>
+    <h2>Numeric Verification</h2>
     <p class="section-copy">Use numeric mode for short SMS, email, or authenticator codes.</p>
     <div class="otp-demo">
       <ms-otp-input
@@ -25,7 +25,7 @@
   </section>
 
   <section class="otp-section">
-    <h2>Alphanumeric access code</h2>
+    <h2>Alphanumeric Access Code</h2>
     <p class="section-copy">
       Switch to alphanumeric mode when codes can include letters and digits.
     </p>
@@ -42,7 +42,7 @@
   </section>
 
   <section class="otp-section">
-    <h2>Paste-friendly recovery code</h2>
+    <h2>Paste-Friendly Recovery Code</h2>
     <p class="section-copy">
       Pasted content is filtered, uppercased, and distributed from the focused cell.
     </p>
@@ -55,24 +55,24 @@
       />
       <p class="otp-status">Paste examples like ab-12-cd-34.</p>
     </div>
-    <app-showcase-code label="Recovery code" [code]="pasteSnippet" />
+    <app-showcase-code label="Recovery Code" [code]="pasteSnippet" />
   </section>
 
   <section class="otp-section">
-    <h2>Signal form-field layout</h2>
+    <h2>Signal Form-Field Layout</h2>
     <p class="section-copy">Bind directly with `[formField]` inside the shared form-field shell.</p>
     <div class="otp-demo form-field-demo">
       <ms-signal-form-field>
-        <label id="code-label">Verification code</label>
+        <label id="code-label">Verification Code</label>
         <ms-otp-input [formField]="formCodeField" length="6" aria-labelledby="code-label" />
         <ms-hint>Paste or type the 6-digit code.</ms-hint>
       </ms-signal-form-field>
     </div>
-    <app-showcase-code label="Signal form-field OTP" [code]="signalFormSnippet" />
+    <app-showcase-code label="Signal Form-Field OTP" [code]="signalFormSnippet" />
   </section>
 
   <section class="otp-section">
-    <h2>Disabled and readonly</h2>
+    <h2>Disabled and Readonly</h2>
     <p class="section-copy">
       Use disabled for unavailable inputs and readonly for review-only codes.
     </p>
@@ -86,6 +86,6 @@
         readonly
       />
     </div>
-    <app-showcase-code label="Disabled and readonly OTP" [code]="disabledSnippet" />
+    <app-showcase-code label="Disabled and Readonly OTP" [code]="disabledSnippet" />
   </section>
 </main>

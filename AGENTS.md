@@ -14,6 +14,10 @@ Use modern Angular patterns:
 - Use native template control flow: `@if`, `@for`, `@switch`.
 - Prefer reactive forms for non-trivial forms.
 - Keep strict TypeScript; avoid `any`.
+- Use Title Case for user-facing page/section headings, dialog and popover titles, table headers,
+  form labels, action buttons, and button-styled links. Preserve established acronyms and keep
+  minor words such as "and", "of", and "to" lowercase. Keep prose, hints, placeholders,
+  validation/status messages, and ARIA descriptions in sentence case.
 - Match existing project style:
   - root component class is `App`
   - app template/style files are `app.html` and `app.scss`

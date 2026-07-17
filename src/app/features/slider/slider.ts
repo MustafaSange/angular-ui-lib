@@ -90,7 +90,7 @@ type BudgetForm = {
 @Component({
   selector: 'app-form-field-slider-example', imports: [FormField, SignalFormField, SignalFormHint, SliderComponent], template: \`
     <ms-signal-form-field>
-      <label id="budget-label">Monthly budget</label>
+      <label id="budget-label">Monthly Budget</label>
 
       <ms-slider
         [formField]="budgetField"

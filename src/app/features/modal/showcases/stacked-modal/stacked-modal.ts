@@ -70,7 +70,7 @@ export type StackedChildModalData = {
 
 @Component({
   selector: 'app-stacked-child-modal-content', imports: [ModalComponent], template: \`
-    <ms-modal title="Stacked child modal" (close)="modalRef.close()">
+    <ms-modal title="Stacked Child Modal" (close)="modalRef.close()">
       <div class="modal-stack">
         <p>
           <strong>{{ data.name }}</strong> is owned by {{ data.owner }}.
@@ -92,11 +92,11 @@ import type { StackedChildModalData } from './stacked-child-modal';
 
 @Component({
   selector: 'app-stacked-parent-modal', imports: [ModalComponent], template: \`
-    <ms-modal title="Parent modal" (close)="modalRef.close()">
+    <ms-modal title="Parent Modal" (close)="modalRef.close()">
       <div class="modal-stack">
         <p>Open another modal on top of this one to verify stacking and focus behavior.</p>
         <button class="btn btn-primary" type="button" (click)="openChild()">
-          Open stacked modal
+          Open Stacked Modal
         </button>
       </div>
     </ms-modal>
@@ -123,7 +123,7 @@ import { ModalService } from './shared/ui-lib';
   selector: 'app-workflows-page',
   template: \`
     <button class="btn btn-primary" type="button" (click)="openStackedModal()">
-      Open parent modal
+      Open Parent Modal
     </button>
   \`,
 })

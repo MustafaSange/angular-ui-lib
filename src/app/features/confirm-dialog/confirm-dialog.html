@@ -1,37 +1,37 @@
 <main class="confirm-dialog-page">
   <header class="confirm-dialog-header">
-    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to home</span></a>
+    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to Home</span></a>
     <p class="eyebrow">Components</p>
-    <h1>Confirmation dialog</h1>
+    <h1>Confirmation Dialog</h1>
     <p class="description">
       Service-opened confirmations for yes-or-no decisions, built on the modal system.
     </p>
   </header>
 
   <section class="confirm-dialog-section">
-    <h2>Basic confirmation</h2>
+    <h2>Basic Confirmation</h2>
     <div class="confirm-dialog-demo-row">
       <button class="btn btn-primary" type="button" (click)="openBasic()">
-        Publish release
+        Publish Release
       </button>
       <span class="result-note">{{ basicResult() }}</span>
     </div>
-    <app-showcase-code label="Basic confirmation" [code]="basicSnippet" />
+    <app-showcase-code label="Basic Confirmation" [code]="basicSnippet" />
   </section>
 
   <section class="confirm-dialog-section">
-    <h2>Destructive confirmation</h2>
+    <h2>Destructive Confirmation</h2>
     <div class="confirm-dialog-demo-row">
       <button class="btn btn-danger" type="button" (click)="openDanger()">
-        Delete project
+        Delete Project
       </button>
       <span class="result-note">{{ dangerResult() }}</span>
     </div>
-    <app-showcase-code label="Destructive confirmation" [code]="dangerSnippet" />
+    <app-showcase-code label="Destructive Confirmation" [code]="dangerSnippet" />
   </section>
 
   <section class="confirm-dialog-section">
-    <h2>Semantic kinds</h2>
+    <h2>Semantic Kinds</h2>
     <div class="confirm-dialog-demo-row">
       <button class="btn btn-outline" type="button" (click)="openKind('info')">Info</button>
       <button class="btn btn-outline-success" type="button" (click)="openKind('success')">
@@ -45,17 +45,17 @@
       </button>
       <span class="result-note">{{ kindResult() }}</span>
     </div>
-    <app-showcase-code label="Semantic kinds" [code]="kindsSnippet" />
+    <app-showcase-code label="Semantic Kinds" [code]="kindsSnippet" />
   </section>
 
   <section class="confirm-dialog-section">
-    <h2>Locked confirmation</h2>
+    <h2>Locked Confirmation</h2>
     <div class="confirm-dialog-demo-row">
       <button class="btn btn-primary" type="button" (click)="openLocked()">
-        Open locked confirmation
+        Open Locked Confirmation
       </button>
       <span class="result-note">{{ lockedResult() }}</span>
     </div>
-    <app-showcase-code label="Locked confirmation" [code]="lockedSnippet" />
+    <app-showcase-code label="Locked Confirmation" [code]="lockedSnippet" />
   </section>
 </main>

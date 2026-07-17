@@ -34,15 +34,15 @@ import { TimelineComponent, TimelineItemComponent } from './shared/ui-lib';
 @Component({
   selector: 'app-workflow-timeline-example', imports: [TimelineComponent, TimelineItemComponent], template: \`
     <ms-timeline ariaLabel="Purchase request workflow">
-      <ms-timeline-item status="done" title="Request submitted" meta="Today, 09:10">
+      <ms-timeline-item status="done" title="Request Submitted" meta="Today, 09:10">
         <p>The purchase request was sent to the approval queue.</p>
       </ms-timeline-item>
 
-      <ms-timeline-item status="in-progress" title="Manager review" meta="Today, 10:25">
+      <ms-timeline-item status="in-progress" title="Manager Review" meta="Today, 10:25">
         <p>The team manager is reviewing budget and priority.</p>
       </ms-timeline-item>
 
-      <ms-timeline-item status="pending" title="Finance review">
+      <ms-timeline-item status="pending" title="Finance Review">
         <p>Finance review begins after manager approval.</p>
       </ms-timeline-item>
     </ms-timeline>
@@ -97,8 +97,8 @@ import {
         <p>Budget and delivery impact were approved.</p>
       </ms-timeline-item>
 
-      <ms-timeline-item status="blocked" title="Legal approval" subtitle="Missing vendor terms">
-        <button class="btn btn-outline-primary" type="button">Upload terms</button>
+      <ms-timeline-item status="blocked" title="Legal Approval" subtitle="Missing vendor terms">
+        <button class="btn btn-outline-primary" type="button">Upload Terms</button>
       </ms-timeline-item>
     </ms-timeline>
   \`,
@@ -112,11 +112,11 @@ import { TimelineComponent, TimelineItemComponent } from './shared/ui-lib';
 @Component({
   selector: 'app-custom-icon-timeline-example', imports: [TimelineComponent, TimelineItemComponent], template: \`
     <ms-timeline ariaLabel="Document workflow">
-      <ms-timeline-item status="skipped" icon="redo" title="Secondary review skipped">
+      <ms-timeline-item status="skipped" icon="redo" title="Secondary Review Skipped">
         <p>The requester selected the fast-track policy.</p>
       </ms-timeline-item>
 
-      <ms-timeline-item status="cancelled" title="Archive cancelled">
+      <ms-timeline-item status="cancelled" title="Archive Cancelled">
         <p>The archive job was cancelled by an administrator.</p>
       </ms-timeline-item>
     </ms-timeline>

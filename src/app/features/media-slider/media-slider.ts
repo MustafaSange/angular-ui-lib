@@ -218,7 +218,7 @@ import { CardComponent, CardContentDirective, CardHeaderDirective, CardTitleDire
       <ms-media-slide>
         <ms-card>
           <header msCardHeader>
-            <h2 msCardTitle>Campaign frame</h2>
+            <h2 msCardTitle>Campaign Frame</h2>
           </header>
           <section msCardContent>
             <p>Use any projected content as a snapped slide.</p>

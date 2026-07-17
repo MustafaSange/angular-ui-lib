@@ -30,7 +30,7 @@ import {
   imports: [RadioGroup, RadioControl, ChoiceHint, ChoiceError],
   template: \`
     <ms-radio-group>
-      <legend>Support plan</legend>
+      <legend>Support Plan</legend>
 
       <ms-radio-control>
         <input type="radio" name="support-plan" value="starter" />
@@ -52,7 +52,7 @@ import {
 
       <ms-radio-control slot="label-before">
         <input type="radio" name="support-plan" value="custom" />
-        <label>Label before</label>
+        <label>Label Before</label>
         <ms-choice-hint>Places text before the radio.</ms-choice-hint>
       </ms-radio-control>
     </ms-radio-group>

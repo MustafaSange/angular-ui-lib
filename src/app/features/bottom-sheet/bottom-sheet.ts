@@ -30,7 +30,7 @@ type ShareSheetResult =
   imports: [BottomSheetComponent],
   template: `
     <ms-bottom-sheet
-      title="Share project"
+      title="Share Project"
       size="compact"
       (close)="sheetRef.close({ action: 'cancel' })"
     >
@@ -45,7 +45,7 @@ type ShareSheetResult =
           Cancel
         </button>
         <button class="btn btn-primary btn-full" type="button" (click)="copyLink()">
-          Copy link
+          Copy Link
         </button>
       </div>
     </ms-bottom-sheet>
@@ -95,19 +95,19 @@ import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger, } from './s
 @Component({
   selector: 'app-bottom-sheet-actions-example', imports: [BottomSheetClose, BottomSheetComponent, BottomSheetTrigger], template: \`
     <button class="btn btn-primary" type="button" [msBottomSheetTrigger]="sheet">
-      Open actions
+      Open Actions
     </button>
 
-    <ms-bottom-sheet #sheet="msBottomSheet" [(open)]="isOpen" title="Project actions">
+    <ms-bottom-sheet #sheet="msBottomSheet" [(open)]="isOpen" title="Project Actions">
       <div class="action-list">
         <button class="btn btn-ghost btn-full" type="button" msBottomSheetClose>
-          Rename project
+          Rename Project
         </button>
         <button class="btn btn-ghost btn-full" type="button" msBottomSheetClose>
-          Duplicate project
+          Duplicate Project
         </button>
         <button class="btn btn-ghost btn-full" type="button" msBottomSheetClose>
-          Archive project
+          Archive Project
         </button>
       </div>
 
@@ -136,10 +136,10 @@ import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './sh
 @Component({
   selector: 'app-compact-bottom-sheet-example', imports: [BottomSheetClose, BottomSheetComponent, BottomSheetTrigger], template: \`
     <button class="btn btn-outline" type="button" [msBottomSheetTrigger]="sheet">
-      Open compact sheet
+      Open Compact Sheet
     </button>
 
-    <ms-bottom-sheet #sheet="msBottomSheet" [(open)]="open" title="Quick note" size="compact">
+    <ms-bottom-sheet #sheet="msBottomSheet" [(open)]="open" title="Quick Note" size="compact">
       <p>Compact sheets fit short confirmations and action groups.</p>
       <div slot="footer">
         <button class="btn btn-primary btn-full" type="button" msBottomSheetClose>
@@ -160,12 +160,12 @@ import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './sh
 @Component({
   selector: 'app-form-bottom-sheet-example', imports: [BottomSheetClose, BottomSheetComponent, BottomSheetTrigger, ReactiveFormsModule], template: \`
     <button class="btn btn-outline" type="button" [msBottomSheetTrigger]="sheet">
-      Rename project
+      Rename Project
     </button>
 
-    <ms-bottom-sheet #sheet="msBottomSheet" [(open)]="open" title="Rename project">
+    <ms-bottom-sheet #sheet="msBottomSheet" [(open)]="open" title="Rename Project">
       <label class="form-field">
-        <span class="form-label">Project name</span>
+        <span class="form-label">Project Name</span>
         <input class="input" type="text" [formControl]="name" />
       </label>
 
@@ -190,10 +190,10 @@ import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './sh
 @Component({
   selector: 'app-full-bottom-sheet-example', imports: [BottomSheetClose, BottomSheetComponent, BottomSheetTrigger], template: \`
     <button class="btn btn-outline" type="button" [msBottomSheetTrigger]="sheet">
-      Open mobile workflow
+      Open Mobile Workflow
     </button>
 
-    <ms-bottom-sheet #sheet="msBottomSheet" [(open)]="open" title="Review changes" size="full">
+    <ms-bottom-sheet #sheet="msBottomSheet" [(open)]="open" title="Review Changes" size="full">
       <div class="review-list">
         <p>Profile details</p>
         <p>Notification settings</p>
@@ -225,19 +225,19 @@ import { BottomSheetClose, BottomSheetComponent, BottomSheetTrigger } from './sh
 @Component({
   selector: 'app-locked-bottom-sheet-example', imports: [BottomSheetClose, BottomSheetComponent, BottomSheetTrigger], template: \`
     <button class="btn btn-outline" type="button" [msBottomSheetTrigger]="sheet">
-      Open required choice
+      Open Required Choice
     </button>
 
     <ms-bottom-sheet
       #sheet="msBottomSheet"
       [(open)]="open"
-      title="Required choice"
+      title="Required Choice"
       [closeOnBackdrop]="false"
     >
       <p>Backdrop clicks stay inside the workflow. Use an explicit action to close.</p>
       <div slot="footer">
         <button class="btn btn-primary btn-full" type="button" msBottomSheetClose>
-          I understand
+          I Understand
         </button>
       </div>
     </ms-bottom-sheet>
@@ -264,12 +264,12 @@ type ShareSheetResult =
 
 @Component({
   selector: 'app-share-sheet', imports: [BottomSheetComponent], template: \`
-    <ms-bottom-sheet title="Share project" (close)="sheetRef.close({ action: 'cancel' })">
+    <ms-bottom-sheet title="Share Project" (close)="sheetRef.close({ action: 'cancel' })">
       <p>Share {{ data.projectId }} with your team.</p>
 
       <div slot="footer">
         <button class="btn btn-primary btn-full" type="button" (click)="copyLink()">
-          Copy link
+          Copy Link
         </button>
       </div>
     </ms-bottom-sheet>
@@ -286,7 +286,7 @@ export class ShareSheetComponent {
 @Component({
   selector: 'app-share-sheet-launcher', template: \`
     <button class="btn btn-primary" type="button" (click)="openShareSheet()">
-      Open share sheet
+      Open Share Sheet
     </button>
   \`, })
 export class ShareSheetLauncher {

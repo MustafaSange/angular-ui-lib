@@ -138,7 +138,7 @@ import { StepComponent, StepperComponent } from './shared/ui-lib';
         <p>Workspace setup is complete.</p>
       </ms-step>
 
-      <ms-step title="Invite team">
+      <ms-step title="Invite Team">
         <p>Invite editors and reviewers before launch.</p>
       </ms-step>
 

@@ -1,6 +1,6 @@
 <main class="utilities-page">
   <header class="utilities-header">
-    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to home</span></a>
+    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to Home</span></a>
     <p class="eyebrow">Utilities</p>
     <h1>Utilities</h1>
     <p class="description">
@@ -116,7 +116,7 @@
       <p class="detail-copy">{{ selectedGroup().guidance }}</p>
 
       <section class="detail-section" aria-labelledby="utility-demo-title">
-        <h3 id="utility-demo-title">Realistic example</h3>
+        <h3 id="utility-demo-title">Realistic Example</h3>
 
         <div class="real-demo">
           @switch (selectedGroup().id) {
@@ -125,7 +125,7 @@
                 <header class="d-flex align-center justify-between gap-16">
                   <div>
                     <p class="m-0 text-sm text-muted">Workspace</p>
-                    <h4 class="m-0 text-lg">Design system audit</h4>
+                    <h4 class="m-0 text-lg">Design System Audit</h4>
                   </div>
                   <button class="btn btn-outline" type="button">Export</button>
                 </header>
@@ -195,7 +195,7 @@
             @case ('typography') {
               <article class="product-panel">
                 <p class="m-0 text-sm text-muted text-uppercase">Release notes</p>
-                <h4 class="m-0 mt-8 text-xl fw-semibold">Utility classes refreshed</h4>
+                <h4 class="m-0 mt-8 text-xl fw-semibold">Utility Classes Refreshed</h4>
                 <p class="m-0 mt-8 text-secondary">Cards, demos, and references now use clearer hierarchy and compact supporting copy.</p>
                 <p class="m-0 mt-16 text-sm text-muted">Updated 12 minutes ago</p>
                 <p><code>text-sm</code>, <code>text-xl</code>, <code>fw-semibold</code>, and muted text create scan-friendly hierarchy.</p>
@@ -225,7 +225,7 @@
                 <div class="border rounded-lg p-16 bg-surface d-flex align-center gap-12">
                   <span class="avatar" aria-hidden="true">UI</span>
                   <div>
-                    <h4 class="m-0 text-lg">Reusable card</h4>
+                    <h4 class="m-0 text-lg">Reusable Card</h4>
                     <p class="m-0 text-sm text-muted">Border and radius define the surface.</p>
                   </div>
                 </div>
@@ -236,7 +236,7 @@
               <article class="product-panel overlay-stage">
                 <div class="shadow-md rounded-lg p-20 bg-surface-raised command-card">
                   <p class="m-0 text-sm text-muted">Command palette</p>
-                  <h4 class="m-0 mt-4 text-lg">Quick actions</h4>
+                  <h4 class="m-0 mt-4 text-lg">Quick Actions</h4>
                   <div class="d-grid gap-8 mt-16">
                     <span>Open documentation</span>
                     <span>Create component</span>
@@ -248,7 +248,7 @@
             @case ('sizing') {
               <article class="product-panel">
                 <label class="d-grid gap-8">
-                  <span class="text-sm fw-medium">Search workspace</span>
+                  <span class="text-sm fw-medium">Search Workspace</span>
                   <input class="w-full p-12 border rounded-md bg-surface" value="button variants" aria-label="Search workspace" />
                 </label>
                 <div class="min-h-card d-flex align-center justify-center mt-16 rounded-md bg-surface-muted">
@@ -262,7 +262,7 @@
                 <div class="position-relative border rounded-lg p-20 bg-surface">
                   <span class="position-absolute demo-dot" aria-label="Unread"></span>
                   <p class="m-0 text-sm text-muted">Inbox</p>
-                  <h4 class="m-0 mt-4 text-lg">New design review</h4>
+                  <h4 class="m-0 mt-4 text-lg">New Design Review</h4>
                   <p class="m-0 mt-8 text-secondary">The unread dot stays anchored to the card corner.</p>
                 </div>
                 <p><code>position-relative</code> on the card gives the absolute dot a predictable anchor.</p>
@@ -273,14 +273,14 @@
                 <div class="d-grid gap-12">
                   <div class="d-flex align-center justify-between utility-row">
                     <div>
-                      <h4 class="m-0 text-md">Email reports</h4>
+                      <h4 class="m-0 text-md">Email Reports</h4>
                       <p class="m-0 text-sm opacity-muted">Sent every Monday at 9:00</p>
                     </div>
                     <button class="btn btn-outline" type="button">Edit</button>
                   </div>
                   <div class="d-flex align-center justify-between utility-row opacity-disabled">
                     <div>
-                      <h4 class="m-0 text-md">SMS alerts</h4>
+                      <h4 class="m-0 text-md">SMS Alerts</h4>
                       <p class="m-0 text-sm">Requires billing setup</p>
                     </div>
                     <button class="btn btn-outline" type="button" disabled>Locked</button>
@@ -294,7 +294,7 @@
       </section>
 
       <section class="detail-section" aria-labelledby="utility-used-title">
-        <h3 id="utility-used-title">Classes used here</h3>
+        <h3 id="utility-used-title">Classes Used Here</h3>
         <div class="used-class-list" aria-label="Classes used in the example">
           @for (className of selectedGroup().usedClasses; track className) {
             <code>{{ className }}</code>
@@ -304,7 +304,7 @@
 
       <section class="guidance-grid" aria-label="Usage guidance">
         <div class="guidance-card">
-          <h3>Use when</h3>
+          <h3>Use When</h3>
           <ul>
             @for (item of selectedGroup().useWhen; track item) {
               <li>{{ item }}</li>
@@ -313,7 +313,7 @@
         </div>
 
         <div class="guidance-card">
-          <h3>Avoid when</h3>
+          <h3>Avoid When</h3>
           <ul>
             @for (item of selectedGroup().avoidWhen; track item) {
               <li>{{ item }}</li>
@@ -323,7 +323,7 @@
       </section>
 
       <section class="detail-section" aria-labelledby="utility-classes-title">
-        <h3 id="utility-classes-title">All available classes</h3>
+        <h3 id="utility-classes-title">All Available Classes</h3>
         <p class="section-note">
           The example above only uses a few classes. This list shows the available utilities for
           this group.

@@ -17,7 +17,7 @@ export class ButtonSizesShowcase {
 @Component({
   selector: 'app-button-sizes-example',
   template: \`
-    <button class="btn btn-primary btn-xs">Extra small</button>
+    <button class="btn btn-primary btn-xs">Extra Small</button>
     <button class="btn btn-primary btn-sm">Small</button>
     <button class="btn btn-primary btn-md">Medium</button>
     <button class="btn btn-primary btn-lg">Large</button>

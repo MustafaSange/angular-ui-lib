@@ -22,7 +22,7 @@ import { AlertComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-alert-kinds-example', imports: [AlertComponent], template: \`
-    <ms-alert kind="info" title="Heads up">
+    <ms-alert kind="info" title="Heads Up">
       Invite links expire after seven days.
     </ms-alert>
 
@@ -30,11 +30,11 @@ import { AlertComponent } from './shared/ui-lib';
       Your workspace settings were updated.
     </ms-alert>
 
-    <ms-alert kind="warning" title="Review required">
+    <ms-alert kind="warning" title="Review Required">
       Two imported rows need attention before publishing.
     </ms-alert>
 
-    <ms-alert kind="danger" title="Sync failed">
+    <ms-alert kind="danger" title="Sync Failed">
       The billing export could not be completed.
     </ms-alert>
   \`, })
@@ -46,11 +46,11 @@ import { AlertComponent } from './shared/ui-lib';
 
 @Component({
   selector: 'app-alert-actions-example', imports: [AlertComponent], template: \`
-    <ms-alert kind="warning" title="Subscription needs attention">
+    <ms-alert kind="warning" title="Subscription Needs Attention">
       Update the payment method before the next renewal.
 
       <div slot="actions">
-        <button class="btn btn-primary btn-sm" type="button">Update payment</button>
+        <button class="btn btn-primary btn-sm" type="button">Update Payment</button>
         <a href="/billing">View billing</a>
       </div>
     </ms-alert>
@@ -66,7 +66,7 @@ import { AlertComponent } from './shared/ui-lib';
     @if (isVisible()) {
       <ms-alert
         kind="danger"
-        title="Payment failed"
+        title="Payment Failed"
         dismissible
         (dismissed)="isVisible.set(false)"
       >
@@ -85,7 +85,7 @@ import { ToastOutletComponent, ToastService } from './shared/ui-lib';
 @Component({
   selector: 'app-toast-kinds-example', imports: [ToastOutletComponent], template: \`
     <button class="btn btn-primary" type="button" (click)="showToasts()">
-      Show toast kinds
+      Show Toast Kinds
     </button>
     <ms-toast-outlet />
   \`, })
@@ -96,8 +96,8 @@ export class ToastKindsExample {
     this.toast.clear();
     this.toast.info('Import started', { title: 'Queued' });
     this.toast.success('Profile saved', { title: 'Saved' });
-    this.toast.warning('Two fields need review', { title: 'Review required' });
-    this.toast.danger('Payment could not be processed', { title: 'Payment failed' });
+    this.toast.warning('Two fields need review', { title: 'Review Required' });
+    this.toast.danger('Payment could not be processed', { title: 'Payment Failed' });
   }
 }`;
 
@@ -108,7 +108,7 @@ import { ToastOutletComponent, ToastService } from './shared/ui-lib';
 @Component({
   selector: 'app-persistent-danger-toast-example', imports: [ToastOutletComponent], template: \`
     <button class="btn btn-danger" type="button" (click)="showPersistentToast()">
-      Show persistent toast
+      Show Persistent Toast
     </button>
     <ms-toast-outlet />
   \`, })
@@ -117,7 +117,7 @@ export class PersistentDangerToastExample {
 
   protected showPersistentToast(): void {
     this.toast.danger('Reconnect the account before running another sync.', {
-      title: 'Sync failed', duration: false, });
+      title: 'Sync Failed', duration: false, });
   }
 }`;
 
@@ -128,7 +128,7 @@ import { ToastOutletComponent, ToastService } from './shared/ui-lib';
 @Component({
   selector: 'app-toast-action-example', imports: [ToastOutletComponent], template: \`
     <button class="btn btn-primary" type="button" (click)="archiveProject()">
-      Archive project
+      Archive Project
     </button>
     <p>{{ result() }}</p>
     <ms-toast-outlet />
@@ -154,7 +154,7 @@ import { ToastOutletComponent, ToastService } from './shared/ui-lib';
   imports: [ToastOutletComponent],
   template: \`
     <button class="btn btn-primary" type="button" (click)="showStack()">
-      Show stacked toasts
+      Show Stacked Toasts
     </button>
     <ms-toast-outlet />
   \`,
@@ -181,13 +181,13 @@ export class StackedToastsExample {
     this.toast.clear();
     this.toast.info('Import started', { title: 'Queued' });
     this.toast.success('Profile saved', { title: 'Saved' });
-    this.toast.warning('Two fields need review', { title: 'Review required' });
-    this.toast.danger('Payment could not be processed', { title: 'Payment failed' });
+    this.toast.warning('Two fields need review', { title: 'Review Required' });
+    this.toast.danger('Payment could not be processed', { title: 'Payment Failed' });
   }
 
   protected showPersistentDangerToast(): void {
     this.toast.danger('Reconnect the account before running another sync.', {
-      title: 'Sync failed',
+      title: 'Sync Failed',
       duration: false,
     });
   }

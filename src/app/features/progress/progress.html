@@ -1,8 +1,8 @@
 <main class="progress-page showcase-page">
   <header class="progress-header showcase-header">
-    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to home</span></a>
+    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to Home</span></a>
     <p class="eyebrow">Components</p>
-    <h1>Progress indicator and spinner</h1>
+    <h1>Progress Indicator and Spinner</h1>
     <p class="description">
       Accessible determinate progress and indeterminate loading feedback with semantic colors and
       compact sizes.
@@ -10,7 +10,7 @@
   </header>
 
   <section class="progress-section showcase-section">
-    <h2>Determinate progress</h2>
+    <h2>Determinate Progress</h2>
     <p class="section-copy">Bind a value and maximum when completion can be measured.</p>
     <div class="progress-demo showcase-demo-panel">
       <div class="progress-example-header">
@@ -42,21 +42,21 @@
         </button>
       </div>
     </div>
-    <app-showcase-code label="Determinate progress" [code]="determinateSnippet" />
+    <app-showcase-code label="Determinate Progress" [code]="determinateSnippet" />
   </section>
 
   <section class="progress-section showcase-section">
-    <h2>Indeterminate progress</h2>
+    <h2>Indeterminate Progress</h2>
     <p class="section-copy">Omit the value when work is active but completion is unknown.</p>
     <div class="progress-demo showcase-demo-panel">
       <p id="report-progress-label">Preparing report…</p>
       <ms-progress-indicator ariaLabelledby="report-progress-label" />
     </div>
-    <app-showcase-code label="Indeterminate progress" [code]="indeterminateSnippet" />
+    <app-showcase-code label="Indeterminate Progress" [code]="indeterminateSnippet" />
   </section>
 
   <section class="progress-section showcase-section">
-    <h2>Sizes and semantic kinds</h2>
+    <h2>Sizes and Semantic Kinds</h2>
     <p class="section-copy">Match the visual emphasis to the status and surrounding density.</p>
     <div class="progress-demo progress-stack showcase-demo-panel">
       <div>
@@ -76,7 +76,7 @@
         <ms-progress-indicator kind="danger" size="lg" [value]="90" ariaLabel="Danger progress" />
       </div>
     </div>
-    <app-showcase-code label="Progress sizes and kinds" [code]="kindsSnippet" />
+    <app-showcase-code label="Progress Sizes and Kinds" [code]="kindsSnippet" />
   </section>
 
   <section class="progress-section showcase-section">
@@ -105,7 +105,7 @@
       </div>
 
       <div class="spinner-group">
-        <h3>Semantic context</h3>
+        <h3>Semantic Context</h3>
         <p>Use a semantic color only when it matches the operation's context.</p>
         <div class="spinner-options">
           <div class="spinner-option">
@@ -132,16 +132,16 @@
         Saving…
       </button>
     </div>
-    <app-showcase-code label="Spinner sizes and composition" [code]="spinnerSnippet" />
+    <app-showcase-code label="Spinner Sizes and Composition" [code]="spinnerSnippet" />
   </section>
 
   <section class="progress-section showcase-section">
-    <h2>RTL layout</h2>
+    <h2>RTL Layout</h2>
     <p class="section-copy">The fill begins at logical inline-start and mirrors automatically.</p>
     <div class="progress-demo showcase-demo-panel" dir="rtl">
       <p id="rtl-progress-label">اكتمل ٦٠٪</p>
       <ms-progress-indicator kind="success" [value]="60" ariaLabelledby="rtl-progress-label" />
     </div>
-    <app-showcase-code label="RTL progress" [code]="rtlSnippet" />
+    <app-showcase-code label="RTL Progress" [code]="rtlSnippet" />
   </section>
 </main>

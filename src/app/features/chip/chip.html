@@ -1,6 +1,6 @@
 <main class="chip-page showcase-page">
   <header class="chip-header showcase-header">
-    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to home</span></a>
+    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to Home</span></a>
     <p class="eyebrow">Components</p>
     <h1>Chip</h1>
     <p class="description">
@@ -9,7 +9,7 @@
   </header>
 
   <section class="chip-section showcase-section">
-    <h2>Static chips</h2>
+    <h2>Static Chips</h2>
     <div class="chip-demo-row showcase-demo-row">
       <ms-chip>Design system</ms-chip>
       <ms-chip kind="info">Documentation</ms-chip>
@@ -18,7 +18,7 @@
         Published
       </ms-chip>
     </div>
-    <app-showcase-code label="Static chips" [code]="staticSnippet" />
+    <app-showcase-code label="Static Chips" [code]="staticSnippet" />
   </section>
 
   <section class="chip-section showcase-section">
@@ -30,17 +30,17 @@
       <ms-chip kind="warning">Warning</ms-chip>
       <ms-chip kind="danger">Danger</ms-chip>
     </div>
-    <app-showcase-code label="Chip kinds" [code]="kindsSnippet" />
+    <app-showcase-code label="Chip Kinds" [code]="kindsSnippet" />
   </section>
 
   <section class="chip-section showcase-section">
-    <h2>Appearances and states</h2>
+    <h2>Appearances and States</h2>
     <div class="chip-demo-row showcase-demo-row">
       <ms-chip kind="info" selected>Selected</ms-chip>
       <ms-chip kind="success" appearance="outline">Outline</ms-chip>
       <ms-chip kind="warning" disabled>Disabled</ms-chip>
     </div>
-    <app-showcase-code label="Chip states" [code]="statesSnippet" />
+    <app-showcase-code label="Chip States" [code]="statesSnippet" />
   </section>
 
   <section class="chip-section showcase-section">
@@ -53,7 +53,7 @@
       <ms-chip kind="success" radius="xl">Extra large</ms-chip>
       <ms-chip kind="success" radius="full">Full</ms-chip>
     </div>
-    <app-showcase-code label="Chip radius" [code]="radiusSnippet" />
+    <app-showcase-code label="Chip Radius" [code]="radiusSnippet" />
   </section>
 
   <section class="chip-section showcase-section">
@@ -66,11 +66,11 @@
         <button type="button" msChipRemove aria-label="Remove extra small chip"></button>
       </ms-chip>
     </div>
-    <app-showcase-code label="Chip sizes" [code]="sizesSnippet" />
+    <app-showcase-code label="Chip Sizes" [code]="sizesSnippet" />
   </section>
 
   <section class="chip-section showcase-section">
-    <h2>Removable chips</h2>
+    <h2>Removable Chips</h2>
     <div class="chip-demo-row showcase-demo-row">
       @for (chip of removableChips(); track chip) {
         <ms-chip removable (removed)="removeChip(chip)">
@@ -81,7 +81,7 @@
 
       @if (!removableChips().length) {
         <button class="btn btn-secondary btn-sm" type="button" (click)="restoreChips()">
-          Restore chips
+          Restore Chips
         </button>
       }
 
@@ -90,11 +90,11 @@
         <button type="button" msChipRemove aria-label="Remove Locked"></button>
       </ms-chip>
     </div>
-    <app-showcase-code label="Removable chips" [code]="removableSnippet" />
+    <app-showcase-code label="Removable Chips" [code]="removableSnippet" />
   </section>
 
   <section class="chip-section showcase-section">
-    <h2>RTL mirroring</h2>
+    <h2>RTL Mirroring</h2>
     <div class="chip-demo-row showcase-demo-row rtl-demo" dir="rtl">
       <span class="rtl-label">RTL context</span>
       <ms-chip kind="success">

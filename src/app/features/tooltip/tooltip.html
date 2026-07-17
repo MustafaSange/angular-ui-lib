@@ -1,6 +1,6 @@
 <main class="tooltip-page">
   <header class="tooltip-header">
-    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to home</span></a>
+    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to Home</span></a>
     <p class="eyebrow">Components</p>
     <h1>Tooltip</h1>
     <p class="description">
@@ -9,7 +9,7 @@
   </header>
 
   <section class="tooltip-section">
-    <h2>Icon action description</h2>
+    <h2>Icon Action Description</h2>
     <p class="section-copy">
       Hover briefly or focus the button to show its description. Press Escape to dismiss it.
     </p>
@@ -22,11 +22,11 @@
         <ms-tooltip-panel>Invitees receive an email notification.</ms-tooltip-panel>
       </ms-tooltip>
     </div>
-    <app-showcase-code label="Icon action tooltip" [code]="basicSnippet" />
+    <app-showcase-code label="Icon Action Tooltip" [code]="basicSnippet" />
   </section>
 
   <section class="tooltip-section">
-    <h2>Logical placement</h2>
+    <h2>Logical Placement</h2>
     <p class="section-copy">
       Use the layout direction control to mirror this page. The scoped RTL example below shows that
       logical start and end also follow a consumer-provided direction.
@@ -64,23 +64,23 @@
         <ms-tooltip-panel>Inline end mirrors in RTL.</ms-tooltip-panel>
       </ms-tooltip>
     </div>
-    <app-showcase-code label="Tooltip placements and RTL" [code]="placementSnippet" />
+    <app-showcase-code label="Tooltip Placements and RTL" [code]="placementSnippet" />
   </section>
 
   <section class="tooltip-section">
-    <h2>Trigger elements</h2>
+    <h2>Trigger Elements</h2>
     <p class="section-copy">
       Triggers must be keyboard focusable. Wrap a disabled control in a focusable disabled surrogate
       because a native disabled button cannot receive focus.
     </p>
     <div class="trigger-demo">
       <ms-tooltip placement="bottom">
-        <a class="btn btn-outline" routerLink="/" msTooltipTrigger>Release guide</a>
+        <a class="btn btn-outline" routerLink="/" msTooltipTrigger>Release Guide</a>
         <ms-tooltip-panel>Read the publishing checklist.</ms-tooltip-panel>
       </ms-tooltip>
 
       <div class="input-example">
-        <label for="build-tag">Build tag</label>
+        <label for="build-tag">Build Tag</label>
         <ms-tooltip placement="bottom">
           <input
             id="build-tag"
@@ -112,6 +112,6 @@
         <ms-tooltip-panel>Finish required checks before publishing.</ms-tooltip-panel>
       </ms-tooltip>
     </div>
-    <app-showcase-code label="Focusable tooltip triggers" [code]="triggerSnippet" />
+    <app-showcase-code label="Focusable Tooltip Triggers" [code]="triggerSnippet" />
   </section>
 </main>
