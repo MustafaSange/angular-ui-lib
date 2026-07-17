@@ -1,23 +1,23 @@
 <main class="grid-page">
   <header class="grid-header">
-    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to home</span></a>
+    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to Home</span></a>
     <p class="eyebrow">Layout</p>
-    <h1>Grid system</h1>
+    <h1>Grid System</h1>
     <p class="description">A visual pass over the 12-column grid, row gaps, responsive spans, and named containers.</p>
   </header>
 
   <section class="grid-section">
-    <h2>12 columns</h2>
+    <h2>12 Columns</h2>
     <div class="row row-gap-8 grid-demo">
       @for (column of columns; track column) {
         <div class="col-1 grid-cell">{{ column }}</div>
       }
     </div>
-    <app-showcase-code label="12-column grid" [code]="snippets.columns" />
+    <app-showcase-code label="12-Column Grid" [code]="snippets.columns" />
   </section>
 
   <section class="grid-section">
-    <h2>Common spans</h2>
+    <h2>Common Spans</h2>
     <div class="row row-gap-12 grid-demo">
       <div class="col-12 grid-cell">col-12</div>
       <div class="col-6 grid-cell">col-6</div>
@@ -30,22 +30,22 @@
       <div class="col-3 grid-cell">col-3</div>
       <div class="col-3 grid-cell">col-3</div>
     </div>
-    <app-showcase-code label="Common grid spans" [code]="snippets.spans" />
+    <app-showcase-code label="Common Grid Spans" [code]="snippets.spans" />
   </section>
 
   <section class="grid-section">
-    <h2>Responsive aliases</h2>
+    <h2>Responsive Aliases</h2>
     <p class="section-copy">These cards use <code>col-12 sm-col-6 md-col-4 lg-col-4 xl-col-4</code>.</p>
     <div class="row row-gap-12 grid-demo">
       <div class="col-12 sm-col-6 md-col-4 lg-col-4 xl-col-4 grid-cell">Responsive A</div>
       <div class="col-12 sm-col-6 md-col-4 lg-col-4 xl-col-4 grid-cell">Responsive B</div>
       <div class="col-12 sm-col-6 md-col-4 lg-col-4 xl-col-4 grid-cell">Responsive C</div>
     </div>
-    <app-showcase-code label="Responsive grid aliases" [code]="snippets.responsive" />
+    <app-showcase-code label="Responsive Grid Aliases" [code]="snippets.responsive" />
   </section>
 
   <section class="grid-section">
-    <h2>Named containers</h2>
+    <h2>Named Containers</h2>
     <div class="container-stack">
       <div class="container-narrow grid-cell">container-narrow</div>
       <div class="container-content grid-cell">container-content</div>
@@ -53,6 +53,6 @@
       <div class="container-wide grid-cell">container-wide</div>
       <div class="container-full grid-cell">container-full</div>
     </div>
-    <app-showcase-code label="Named containers" [code]="snippets.containers" />
+    <app-showcase-code label="Named Containers" [code]="snippets.containers" />
   </section>
 </main>

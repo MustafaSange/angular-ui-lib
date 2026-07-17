@@ -48,8 +48,8 @@ export class Autocomplete {
   protected readonly roleOptions: readonly AutocompleteOption<string>[] = [
     { label: 'Designer', value: 'designer', description: 'Shapes visual and interaction systems' },
     { label: 'Developer', value: 'developer', description: 'Builds product interfaces' },
-    { label: 'Product manager', value: 'pm', description: 'Coordinates product direction' },
-    { label: 'Support lead', value: 'support', disabled: true },
+    { label: 'Product Manager', value: 'pm', description: 'Coordinates product direction' },
+    { label: 'Support Lead', value: 'support', disabled: true },
   ];
 
   protected readonly cityOptions: readonly AutocompleteOption<string>[] = [
@@ -185,7 +185,7 @@ interface City {
   imports: [AutocompleteComponent, SignalFormField],
   template: \`
     <ms-signal-form-field>
-      <label for="remote-city">Remote city</label>
+      <label for="remote-city">Remote City</label>
       <ms-autocomplete
         id="remote-city"
         name="remoteCity"
@@ -250,7 +250,7 @@ type CountryForm = {
     </ms-signal-form-field>
 
     <ms-signal-form-field>
-      <label for="readonly-role">Readonly value</label>
+      <label for="readonly-role">Readonly Value</label>
       <ms-autocomplete
         id="readonly-role"
         placeholder="Readonly"
@@ -264,7 +264,7 @@ type CountryForm = {
     </ms-signal-form-field>
 
     <ms-signal-form-field dir="rtl">
-      <label for="rtl-city">RTL autocomplete</label>
+      <label for="rtl-city">RTL Autocomplete</label>
       <ms-autocomplete id="rtl-city" placeholder="اختر مدينة">
         <ms-autocomplete-option value="doha" group="Middle East">Doha</ms-autocomplete-option>
         <ms-autocomplete-option value="dubai" group="Middle East">Dubai</ms-autocomplete-option>

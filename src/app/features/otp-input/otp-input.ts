@@ -129,7 +129,7 @@ type VerificationForm = {
   imports: [FormField, OtpInputComponent, SignalFormField, SignalFormHint],
   template: \`
     <ms-signal-form-field>
-      <label id="code-label">Verification code</label>
+      <label id="code-label">Verification Code</label>
       <ms-otp-input [formField]="codeField" length="6" aria-labelledby="code-label" />
       <ms-hint>Paste or type the 6-digit code.</ms-hint>
     </ms-signal-form-field>

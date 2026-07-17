@@ -2,10 +2,10 @@
   <header class="table-search-page-header">
     <a class="btn btn-ghost back-link" routerLink="/">
       <span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span>
-      <span>Back to home</span>
+      <span>Back to Home</span>
     </a>
     <p class="eyebrow">Components</p>
-    <h1>Table search</h1>
+    <h1>Table Search</h1>
     <p class="description">
       Data-type-aware column filters and ordered multi-sort controls attached directly to native
       table headers.
@@ -13,12 +13,15 @@
   </header>
 
   <section class="table-search-section">
-    <h2>Filters and ordered multi-sort</h2>
+    <h2>Filters and Ordered Multi-Sort</h2>
     <p class="section-copy">
       The table configures every supported data type and operator family. Invoice is required and
-      starts with a valid default so every editor can be exercised immediately. Applying a filter or
-      sort updates both the request preview and the local rows. Required or invalid drafts explain
-      why Apply is unavailable.
+      starts with a valid default so every editor can be exercised immediately. Applying, clearing,
+      or sorting returns to page 1 and updates both the request preview and the local rows. Reset
+      defaults from either editor restores the configured filters and sorting while preserving the
+      page size. Required or invalid drafts explain why Apply is unavailable. Cleanup can still
+      update table state while required filters are invalid; request emission resumes after the
+      state becomes valid.
     </p>
 
     <div class="table-search-demo-panel">
@@ -32,16 +35,16 @@
           (requestChange)="handleRequest($event)"
         >
           <caption>
-            Searchable invoice results
+            Searchable Invoice Results
           </caption>
           <thead>
             <tr>
               <th scope="col" class="text-start" msTableSearchColumn="invoice">
-                Invoice reference
+                Invoice Reference
               </th>
               <th scope="col" class="text-start" msTableSearchColumn="customer">Customer</th>
               <th scope="col" class="text-start" msTableSearchColumn="status">Status</th>
-              <th scope="col" class="text-start" msTableSearchColumn="due">Due date</th>
+              <th scope="col" class="text-start" msTableSearchColumn="due">Due Date</th>
               <th scope="col" class="text-end" msTableSearchColumn="amount">
                 <span align="end">Amount</span>
               </th>
@@ -52,7 +55,7 @@
                 <span align="end">Sequence</span>
               </th>
               <th scope="col" class="text-start" msTableSearchColumn="issuedOn">Issued</th>
-              <th scope="col" class="text-start" msTableSearchColumn="dueTime">Due time</th>
+              <th scope="col" class="text-start" msTableSearchColumn="dueTime">Due Time</th>
               <th scope="col" class="text-start" msTableSearchColumn="accountId">Account ID</th>
               <th scope="col" class="text-start" msTableSearchColumn="paid">Paid?</th>
             </tr>
@@ -85,6 +88,6 @@
       </div>
     </div>
 
-    <app-showcase-code label="Table search" [code]="snippet" />
+    <app-showcase-code label="Table Search" [code]="snippet" />
   </section>
 </main>

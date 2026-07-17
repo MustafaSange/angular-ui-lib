@@ -31,7 +31,7 @@ import { SignalFormField, SignalFormHint, SignalReadonlyValue } from './shared/u
   imports: [SignalFormField, SignalFormHint, SignalReadonlyValue],
   template: \`
     <ms-signal-form-field>
-      <label>Display name</label>
+      <label>Display Name</label>
       <ms-readonly-value [value]="displayName()" />
       <ms-hint>Display values can use the default field treatment.</ms-hint>
     </ms-signal-form-field>

@@ -17,7 +17,7 @@ type ScrollableModalData = {
   selector: 'app-scrollable-modal-content',
   imports: [ModalComponent],
   template: `
-    <ms-modal title="Scrollable content" (close)="modalRef.close()">
+    <ms-modal title="Scrollable Content" (close)="modalRef.close()">
       <div class="modal-stack">
         @for (item of items; track item) {
           <p>
@@ -62,7 +62,7 @@ export type ActivityLogModalData = {
 
 @Component({
   selector: 'app-activity-log-modal', imports: [ModalComponent], template: \`
-    <ms-modal title="Activity log" (close)="modalRef.close()">
+    <ms-modal title="Activity Log" (close)="modalRef.close()">
       <div class="modal-stack">
         @for (item of items; track item) {
           <p>
@@ -93,7 +93,7 @@ import type { ActivityLogModalData } from './activity-log-modal';
   selector: 'app-audit-page',
   template: \`
     <button class="btn btn-primary" type="button" (click)="openActivityLog()">
-      Open activity log
+      Open Activity Log
     </button>
   \`,
 })

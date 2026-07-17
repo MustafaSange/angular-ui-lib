@@ -1,15 +1,15 @@
 <main class="time-ago-page">
   <header class="time-ago-header">
-    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to home</span></a>
+    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to Home</span></a>
     <p class="eyebrow">Pipes</p>
-    <h1>Time ago</h1>
+    <h1>Time Ago</h1>
     <p class="description">
       Locale-aware relative dates for static metadata, live activity, and future events.
     </p>
   </header>
 
   <section class="time-ago-section">
-    <h2>Relative units</h2>
+    <h2>Relative Units</h2>
     <div class="value-list">
       @for (item of staticDates; track item.label) {
         <div class="value-row">
@@ -18,13 +18,13 @@
         </div>
       }
     </div>
-    <app-showcase-code label="Static relative dates" [code]="staticSnippet" />
+    <app-showcase-code label="Static Relative Dates" [code]="staticSnippet" />
   </section>
 
   <section class="time-ago-section">
     <div class="section-heading">
       <div>
-        <h2>Live updates</h2>
+        <h2>Live Updates</h2>
         <p>The label refreshes adaptively while live mode is enabled.</p>
       </div>
       <label class="live-toggle">
@@ -37,14 +37,14 @@
       <span>Last activity</span>
       <strong>{{ liveDate() | timeAgo: liveEnabled() }}</strong>
       <button class="btn btn-outline" type="button" (click)="resetLiveDate()">
-        Reset activity
+        Reset Activity
       </button>
     </div>
-    <app-showcase-code label="Live relative date" [code]="liveSnippet" />
+    <app-showcase-code label="Live Relative Date" [code]="liveSnippet" />
   </section>
 
   <section class="time-ago-section">
-    <h2>Future and invalid values</h2>
+    <h2>Future and Invalid Values</h2>
     <div class="value-list">
       <div class="value-row">
         <span>Future date</span>
@@ -59,6 +59,6 @@
         <strong class="empty-value">{{ null | timeAgo }}</strong>
       </div>
     </div>
-    <app-showcase-code label="Future and invalid dates" [code]="edgeCasesSnippet" />
+    <app-showcase-code label="Future and Invalid Dates" [code]="edgeCasesSnippet" />
   </section>
 </main>

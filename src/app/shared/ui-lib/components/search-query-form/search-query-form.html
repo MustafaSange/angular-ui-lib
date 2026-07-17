@@ -265,7 +265,7 @@
                                       (click)="clearCustomValues(filter)"
                                     >
                                       <span class="ms-icon" aria-hidden="true">clear_all</span>
-                                      Clear custom
+                                      Clear Custom
                                     </button>
                                   }
                                 </div>
@@ -346,7 +346,7 @@
 
   <div class="filter-toolbar" [class.has-sort-options]="hasSortOptions()">
     <ms-signal-form-field class="add-filter no-message">
-      <label>Add filter</label>
+      <label>Add Filter</label>
       <span slot="label-extra" class="filter-count">
         {{ filters().length }} / {{ filterLimit() }} filters
       </span>
@@ -364,7 +364,7 @@
 
     @if (hasSortOptions()) {
       <ms-signal-form-field class="add-sort no-message">
-        <label>Sort by</label>
+        <label>Sort By</label>
         <span slot="label-extra" class="sort-count">
           {{ sorts().length }} / {{ sortLimit() }} sorts
         </span>
@@ -428,13 +428,13 @@
         (click)="clearOptionalFilters()"
       >
         <span class="ms-icon" aria-hidden="true">clear_all</span>
-        Clear filters
+        Clear Filters
       </button>
 
       @if (hasVisibleDefaultProperties()) {
         <button class="btn btn-outline btn-sm reset-filters" type="button" (click)="resetForm()">
           <span class="ms-icon" aria-hidden="true">settings_backup_restore</span>
-          Reset defaults
+          Reset Defaults
         </button>
       }
 

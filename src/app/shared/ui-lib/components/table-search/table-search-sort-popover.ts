@@ -49,6 +49,12 @@ export class TableSortPopoverComponent {
   protected readonly liveMessage = signal('');
   protected readonly sorts = computed(() => this.model().sorts);
   protected readonly activeSorts = computed(() => this.table.state().sort ?? []);
+  protected readonly invalidFilterLabels = computed(() =>
+    this.table
+      .invalidActiveFilterProperties()
+      .map((property) => property.label ?? property.propertyName)
+      .join(', '),
+  );
   protected readonly activeSort = computed(() => {
     const index = this.activeSorts().findIndex(
       (sort) => sort.property === this.property().propertyName,
@@ -159,8 +165,23 @@ export class TableSortPopoverComponent {
   }
 
   protected clear(): void {
-    this.model.set({ sorts: [] });
-    this.liveMessage.set('Sort draft cleared. Apply to commit no sorting.');
+    if (this.table.commitSort([])) {
+      this.closeAndFocus();
+    }
+  }
+
+  protected moveUp(index: number): void {
+    this.move(index, index - 1);
+  }
+
+  protected moveDown(index: number): void {
+    this.move(index, index + 1);
+  }
+
+  protected resetDefaults(): void {
+    if (this.table.resetDefaults()) {
+      this.closeAndFocus();
+    }
   }
 
   protected cancel(): void {
@@ -211,6 +232,10 @@ export class TableSortPopoverComponent {
     }
   }
 
+  protected endDrag(): void {
+    this.draggedIndex = null;
+  }
+
   protected allowDrop(event: DragEvent): void {
     event.preventDefault();
   }
@@ -218,7 +243,7 @@ export class TableSortPopoverComponent {
   protected drop(index: number, event: DragEvent): void {
     event.preventDefault();
     const from = this.draggedIndex;
-    this.draggedIndex = null;
+    this.endDrag();
     if (from !== null) {
       this.move(from, index);
     }

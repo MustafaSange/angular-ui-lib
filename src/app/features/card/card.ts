@@ -38,7 +38,7 @@ import { CardComponent, CardContentDirective, CardHeaderDirective, CardSubtitleD
     CardComponent, CardHeaderDirective, CardTitleDirective, CardSubtitleDirective, CardContentDirective, ], template: \`
     <ms-card>
       <header msCardHeader>
-        <h2 msCardTitle>Quarterly planning</h2>
+        <h2 msCardTitle>Quarterly Planning</h2>
         <p msCardSubtitle>Shared team workspace</p>
       </header>
 
@@ -95,7 +95,7 @@ import { CardComponent, CardContentDirective, CardFooterDirective, CardHeaderDir
       <div msCardMedia class="summary-media" aria-hidden="true"></div>
 
       <header msCardHeader>
-        <h2 msCardTitle>Release summary</h2>
+        <h2 msCardTitle>Release Summary</h2>
         <p msCardSubtitle>Version 2.4 readiness</p>
       </header>
 

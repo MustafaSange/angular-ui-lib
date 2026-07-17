@@ -1,15 +1,15 @@
 <main class="drawer-page">
   <header class="drawer-page-header">
-    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to home</span></a>
+    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to Home</span></a>
     <p class="eyebrow">Components</p>
-    <h1>Navigation drawer</h1>
+    <h1>Navigation Drawer</h1>
     <p class="description">
       Button-controlled slide navigation with logical placement, focus handling, and RTL mirroring.
     </p>
   </header>
 
   <section class="drawer-section">
-    <h2>Start drawer</h2>
+    <h2>Start Drawer</h2>
     <p class="section-copy">
       The default drawer opens from logical inline-start: left in LTR, right in RTL.
     </p>
@@ -47,11 +47,11 @@
       </ms-drawer>
     </div>
 
-    <app-showcase-code label="Start drawer" [code]="startSnippet" />
+    <app-showcase-code label="Start Drawer" [code]="startSnippet" />
   </section>
 
   <section class="drawer-section">
-    <h2>RTL start drawer</h2>
+    <h2>RTL Start Drawer</h2>
     <p class="section-copy">
       The same `start` placement mirrors automatically inside a right-to-left context.
     </p>
@@ -83,18 +83,18 @@
       </ms-drawer>
     </div>
 
-    <app-showcase-code label="RTL start drawer" [code]="rtlSnippet" />
+    <app-showcase-code label="RTL Start Drawer" [code]="rtlSnippet" />
   </section>
 
   <section class="drawer-section">
-    <h2>End drawer</h2>
+    <h2>End Drawer</h2>
     <p class="section-copy">
       Use `placement="end"` for account, utility, or secondary navigation drawers.
     </p>
 
     <div class="drawer-demo">
       <button class="btn btn-outline" type="button" [msDrawerTrigger]="endDrawer">
-        Account menu
+        Account Menu
         <span class="ms-icon" aria-hidden="true">menu_open</span>
       </button>
 
@@ -128,6 +128,6 @@
       </ms-drawer>
     </div>
 
-    <app-showcase-code label="End drawer" [code]="endSnippet" />
+    <app-showcase-code label="End Drawer" [code]="endSnippet" />
   </section>
 </main>

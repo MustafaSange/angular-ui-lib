@@ -130,7 +130,7 @@ import { DrawerClose, DrawerComponent, DrawerTrigger } from './shared/ui-lib';
   imports: [DrawerClose, DrawerComponent, DrawerTrigger],
   template: \`
     <button class="btn btn-outline" type="button" [msDrawerTrigger]="drawer">
-      Account menu
+      Account Menu
       <span class="ms-icon" aria-hidden="true">menu_open</span>
     </button>
 

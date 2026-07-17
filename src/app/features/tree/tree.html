@@ -1,8 +1,8 @@
 <main class="tree-page showcase-page">
   <header class="tree-header showcase-header">
-    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to home</span></a>
+    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to Home</span></a>
     <p class="eyebrow">Components</p>
-    <h1>Tree view</h1>
+    <h1>Tree View</h1>
     <p class="description">
       Dense hierarchical navigation with text inputs, rich content projection, mixed data sources,
       lazy children, and accessible keyboard behavior.
@@ -10,7 +10,7 @@
   </header>
 
   <section class="tree-section showcase-section">
-    <h2>Text inputs</h2>
+    <h2>Text Inputs</h2>
     <p class="section-copy">
       Pass concise labels and expandable descriptions directly through component inputs.
     </p>
@@ -27,8 +27,8 @@
           content="Files available to everyone in this workspace."
           icon="folder"
         >
-          <ms-tree-node nodeId="recent" label="Recent files" icon="description" />
-          <ms-tree-node nodeId="shared" label="Shared files" icon="folder" />
+          <ms-tree-node nodeId="recent" label="Recent Files" icon="description" />
+          <ms-tree-node nodeId="shared" label="Shared Files" icon="folder" />
         </ms-tree-node>
       </ms-tree>
       <div class="tree-state" aria-live="polite">
@@ -39,7 +39,7 @@
     </div>
 
     <div class="tree-guide">
-      <h3>How the state bindings work</h3>
+      <h3>How the State Bindings Work</h3>
       <dl>
         <div>
           <dt><code>[(selectedId)]</code></dt>
@@ -55,11 +55,11 @@
         </div>
       </dl>
     </div>
-    <app-showcase-code label="Text tree nodes" [code]="textSnippet" />
+    <app-showcase-code label="Text Tree Nodes" [code]="textSnippet" />
   </section>
 
   <section class="tree-section showcase-section">
-    <h2>Projected labels and content</h2>
+    <h2>Projected Labels and Content</h2>
     <p class="section-copy">
       Label and content projection are independent, so rich and plain-text values can be combined.
     </p>
@@ -69,11 +69,11 @@
           <span msTreeNodeLabel>Favorites <ms-badge>4</ms-badge></span>
           <div msTreeNodeContent>
             <p>Recently pinned project files.</p>
-            <button class="btn btn-secondary btn-sm" type="button">Manage favorites</button>
+            <button class="btn btn-secondary btn-sm" type="button">Manage Favorites</button>
           </div>
         </ms-tree-node>
 
-        <ms-tree-node nodeId="text-label" label="Team files" icon="folder">
+        <ms-tree-node nodeId="text-label" label="Team Files" icon="folder">
           <div msTreeNodeContent>Files shared by your project team.</div>
         </ms-tree-node>
 
@@ -86,11 +86,11 @@
         </ms-tree-node>
       </ms-tree>
     </div>
-    <app-showcase-code label="Projected tree nodes" [code]="projectionSnippet" />
+    <app-showcase-code label="Projected Tree Nodes" [code]="projectionSnippet" />
   </section>
 
   <section class="tree-section showcase-section">
-    <h2>Data nodes and mixed ordering</h2>
+    <h2>Data Nodes and Mixed Ordering</h2>
     <p class="section-copy">
       Data nodes render first here, with one projected root and keyed rich templates for Reports.
     </p>
@@ -110,21 +110,21 @@
           Maintained by {{ node.data?.owner }}.
         </ng-template>
 
-        <ms-tree-node nodeId="pinned" label="Pinned resources" icon="favorite" />
+        <ms-tree-node nodeId="pinned" label="Pinned Resources" icon="favorite" />
       </ms-tree>
     </div>
-    <app-showcase-code label="Data and projected tree nodes" [code]="dataSnippet" />
+    <app-showcase-code label="Data and Projected Tree Nodes" [code]="dataSnippet" />
   </section>
 
   <section class="tree-section showcase-section">
-    <h2>Lazy children sources</h2>
+    <h2>Lazy Children Sources</h2>
     <p class="section-copy">
       Load children from a Promise, the first Observable emission, or a Signal that changes from
       <code>null</code> to a child array.
     </p>
 
     <div class="tree-guide">
-      <h3>When loading runs</h3>
+      <h3>When Loading Runs</h3>
       <ol>
         <li>Expanding an unloaded node calls its loader once.</li>
         <li>The node shows loading until its child array arrives.</li>
@@ -149,7 +149,7 @@
         [(expandedIds)]="lazyExpandedIds"
       />
     </div>
-    <app-showcase-code label="Promise tree loader" [code]="lazySnippet" />
+    <app-showcase-code label="Promise Tree Loader" [code]="lazySnippet" />
 
     <div class="tree-source-example">
       <h3>Observable</h3>
@@ -162,7 +162,7 @@
           [(expandedIds)]="observableExpandedIds"
         />
       </div>
-      <app-showcase-code label="Observable tree loader" [code]="observableSnippet" />
+      <app-showcase-code label="Observable Tree Loader" [code]="observableSnippet" />
     </div>
 
     <div class="tree-source-example">
@@ -178,12 +178,12 @@
           [(expandedIds)]="signalExpandedIds"
         />
       </div>
-      <app-showcase-code label="Signal tree loader" [code]="signalSnippet" />
+      <app-showcase-code label="Signal Tree Loader" [code]="signalSnippet" />
     </div>
   </section>
 
   <section class="tree-section showcase-section">
-    <h2>Keyboard, disabled, and RTL</h2>
+    <h2>Keyboard, Disabled, and RTL</h2>
     <p class="section-copy">
       Arrow keys follow logical direction. Type characters to find visible nodes by label. Disabled
       nodes remain visible but are skipped by focus and type-ahead.
@@ -197,6 +197,6 @@
         </ms-tree-node>
       </ms-tree>
     </div>
-    <app-showcase-code label="RTL tree" [code]="rtlSnippet" />
+    <app-showcase-code label="RTL Tree" [code]="rtlSnippet" />
   </section>
 </main>

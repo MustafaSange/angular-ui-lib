@@ -97,9 +97,7 @@ export class TableFilterPopoverComponent {
   );
   protected readonly canClear = computed(() => {
     const filter = this.appliedFilter();
-    return Boolean(
-      filter && !filter.locked && !this.property().required && this.table.requiredFiltersValid(),
-    );
+    return Boolean(filter && !filter.locked && !this.property().required);
   });
   protected readonly otherRequiredFiltersValid = computed(() =>
     this.table
@@ -108,6 +106,18 @@ export class TableFilterPopoverComponent {
         (property) => property.required && property.propertyName !== this.property().propertyName,
       )
       .every((property) => this.table.isPropertyFilterValid(property)),
+  );
+  protected readonly otherActiveFiltersValid = computed(() =>
+    this.table.areOtherActiveFiltersValid(this.property().propertyName),
+  );
+  protected readonly otherInvalidOptionalFilterLabels = computed(() =>
+    this.table
+      .invalidActiveFilterProperties()
+      .filter(
+        (property) => !property.required && property.propertyName !== this.property().propertyName,
+      )
+      .map((property) => property.label ?? property.propertyName)
+      .join(', '),
   );
   protected readonly isBetween = computed(() => this.draft().operator === 'between');
   protected readonly isIn = computed(() => this.draft().operator === 'in');
@@ -425,6 +435,12 @@ export class TableFilterPopoverComponent {
 
   protected clear(): void {
     if (this.table.clearFilter(this.property())) {
+      this.closeAndFocus();
+    }
+  }
+
+  protected resetDefaults(): void {
+    if (this.table.resetDefaults()) {
       this.closeAndFocus();
     }
   }

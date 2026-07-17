@@ -18,7 +18,7 @@ type BasicModalData = {
   selector: 'app-basic-modal-content',
   imports: [ModalComponent],
   template: `
-    <ms-modal title="Project details" (close)="modalRef.close()">
+    <ms-modal title="Project Details" (close)="modalRef.close()">
       <div class="modal-stack">
         <p>
           <strong>{{ data.name }}</strong> is owned by {{ data.owner }}.
@@ -56,7 +56,7 @@ export type ProjectDetailsData = {
 
 @Component({
   selector: 'app-project-details-modal', imports: [ModalComponent], template: \`
-    <ms-modal title="Project details" (close)="modalRef.close()">
+    <ms-modal title="Project Details" (close)="modalRef.close()">
       <div class="modal-stack">
         <p>
           <strong>{{ data.name }}</strong> is owned by {{ data.owner }}.
@@ -79,7 +79,7 @@ import type { ProjectDetailsData } from './project-details-modal';
   selector: 'app-project-list',
   template: \`
     <button class="btn btn-primary" type="button" (click)="openProjectDetails()">
-      Open modal
+      Open Modal
     </button>
   \`,
 })

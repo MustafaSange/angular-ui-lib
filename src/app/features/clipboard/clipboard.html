@@ -1,8 +1,8 @@
 <main class="clipboard-page">
   <header class="clipboard-header">
-    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to home</span></a>
+    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to Home</span></a>
     <p class="eyebrow">Components</p>
-    <h1>Clipboard copy</h1>
+    <h1>Clipboard Copy</h1>
     <p class="description">
       Compact copy actions for explicit values, projected text, reveal-on-hover rows, and imperative
       flows.
@@ -10,26 +10,26 @@
   </header>
 
   <section class="clipboard-section">
-    <h2>Copy explicit text</h2>
+    <h2>Copy Explicit Text</h2>
     <div class="clipboard-row">
       <code>INV-2026-0042</code>
       <ms-copy-button text="INV-2026-0042" ariaLabel="Copy invoice number" />
     </div>
-    <app-showcase-code label="Copy from text input" [code]="inputSnippet" />
+    <app-showcase-code label="Copy from Text Input" [code]="inputSnippet" />
   </section>
 
   <section class="clipboard-section">
-    <h2>Copy projected text</h2>
+    <h2>Copy Projected Text</h2>
     <div class="clipboard-row">
       <ms-copy-button ariaLabel="Copy support email">
         support@example.com
       </ms-copy-button>
     </div>
-    <app-showcase-code label="Copy projected text" [code]="projectedSnippet" />
+    <app-showcase-code label="Copy Projected Text" [code]="projectedSnippet" />
   </section>
 
   <section class="clipboard-section">
-    <h2>Reveal copy action</h2>
+    <h2>Reveal Copy Action</h2>
     <div class="clipboard-stack">
       <ms-copy-reveal text="support@example.com" ariaLabel="Copy support email">
         support@example.com
@@ -38,28 +38,28 @@
         <code>QA-BUILD-21.2</code>
       </ms-copy-reveal>
     </div>
-    <app-showcase-code label="Reveal on hover and focus" [code]="revealSnippet" />
+    <app-showcase-code label="Reveal on Hover and Focus" [code]="revealSnippet" />
   </section>
 
   <section class="clipboard-section">
-    <h2>Imperative helper</h2>
+    <h2>Imperative Helper</h2>
     <div class="clipboard-row">
       <button class="btn btn-outline" type="button" (click)="copyWithHelper()">
-        Copy reference
+        Copy Reference
       </button>
       <span class="result-note">{{ helperResult() }}</span>
     </div>
-    <app-showcase-code label="Copy helper function" [code]="helperSnippet" />
+    <app-showcase-code label="Copy Helper Function" [code]="helperSnippet" />
   </section>
 
   <section class="clipboard-section">
-    <h2>States and sizing</h2>
+    <h2>States and Sizing</h2>
     <div class="clipboard-row">
       <ms-copy-button text="Primary action" kind="primary" ariaLabel="Copy primary value" />
       <ms-copy-button text="Outline action" kind="outline" ariaLabel="Copy outline value" />
       <ms-copy-button text="Small action" size="sm" ariaLabel="Copy small value" />
       <ms-copy-button text="Unavailable" ariaLabel="Copy unavailable value" disabled />
     </div>
-    <app-showcase-code label="Copy states and sizes" [code]="statesSnippet" />
+    <app-showcase-code label="Copy States and Sizes" [code]="statesSnippet" />
   </section>
 </main>

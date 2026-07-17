@@ -118,7 +118,7 @@ import { DatePickerComponent, SignalFormField, SignalFormHint } from './shared/u
   imports: [DatePickerComponent, FormField, SignalFormField, SignalFormHint],
   template: \`
     <ms-signal-form-field>
-      <label for="delivery-date">Delivery date</label>
+      <label for="delivery-date">Delivery Date</label>
       <ms-date-picker id="delivery-date" [formField]="dateField" />
       <ms-hint>Enter the date as DD-MM-YYYY.</ms-hint>
     </ms-signal-form-field>
@@ -142,7 +142,7 @@ import { DatePickerComponent, SignalFormField } from './shared/ui-lib';
   imports: [DatePickerComponent, FormField, SignalFormField],
   template: \`
     <ms-signal-form-field>
-      <label for="report-date">Report date</label>
+      <label for="report-date">Report Date</label>
       <ms-date-picker
         id="report-date"
         displayFormat="yyyy-MM-dd"
@@ -165,7 +165,7 @@ import { DatePickerComponent, SignalFormField } from './shared/ui-lib';
   imports: [DatePickerComponent, FormField, SignalFormField],
   template: \`
     <ms-signal-form-field>
-      <label for="work-date">Working day</label>
+      <label for="work-date">Working Day</label>
       <ms-date-picker
         id="work-date"
         minDate="2026-07-01"
@@ -213,7 +213,7 @@ import { SignalFormField, TimePickerComponent } from './shared/ui-lib';
   imports: [FormField, SignalFormField, TimePickerComponent],
   template: \`
     <ms-signal-form-field>
-      <label for="meeting-time">Meeting time</label>
+      <label for="meeting-time">Meeting Time</label>
       <ms-time-picker
         id="meeting-time"
         displayFormat="12-hour"
@@ -257,7 +257,7 @@ import { SignalFormField, TimePickerComponent } from './shared/ui-lib';
   imports: [FormField, SignalFormField, TimePickerComponent],
   template: \`
     <ms-signal-form-field>
-      <label for="precise-time">Precise time</label>
+      <label for="precise-time">Precise Time</label>
       <ms-time-picker
         id="precise-time"
         [minuteStep]="1"

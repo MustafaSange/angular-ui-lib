@@ -40,7 +40,7 @@ type ModalResultState =
   selector: 'app-header-footer-modal-content',
   imports: [ModalComponent],
   template: `
-    <ms-modal title="Review changes" (close)="modalRef.close()">
+    <ms-modal title="Review Changes" (close)="modalRef.close()">
       <button slot="headerActions" class="btn btn-outline-primary btn-sm" type="button">
         Skip
       </button>
@@ -135,7 +135,7 @@ export type ReviewChangesResult =
 
 @Component({
   selector: 'app-review-changes-modal', imports: [ModalComponent], template: \`
-    <ms-modal title="Review changes" (close)="modalRef.close()">
+    <ms-modal title="Review Changes" (close)="modalRef.close()">
       <button slot="headerActions" class="btn btn-outline-primary btn-sm" type="button">
         Skip
       </button>
@@ -191,7 +191,7 @@ type SaveState =
   selector: 'app-project-settings',
   template: \`
     <button class="btn btn-primary" type="button" (click)="openReviewChanges()">
-      Open modal with footer
+      Open Modal with Footer
     </button>
     <span>{{ resultMessage() }}</span>
   \`,

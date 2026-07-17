@@ -17,7 +17,7 @@ export class ButtonFullWidthShowcase {
 @Component({
   selector: 'app-full-width-button-example',
   template: \`
-    <button class="btn btn-primary btn-full">Full width button</button>
+    <button class="btn btn-primary btn-full">Full Width Button</button>
   \`,
 })
 export class FullWidthButtonExample {}`;

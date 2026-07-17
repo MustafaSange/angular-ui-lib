@@ -34,7 +34,7 @@ import {
   selector: 'app-custom-breadcrumb-separator-example',
   imports: [BreadcrumbComponent, BreadcrumbItemDirective, BreadcrumbSeparatorDirective],
   template: \`
-    <ms-breadcrumb label="Documentation path">
+    <ms-breadcrumb label="Documentation Path">
       <a msBreadcrumbItem href="/docs">Docs</a>
       <span msBreadcrumbSeparator aria-hidden="true">/</span>
       <a msBreadcrumbItem href="/docs/components">Components</a>

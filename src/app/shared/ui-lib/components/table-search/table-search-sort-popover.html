@@ -27,7 +27,7 @@
     @if (open()) {
       <form class="table-search-form" (submit)="apply($event)">
         <header class="table-search-panel-header table-search-dialog-header">
-          <h3 class="table-search-panel-title">Sort properties</h3>
+          <h3 class="table-search-panel-title">Sort Properties</h3>
           <button
             class="btn btn-ghost btn-icon table-search-panel-close-button"
             type="button"
@@ -41,27 +41,14 @@
 
         <div class="table-search-panel-body sort-editor">
           <p class="sort-help">
-            Order controls precedence. The first property is the primary sort.
+            Order controls precedence. The first property is the primary sort. Use the arrow
+            buttons, drag, or Alt+Arrow keys to reorder.
           </p>
 
           <div class="sort-list" aria-label="Active sorts">
             @for (sort of sorts(); track sort.id) {
               @let rowField = field($index);
               <div class="sort-row" (dragover)="allowDrop($event)" (drop)="drop($index, $event)">
-                <button
-                  class="btn btn-ghost btn-icon btn-sm drag-handle"
-                  type="button"
-                  draggable="true"
-                  [attr.aria-label]="
-                    'Reorder ' + sortLabel(sort.property) + ', position ' + ($index + 1)
-                  "
-                  title="Drag or use Alt+Arrow keys to reorder"
-                  (dragstart)="startDrag($index, $event)"
-                  (keydown)="handleReorderKey($index, $event)"
-                >
-                  <span class="ms-icon" aria-hidden="true">drag_indicator</span>
-                </button>
-
                 <ms-signal-form-field class="sort-property no-message">
                   <label>Property {{ $index + 1 }}</label>
                   <select #firstControl [formField]="rowField.property">
@@ -84,15 +71,54 @@
                   </select>
                 </ms-signal-form-field>
 
-                <button
-                  class="btn btn-outline-danger btn-icon btn-sm remove-sort"
-                  type="button"
-                  [attr.aria-label]="'Remove ' + sortLabel(sort.property) + ' sort'"
-                  title="Remove sort"
-                  (click)="remove($index)"
-                >
-                  <span class="ms-icon" aria-hidden="true">delete</span>
-                </button>
+                <div class="sort-row-actions">
+                  <div class="sort-reorder-actions">
+                    <button
+                      class="btn btn-ghost btn-icon btn-sm drag-handle"
+                      type="button"
+                      draggable="true"
+                      [attr.aria-label]="
+                        'Reorder ' + sortLabel(sort.property) + ', position ' + ($index + 1)
+                      "
+                      title="Drag or Use Alt+Arrow Keys to Reorder"
+                      (dragstart)="startDrag($index, $event)"
+                      (dragend)="endDrag()"
+                      (keydown)="handleReorderKey($index, $event)"
+                    >
+                      <span class="ms-icon" aria-hidden="true">drag_indicator</span>
+                    </button>
+                    <button
+                      class="btn btn-ghost btn-icon btn-sm"
+                      type="button"
+                      [disabled]="$first"
+                      [attr.aria-label]="'Move ' + sortLabel(sort.property) + ' up'"
+                      title="Move Up"
+                      (click)="moveUp($index)"
+                    >
+                      <span class="ms-icon" aria-hidden="true">arrow_upward</span>
+                    </button>
+                    <button
+                      class="btn btn-ghost btn-icon btn-sm"
+                      type="button"
+                      [disabled]="$last"
+                      [attr.aria-label]="'Move ' + sortLabel(sort.property) + ' down'"
+                      title="Move Down"
+                      (click)="moveDown($index)"
+                    >
+                      <span class="ms-icon" aria-hidden="true">arrow_downward</span>
+                    </button>
+                  </div>
+
+                  <button
+                    class="btn btn-outline-danger btn-icon btn-sm remove-sort"
+                    type="button"
+                    [attr.aria-label]="'Remove ' + sortLabel(sort.property) + ' sort'"
+                    title="Remove Sort"
+                    (click)="remove($index)"
+                  >
+                    <span class="ms-icon" aria-hidden="true">delete</span>
+                  </button>
+                </div>
               </div>
             } @empty {
               <p class="sort-empty">No sorting will be applied.</p>
@@ -106,39 +132,57 @@
             (click)="add()"
           >
             <span class="ms-icon" aria-hidden="true">add</span>
-            Add sort
+            Add Sort
           </button>
-          @if (!table.requiredFiltersValid()) {
+          @if (!table.requestValid()) {
             <p class="table-search-blocked-note" role="status">
-              Complete all required filters before applying table sorting.
+              Complete all invalid filters before applying table sorting.
+              @if (invalidFilterLabels(); as labels) {
+                Invalid filters: {{ labels }}.
+              }
             </p>
+          }
+          @if (table.resetDefaultsUnavailableReason(); as reason) {
+            <p class="table-search-blocked-note" role="status">{{ reason }}</p>
           }
           <p class="visually-hidden" aria-live="polite">{{ liveMessage() }}</p>
         </div>
 
         <footer class="table-search-panel-footer">
-          <button class="btn btn-outline btn-sm" type="button" (click)="cancel()">Cancel</button>
-          <span class="table-search-footer-spacer"></span>
-          <button
-            class="btn btn-ghost btn-sm"
-            type="button"
-            [disabled]="sorts().length === 0"
-            (click)="clear()"
-          >
-            Clear
-          </button>
-          <button
-            class="btn btn-primary btn-sm"
-            type="submit"
-            [disabled]="
-              sortForm().invalid() ||
-              sortForm().pending() ||
-              hasDuplicates() ||
-              !table.requiredFiltersValid()
-            "
-          >
-            Apply
-          </button>
+          <div class="table-search-footer-actions table-search-footer-actions-start">
+            <button
+              class="btn btn-ghost btn-sm"
+              type="button"
+              [disabled]="activeSorts().length === 0"
+              (click)="clear()"
+            >
+              Clear Sorts
+            </button>
+            <button
+              class="btn btn-outline btn-sm"
+              type="button"
+              [disabled]="!table.canResetDefaults()"
+              (click)="resetDefaults()"
+            >
+              <span class="ms-icon" aria-hidden="true">settings_backup_restore</span>
+              Reset Defaults
+            </button>
+          </div>
+          <div class="table-search-footer-actions table-search-footer-actions-end">
+            <button class="btn btn-outline btn-sm" type="button" (click)="cancel()">Cancel</button>
+            <button
+              class="btn btn-primary btn-sm"
+              type="submit"
+              [disabled]="
+                sortForm().invalid() ||
+                sortForm().pending() ||
+                hasDuplicates() ||
+                !table.requestValid()
+              "
+            >
+              Apply
+            </button>
+          </div>
         </footer>
       </form>
     }

@@ -17,10 +17,10 @@ export class ButtonOutlineVariantsShowcase {
 @Component({
   selector: 'app-button-outline-example',
   template: \`
-    <button class="btn btn-outline-primary">Primary outline</button>
-    <button class="btn btn-outline-secondary">Secondary outline</button>
-    <button class="btn btn-outline-danger">Danger outline</button>
-    <button class="btn btn-outline-success">Success outline</button>
+    <button class="btn btn-outline-primary">Primary Outline</button>
+    <button class="btn btn-outline-secondary">Secondary Outline</button>
+    <button class="btn btn-outline-danger">Danger Outline</button>
+    <button class="btn btn-outline-success">Success Outline</button>
   \`,
 })
 export class ButtonOutlineExample {}`;

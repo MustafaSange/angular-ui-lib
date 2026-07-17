@@ -260,12 +260,12 @@ type UploadForm = {
   imports: [FormField, FileUploadComponent, SignalFormField],
   template: \`
     <ms-signal-form-field>
-      <label for="disabled-upload">Disabled upload</label>
+      <label for="disabled-upload">Disabled Upload</label>
       <ms-file-upload id="disabled-upload" [formField]="disabledField" [config]="disabledConfig" />
     </ms-signal-form-field>
 
     <ms-signal-form-field>
-      <label for="readonly-upload">Readonly upload</label>
+      <label for="readonly-upload">Readonly Upload</label>
       <ms-file-upload id="readonly-upload" [formField]="readonlyField" [config]="readonlyConfig" />
     </ms-signal-form-field>
   \`,

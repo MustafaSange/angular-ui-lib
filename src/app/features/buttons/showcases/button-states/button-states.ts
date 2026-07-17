@@ -17,12 +17,12 @@ export class ButtonStatesShowcase {
 @Component({
   selector: 'app-button-states-example',
   template: \`
-    <button class="btn btn-primary" disabled>Primary disabled</button>
-    <button class="btn btn-secondary" disabled>Secondary disabled</button>
-    <button class="btn btn-outline" disabled>Outline disabled</button>
-    <button class="btn btn-ghost" disabled>Ghost disabled</button>
-    <button class="btn btn-danger" disabled>Danger disabled</button>
-    <button class="btn btn-success" disabled>Success disabled</button>
+    <button class="btn btn-primary" disabled>Primary Disabled</button>
+    <button class="btn btn-secondary" disabled>Secondary Disabled</button>
+    <button class="btn btn-outline" disabled>Outline Disabled</button>
+    <button class="btn btn-ghost" disabled>Ghost Disabled</button>
+    <button class="btn btn-danger" disabled>Danger Disabled</button>
+    <button class="btn btn-success" disabled>Success Disabled</button>
   \`,
 })
 export class ButtonStatesExample {}`;

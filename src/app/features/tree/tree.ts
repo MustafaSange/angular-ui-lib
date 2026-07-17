@@ -57,8 +57,8 @@ export class Tree {
       content: 'Operational reports shared with workspace administrators.',
       data: { owner: 'Operations' },
       children: [
-        { id: 'weekly', label: 'Weekly summary', icon: 'description', data: { owner: 'Mariam' } },
-        { id: 'audit', label: 'Audit log', icon: 'description', data: { owner: 'Security' } },
+        { id: 'weekly', label: 'Weekly Summary', icon: 'description', data: { owner: 'Mariam' } },
+        { id: 'audit', label: 'Audit Log', icon: 'description', data: { owner: 'Security' } },
       ],
     },
     {
@@ -72,7 +72,7 @@ export class Tree {
 
   protected readonly lazyNodes: readonly TreeNode[] = [
     { id: 'services', label: 'Services', icon: 'folder', hasChildren: true },
-    { id: 'failed-jobs', label: 'Failed jobs', icon: 'folder', hasChildren: true },
+    { id: 'failed-jobs', label: 'Failed Jobs', icon: 'folder', hasChildren: true },
   ];
   protected readonly observableNodes: readonly TreeNode[] = [
     { id: 'observable-teams', label: 'Teams', icon: 'folder', hasChildren: true },
@@ -151,8 +151,8 @@ import { TreeComponent, TreeNode, TreeNodeComponent } from './shared/ui-lib';
         content="Files available to everyone in this workspace."
         icon="folder"
       >
-        <ms-tree-node nodeId="recent" label="Recent files" icon="description" />
-        <ms-tree-node nodeId="shared" label="Shared files" icon="folder" />
+        <ms-tree-node nodeId="recent" label="Recent Files" icon="description" />
+        <ms-tree-node nodeId="shared" label="Shared Files" icon="folder" />
       </ms-tree-node>
     </ms-tree>
 
@@ -206,11 +206,11 @@ import {
         <span msTreeNodeLabel>Favorites <ms-badge>4</ms-badge></span>
         <div msTreeNodeContent>
           <p>Recently pinned project files.</p>
-          <button class="btn btn-secondary btn-sm" type="button">Manage favorites</button>
+          <button class="btn btn-secondary btn-sm" type="button">Manage Favorites</button>
         </div>
       </ms-tree-node>
 
-      <ms-tree-node nodeId="text-label" label="Team files" icon="folder">
+      <ms-tree-node nodeId="text-label" label="Team Files" icon="folder">
         <div msTreeNodeContent>Files shared by your project team.</div>
       </ms-tree-node>
 
@@ -266,7 +266,7 @@ import {
         Maintained by {{ node.data?.owner }}.
       </ng-template>
 
-      <ms-tree-node nodeId="pinned" label="Pinned resources" icon="favorite" />
+      <ms-tree-node nodeId="pinned" label="Pinned Resources" icon="favorite" />
     </ms-tree>
   \`,
 })
@@ -282,13 +282,13 @@ export class DataTreeExample {
       children: [
         {
           id: 'weekly',
-          label: 'Weekly summary',
+          label: 'Weekly Summary',
           icon: 'description',
           data: { owner: 'Mariam' },
         },
         {
           id: 'audit',
-          label: 'Audit log',
+          label: 'Audit Log',
           icon: 'description',
           data: { owner: 'Security' },
         },
@@ -329,7 +329,7 @@ export class LazyTreeExample {
   protected readonly expandedIds = signal<ReadonlySet<string>>(new Set());
   protected readonly nodes: readonly TreeNode[] = [
     { id: 'services', label: 'Services', icon: 'folder', hasChildren: true },
-    { id: 'failed-jobs', label: 'Failed jobs', icon: 'folder', hasChildren: true },
+    { id: 'failed-jobs', label: 'Failed Jobs', icon: 'folder', hasChildren: true },
   ];
 
   protected readonly loadChildren = async (node: TreeNode): Promise<readonly TreeNode[]> => {

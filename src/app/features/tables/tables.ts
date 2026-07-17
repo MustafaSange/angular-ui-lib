@@ -372,7 +372,7 @@ interface Column {
     <div class="data-grid" role="region" aria-label="Invoice data grid">
       <div class="data-grid-toolbar">
         <ms-signal-form-field class="no-message search-control">
-          <label for="invoice-search">Search invoices</label>
+          <label for="invoice-search">Search Invoices</label>
           <span class="form-field-prefix" aria-hidden="true">
             <span class="ms-icon">search</span>
           </span>
@@ -393,7 +393,7 @@ interface Column {
 
       <div class="table-wrapper data-grid-table-wrapper">
         <table class="table table-hover data-grid-table">
-        <caption>Invoice results</caption>
+        <caption>Invoice Results</caption>
         <thead>
           <tr>
             <th class="selection-column" scope="col">
@@ -401,7 +401,7 @@ interface Column {
                 <input type="checkbox" aria-label="Select all invoices on this page"
                   [checked]="allVisibleSelected()" [indeterminate]="someVisibleSelected()"
                   [disabled]="pagedRows().length === 0" (change)="toggleVisible($event)" />
-                <label>Select all invoices on this page</label>
+                <label>Select All Invoices on This Page</label>
               </ms-checkbox-control>
             </th>
             @for (column of columns; track column.key) {
@@ -579,7 +579,7 @@ export class InvoiceGridExample {
     { key: 'amount', label: 'Amount' },
   ];
   readonly statusOptions: readonly SelectOption<StatusFilter>[] = [
-    { label: 'All statuses', value: 'all' }, { label: 'Paid', value: 'Paid' },
+    { label: 'All Statuses', value: 'all' }, { label: 'Paid', value: 'Paid' },
     { label: 'Pending', value: 'Pending' }, { label: 'Overdue', value: 'Overdue' },
   ];
   readonly query = signal('');
@@ -689,7 +689,7 @@ export class InvoiceGridExample {
   template: \`
     <div class="table-wrapper">
       <table class="table">
-        <caption>Recent invoices</caption>
+        <caption>Recent Invoices</caption>
         <thead>
           <tr>
             <th scope="col" class="text-start">Invoice</th>
@@ -724,7 +724,7 @@ export class BasicTableExample {}`,
   template: \`
     <div class="table-wrapper">
       <table class="table table-compact">
-        <caption>Compact queue</caption>
+        <caption>Compact Queue</caption>
         <thead>
           <tr>
             <th scope="col" class="text-start">Task</th>
@@ -756,7 +756,7 @@ export class CompactTableExample {}`,
   template: \`
     <div class="table-wrapper">
       <table class="table table-striped table-hover">
-        <caption>Team availability</caption>
+        <caption>Team Availability</caption>
         <thead>
           <tr>
             <th scope="col" class="text-start">Name</th>
@@ -793,7 +793,7 @@ export class StripedHoverTableExample {}`,
   template: \`
     <div class="table-wrapper">
       <table class="table">
-        <caption>Plan usage</caption>
+        <caption>Plan Usage</caption>
         <thead>
           <tr>
             <th scope="col" class="text-start">Plan</th>
@@ -853,7 +853,7 @@ export class EmptyTableExample {}`,
   template: \`
     <div class="table-wrapper">
       <table class="table">
-        <caption>Sync history</caption>
+        <caption>Sync History</caption>
         <thead>
           <tr>
             <th scope="col" class="text-start">Source</th>

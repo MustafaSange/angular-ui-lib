@@ -27,7 +27,7 @@ import { ConfirmDialogService, ModalOutletComponent } from './shared/ui-lib';
   imports: [ModalOutletComponent],
   template: \`
     <button class="btn btn-primary" type="button" (click)="confirmPublish()">
-      Publish release
+      Publish Release
     </button>
     <p>{{ result() }}</p>
     <ms-modal-outlet />
@@ -39,7 +39,7 @@ export class BasicConfirmExample {
 
   protected confirmPublish(): void {
     this.confirmDialog.confirm({
-      title: 'Publish release?',
+      title: 'Publish Release?',
       message: 'The release will be visible to every workspace member.',
       confirmText: 'Publish',
       cancelText: 'Review again',
@@ -58,7 +58,7 @@ import { ConfirmDialogService, ModalOutletComponent } from './shared/ui-lib';
   imports: [ModalOutletComponent],
   template: \`
     <button class="btn btn-danger" type="button" (click)="deleteProject()">
-      Delete project
+      Delete Project
     </button>
     <p>{{ result() }}</p>
     <ms-modal-outlet />
@@ -70,7 +70,7 @@ export class DangerConfirmExample {
 
   protected deleteProject(): void {
     this.confirmDialog.danger({
-      title: 'Delete project?',
+      title: 'Delete Project?',
       message: 'This action cannot be undone.',
       confirmText: 'Delete',
       cancelText: 'Keep project',
@@ -122,7 +122,7 @@ import { ConfirmDialogService, ModalOutletComponent } from './shared/ui-lib';
   imports: [ModalOutletComponent],
   template: \`
     <button class="btn btn-primary" type="button" (click)="openLocked()">
-      Open locked confirmation
+      Open Locked Confirmation
     </button>
     <p>{{ result() }}</p>
     <ms-modal-outlet />
@@ -134,7 +134,7 @@ export class LockedConfirmExample {
 
   protected openLocked(): void {
     this.confirmDialog.warning({
-      title: 'Submit final report?',
+      title: 'Submit Final Report?',
       message: 'Use one of the actions to continue.',
       confirmText: 'Submit report',
       cancelText: 'Keep editing',
@@ -150,7 +150,7 @@ export class LockedConfirmExample {
   protected openBasic(): void {
     this.confirmDialog
       .confirm({
-        title: 'Publish release?',
+        title: 'Publish Release?',
         message: 'The release will be visible to every workspace member.',
         confirmText: 'Publish',
         cancelText: 'Review again',
@@ -163,7 +163,7 @@ export class LockedConfirmExample {
   protected openDanger(): void {
     this.confirmDialog
       .danger({
-        title: 'Delete project?',
+        title: 'Delete Project?',
         message: 'This action cannot be undone.',
         confirmText: 'Delete',
         cancelText: 'Keep project',
@@ -188,7 +188,7 @@ export class LockedConfirmExample {
   protected openLocked(): void {
     this.confirmDialog
       .warning({
-        title: 'Submit final report?',
+        title: 'Submit Final Report?',
         message: 'Use one of the actions to continue.',
         confirmText: 'Submit report',
         cancelText: 'Keep editing',

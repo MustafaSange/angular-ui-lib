@@ -229,7 +229,7 @@ export class TableSearch {
   protected readonly properties: readonly SearchPropertyConfig[] = [
     {
       propertyName: 'invoice',
-      label: 'Invoice',
+      label: 'Invoice Reference',
       dataType: 'string',
       defaultOperator: 'contains',
       defaultValue: 'INV-',
@@ -247,6 +247,8 @@ export class TableSearch {
       label: 'Status',
       dataType: 'enum',
       defaultOperator: 'in',
+      defaultValue: ['Pending'],
+      visibleByDefault: true,
       options: [
         { label: 'Paid', value: 'Paid' },
         { label: 'Pending', value: 'Pending' },
@@ -255,7 +257,7 @@ export class TableSearch {
     },
     {
       propertyName: 'due',
-      label: 'Due date',
+      label: 'Due Date',
       dataType: 'dateTime',
       defaultOperator: 'between',
       allowCustomInValues: true,
@@ -290,7 +292,7 @@ export class TableSearch {
     },
     {
       propertyName: 'dueTime',
-      label: 'Due time',
+      label: 'Due Time',
       dataType: 'time',
       defaultOperator: 'between',
       allowCustomInValues: true,
@@ -318,7 +320,7 @@ export class TableSearch {
     defaultSorts: [{ property: 'due', direction: SEARCH_SORT_DIRECTION.ASCENDING }],
     maxSorts: 4,
   };
-  protected readonly state = signal<SearchQueryFormState>({ filters: [] });
+  protected readonly state = signal<SearchQueryFormState>({ page: 3, limit: 25, filters: [] });
   protected readonly request = signal<PaginatedSearchRequest | null>(null);
   protected readonly requestJson = computed(() =>
     this.request()
@@ -458,15 +460,15 @@ function applyInvoiceRequest(rows: readonly InvoiceRow[], request: PaginatedSear
       <table class="table table-hover table-search-demo" msTableSearch
         [properties]="properties" [sortConfig]="sortConfig"
         [(state)]="state" (requestChange)="handleRequest($event)">
-        <caption>Searchable invoice results</caption>
+        <caption>Searchable Invoice Results</caption>
         <thead>
           <tr>
             <th scope="col" class="text-start" msTableSearchColumn="invoice">
-              Invoice reference
+              Invoice Reference
             </th>
             <th scope="col" class="text-start" msTableSearchColumn="customer">Customer</th>
             <th scope="col" class="text-start" msTableSearchColumn="status">Status</th>
-            <th scope="col" class="text-start" msTableSearchColumn="due">Due date</th>
+            <th scope="col" class="text-start" msTableSearchColumn="due">Due Date</th>
             <th scope="col" class="text-end" msTableSearchColumn="amount">
               <span align="end">Amount</span>
             </th>
@@ -477,7 +479,7 @@ function applyInvoiceRequest(rows: readonly InvoiceRow[], request: PaginatedSear
               <span align="end">Sequence</span>
             </th>
             <th scope="col" class="text-start" msTableSearchColumn="issuedOn">Issued</th>
-            <th scope="col" class="text-start" msTableSearchColumn="dueTime">Due time</th>
+            <th scope="col" class="text-start" msTableSearchColumn="dueTime">Due Time</th>
             <th scope="col" class="text-start" msTableSearchColumn="accountId">Account ID</th>
             <th scope="col" class="text-start" msTableSearchColumn="paid">Paid?</th>
           </tr>
@@ -519,17 +521,18 @@ function applyInvoiceRequest(rows: readonly InvoiceRow[], request: PaginatedSear
 })
 export class SearchableInvoiceTable {
   readonly properties: readonly SearchPropertyConfig[] = [
-    { propertyName: 'invoice', label: 'Invoice', dataType: 'string',
+    { propertyName: 'invoice', label: 'Invoice Reference', dataType: 'string',
       defaultOperator: 'contains', defaultValue: 'INV-', required: true },
     { propertyName: 'customer', label: 'Customer', dataType: 'string',
       defaultOperator: 'contains', allowCustomInValues: true },
     { propertyName: 'status', label: 'Status', dataType: 'enum', defaultOperator: 'in',
+      defaultValue: ['Pending'], visibleByDefault: true,
       options: [
         { label: 'Paid', value: 'Paid' },
         { label: 'Pending', value: 'Pending' },
         { label: 'Overdue', value: 'Overdue' },
       ] },
-    { propertyName: 'due', label: 'Due date', dataType: 'dateTime', defaultOperator: 'between',
+    { propertyName: 'due', label: 'Due Date', dataType: 'dateTime', defaultOperator: 'between',
       allowCustomInValues: true },
     { propertyName: 'amount', label: 'Amount', dataType: 'decimal', defaultOperator: 'between',
       allowCustomInValues: true },
@@ -539,7 +542,7 @@ export class SearchableInvoiceTable {
       allowCustomInValues: true },
     { propertyName: 'issuedOn', label: 'Issued', dataType: 'date', defaultOperator: 'between',
       allowCustomInValues: true },
-    { propertyName: 'dueTime', label: 'Due time', dataType: 'time', defaultOperator: 'between',
+    { propertyName: 'dueTime', label: 'Due Time', dataType: 'time', defaultOperator: 'between',
       allowCustomInValues: true },
     { propertyName: 'accountId', label: 'Account ID', dataType: 'guid', defaultOperator: 'eq',
       allowCustomInValues: true },
@@ -554,7 +557,7 @@ export class SearchableInvoiceTable {
     defaultSorts: [{ property: 'due', direction: SEARCH_SORT_DIRECTION.ASCENDING }],
     maxSorts: 4,
   };
-  readonly state = signal<SearchQueryFormState>({ filters: [] });
+  readonly state = signal<SearchQueryFormState>({ page: 3, limit: 25, filters: [] });
   readonly request = signal<PaginatedSearchRequest | null>(null);
   readonly requestJson = computed(() => this.request()
     ? JSON.stringify(this.request(), null, 2)

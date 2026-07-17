@@ -34,7 +34,7 @@ import {
   selector: 'app-overflow-breadcrumb-example',
   imports: [BreadcrumbComponent, BreadcrumbItemDirective, BreadcrumbSeparatorDirective],
   template: \`
-    <ms-breadcrumb label="Project location">
+    <ms-breadcrumb label="Project Location">
       <a msBreadcrumbItem href="/">Home</a>
       <span class="ms-icon" msBreadcrumbSeparator aria-hidden="true">chevron_right</span>
       <button class="btn btn-ghost btn-icon btn-sm" type="button" aria-label="Show parent pages">

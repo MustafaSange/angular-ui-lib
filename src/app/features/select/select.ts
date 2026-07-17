@@ -61,8 +61,8 @@ export class Select {
   protected readonly roleOptions: readonly SelectOption<string>[] = [
     { label: 'Designer', value: 'designer', description: 'Shapes visual and interaction systems' },
     { label: 'Developer', value: 'developer', description: 'Builds product interfaces' },
-    { label: 'Product manager', value: 'pm', description: 'Coordinates product direction' },
-    { label: 'Support lead', value: 'support', disabled: true },
+    { label: 'Product Manager', value: 'pm', description: 'Coordinates product direction' },
+    { label: 'Support Lead', value: 'support', disabled: true },
   ];
 
   protected readonly statusOptions: readonly SelectOption<string>[] = [
@@ -145,7 +145,7 @@ import { SelectComponent, SelectOptionComponent, SignalFormField } from './share
           <strong>Developer</strong>
           <span>Builds product interfaces</span>
         </ms-select-option>
-        <ms-select-option value="pm" label="Product manager">
+        <ms-select-option value="pm" label="Product Manager">
           <strong>Product manager</strong>
           <span>Coordinates product direction</span>
         </ms-select-option>
@@ -233,7 +233,7 @@ interface City {
   imports: [SelectComponent, SignalFormField],
   template: \`
     <ms-signal-form-field>
-      <label for="remote-city">Remote city</label>
+      <label for="remote-city">Remote City</label>
       <ms-select
         id="remote-city"
         name="remoteCity"
@@ -314,7 +314,7 @@ type CountryForm = {
     </ms-signal-form-field>
 
     <ms-signal-form-field>
-      <label for="readonly-role">Readonly value</label>
+      <label for="readonly-role">Readonly Value</label>
       <ms-select id="readonly-role" placeholder="Readonly" readonly [value]="'developer'">
         <ms-select-option value="designer">Designer</ms-select-option>
         <ms-select-option value="developer">Developer</ms-select-option>
@@ -324,7 +324,7 @@ type CountryForm = {
     </ms-signal-form-field>
 
     <ms-signal-form-field>
-      <label for="disabled-role">Disabled value</label>
+      <label for="disabled-role">Disabled Value</label>
       <ms-select
         id="disabled-role"
         placeholder="Disabled"
@@ -339,7 +339,7 @@ type CountryForm = {
     </ms-signal-form-field>
 
     <ms-signal-form-field dir="rtl">
-      <label for="rtl-city">RTL select</label>
+      <label for="rtl-city">RTL Select</label>
       <ms-select id="rtl-city" placeholder="اختر مدينة">
         <ms-select-option value="doha" group="Middle East">Doha</ms-select-option>
         <ms-select-option value="dubai" group="Middle East">Dubai</ms-select-option>

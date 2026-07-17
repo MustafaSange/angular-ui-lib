@@ -40,7 +40,7 @@ type ProfileForm = {
   imports: [FormField, SignalFormField],
   template: \`
     <ms-signal-form-field>
-      <label for="full-name">Full name</label>
+      <label for="full-name">Full Name</label>
       <input id="full-name" type="text" placeholder="Ada Lovelace" [formField]="fullNameField" />
     </ms-signal-form-field>
   \`,

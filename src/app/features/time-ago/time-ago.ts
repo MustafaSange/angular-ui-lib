@@ -55,10 +55,10 @@ import { TimeAgoPipe } from './shared/ui-lib';
         [checked]="liveEnabled()"
         (change)="liveEnabled.set(!liveEnabled())"
       />
-      Live updates
+      Live Updates
     </label>
     <p>Last activity {{ activityAt() | timeAgo: liveEnabled() }}</p>
-    <button type="button" (click)="activityAt.set(now())">Reset activity</button>
+    <button type="button" (click)="activityAt.set(now())">Reset Activity</button>
   \`,
 })
 export class LiveTimeAgoExample {

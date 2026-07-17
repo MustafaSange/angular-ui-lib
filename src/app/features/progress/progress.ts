@@ -90,7 +90,7 @@ import { SpinnerComponent } from './shared/ui-lib';
       <div><ms-spinner size="lg" ariaLabel="Loading large example" /><span>Large</span></div>
     </div>
 
-    <h2>Semantic context</h2>
+    <h2>Semantic Context</h2>
     <p>Use a semantic color only when it matches the operation's context.</p>
     <div class="spinner-options">
       <div><ms-spinner ariaLabel="Loading data" /><span>Primary</span></div>

@@ -24,7 +24,7 @@ import { BreadcrumbComponent, BreadcrumbItemDirective } from './shared/ui-lib';
   selector: 'app-long-label-breadcrumb-example',
   imports: [BreadcrumbComponent, BreadcrumbItemDirective],
   template: \`
-    <ms-breadcrumb label="Workspace location">
+    <ms-breadcrumb label="Workspace Location">
       <a msBreadcrumbItem href="/">Home</a>
       <a msBreadcrumbItem href="/workspaces">International design systems workspace</a>
       <a msBreadcrumbItem href="/workspaces/components">Navigation primitives and patterns</a>

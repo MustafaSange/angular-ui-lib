@@ -258,7 +258,7 @@
                               (click)="clearCustomValues()"
                             >
                               <span class="ms-icon" aria-hidden="true">clear_all</span>
-                              Clear custom
+                              Clear Custom
                             </button>
                           }
                         </div>
@@ -317,26 +317,52 @@
             <p class="table-search-blocked-note" role="status">
               Complete the other required filters before applying this filter.
             </p>
+          } @else if (!otherActiveFiltersValid()) {
+            <p class="table-search-blocked-note" role="status">
+              @if (otherInvalidOptionalFilterLabels(); as labels) {
+                Complete or clear the invalid filters before applying: {{ labels }}.
+              } @else {
+                Another active filter is invalid. Complete or clear it before applying.
+              }
+            </p>
+          }
+          @if (table.resetDefaultsUnavailableReason(); as reason) {
+            <p class="table-search-blocked-note" role="status">{{ reason }}</p>
           }
         </div>
 
         <footer class="table-search-panel-footer">
-          @if (canClear()) {
-            <button class="btn btn-ghost btn-sm" type="button" (click)="clear()">
-              Clear filter
+          <div class="table-search-footer-actions table-search-footer-actions-start">
+            @if (canClear()) {
+              <button class="btn btn-ghost btn-sm" type="button" (click)="clear()">
+                Clear Filter
+              </button>
+            }
+            <button
+              class="btn btn-outline btn-sm"
+              type="button"
+              [disabled]="!table.canResetDefaults()"
+              (click)="resetDefaults()"
+            >
+              <span class="ms-icon" aria-hidden="true">settings_backup_restore</span>
+              Reset Defaults
             </button>
-          }
-          <span class="table-search-footer-spacer"></span>
-          <button class="btn btn-outline btn-sm" type="button" (click)="cancel()">Cancel</button>
-          <button
-            class="btn btn-primary btn-sm"
-            type="submit"
-            [disabled]="
-              filterForm().invalid() || filterForm().pending() || !otherRequiredFiltersValid()
-            "
-          >
-            Apply
-          </button>
+          </div>
+          <div class="table-search-footer-actions table-search-footer-actions-end">
+            <button class="btn btn-outline btn-sm" type="button" (click)="cancel()">Cancel</button>
+            <button
+              class="btn btn-primary btn-sm"
+              type="submit"
+              [disabled]="
+                filterForm().invalid() ||
+                filterForm().pending() ||
+                !otherRequiredFiltersValid() ||
+                !otherActiveFiltersValid()
+              "
+            >
+              Apply
+            </button>
+          </div>
         </footer>
       </form>
     }
