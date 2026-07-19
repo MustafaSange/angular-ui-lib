@@ -1,6 +1,9 @@
 <main class="pagination-page">
   <header class="pagination-header">
-    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to Home</span></a>
+    <a class="btn btn-ghost back-link" routerLink="/"
+      ><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span
+      ><span>Back to Home</span></a
+    >
     <p class="eyebrow">Components</p>
     <h1>Pagination</h1>
     <p class="description">
@@ -11,7 +14,7 @@
   <section class="pagination-section">
     <h2>Basic Pagination</h2>
     <div class="pagination-demo-panel">
-      <ms-pagination [(state)]="basicState" />
+      <ms-pagination [state]="basicState()" (stateChange)="handleBasicPaginationChange($event)" />
       <dl class="pagination-meta" aria-label="Parent pagination metadata">
         <div>
           <dt>Current page</dt>
@@ -24,6 +27,14 @@
         <div>
           <dt>Visible range</dt>
           <dd>{{ basicMeta().itemStart }}-{{ basicMeta().itemEnd }}</dd>
+        </div>
+        <div>
+          <dt>Last Requested Page</dt>
+          <dd aria-live="polite">{{ basicRequest().page }}</dd>
+        </div>
+        <div>
+          <dt>Requested Page Size</dt>
+          <dd aria-live="polite">{{ basicRequest().pageSize }}</dd>
         </div>
       </dl>
     </div>
@@ -61,11 +72,18 @@
   </section>
 
   <section class="pagination-section">
-    <h2>Summary Off</h2>
-    <div class="pagination-demo-panel">
-      <ms-pagination [(state)]="summaryOffState" />
+    <h2>Optional Details</h2>
+    <div class="pagination-demo-stack">
+      <div class="pagination-demo-panel">
+        <span class="alignment-label">Summary Hidden</span>
+        <ms-pagination [(state)]="summaryOffState" />
+      </div>
+      <div class="pagination-demo-panel">
+        <span class="alignment-label">Page Size Hidden</span>
+        <ms-pagination [(state)]="pageSizeOffState" />
+      </div>
     </div>
-    <app-showcase-code label="Pagination Summary Off" [code]="summaryOffSnippet" />
+    <app-showcase-code label="Pagination Optional Details" [code]="summaryOffSnippet" />
   </section>
 
   <section class="pagination-section">

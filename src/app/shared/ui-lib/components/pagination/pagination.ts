@@ -22,10 +22,16 @@ export class PaginationComponent {
 
   protected readonly meta = computed(() => getPaginationMeta(this.state()));
   protected readonly totalItems = computed(() => this.meta().totalItems);
+  protected readonly pageSize = computed(() => this.meta().pageSize);
+  protected readonly pageSizeOptions = computed(() => this.meta().pageSizeOptions);
+  protected readonly hasCurrentPageSizeOption = computed(() =>
+    this.pageSizeOptions().includes(this.pageSize()),
+  );
   protected readonly safeSiblingCount = computed(() => this.meta().siblingCount);
   protected readonly disabled = computed(() => this.meta().disabled);
   protected readonly ariaLabel = computed(() => this.meta().ariaLabel);
   protected readonly showSummary = computed(() => this.meta().showSummary);
+  protected readonly showPageSizeSelector = computed(() => this.meta().showPageSizeSelector);
   protected readonly alignment = computed(() => this.meta().alignment);
   protected readonly totalPages = computed(() => this.meta().totalPages);
   protected readonly currentPage = computed(() => this.meta().page);
@@ -86,6 +92,21 @@ export class PaginationComponent {
     }
 
     this.state.update((state) => ({ ...state, page: targetPage }));
+  }
+
+  protected changePageSize(event: Event): void {
+    const pageSize = Math.trunc(Number((event.target as HTMLSelectElement).value));
+
+    if (
+      this.disabled() ||
+      !Number.isFinite(pageSize) ||
+      pageSize <= 0 ||
+      pageSize === this.pageSize()
+    ) {
+      return;
+    }
+
+    this.state.update((state) => ({ ...state, page: 1, pageSize }));
   }
 
   protected trackItem(_index: number, item: PaginationItem): string {

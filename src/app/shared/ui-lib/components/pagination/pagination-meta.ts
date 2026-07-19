@@ -1,9 +1,14 @@
-import type { PaginationAlignment, PaginationState } from './pagination-state';
+import {
+  DEFAULT_PAGINATION_PAGE_SIZE_OPTIONS,
+  type PaginationAlignment,
+  type PaginationState,
+} from './pagination-state';
 
 export interface PaginationMeta {
   page: number;
   totalItems: number;
   pageSize: number;
+  pageSizeOptions: readonly number[];
   siblingCount: number;
   disabled: boolean;
   ariaLabel: string;
@@ -13,12 +18,14 @@ export interface PaginationMeta {
   hasPrevious: boolean;
   hasNext: boolean;
   showSummary: boolean;
+  showPageSizeSelector: boolean;
   alignment: PaginationAlignment;
 }
 
 export function getPaginationMeta(state: PaginationState): PaginationMeta {
   const totalItems = Math.max(0, integerOrDefault(state.totalItems, 0));
   const pageSize = Math.max(1, integerOrDefault(state.pageSize, 10));
+  const pageSizeOptions = normalizePageSizeOptions(state.pageSizeOptions);
   const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
   const page = clampPage(integerOrDefault(state.page, 1), totalPages);
   const itemStart = totalItems <= 0 ? 0 : (page - 1) * pageSize + 1;
@@ -28,6 +35,7 @@ export function getPaginationMeta(state: PaginationState): PaginationMeta {
     page,
     totalItems,
     pageSize,
+    pageSizeOptions,
     siblingCount: Math.max(0, integerOrDefault(state.siblingCount, 1)),
     disabled: state.disabled ?? false,
     ariaLabel: state.ariaLabel?.trim() || 'Pagination',
@@ -37,8 +45,17 @@ export function getPaginationMeta(state: PaginationState): PaginationMeta {
     hasPrevious: page > 1,
     hasNext: page < totalPages,
     showSummary: state.showSummary ?? true,
+    showPageSizeSelector: state.showPageSizeSelector ?? true,
     alignment: normalizeAlignment(state.alignment),
   };
+}
+
+function normalizePageSizeOptions(options: readonly number[] | undefined): readonly number[] {
+  const normalizedOptions = [
+    ...new Set((options ?? []).map((option) => Math.trunc(option))),
+  ].filter((option) => Number.isFinite(option) && option > 0);
+
+  return normalizedOptions.length > 0 ? normalizedOptions : DEFAULT_PAGINATION_PAGE_SIZE_OPTIONS;
 }
 
 function clampPage(page: number, totalPages: number): number {

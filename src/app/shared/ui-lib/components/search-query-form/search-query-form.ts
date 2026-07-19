@@ -276,6 +276,13 @@ export class SearchQueryFormComponent {
   private readonly propertyMap = computed(
     () => new Map(this.properties().map((property) => [property.propertyName, property])),
   );
+  private readonly sortedProperties = computed(() =>
+    [...this.properties()].sort((first, second) =>
+      this.propertyLabel(first).localeCompare(this.propertyLabel(second), undefined, {
+        sensitivity: 'base',
+      }),
+    ),
+  );
   private readonly selectedPropertyNames = computed(
     () => new Set(this.filters().map((filter) => filter.property)),
   );
@@ -299,7 +306,7 @@ export class SearchQueryFormComponent {
     }
 
     const selected = this.selectedPropertyNames();
-    return this.properties().filter((property) => !selected.has(property.propertyName));
+    return this.sortedProperties().filter((property) => !selected.has(property.propertyName));
   });
   protected readonly canClear = computed(
     () =>
@@ -736,7 +743,7 @@ export class SearchQueryFormComponent {
         .map((item) => item.property),
     );
 
-    return this.properties().filter(
+    return this.sortedProperties().filter(
       (property) =>
         property.propertyName === filter.property || !selected.has(property.propertyName),
     );
