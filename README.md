@@ -74,7 +74,25 @@ contexts.
 
 Material Symbols support is handled by `MaterialIconsService`, which injects the configured Google
 Fonts stylesheet for the icons listed in
-`src/app/shared/ui-lib/services/material-icons/icon-registry.ts`.
+`src/app/shared/ui-lib/services/material-icons/icon-registry.ts`. Applications can extend that
+default subset when configuring the library:
+
+```ts
+import { ApplicationConfig } from '@angular/core';
+
+import { provideUiLib } from './shared/ui-lib';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideUiLib({
+      additionalMaterialIcons: ['home', 'notifications'],
+    }),
+  ],
+};
+```
+
+The configured names are merged with the defaults, deduplicated, and loaded automatically during
+application startup.
 
 ## Interface density
 

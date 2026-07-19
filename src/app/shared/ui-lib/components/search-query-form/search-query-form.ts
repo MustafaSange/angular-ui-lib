@@ -22,6 +22,7 @@ import {
 } from '@angular/forms/signals';
 
 import { buildSearchRequest, isBetweenValue } from '../../search-query/search-query-builder';
+import { createSearchFilterId } from '../../search-query/search-query-id';
 import { reconcileSearchState } from '../../search-query/search-query-reconciliation';
 import { areSearchQueryStatesEqual } from '../../search-query/search-query-equality';
 import {
@@ -80,8 +81,6 @@ import { SignalFormField, SignalReadonlyValue } from '../signal-form-field';
 import { SelectComponent, SelectOptionComponent } from '../select';
 import { ChipComponent, ChipRemoveDirective } from '../chip';
 import { PopoverComponent, PopoverPanelComponent, PopoverTrigger } from '../menu-popover';
-
-let nextFilterId = 0;
 
 @Component({
   selector: 'ms-search-query-form',
@@ -821,7 +820,7 @@ export class SearchQueryFormComponent {
 
   private createFilter(
     property: SearchPropertyConfig,
-    id = `search-filter-${nextFilterId++}`,
+    id = createSearchFilterId(new Set(this.filters().map((filter) => filter.id))),
   ): SearchQueryFormFilterModel {
     const operator = this.defaultOperator(property);
 

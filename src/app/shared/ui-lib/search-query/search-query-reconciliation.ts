@@ -1,4 +1,5 @@
 import { isBetweenValue } from './search-query-builder';
+import { createSearchFilterId } from './search-query-id';
 import {
   getCompatibleSearchOperators,
   getDefaultSearchOperator,
@@ -27,8 +28,6 @@ import {
   parseCustomSearchValue,
   stringifySearchScalar,
 } from './search-query-value';
-
-let nextSharedFilterId = 0;
 
 export interface ReconcileSearchStateOptions {
   readonly maxFilters?: number;
@@ -122,7 +121,7 @@ export function searchValueMatchesOperator(
 
 export function createSearchFilter(
   property: SearchPropertyConfig,
-  id = `search-filter-${nextSharedFilterId++}`,
+  id = createSearchFilterId(),
 ): SearchQueryFormFilter {
   const operator = getConfiguredSearchOperator(property);
   return {
@@ -239,6 +238,8 @@ export function reconcileSearchState(
   const propertyMap = new Map(properties.map((property) => [property.propertyName, property]));
   const knownFilters = state.filters.filter((filter) => propertyMap.has(filter.property));
   const used = new Set<string>();
+  const usedIds = new Set<string>();
+  const idPrefix = options.idPrefix ?? 'search-filter';
   const filters: SearchQueryFormFilter[] = [];
   const requiredCount = properties.filter((property) => property.required).length;
   const maxFilters = Number.isFinite(options.maxFilters)
@@ -247,11 +248,9 @@ export function reconcileSearchState(
 
   for (const property of properties.filter((item) => item.required)) {
     const current = knownFilters.find((filter) => filter.property === property.propertyName);
-    const fallback = createSearchFilter(
-      property,
-      `${options.idPrefix ?? 'search-filter'}-${nextSharedFilterId++}`,
-    );
-    filters.push(normalizeSearchFilter(current ?? fallback, property, true));
+    const fallback = createSearchFilter(property, createSearchFilterId(usedIds, idPrefix));
+    const normalized = normalizeSearchFilter(current ?? fallback, property, true);
+    filters.push(withUniqueFilterId(normalized, usedIds, idPrefix));
     used.add(property.propertyName);
   }
 
@@ -262,7 +261,9 @@ export function reconcileSearchState(
 
     const property = propertyMap.get(filter.property);
     if (property) {
-      filters.push(normalizeSearchFilter(filter, property, false));
+      filters.push(
+        withUniqueFilterId(normalizeSearchFilter(filter, property, false), usedIds, idPrefix),
+      );
       used.add(filter.property);
     }
   }
@@ -280,6 +281,20 @@ export function reconcileSearchState(
     filters,
     sort: state.sort === undefined && sort.length === 0 ? undefined : sort,
   };
+}
+
+function withUniqueFilterId(
+  filter: SearchQueryFormFilter,
+  usedIds: Set<string>,
+  idPrefix: string,
+): SearchQueryFormFilter {
+  const id =
+    filter.id.trim().length > 0 && !usedIds.has(filter.id)
+      ? filter.id
+      : createSearchFilterId(usedIds, idPrefix);
+
+  usedIds.add(id);
+  return id === filter.id ? filter : { ...filter, id };
 }
 
 function createSearchFilterValue(

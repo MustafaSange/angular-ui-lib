@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Service, inject } from '@angular/core';
 
+import { UI_LIB_CONFIG } from '../density-config';
 import { MATERIAL_ICONS } from './icon-registry';
 
 const MATERIAL_SYMBOLS_LINK_ID = 'ms-material-symbols-font';
@@ -9,6 +10,7 @@ const MATERIAL_SYMBOLS_FAMILY = 'Material Symbols Outlined:opsz,wght,FILL,GRAD@2
 @Service()
 export class MaterialIconsService {
   private readonly document = inject(DOCUMENT);
+  private readonly config = inject(UI_LIB_CONFIG);
 
   loadIcons(): void {
     if (this.document.getElementById(MATERIAL_SYMBOLS_LINK_ID)) {
@@ -16,7 +18,11 @@ export class MaterialIconsService {
     }
 
     const href = new URL('https://fonts.googleapis.com/css2');
-    const iconNames = [...new Set(MATERIAL_ICONS)].sort().join(',');
+    const iconNames = [
+      ...new Set([...MATERIAL_ICONS, ...(this.config.additionalMaterialIcons ?? [])]),
+    ]
+      .sort()
+      .join(',');
 
     href.searchParams.set('family', MATERIAL_SYMBOLS_FAMILY);
     href.searchParams.set('icon_names', iconNames);
