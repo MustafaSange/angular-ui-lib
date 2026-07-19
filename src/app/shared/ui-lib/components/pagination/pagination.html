@@ -3,17 +3,38 @@
   [class.pagination-align-start]="alignment() === 'start'"
   [class.pagination-align-center]="alignment() === 'center'"
   [class.pagination-align-end]="alignment() === 'end'"
-  [class.pagination-summary-off]="!showSummary()"
   [attr.aria-label]="ariaLabel()"
 >
-  @if (showSummary()) {
-    <p class="pagination-summary" aria-live="polite">
-      @if (totalItems() > 0) {
-        Showing {{ itemStart() }}-{{ itemEnd() }} of {{ totalItems() }}
-      } @else {
-        No items
+  @if (showSummary() || showPageSizeSelector()) {
+    <div class="pagination-details">
+      @if (showSummary()) {
+        <p class="pagination-summary" aria-live="polite">
+          @if (totalItems() > 0) {
+            Showing {{ itemStart() }}-{{ itemEnd() }} of {{ totalItems() }}
+          } @else {
+            No items
+          }
+        </p>
       }
-    </p>
+
+      @if (showPageSizeSelector()) {
+        <span class="pagination-page-size">
+          <span>Items per Page</span>
+          <select
+            aria-label="Items per Page"
+            [disabled]="disabled()"
+            (change)="changePageSize($event)"
+          >
+            @if (!hasCurrentPageSizeOption()) {
+              <option [value]="pageSize()" selected hidden>{{ pageSize() }}</option>
+            }
+            @for (option of pageSizeOptions(); track option) {
+              <option [value]="option" [selected]="option === pageSize()">{{ option }}</option>
+            }
+          </select>
+        </span>
+      }
+    </div>
   }
 
   <ul class="pagination-list">

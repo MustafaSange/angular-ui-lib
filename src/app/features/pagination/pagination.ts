@@ -24,6 +24,7 @@ export class Pagination {
     page: 18,
     totalItems: 980,
     pageSize: 10,
+    pageSizeOptions: [10, 20, 50],
     siblingCount: 1,
   });
   protected readonly disabledState = signal<PaginationState>({
@@ -37,6 +38,13 @@ export class Pagination {
     totalItems: 90,
     pageSize: 10,
     showSummary: false,
+    alignment: 'center',
+  });
+  protected readonly pageSizeOffState = signal<PaginationState>({
+    page: 2,
+    totalItems: 90,
+    pageSize: 10,
+    showPageSizeSelector: false,
     alignment: 'center',
   });
   protected readonly startAlignedState = signal<PaginationState>({
@@ -64,7 +72,20 @@ export class Pagination {
     ariaLabel: 'ترقيم الصفحات',
   });
   protected readonly basicMeta = computed(() => getPaginationMeta(this.basicState()));
+  protected readonly basicRequest = signal({ page: 1, pageSize: 10 });
   protected readonly denseMeta = computed(() => getPaginationMeta(this.denseState()));
+
+  protected handleBasicPaginationChange(state: PaginationState): void {
+    this.basicState.set(state);
+
+    const { page, pageSize } = getPaginationMeta(state);
+
+    this.loadBasicRecords(page, pageSize);
+  }
+
+  private loadBasicRecords(page: number, pageSize: number): void {
+    this.basicRequest.set({ page, pageSize });
+  }
 
   protected readonly basicSnippet = `import { Component, computed, signal } from '@angular/core';
 
@@ -72,15 +93,36 @@ import { PaginationComponent, PaginationState, getPaginationMeta, } from './shar
 
 @Component({
   selector: 'app-pagination-basic-example', imports: [PaginationComponent], template: \`
-    <ms-pagination [(state)]="pagination" />
+    <ms-pagination
+      [state]="pagination()"
+      (stateChange)="onPaginationChange($event)"
+    />
     <p>
       Page {{ paginationMeta().page }} of {{ paginationMeta().totalPages }}
+    </p>
+    <p>
+      Last request: page {{ lastRequest().page }},
+      page size {{ lastRequest().pageSize }}
     </p>
   \`, })
 export class PaginationBasicExample {
   readonly pagination = signal<PaginationState>({
     page: 1, totalItems: 245, pageSize: 10, });
   readonly paginationMeta = computed(() => getPaginationMeta(this.pagination()));
+  readonly lastRequest = signal({ page: 1, pageSize: 10 });
+
+  onPaginationChange(state: PaginationState): void {
+    this.pagination.set(state);
+
+    const { page, pageSize } = getPaginationMeta(state);
+
+    this.loadRecords(page, pageSize);
+  }
+
+  private loadRecords(page: number, pageSize: number): void {
+    // Replace this with your API or data-service call.
+    this.lastRequest.set({ page, pageSize });
+  }
 }`;
 
   protected readonly ellipsisSnippet = `import { Component, computed, signal } from '@angular/core';
@@ -97,7 +139,8 @@ import { PaginationComponent, PaginationState, getPaginationMeta, } from './shar
   \`, })
 export class PaginationEllipsisExample {
   readonly pagination = signal<PaginationState>({
-    page: 18, totalItems: 980, pageSize: 10, siblingCount: 1, });
+    page: 18, totalItems: 980, pageSize: 10,
+    pageSizeOptions: [10, 20, 50], siblingCount: 1, });
   readonly paginationMeta = computed(() => getPaginationMeta(this.pagination()));
 }`;
 
@@ -106,12 +149,16 @@ export class PaginationEllipsisExample {
 import { PaginationComponent, PaginationState } from './shared/ui-lib';
 
 @Component({
-  selector: 'app-pagination-summary-off-example', imports: [PaginationComponent], template: \`
-    <ms-pagination [(state)]="pagination" />
+  selector: 'app-pagination-optional-details-example', imports: [PaginationComponent], template: \`
+    <ms-pagination [(state)]="summaryHidden" />
+    <ms-pagination [(state)]="pageSizeHidden" />
   \`, })
-export class PaginationSummaryOffExample {
-  readonly pagination = signal<PaginationState>({
+export class PaginationOptionalDetailsExample {
+  readonly summaryHidden = signal<PaginationState>({
     page: 2, totalItems: 90, pageSize: 10, showSummary: false, alignment: 'center', });
+  readonly pageSizeHidden = signal<PaginationState>({
+    page: 2, totalItems: 90, pageSize: 10,
+    showPageSizeSelector: false, alignment: 'center', });
 }`;
 
   protected readonly alignmentSnippet = `import { Component, signal } from '@angular/core';

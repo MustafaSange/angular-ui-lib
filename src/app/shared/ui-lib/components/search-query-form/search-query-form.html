@@ -37,7 +37,7 @@
                     <label>From</label>
                     @if (hasOptions(property)) {
                       <select [formField]="field.from">
-                        <option value="">Choose from</option>
+                        <option value="">Choose From</option>
                         @for (option of propertyOptions(property); track option.value) {
                           <option [value]="option.value">{{ option.label }}</option>
                         }
@@ -57,7 +57,7 @@
                     <label>To</label>
                     @if (hasOptions(property)) {
                       <select [formField]="field.to">
-                        <option value="">Choose to</option>
+                        <option value="">Choose To</option>
                         @for (option of propertyOptions(property); track option.value) {
                           <option [value]="option.value">{{ option.label }}</option>
                         }
@@ -302,7 +302,7 @@
                   <ms-signal-form-field>
                     <label>Value</label>
                     <select [formField]="field.value">
-                      <option value="">Choose value</option>
+                      <option value="">Choose Value</option>
                       @for (option of propertyOptions(property); track option.value) {
                         <option [value]="option.value">{{ option.label }}</option>
                       }
@@ -355,7 +355,7 @@
         [disabled]="availableProperties().length === 0"
         (change)="handleAddChange($event)"
       >
-        <option value="">Choose property</option>
+        <option value="">Choose Property</option>
         @for (property of availableProperties(); track property.propertyName) {
           <option [value]="property.propertyName">{{ propertyLabel(property) }}</option>
         }
