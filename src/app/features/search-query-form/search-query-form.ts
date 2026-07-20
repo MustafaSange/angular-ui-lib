@@ -195,7 +195,6 @@ export class SearchQueryForm {
         property: 'tenantId',
         operator: 'eq',
         value: 'f2c09089-f857-4c42-857d-1c48e89f1107',
-        locked: true,
       },
       {
         id: 'name-in',
@@ -265,7 +264,7 @@ export class SearchQueryForm {
   );
   protected readonly userRequestJson = computed(() => JSON.stringify(this.userRequest(), null, 2));
 
-  protected readonly emptySnippet = `import { Component, signal } from '@angular/core';
+  protected readonly emptySnippet = `import { Component, computed, signal } from '@angular/core';
 
 import {
   SEARCH_SORT_DIRECTION,
@@ -273,6 +272,8 @@ import {
   SearchPropertyConfig,
   SearchQueryFormState,
   SearchSortConfig,
+  buildSearchRequest,
+  type PaginatedSearchRequest,
 } from './shared/ui-lib';
 
 @Component({
@@ -283,7 +284,10 @@ import {
       [properties]="properties"
       [sortConfig]="sortConfig"
       [(state)]="searchState"
+      (requestChange)="request.set($event)"
     />
+
+    <pre>{{ requestJson() }}</pre>
   \`,
 })
 export class EmptySearchQueryExample {
@@ -317,6 +321,8 @@ export class EmptySearchQueryExample {
     filters: [],
     sort: [{ property: 'name', direction: SEARCH_SORT_DIRECTION.ASCENDING }],
   });
+  readonly request = signal<PaginatedSearchRequest>(buildSearchRequest(this.searchState()));
+  readonly requestJson = computed(() => JSON.stringify(this.request(), null, 2));
 }`;
 
   protected readonly fullSnippet = `import { Component, computed, signal } from '@angular/core';
@@ -490,7 +496,6 @@ export class UserSearchQueryExample {
         property: 'tenantId',
         operator: 'eq',
         value: 'f2c09089-f857-4c42-857d-1c48e89f1107',
-        locked: true,
       },
       {
         id: 'name-in',
