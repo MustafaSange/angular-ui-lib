@@ -1,0 +1,9 @@
+<div class="media-slide-content">
+  <ng-content select=":not([msMediaCaption])" />
+</div>
+
+@if (hasCaption()) {
+  <div class="media-slide-caption">
+    <ng-content select="[msMediaCaption]" />
+  </div>
+}

@@ -1,0 +1,13 @@
+<button
+  [class]="buttonClasses()"
+  type="button"
+  [disabled]="disabled()"
+  [attr.aria-label]="currentLabel()"
+  (click)="copy()"
+>
+  <span class="copy-icon ms-icon" aria-hidden="true">{{ icon() }}</span>
+  <span #projectedContent class="copy-content" aria-hidden="true">
+    <ng-content />
+  </span>
+  <span class="copy-status" aria-live="polite">{{ copyState() === 'idle' ? '' : currentLabel() }}</span>
+</button>

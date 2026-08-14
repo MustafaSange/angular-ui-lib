@@ -1,0 +1,22 @@
+<div class="slider-control">
+  <span class="slider-fill" aria-hidden="true"></span>
+  <input
+    #range
+    class="slider-input"
+    type="range"
+    [min]="effectiveMin()"
+    [max]="effectiveMax()"
+    [step]="effectiveStep()"
+    [value]="clampedValue()"
+    [disabled]="disabled()"
+    [attr.aria-label]="ariaLabel()"
+    [attr.aria-labelledby]="ariaLabelledby()"
+    [attr.aria-describedby]="ariaDescribedby()"
+    (input)="updateValue(range.valueAsNumber)"
+    (blur)="touch.emit()"
+  />
+</div>
+
+@if (showValue()) {
+  <output class="slider-value">{{ clampedValue() }}</output>
+}

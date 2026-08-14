@@ -1,0 +1,20 @@
+<div class="form-field-label">
+  <ng-content select="label" />
+  <ng-content select="[slot=label-extra], [slot=label-action]" />
+</div>
+
+<div class="form-field-control">
+  <ng-content
+    select="[formField], input, textarea, select, button, ms-autocomplete, ms-select, ms-button-toggle-group, ms-slider, ms-otp-input, ms-date-picker, ms-time-picker, ms-date-time-picker, ms-readonly-value, .form-field-prefix, .form-field-suffix, .form-field-action"
+  />
+</div>
+
+<div class="form-field-message">
+  @if (showError() && hasErrorContent()) {
+    <ng-content select="ms-error" />
+  } @else if (showError()) {
+    <ms-error>{{ errorMessage() }}</ms-error>
+  } @else if (showHint()) {
+    <ng-content select="ms-hint" />
+  }
+</div>

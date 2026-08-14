@@ -1,0 +1,24 @@
+<ms-modal [title]="data.title" (close)="cancel()">
+  <div
+    class="confirm-dialog"
+    [class.confirm-dialog-info]="data.kind === 'info'"
+    [class.confirm-dialog-success]="data.kind === 'success'"
+    [class.confirm-dialog-warning]="data.kind === 'warning'"
+    [class.confirm-dialog-danger]="data.kind === 'danger'"
+  >
+    <span class="confirm-dialog-icon" aria-hidden="true">
+      <span class="ms-icon">{{ icon }}</span>
+    </span>
+
+    <p class="confirm-dialog-message">{{ data.message }}</p>
+  </div>
+
+  <div class="confirm-dialog-actions" slot="footer">
+    <button class="btn btn-secondary" type="button" (click)="cancel()">
+      {{ data.cancelText }}
+    </button>
+    <button [class]="confirmButtonClass" type="button" (click)="confirm()">
+      {{ data.confirmText }}
+    </button>
+  </div>
+</ms-modal>

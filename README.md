@@ -207,6 +207,19 @@ npm run build
 
 This compiles the application and stores build artifacts in `dist/`.
 
+## Building and Using the Local Library
+
+Build the reusable package separately from the showcase application:
+
+```bash
+npm run build-ui-lib
+```
+
+The latest package is written to `dist/ms-ui`, with a versioned snapshot such as
+`dist/ms-ui-0.0.2`. See the
+[`MS UI` consumer guide](projects/ms-ui/README.md) for local installation, styles, provider setup,
+component imports, and version updates in another Angular application.
+
 ## Running unit tests
 
 To execute unit tests with Vitest, run:

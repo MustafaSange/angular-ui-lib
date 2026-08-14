@@ -1,0 +1,123 @@
+@use '../tokens/breakpoints';
+
+$-spacing-sizes: 0, 2, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 48;
+
+@mixin spacing-utilities($prefix: '') {
+  @each $space in $-spacing-sizes {
+    .#{$prefix}m-#{$space} {
+      margin: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}mt-#{$space} {
+      margin-top: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}mr-#{$space} {
+      margin-right: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}mb-#{$space} {
+      margin-bottom: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}ml-#{$space} {
+      margin-left: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}ms-#{$space} {
+      margin-inline-start: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}me-#{$space} {
+      margin-inline-end: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}mx-#{$space} {
+      margin-inline: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}my-#{$space} {
+      margin-block: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}p-#{$space} {
+      padding: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}pt-#{$space} {
+      padding-top: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}pr-#{$space} {
+      padding-right: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}pb-#{$space} {
+      padding-bottom: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}pl-#{$space} {
+      padding-left: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}ps-#{$space} {
+      padding-inline-start: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}pe-#{$space} {
+      padding-inline-end: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}px-#{$space} {
+      padding-inline: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}py-#{$space} {
+      padding-block: var(--spacing-#{$space});
+    }
+  }
+
+  .#{$prefix}m-auto {
+    margin: auto;
+  }
+
+  .#{$prefix}mt-auto {
+    margin-top: auto;
+  }
+
+  .#{$prefix}mr-auto {
+    margin-right: auto;
+  }
+
+  .#{$prefix}mb-auto {
+    margin-bottom: auto;
+  }
+
+  .#{$prefix}ml-auto {
+    margin-left: auto;
+  }
+
+  .#{$prefix}ms-auto {
+    margin-inline-start: auto;
+  }
+
+  .#{$prefix}me-auto {
+    margin-inline-end: auto;
+  }
+
+  .#{$prefix}mx-auto {
+    margin-inline: auto;
+  }
+
+  .#{$prefix}my-auto {
+    margin-block: auto;
+  }
+}
+
+@include spacing-utilities;
+
+@each $alias, $query in breakpoints.$media-aliases {
+  @media #{$query} {
+    @include spacing-utilities('#{$alias}-');
+  }
+}

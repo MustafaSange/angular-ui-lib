@@ -1,0 +1,135 @@
+<div class="autocomplete-control">
+  <div class="autocomplete-values" (click)="focusInput()">
+    @if (multiple()) {
+      @for (option of selectedOptions(); track optionId(option)) {
+        <span class="autocomplete-chip">
+          {{ option.label }}
+          @if (!isInteractiveDisabled()) {
+            <button
+              class="autocomplete-chip-remove"
+              type="button"
+              [attr.aria-label]="'Remove ' + option.label"
+              (click)="removeOption(option, $event)"
+            >
+              <span class="ms-icon" aria-hidden="true">close</span>
+            </button>
+          }
+        </span>
+      }
+    }
+
+    <input
+      #autocompleteInput
+      type="text"
+      role="combobox"
+      autocomplete="off"
+      [id]="inputId()"
+      [placeholder]="inputPlaceholder()"
+      [disabled]="isDisabled()"
+      [readonly]="readonly()"
+      [required]="required()"
+      [attr.aria-autocomplete]="'list'"
+      [attr.aria-controls]="panelId"
+      [attr.aria-expanded]="open()"
+      [attr.aria-activedescendant]="activeOptionDomId()"
+      [attr.aria-required]="required() || null"
+      [value]="inputText()"
+      (input)="handleInput($event)"
+      (focus)="handleFocus()"
+      (blur)="handleBlur()"
+      (keydown)="handleKeydown($event)"
+    />
+  </div>
+
+  @if (loading()) {
+    <span class="autocomplete-progress" aria-label="Loading options" role="status"></span>
+  }
+
+  @if (clearable() && hasSelection() && !isInteractiveDisabled()) {
+    <button
+      class="autocomplete-clear"
+      type="button"
+      aria-label="Clear selection"
+      (click)="clearSelection()"
+    >
+      <span class="ms-icon" aria-hidden="true">close</span>
+    </button>
+  }
+
+  <button
+    class="autocomplete-toggle"
+    type="button"
+    aria-label="Show options"
+    [disabled]="isDisabled() || readonly()"
+    [attr.aria-expanded]="open()"
+    [attr.aria-controls]="panelId"
+    (click)="togglePanel()"
+  >
+    <span class="ms-icon" aria-hidden="true">expand_more</span>
+  </button>
+</div>
+
+<div
+  #autocompletePanel
+  class="autocomplete-panel"
+  popover="auto"
+  role="listbox"
+  [id]="panelId"
+  [attr.aria-multiselectable]="multiple() || null"
+  (toggle)="handlePanelToggle($event)"
+>
+  @if (loading()) {
+    <div class="autocomplete-status" role="status">Loading options</div>
+  } @else if (error()) {
+    <div class="autocomplete-status" role="status">{{ error() }}</div>
+  } @else if (visibleOptions().length === 0) {
+    <div class="autocomplete-status">No options found</div>
+  } @else {
+    @for (option of visibleOptions(); track optionId(option); let index = $index) {
+      @if (shouldRenderGroup(index)) {
+        <div class="autocomplete-group">{{ option.group }}</div>
+      }
+      <div
+        class="autocomplete-option"
+        role="option"
+        [id]="optionDomId(index)"
+        [class.is-active]="activeIndex() === index"
+        [class.is-selected]="isSelected(option)"
+        [class.is-disabled]="option.disabled"
+        [attr.aria-selected]="isSelected(option)"
+        [attr.aria-disabled]="option.disabled || null"
+        (mousedown)="handleOptionPointerDown($event)"
+        (click)="selectOption(option)"
+      >
+        @if (option.template) {
+          <span class="autocomplete-option-content">
+            <ng-container [ngTemplateOutlet]="option.template" />
+          </span>
+        } @else {
+          @if (option.icon) {
+            <span class="ms-icon" aria-hidden="true">{{ option.icon }}</span>
+          }
+          <span class="autocomplete-option-text">
+            <span class="autocomplete-option-label">{{ option.label }}</span>
+            @if (option.description) {
+              <span class="autocomplete-option-description">{{ option.description }}</span>
+            }
+          </span>
+        }
+        @if (isSelected(option)) {
+          <span class="ms-icon autocomplete-selected-icon" aria-hidden="true">check</span>
+        }
+      </div>
+    }
+  }
+</div>
+
+@if (name()) {
+  @for (submittedValue of submittedValues(); track submittedValue) {
+    <input type="hidden" [name]="name()" [value]="submittedValue" />
+  }
+}
+
+<div class="autocomplete-option-source" aria-hidden="true">
+  <ng-content select="ms-autocomplete-option" />
+</div>

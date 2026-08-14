@@ -1,0 +1,21 @@
+body {
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-sans);
+  line-height: var(--line-height-body);
+}
+
+a {
+  color: var(--color-link);
+  text-decoration-color: currentColor;
+
+  &:hover:not(.btn) {
+    color: var(--color-link-hover);
+  }
+
+  &:focus-visible {
+    border-radius: var(--radius-sm);
+    outline: 0;
+    box-shadow: var(--control-focus-ring);
+  }
+}

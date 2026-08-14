@@ -1,0 +1,142 @@
+ms-progress-indicator {
+  display: block;
+  inline-size: 100%;
+}
+
+ms-spinner {
+  display: inline-flex;
+  flex: 0 0 auto;
+  vertical-align: middle;
+}
+
+.progress-indicator,
+.spinner {
+  --_progress-color: var(--color-primary);
+}
+
+.progress-indicator-success,
+.spinner-success {
+  --_progress-color: var(--color-success);
+}
+
+.progress-indicator-warning,
+.spinner-warning {
+  --_progress-color: var(--color-warning);
+}
+
+.progress-indicator-danger,
+.spinner-danger {
+  --_progress-color: var(--color-danger);
+}
+
+.progress-indicator-inherit,
+.spinner-inherit {
+  --_progress-color: currentColor;
+}
+
+.progress-indicator {
+  position: relative;
+  contain: paint;
+  inline-size: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-full);
+  background-color: var(--color-border-muted);
+
+  &.progress-indicator-sm {
+    block-size: var(--spacing-2);
+  }
+
+  &.progress-indicator-md {
+    block-size: var(--spacing-4);
+  }
+
+  &.progress-indicator-lg {
+    block-size: var(--spacing-8);
+  }
+}
+
+.progress-indicator-fill {
+  display: block;
+  inline-size: var(--_progress-percent);
+  block-size: 100%;
+  border-radius: inherit;
+  background-color: var(--_progress-color);
+  transition: inline-size var(--transition-base);
+}
+
+.progress-indicator.is-indeterminate .progress-indicator-fill {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: -40%;
+  inline-size: 40%;
+  animation: progress-indicator-sweep 1.2s ease-in-out infinite;
+}
+
+.spinner {
+  display: inline-flex;
+  inline-size: var(--_progress-spinner-size);
+  block-size: var(--_progress-spinner-size);
+  color: var(--_progress-color);
+
+  &.spinner-sm {
+    --_progress-spinner-size: var(--spacing-16);
+    --_progress-spinner-border: var(--border-width-md);
+  }
+
+  &.spinner-md {
+    --_progress-spinner-size: var(--spacing-24);
+    --_progress-spinner-border: var(--border-width-md);
+  }
+
+  &.spinner-lg {
+    --_progress-spinner-size: var(--spacing-32);
+    --_progress-spinner-border: var(--border-width-lg);
+  }
+}
+
+.spinner-circle {
+  display: block;
+  box-sizing: border-box;
+  inline-size: 100%;
+  block-size: 100%;
+  border: var(--_progress-spinner-border) solid color-mix(in srgb, currentColor 30%, transparent);
+  border-block-start-color: currentColor;
+  border-radius: var(--radius-full);
+  animation: progress-spinner-rotate 800ms linear infinite;
+}
+
+.spinner-status-text {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@keyframes progress-indicator-sweep {
+  from {
+    inset-inline-start: -40%;
+  }
+
+  to {
+    inset-inline-start: 100%;
+  }
+}
+
+@keyframes progress-spinner-rotate {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-indicator-fill {
+    transition: none;
+  }
+
+  .progress-indicator.is-indeterminate .progress-indicator-fill,
+  .spinner-circle {
+    animation: none;
+  }
+}

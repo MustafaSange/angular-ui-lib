@@ -1,0 +1,26 @@
+<button
+  #trigger
+  class="side-nav-section-trigger"
+  type="button"
+  [attr.aria-label]="label()"
+  [attr.aria-expanded]="isOpen()"
+  [attr.aria-controls]="panelId"
+  (click)="toggle($event)"
+  (mouseenter)="openTransient()"
+  (focus)="openTransient()"
+>
+  <span class="ms-icon" aria-hidden="true">{{ icon() }}</span>
+  <span class="side-nav-label">{{ label() }}</span>
+  <span class="ms-icon side-nav-arrow" aria-hidden="true">chevron_right</span>
+</button>
+
+<div
+  class="side-nav-panel"
+  [class.side-nav-flyout]="opensAsFlyout()"
+  [attr.id]="panelId"
+  role="list"
+  (mouseenter)="openTransient()"
+  (mouseleave)="scheduleCloseTransient()"
+>
+  <ng-content />
+</div>
