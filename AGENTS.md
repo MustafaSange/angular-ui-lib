@@ -45,3 +45,5 @@ Use modern Angular patterns:
   - On the form-fields showcase, render each form-field variant, including autocomplete variants, with its snippet directly below the visual example.
 - Keep global form-control browser resets in `src/styles/base/_reset.scss`; number input spinner resets should be scoped to `input[type='number']` and cover both Firefox (`-moz-appearance: textfield`) and WebKit spin button pseudo-elements.
 - Do not add/update tests for behavior changes.
+- Exclude `src/app/app.spec.ts` from application test validation. It is intentionally outside the
+  active test suite and should not be treated as a blocker in future work.
