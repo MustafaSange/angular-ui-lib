@@ -1,0 +1,105 @@
+<div class="time-picker-control">
+  <input
+    #timeInput
+    type="text"
+    [inputMode]="effectiveInputMode()"
+    autocomplete="off"
+    [id]="inputId()"
+    [name]="name()"
+    [value]="inputText()"
+    [placeholder]="effectivePlaceholder()"
+    [disabled]="disabled()"
+    [readOnly]="readonly()"
+    [required]="required()"
+    [attr.aria-label]="ariaLabel()"
+    [attr.aria-labelledby]="ariaLabelledby()"
+    [attr.aria-describedby]="ariaDescribedby()"
+    [attr.aria-controls]="panelId"
+    [attr.aria-expanded]="open()"
+    [attr.aria-invalid]="invalidInput()"
+    [attr.aria-haspopup]="'dialog'"
+    (input)="handleInput($event)"
+    (keydown)="handleInputKeydown($event)"
+    (blur)="handleBlur($event)"
+  />
+
+  @if (clearable() && value() && !disabled() && !readonly()) {
+    <button class="time-picker-clear" type="button" aria-label="Clear time" (click)="clear($event)">
+      <span class="ms-icon" aria-hidden="true">close</span>
+    </button>
+  }
+
+  <button
+    class="time-picker-toggle"
+    type="button"
+    aria-label="Choose time"
+    [disabled]="disabled()"
+    [attr.aria-disabled]="readonly()"
+    [attr.aria-controls]="panelId"
+    [attr.aria-expanded]="open()"
+    (click)="togglePanel()"
+  >
+    <span class="ms-icon" aria-hidden="true">schedule</span>
+  </button>
+</div>
+
+<div
+  #timePanel
+  class="time-picker-panel"
+  popover="auto"
+  role="dialog"
+  aria-label="Choose time"
+  [id]="panelId"
+  (keydown)="handlePanelKeydown($event)"
+  (toggle)="handlePanelToggle($event)"
+>
+  <div class="time-picker-selectors">
+    <label class="time-picker-segment">
+      <span>Hour</span>
+      <select #hourSelect aria-label="Hour" [value]="draftHour()" (change)="updateHour($event)">
+        @for (hour of hourOptions(); track hour) {
+          <option [value]="hour">{{ optionLabel(hour) }}</option>
+        }
+      </select>
+    </label>
+
+    <span class="time-picker-separator" aria-hidden="true">:</span>
+
+    <label class="time-picker-segment">
+      <span>Minute</span>
+      <select aria-label="Minute" [value]="draftMinute()" (change)="updateMinute($event)">
+        @for (minute of minuteOptions(); track minute) {
+          <option [value]="minute">{{ optionLabel(minute) }}</option>
+        }
+      </select>
+    </label>
+
+    @if (showSeconds()) {
+      <span class="time-picker-separator" aria-hidden="true">:</span>
+
+      <label class="time-picker-segment">
+        <span>Second</span>
+        <select aria-label="Second" [value]="draftSecond()" (change)="updateSecond($event)">
+          @for (second of secondOptions(); track second) {
+            <option [value]="second">{{ optionLabel(second) }}</option>
+          }
+        </select>
+      </label>
+    }
+
+    @if (showPeriod()) {
+      <label class="time-picker-segment time-picker-period">
+        <span>Period</span>
+        <select aria-label="Period" [value]="draftPeriod()" (change)="updatePeriod($event)">
+          @for (period of periodOptions; track period) {
+            <option [value]="period">{{ period }}</option>
+          }
+        </select>
+      </label>
+    }
+  </div>
+
+  <div class="time-picker-actions">
+    <button class="btn btn-primary btn-sm" type="button" (click)="finishSelection()">Done</button>
+  </div>
+</div>

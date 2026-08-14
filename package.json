@@ -5,6 +5,12 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "migrate-ui-lib": "node scripts/migrate-ui-lib.mjs",
+    "build-ui-lib": "npm run migrate-ui-lib && ng build ms-ui && node scripts/snapshot-ui-lib-build.mjs",
+    "version-ui-lib": "node scripts/version-ui-lib.mjs",
+    "version-ui-lib:patch": "npm run version-ui-lib -- patch && npm run build-ui-lib",
+    "version-ui-lib:minor": "npm run version-ui-lib -- minor && npm run build-ui-lib",
+    "version-ui-lib:major": "npm run version-ui-lib -- major && npm run build-ui-lib",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -27,6 +33,7 @@
     "@angular/compiler-cli": "^22.0.0",
     "@types/prismjs": "^1.26.6",
     "jsdom": "^28.0.0",
+    "ng-packagr": "^22.0.0",
     "prettier": "^3.8.1",
     "typescript": "~6.0.3",
     "vitest": "^4.0.8"

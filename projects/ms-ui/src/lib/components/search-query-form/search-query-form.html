@@ -1,0 +1,451 @@
+<form class="search-query-form" (submit)="submitSearch($event)">
+  @if (filters().length > 0) {
+    <div class="filter-list" aria-label="Search filters">
+      @for (filter of filters(); track filter.id) {
+        @let property = getProperty(filter.property);
+        @let field = filterField($index);
+        <div
+          class="filter-row"
+          role="group"
+          [attr.aria-label]="'Filter for ' + propertyLabel(property)"
+        >
+          <ms-signal-form-field class="filter-property">
+            <label>Property</label>
+            <select [formField]="field.property" (change)="handlePropertyChange(filter, $event)">
+              @for (option of rowPropertyOptions(filter); track option.propertyName) {
+                <option [value]="option.propertyName">{{ propertyLabel(option) }}</option>
+              }
+            </select>
+          </ms-signal-form-field>
+
+          @if (property) {
+            <ms-signal-form-field class="filter-operator">
+              <label>Operator</label>
+              <select [formField]="field.operator" (change)="handleOperatorChange(filter, $event)">
+                @for (operator of allowedOperators(property); track operator) {
+                  <option [value]="operator">{{ operatorLabels[operator] }}</option>
+                }
+              </select>
+            </ms-signal-form-field>
+
+            @if (isValuelessOperator(filter)) {
+              <span class="filter-value" aria-hidden="true"></span>
+            } @else {
+              <div class="filter-value">
+                @if (isBetweenOperator(filter)) {
+                  <ms-signal-form-field>
+                    <label>From</label>
+                    @if (hasOptions(property)) {
+                      <select [formField]="field.from">
+                        <option value="">Choose From</option>
+                        @for (option of propertyOptions(property); track option.value) {
+                          <option [value]="option.value">{{ option.label }}</option>
+                        }
+                      </select>
+                    } @else {
+                      <input
+                        [type]="inputType(property)"
+                        [inputMode]="inputMode(property)"
+                        [step]="step(property)"
+                        [placeholder]="property.placeholder ?? ''"
+                        [formField]="field.from"
+                      />
+                    }
+                  </ms-signal-form-field>
+
+                  <ms-signal-form-field>
+                    <label>To</label>
+                    @if (hasOptions(property)) {
+                      <select [formField]="field.to">
+                        <option value="">Choose To</option>
+                        @for (option of propertyOptions(property); track option.value) {
+                          <option [value]="option.value">{{ option.label }}</option>
+                        }
+                      </select>
+                    } @else {
+                      <input
+                        [type]="inputType(property)"
+                        [inputMode]="inputMode(property)"
+                        [step]="step(property)"
+                        [placeholder]="property.placeholder ?? ''"
+                        [formField]="field.to"
+                      />
+                    }
+                  </ms-signal-form-field>
+                } @else if (isInOperator(filter)) {
+                  <div class="in-values">
+                    <div
+                      class="in-values-control"
+                      [class.has-custom-values]="allowCustomInValues(property)"
+                    >
+                      <ms-signal-form-field
+                        [style.--form-field-control-anchor]="'--custom-values-' + filter.id"
+                      >
+                        <label>Values</label>
+                        @if (!allowCustomInValues(property) && hasOptions(property)) {
+                          <ms-select
+                            multiple
+                            overflowNavigation
+                            [searchable]="false"
+                            [formField]="field.values"
+                            (valueChange)="handleInOptionValuesChange(filter, property, $event)"
+                          >
+                            @for (option of propertyOptions(property); track option.value) {
+                              <ms-select-option
+                                [value]="option.value.toString()"
+                                [label]="option.label"
+                              >
+                                {{ option.label }}
+                              </ms-select-option>
+                            }
+                          </ms-select>
+                        } @else {
+                          <ms-readonly-value readonly overflowNavigation>
+                            <span class="in-values-preview">
+                              @if (totalInValues(filter) === 0) {
+                                <span class="in-values-placeholder">Add values</span>
+                              } @else {
+                                @for (
+                                  item of inValuePreview(filter, property);
+                                  track item.custom + '-' + item.value
+                                ) {
+                                  <ms-chip size="xs" selected removable>
+                                    {{ item.label }}
+                                    <button
+                                      msChipRemove
+                                      type="button"
+                                      [attr.aria-label]="'Remove value ' + item.label"
+                                      (click)="removeInValue(filter, item.value, item.custom)"
+                                    ></button>
+                                  </ms-chip>
+                                }
+                                @if (totalInValues(filter) > 3) {
+                                  <span class="in-values-more">
+                                    +{{ totalInValues(filter) - 3 }} more
+                                  </span>
+                                }
+                              }
+                            </span>
+                          </ms-readonly-value>
+                        }
+                      </ms-signal-form-field>
+
+                      @if (allowCustomInValues(property)) {
+                        <div class="custom-values-toggle-container">
+                          <ms-popover
+                            placement="bottom-start"
+                            (openChange)="
+                              handleCustomValuesPopover(
+                                $event,
+                                customValueInput,
+                                customValuesTrigger
+                              )
+                            "
+                          >
+                            <button
+                              #customValuesTrigger
+                              class="btn btn-icon"
+                              type="button"
+                              msPopoverTrigger
+                              [attr.aria-label]="'Manage values for ' + propertyLabel(property)"
+                              [attr.title]="'Manage values for ' + propertyLabel(property)"
+                              [class.btn-outline]="totalInValues(filter) === 0"
+                              [class.btn-primary]="totalInValues(filter) > 0"
+                            >
+                              <span class="ms-icon" aria-hidden="true">playlist_add</span>
+                            </button>
+
+                            <ms-popover-panel
+                              class="custom-values-popover"
+                              [attr.aria-label]="'Manage values for ' + propertyLabel(property)"
+                              [style.position-anchor]="'--custom-values-' + filter.id"
+                            >
+                              <div class="custom-values-editor">
+                                @if (hasOptions(property)) {
+                                  <ms-signal-form-field class="custom-option-values no-message">
+                                    <label>Options</label>
+                                    <ms-select
+                                      multiple
+                                      overflowNavigation
+                                      [searchable]="false"
+                                      [formField]="field.values"
+                                      (valueChange)="
+                                        handleInOptionValuesChange(filter, property, $event)
+                                      "
+                                    >
+                                      @for (
+                                        option of propertyOptions(property);
+                                        track option.value
+                                      ) {
+                                        <ms-select-option
+                                          [value]="option.value.toString()"
+                                          [label]="option.label"
+                                        >
+                                          {{ option.label }}
+                                        </ms-select-option>
+                                      }
+                                    </ms-select>
+                                  </ms-signal-form-field>
+                                }
+
+                                <ms-signal-form-field
+                                  class="custom-values-entry no-label no-message"
+                                >
+                                  <input
+                                    #customValueInput
+                                    [type]="inputType(property)"
+                                    [inputMode]="inputMode(property)"
+                                    [step]="step(property)"
+                                    [attr.aria-label]="
+                                      'Custom value for ' + propertyLabel(property)
+                                    "
+                                    [placeholder]="property.placeholder ?? 'Add value'"
+                                    [value]="filter.customValueInput"
+                                    [attr.aria-invalid]="
+                                      customValueInputError(property, filter) ? 'true' : null
+                                    "
+                                    [attr.aria-describedby]="
+                                      customValueInputError(property, filter)
+                                        ? 'custom-value-error-' + filter.id
+                                        : null
+                                    "
+                                    (input)="handleCustomValueInput(filter, $event)"
+                                    (keydown)="handleCustomValueKeydown(filter, $event)"
+                                    (paste)="handleCustomValuePaste(filter, $event)"
+                                  />
+                                  <button
+                                    class="form-field-suffix form-field-action"
+                                    type="button"
+                                    [attr.aria-label]="'Add value for ' + propertyLabel(property)"
+                                    [attr.title]="'Add value for ' + propertyLabel(property)"
+                                    [disabled]="
+                                      filter.customValueInput.trim().length === 0 ||
+                                      customValueInputError(property, filter).length > 0 ||
+                                      isAtInValueLimit(filter, property)
+                                    "
+                                    (click)="addCustomValue(filter)"
+                                  >
+                                    <span class="ms-icon" aria-hidden="true">add</span>
+                                  </button>
+                                  <button
+                                    class="form-field-suffix form-field-action"
+                                    type="button"
+                                    [attr.aria-label]="
+                                      'Paste values for ' + propertyLabel(property)
+                                    "
+                                    [attr.title]="'Paste values for ' + propertyLabel(property)"
+                                    [disabled]="
+                                      !clipboardPasteAvailable() ||
+                                      isAtInValueLimit(filter, property)
+                                    "
+                                    (click)="pasteCustomValues(filter, customValueInput)"
+                                  >
+                                    <span class="ms-icon" aria-hidden="true">content_paste</span>
+                                  </button>
+                                </ms-signal-form-field>
+
+                                @if (customValueInputError(property, filter); as inputError) {
+                                  <p
+                                    class="custom-values-input-error"
+                                    [id]="'custom-value-error-' + filter.id"
+                                    aria-live="polite"
+                                  >
+                                    {{ inputError }}
+                                  </p>
+                                }
+
+                                <div class="custom-values-meta">
+                                  <span>
+                                    {{ totalInValues(filter) }} / {{ maxInValues(property) }} values
+                                  </span>
+                                  @if (filter.customValues.length > 0) {
+                                    <button
+                                      class="btn btn-ghost btn-sm"
+                                      type="button"
+                                      (click)="clearCustomValues(filter)"
+                                    >
+                                      <span class="ms-icon" aria-hidden="true">clear_all</span>
+                                      Clear Custom
+                                    </button>
+                                  }
+                                </div>
+
+                                @if (filter.customValues.length > 0) {
+                                  <div class="custom-values-list" aria-label="Custom values">
+                                    @for (value of filter.customValues; track value) {
+                                      <ms-chip removable size="xs" selected>
+                                        {{ value }}
+                                        <button
+                                          msChipRemove
+                                          type="button"
+                                          [attr.aria-label]="'Remove custom value ' + value"
+                                          (click)="removeCustomValue(filter, value)"
+                                        ></button>
+                                      </ms-chip>
+                                    }
+                                  </div>
+                                }
+
+                                @if (filter.customValueStatus) {
+                                  <p class="custom-values-status" aria-live="polite">
+                                    {{ filter.customValueStatus }}
+                                  </p>
+                                }
+                              </div>
+                            </ms-popover-panel>
+                          </ms-popover>
+                        </div>
+                      }
+                    </div>
+                  </div>
+                } @else if (hasOptions(property)) {
+                  <ms-signal-form-field>
+                    <label>Value</label>
+                    <select [formField]="field.value">
+                      <option value="">Choose Value</option>
+                      @for (option of propertyOptions(property); track option.value) {
+                        <option [value]="option.value">{{ option.label }}</option>
+                      }
+                    </select>
+                  </ms-signal-form-field>
+                } @else {
+                  <ms-signal-form-field>
+                    <label>Value</label>
+                    <input
+                      [type]="inputType(property)"
+                      [inputMode]="inputMode(property)"
+                      [step]="step(property)"
+                      [placeholder]="property.placeholder ?? ''"
+                      [formField]="field.value"
+                    />
+                  </ms-signal-form-field>
+                }
+              </div>
+            }
+          }
+
+          <div class="filter-actions">
+            @if (isFilterLocked(filter)) {
+              <span class="action-spacer" aria-hidden="true"></span>
+            } @else {
+              <button
+                class="btn btn-outline-danger btn-icon btn-sm remove-filter"
+                type="button"
+                [attr.aria-label]="'Remove ' + propertyLabel(property) + ' filter'"
+                title="Remove filter"
+                (click)="removeFilter(filter)"
+              >
+                <span class="ms-icon" aria-hidden="true">delete</span>
+              </button>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  <div class="filter-toolbar" [class.has-sort-options]="hasSortOptions()">
+    <ms-signal-form-field class="add-filter no-message">
+      <label>Add Filter</label>
+      <span slot="label-extra" class="filter-count">
+        {{ filters().length }} / {{ filterLimit() }} filters
+      </span>
+      <select
+        aria-label="Add filter"
+        [disabled]="availableProperties().length === 0"
+        (change)="handleAddChange($event)"
+      >
+        <option value="">Choose Property</option>
+        @for (property of availableProperties(); track property.propertyName) {
+          <option [value]="property.propertyName">{{ propertyLabel(property) }}</option>
+        }
+      </select>
+    </ms-signal-form-field>
+
+    @if (hasSortOptions()) {
+      <ms-signal-form-field class="add-sort no-message">
+        <label>Sort By</label>
+        <span slot="label-extra" class="sort-count">
+          {{ sorts().length }} / {{ sortLimit() }} sorts
+        </span>
+
+        <ng-template #selectedSortOption let-index="index">
+          @if (sorts()[index]; as sort) {
+            <span class="sort-property">{{ sortLabel(sort.property) }}</span>
+            <button
+              class="sort-direction-toggle"
+              type="button"
+              [attr.aria-label]="
+                'Change ' +
+                sortLabel(sort.property) +
+                ' sort direction. Current direction: ' +
+                (isDescendingSort(sort) ? 'Descending' : 'Ascending')
+              "
+              [attr.title]="
+                isDescendingSort(sort)
+                  ? 'Descending — change to ascending'
+                  : 'Ascending — change to descending'
+              "
+              (click)="toggleSortDirection(index, $event)"
+            >
+              <span class="ms-icon" aria-hidden="true">
+                {{ isDescendingSort(sort) ? 'arrow_downward' : 'arrow_upward' }}
+              </span>
+              {{ isDescendingSort(sort) ? 'DESC' : 'ASC' }}
+            </button>
+          }
+        </ng-template>
+
+        <ms-select
+          multiple
+          overflowNavigation
+          [searchable]="false"
+          [clearable]="false"
+          placeholder="Choose sort properties"
+          aria-label="Choose sort properties"
+          [value]="selectedSortProperties()"
+          [selectedOptionTemplate]="selectedSortOption"
+          (valueChange)="handleSortSelectionChange($event)"
+        >
+          @for (option of configuredSortOptions(); track option.value) {
+            <ms-select-option
+              [value]="option.value"
+              [label]="option.label"
+              [disabled]="isSortOptionDisabled(option.value)"
+            >
+              {{ option.label }}
+            </ms-select-option>
+          }
+        </ms-select>
+      </ms-signal-form-field>
+    }
+
+    <div class="toolbar-actions">
+      <button
+        class="btn btn-ghost btn-sm clear-filters"
+        type="button"
+        [disabled]="!canClear()"
+        (click)="clearOptionalFilters()"
+      >
+        <span class="ms-icon" aria-hidden="true">clear_all</span>
+        Clear Filters
+      </button>
+
+      @if (hasVisibleDefaultProperties()) {
+        <button class="btn btn-outline btn-sm reset-filters" type="button" (click)="resetForm()">
+          <span class="ms-icon" aria-hidden="true">settings_backup_restore</span>
+          Reset Defaults
+        </button>
+      }
+
+      <button
+        class="btn btn-primary btn-sm search-filters"
+        type="submit"
+        [disabled]="isSearchDisabled()"
+      >
+        <span class="ms-icon" aria-hidden="true">search</span>
+        Search
+      </button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,11 @@
+:root {
+  /* Layout sizes */
+  --layout-header-height: 4rem; /* 64px */
+  --layout-sidebar-width: 16rem; /* 256px */
+
+  /* Z-index */
+  --z-index-dropdown: 1000;
+  --z-index-sticky: 1020;
+  --z-index-modal: 1050;
+  --z-index-toast: 1080;
+}

@@ -1,0 +1,46 @@
+$font-sizes: xs, sm, md, lg, xl, 2xl;
+$font-weights: light, regular, medium, semibold, bold;
+
+@each $size in $font-sizes {
+  .text-#{$size} {
+    font-size: var(--font-size-#{$size});
+  }
+}
+
+@each $weight in $font-weights {
+  .fw-#{$weight} {
+    font-weight: var(--font-weight-#{$weight});
+  }
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-start {
+  text-align: start;
+}
+
+.text-end {
+  text-align: end;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-lowercase {
+  text-transform: lowercase;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}

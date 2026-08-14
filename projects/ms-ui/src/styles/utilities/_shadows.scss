@@ -1,0 +1,7 @@
+$shadow-sizes: sm, md, lg;
+
+@each $size in $shadow-sizes {
+  .shadow-#{$size} {
+    box-shadow: var(--shadow-#{$size});
+  }
+}

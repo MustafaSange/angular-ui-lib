@@ -1,0 +1,14 @@
+:root {
+  /* Border radius */
+  --radius-0: 0;
+  --radius-sm: 0.25rem; /* 4px */
+  --radius-md: 0.5rem; /* 8px */
+  --radius-lg: 0.75rem; /* 12px */
+  --radius-xl: 1rem; /* 16px */
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px var(--color-shadow-sm);
+  --shadow-md: 0 4px 12px var(--color-shadow-md);
+  --shadow-lg: 0 12px 24px var(--color-shadow-lg);
+}

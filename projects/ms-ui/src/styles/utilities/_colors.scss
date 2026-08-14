@@ -1,0 +1,45 @@
+$text-colors: primary, secondary, muted, inverse;
+$semantic-text-colors: accent, success, warning, danger, info;
+$semantic-colors: primary, secondary, accent, success, warning, danger, info;
+$surface-colors: background, surface, surface-muted, surface-raised, surface-overlay;
+
+@each $color in $text-colors {
+  .text-#{$color} {
+    color: var(--color-text-#{$color});
+  }
+}
+
+@each $color in $semantic-text-colors {
+  .text-#{$color} {
+    color: var(--color-#{$color}-text);
+  }
+}
+
+@each $color in $semantic-colors {
+  .bg-#{$color} {
+    background-color: var(--color-#{$color});
+    color: var(--color-#{$color}-contrast);
+  }
+
+  .bg-#{$color}-subtle {
+    background-color: var(--color-#{$color}-subtle);
+  }
+
+  .border-#{$color} {
+    border-color: var(--color-#{$color}-border);
+  }
+}
+
+@each $color in $surface-colors {
+  .bg-#{$color} {
+    background-color: var(--color-#{$color});
+  }
+}
+
+.border-default {
+  border-color: var(--color-border);
+}
+
+.border-strong {
+  border-color: var(--color-border-strong);
+}

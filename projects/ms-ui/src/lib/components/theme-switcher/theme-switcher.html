@@ -1,0 +1,13 @@
+<div class="theme-switcher" role="group" aria-label="Theme mode">
+  @for (option of options; track option.value) {
+    <button
+      type="button"
+      class="theme-option"
+      [class.is-active]="mode() === option.value"
+      [attr.aria-pressed]="mode() === option.value"
+      (click)="setMode(option.value)"
+    >
+      {{ option.label }}
+    </button>
+  }
+</div>

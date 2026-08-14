@@ -1,0 +1,60 @@
+<ol
+  class="timeline"
+  [class.timeline-vertical]="orientation() === 'vertical'"
+  [class.timeline-horizontal]="orientation() === 'horizontal'"
+  [attr.aria-label]="ariaLabel()"
+>
+  @for (item of items(); track item; let last = $last) {
+    <li
+      class="timeline-item"
+      [class.timeline-item-done]="item.status() === 'done'"
+      [class.timeline-item-in-progress]="item.status() === 'in-progress'"
+      [class.timeline-item-pending]="item.status() === 'pending'"
+      [class.timeline-item-blocked]="item.status() === 'blocked'"
+      [class.timeline-item-error]="item.status() === 'error'"
+      [class.timeline-item-skipped]="item.status() === 'skipped'"
+      [class.timeline-item-cancelled]="item.status() === 'cancelled'"
+      [attr.aria-current]="item.status() === 'in-progress' ? 'step' : null"
+    >
+      <span class="timeline-marker" aria-hidden="true">
+        @if (markerIcon(item); as icon) {
+          <span class="ms-icon">{{ icon }}</span>
+        }
+      </span>
+
+      @if (!last) {
+        <span class="timeline-connector" aria-hidden="true"></span>
+      }
+
+      <div class="timeline-content">
+        @if (item.metaTemplate(); as metaTemplate) {
+          <div class="timeline-meta">
+            <ng-container [ngTemplateOutlet]="metaTemplate.template" />
+          </div>
+        } @else if (item.meta()) {
+          <div class="timeline-meta">{{ item.meta() }}</div>
+        }
+
+        @if (item.titleTemplate(); as titleTemplate) {
+          <h3 class="timeline-title">
+            <ng-container [ngTemplateOutlet]="titleTemplate.template" />
+          </h3>
+        } @else if (item.title()) {
+          <h3 class="timeline-title">{{ item.title() }}</h3>
+        }
+
+        @if (item.subtitleTemplate(); as subtitleTemplate) {
+          <p class="timeline-subtitle">
+            <ng-container [ngTemplateOutlet]="subtitleTemplate.template" />
+          </p>
+        } @else if (item.subtitle()) {
+          <p class="timeline-subtitle">{{ item.subtitle() }}</p>
+        }
+
+        <div class="timeline-body">
+          <ng-container [ngTemplateOutlet]="item.content()" />
+        </div>
+      </div>
+    </li>
+  }
+</ol>

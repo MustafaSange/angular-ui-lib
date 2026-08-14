@@ -1,0 +1,47 @@
+<ms-date-picker
+  [id]="dateInputId()"
+  [value]="inputValue().date"
+  [displayFormat]="dateDisplayFormat()"
+  [placeholder]="datePlaceholder()"
+  [minDate]="minDate()"
+  [maxDate]="maxDate()"
+  [disabledDate]="disabledDate()"
+  [firstDayOfWeek]="firstDayOfWeek()"
+  [locale]="locale()"
+  [disabled]="disabled()"
+  [readonly]="readonly()"
+  [required]="required()"
+  [clearable]="clearable()"
+  [attr.aria-label]="dateAriaLabel()"
+  [attr.aria-describedby]="ariaDescribedby()"
+  (valueChange)="updateDate($event)"
+  (parseErrorChange)="updateDateParseError($event)"
+  (touch)="touch.emit()"
+/>
+
+<span class="date-time-separator" aria-hidden="true"></span>
+
+<ms-time-picker
+  [id]="timeInputId()"
+  [value]="inputValue().time"
+  [displayFormat]="timeDisplayFormat()"
+  [precision]="timePrecision()"
+  [minuteStep]="minuteStep()"
+  [secondStep]="secondStep()"
+  [placeholder]="timePlaceholder()"
+  [minTime]="minTime()"
+  [maxTime]="maxTime()"
+  [disabled]="disabled()"
+  [readonly]="readonly()"
+  [required]="required()"
+  [clearable]="clearable()"
+  [attr.aria-label]="timeAriaLabel()"
+  [attr.aria-describedby]="ariaDescribedby()"
+  (valueChange)="updateTime($event)"
+  (parseErrorChange)="updateTimeParseError($event)"
+  (touch)="touch.emit()"
+/>
+
+@if (name()) {
+  <input type="hidden" [name]="name()" [value]="value() ?? ''" [disabled]="disabled()" />
+}

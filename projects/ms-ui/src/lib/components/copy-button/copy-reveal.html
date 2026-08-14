@@ -1,0 +1,14 @@
+<span #content class="copy-reveal-content">
+  <ng-content />
+</span>
+<ms-copy-button
+  class="copy-reveal-action"
+  [text]="copyText()"
+  [ariaLabel]="ariaLabel()"
+  [copiedLabel]="copiedLabel()"
+  [failedLabel]="failedLabel()"
+  [resetDelay]="resetDelay()"
+  [disabled]="disabled()"
+  [kind]="kind()"
+  [size]="size()"
+/>

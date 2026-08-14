@@ -1,0 +1,27 @@
+@use '../tokens/breakpoints';
+
+$-spacing-sizes: 0, 2, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 48;
+
+@mixin gap-utilities($prefix: '') {
+  @each $space in $-spacing-sizes {
+    .#{$prefix}gap-#{$space} {
+      gap: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}row-gap-#{$space} {
+      row-gap: var(--spacing-#{$space});
+    }
+
+    .#{$prefix}column-gap-#{$space} {
+      column-gap: var(--spacing-#{$space});
+    }
+  }
+}
+
+@include gap-utilities;
+
+@each $alias, $query in breakpoints.$media-aliases {
+  @media #{$query} {
+    @include gap-utilities('#{$alias}-');
+  }
+}

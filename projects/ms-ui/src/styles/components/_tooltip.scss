@@ -1,0 +1,85 @@
+ms-tooltip {
+  display: inline-block;
+}
+
+@position-try --tooltip-block-start {
+  position-area: block-start;
+  margin: 0;
+  margin-block-end: var(--spacing-8);
+}
+
+@position-try --tooltip-block-end {
+  position-area: block-end;
+  margin: 0;
+  margin-block-start: var(--spacing-8);
+}
+
+@position-try --tooltip-inline-start {
+  position-area: inline-start;
+  margin: 0;
+  margin-inline-end: var(--spacing-8);
+}
+
+@position-try --tooltip-inline-end {
+  position-area: inline-end;
+  margin: 0;
+  margin-inline-start: var(--spacing-8);
+}
+
+.tooltip-panel[popover] {
+  position: fixed;
+  z-index: var(--z-index-dropdown);
+  inset: auto;
+  max-inline-size: min(18rem, calc(100dvi - (var(--spacing-16) * 2)));
+  margin: 0;
+  padding: var(--spacing-8) var(--spacing-12);
+  border: var(--border-width-sm) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-overlay);
+  box-shadow: var(--shadow-md);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-body);
+  overflow-wrap: anywhere;
+
+  &:popover-open {
+    display: block;
+    animation: ms-tooltip-enter var(--transition-fast);
+  }
+}
+
+.tooltip-panel[data-placement='top'] {
+  position-area: block-start;
+  margin-block-end: var(--spacing-8);
+  position-try-fallbacks: --tooltip-block-end, --tooltip-inline-end, --tooltip-inline-start;
+}
+
+.tooltip-panel[data-placement='bottom'] {
+  position-area: block-end;
+  margin-block-start: var(--spacing-8);
+  position-try-fallbacks: --tooltip-block-start, --tooltip-inline-end, --tooltip-inline-start;
+}
+
+.tooltip-panel[data-placement='start'] {
+  position-area: inline-start;
+  margin-inline-end: var(--spacing-8);
+  position-try-fallbacks: --tooltip-inline-end, --tooltip-block-end, --tooltip-block-start;
+}
+
+.tooltip-panel[data-placement='end'] {
+  position-area: inline-end;
+  margin-inline-start: var(--spacing-8);
+  position-try-fallbacks: --tooltip-inline-start, --tooltip-block-end, --tooltip-block-start;
+}
+
+@keyframes ms-tooltip-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

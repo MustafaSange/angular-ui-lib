@@ -1,0 +1,39 @@
+@use '../tokens/breakpoints';
+
+@mixin display-utilities($prefix: '') {
+  .#{$prefix}d-block {
+    display: block;
+  }
+
+  .#{$prefix}d-inline {
+    display: inline;
+  }
+
+  .#{$prefix}d-inline-block {
+    display: inline-block;
+  }
+
+  .#{$prefix}d-flex {
+    display: flex;
+  }
+
+  .#{$prefix}d-inline-flex {
+    display: inline-flex;
+  }
+
+  .#{$prefix}d-grid {
+    display: grid;
+  }
+
+  .#{$prefix}d-none {
+    display: none;
+  }
+}
+
+@include display-utilities;
+
+@each $alias, $query in breakpoints.$media-aliases {
+  @media #{$query} {
+    @include display-utilities('#{$alias}-');
+  }
+}

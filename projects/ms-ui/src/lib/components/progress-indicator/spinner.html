@@ -1,0 +1,18 @@
+<span
+  class="spinner"
+  [class.spinner-sm]="size() === 'sm'"
+  [class.spinner-md]="size() === 'md'"
+  [class.spinner-lg]="size() === 'lg'"
+  [class.spinner-primary]="kind() === 'primary'"
+  [class.spinner-success]="kind() === 'success'"
+  [class.spinner-warning]="kind() === 'warning'"
+  [class.spinner-danger]="kind() === 'danger'"
+  [class.spinner-inherit]="kind() === 'inherit'"
+  [attr.role]="ariaLabel() ? 'status' : null"
+  [attr.aria-hidden]="ariaLabel() ? null : 'true'"
+>
+  <span class="spinner-circle" aria-hidden="true"></span>
+  @if (ariaLabel()) {
+    <span class="spinner-status-text">{{ ariaLabel() }}</span>
+  }
+</span>

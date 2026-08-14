@@ -1,0 +1,25 @@
+export const FILE_UPLOAD_MIME_TYPES_BY_EXTENSION = {
+  csv: 'text/csv',
+  doc: 'application/msword',
+  docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  gif: 'image/gif',
+  jpeg: 'image/jpeg',
+  json: 'application/json',
+  jpg: 'image/jpeg',
+  mp3: 'audio/mpeg',
+  mp4: 'video/mp4',
+  pdf: 'application/pdf',
+  png: 'image/png',
+  ppt: 'application/vnd.ms-powerpoint',
+  pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+  rtf: 'application/rtf',
+  svg: 'image/svg+xml',
+  txt: 'text/plain',
+  webp: 'image/webp',
+  xls: 'application/vnd.ms-excel',
+  xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  xml: 'application/xml',
+  zip: 'application/zip',
+} as const;
+
+export type FileUploadExtension = keyof typeof FILE_UPLOAD_MIME_TYPES_BY_EXTENSION;
