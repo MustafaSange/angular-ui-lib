@@ -1,0 +1,59 @@
+@use '../showcase-page' as showcase;
+
+@include showcase.shell;
+@include showcase.demo-panel;
+
+.interactive-demo,
+.example-list {
+  display: grid;
+  gap: var(--spacing-16);
+}
+
+.highlight-control {
+  max-inline-size: 24rem;
+}
+
+.highlight-output {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+mark {
+  border-radius: var(--radius-sm);
+  background-color: var(--color-warning-subtle);
+  color: var(--color-warning-text);
+}
+
+.example-row {
+  display: grid;
+  grid-template-columns: minmax(9rem, 0.35fr) minmax(0, 1fr);
+  gap: var(--spacing-16);
+  align-items: baseline;
+
+  & + & {
+    padding-block-start: var(--spacing-12);
+    border-block-start: var(--border-width-sm) solid var(--color-border-muted);
+  }
+}
+
+.example-row > strong {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.empty-result {
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.code-output {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+}
+
+@media (max-width: 32rem) {
+  .example-row {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-4);
+  }
+}

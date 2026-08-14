@@ -1,0 +1,9 @@
+@use '../showcase-page' as showcase;
+
+@include showcase.shell;
+@include showcase.demo-row;
+@include showcase.demo-panel;
+
+.edge-actions {
+  align-items: stretch;
+}

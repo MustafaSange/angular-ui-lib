@@ -1,0 +1,111 @@
+<main class="highlight-page showcase-page">
+  <header class="highlight-header showcase-header">
+    <a class="btn btn-ghost back-link" routerLink="/">
+      <span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span>
+      <span>Back to Home</span>
+    </a>
+    <p class="eyebrow">Pipes</p>
+    <h1>Highlight</h1>
+    <p class="description">
+      Find literal text without generating HTML, while preserving the source content and casing.
+    </p>
+  </header>
+
+  <section class="highlight-section showcase-section">
+    <h2>Interactive Highlighting</h2>
+    <p class="section-copy">
+      Matching is case-insensitive and updates when the primitive search value changes.
+    </p>
+    <div class="showcase-demo-panel interactive-demo">
+      <div class="form-field highlight-control">
+        <label for="highlight-search">Search Text</label>
+        <div class="form-field-control">
+          <input
+            #searchInput
+            id="highlight-search"
+            type="search"
+            [value]="searchText()"
+            (input)="searchText.set(searchInput.value)"
+          />
+        </div>
+      </div>
+
+      <p class="highlight-output">
+        @for (part of description | highlight: searchText(); track $index) {
+          @if (part.match) {
+            <mark>{{ part.text }}</mark>
+          } @else {
+            <span>{{ part.text }}</span>
+          }
+        }
+      </p>
+    </div>
+    <app-showcase-code label="Interactive Highlighting" [code]="interactiveSnippet" />
+  </section>
+
+  <section class="highlight-section showcase-section">
+    <h2>Literal Search Text</h2>
+    <p class="section-copy">
+      Regular-expression metacharacters are escaped and matched as ordinary text.
+    </p>
+    <div class="showcase-demo-panel">
+      <p class="highlight-output">
+        @for (part of literalText | highlight: literalSearch; track $index) {
+          @if (part.match) {
+            <mark>{{ part.text }}</mark>
+          } @else {
+            <span>{{ part.text }}</span>
+          }
+        }
+      </p>
+    </div>
+    <app-showcase-code label="Highlight Literal Search Text" [code]="literalSnippet" />
+  </section>
+
+  <section class="highlight-section showcase-section">
+    <h2>Matching and Empty States</h2>
+    <p class="section-copy">
+      Results preserve source order and casing, omit empty parts, and handle missing values without
+      throwing.
+    </p>
+    <div class="showcase-demo-panel example-list">
+      @for (example of edgeCases; track example.label) {
+        <div class="example-row">
+          <strong>{{ example.label }}</strong>
+          <p class="highlight-output">
+            @for (part of example.value | highlight: example.search; track $index) {
+              @if (part.match) {
+                <mark>{{ part.text }}</mark>
+              } @else {
+                <span>{{ part.text }}</span>
+              }
+            } @empty {
+              <span class="empty-result">No parts returned</span>
+            }
+          </p>
+        </div>
+      }
+    </div>
+    <app-showcase-code label="Highlight Matching and Empty States" [code]="edgeCasesSnippet" />
+  </section>
+
+  <section class="highlight-section showcase-section">
+    <h2>Safe Rendering</h2>
+    <p class="section-copy">
+      HTML-like input is interpolated as inert text. The pipe returns data and never creates trusted
+      HTML.
+    </p>
+    <div class="showcase-demo-panel">
+      <p class="highlight-output code-output">
+        @for (part of htmlLikeText | highlight: htmlLikeSearch; track $index) {
+          @if (part.match) {
+            <mark>{{ part.text }}</mark>
+          } @else {
+            <span>{{ part.text }}</span>
+          }
+        }
+      </p>
+    </div>
+    <app-showcase-code label="Render HTML-Like Text Safely" [code]="safeRenderingSnippet" />
+  </section>
+</main>

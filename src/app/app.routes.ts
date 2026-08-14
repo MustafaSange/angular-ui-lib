@@ -72,6 +72,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/format-json/format-json').then((m) => m.FormatJson),
   },
   {
+    path: 'highlight',
+    loadComponent: () => import('./features/highlight/highlight').then((m) => m.Highlight),
+  },
+  {
     path: 'grid',
     loadComponent: () => import('./features/grid/grid').then((m) => m.Grid),
   },
@@ -176,5 +180,9 @@ export const routes: Routes = [
   {
     path: 'utilities',
     loadComponent: () => import('./features/utilities/utilities').then((m) => m.Utilities),
+  },
+  {
+    path: 'value-viewer',
+    loadComponent: () => import('./features/value-viewer/value-viewer').then((m) => m.ValueViewer),
   },
 ];
