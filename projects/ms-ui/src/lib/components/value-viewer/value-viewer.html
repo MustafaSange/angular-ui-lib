@@ -1,0 +1,59 @@
+<ms-modal [title]="title()" (close)="close.emit()">
+  <div slot="headerActions" class="value-viewer-toolbar">
+    <ms-signal-form-field class="no-label no-message value-viewer-search">
+      <label [for]="searchInputId">Search Value</label>
+      <span class="form-field-prefix" aria-hidden="true">
+        <span class="ms-icon">search</span>
+      </span>
+      <input
+        #searchInput
+        [id]="searchInputId"
+        type="search"
+        aria-label="Search value"
+        autocomplete="off"
+        [formField]="searchField"
+        (keydown.enter)="handleSearchEnter($event)"
+      />
+    </ms-signal-form-field>
+
+    @if (searchText()) {
+      <span class="value-viewer-match-status" aria-live="polite">{{ matchStatus() }}</span>
+    }
+
+    <div class="value-viewer-navigation" role="group" aria-label="Search result navigation">
+      <button
+        class="btn btn-ghost btn-icon btn-sm"
+        type="button"
+        aria-label="Previous match"
+        [disabled]="navigationDisabled()"
+        (click)="previousMatch()"
+      >
+        <span class="ms-icon" aria-hidden="true">arrow_upward</span>
+      </button>
+      <button
+        class="btn btn-ghost btn-icon btn-sm"
+        type="button"
+        aria-label="Next match"
+        [disabled]="navigationDisabled()"
+        (click)="nextMatch()"
+      >
+        <span class="ms-icon" aria-hidden="true">arrow_downward</span>
+      </button>
+    </div>
+
+    <ms-copy-button
+      size="sm"
+      ariaLabel="Copy value"
+      [text]="clipboardText()"
+      [disabled]="!clipboardText()"
+    />
+  </div>
+
+  <pre
+    class="value-viewer-content"
+  ><code>@if (!searchText()) {<span>{{ displayText() }}</span>} @else {@for (part of highlightedParts(); track $index) {@if (part.match) {<mark
+            #matchElement
+            [class.active-match]="part.matchIndex === activeMatchIndex()"
+            [attr.aria-current]="part.matchIndex === activeMatchIndex() ? 'true' : null"
+          >{{ part.text }}</mark>} @else {<span>{{ part.text }}</span>}}}</code></pre>
+</ms-modal>
