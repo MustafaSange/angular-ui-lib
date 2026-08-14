@@ -1,0 +1,128 @@
+<main class="value-viewer-page showcase-page">
+  <header class="value-viewer-header showcase-header">
+    <a class="btn btn-ghost back-link" routerLink="/">
+      <span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span>
+      <span>Back to Home</span>
+    </a>
+    <p class="eyebrow">Components</p>
+    <h1>Value Viewer</h1>
+    <p class="description">
+      Inspect, copy, search, and navigate text or structured values in the existing modal system.
+    </p>
+  </header>
+
+  <section class="value-viewer-section showcase-section">
+    <h2>Searchable Text</h2>
+    <p class="section-copy">
+      Open the viewer and search for “Angular”. Previous, Next, Enter, and Shift+Enter wrap through
+      every case-insensitive match.
+    </p>
+    <div class="showcase-demo-row">
+      <button class="btn btn-primary" type="button" (click)="openTextViewer()">
+        View Searchable Text
+      </button>
+    </div>
+    <app-showcase-code label="Open a Searchable Text Value" [code]="serviceTextSnippet" />
+  </section>
+
+  <section class="value-viewer-section showcase-section">
+    <h2>Structured Value</h2>
+    <p class="section-copy">
+      Objects display as readable indented JSON while the copy action writes compact JSON.
+    </p>
+    <div class="showcase-demo-row">
+      <button class="btn btn-primary" type="button" (click)="openObjectViewer()">
+        View API Response
+      </button>
+    </div>
+    <app-showcase-code label="View a Structured Value" [code]="objectSnippet" />
+  </section>
+
+  <section class="value-viewer-section showcase-section">
+    <h2>Declarative Viewer</h2>
+    <p class="section-copy">
+      Bind the value directly when the consumer owns the viewer’s open and close state.
+    </p>
+    <div class="showcase-demo-row">
+      <button class="btn btn-primary" type="button" (click)="declarativeOpen.set(true)">
+        View Request Log
+      </button>
+      @if (declarativeOpen()) {
+        <ms-value-viewer
+          title="Request Log"
+          [value]="requestLog"
+          (close)="declarativeOpen.set(false)"
+        />
+      }
+    </div>
+    <app-showcase-code label="Use the Viewer Declaratively" [code]="declarativeSnippet" />
+  </section>
+
+  <section class="value-viewer-section showcase-section">
+    <h2>Value and Safety Cases</h2>
+    <p class="section-copy">
+      Exercise empty and nullish inputs, formatted JSON strings, literal search characters, inert
+      HTML-like text, and the fallback for a circular object.
+    </p>
+    <div class="showcase-demo-row edge-actions">
+      <button class="btn btn-outline" type="button" (click)="openEdgeCase('Empty Value', '')">
+        Empty Value
+      </button>
+      <button class="btn btn-outline" type="button" (click)="openEdgeCase('Null Value', null)">
+        Null Value
+      </button>
+      <button
+        class="btn btn-outline"
+        type="button"
+        (click)="openEdgeCase('Undefined Value', undefined)"
+      >
+        Undefined Value
+      </button>
+      <button
+        class="btn btn-outline"
+        type="button"
+        (click)="openEdgeCase('JSON String', jsonString)"
+      >
+        JSON String
+      </button>
+      <button
+        class="btn btn-outline"
+        type="button"
+        (click)="openEdgeCase('Literal Search', literalText)"
+      >
+        Literal Search
+      </button>
+      <button
+        class="btn btn-outline"
+        type="button"
+        (click)="openEdgeCase('HTML-Like Text', htmlLikeText)"
+      >
+        HTML-Like Text
+      </button>
+      <button
+        class="btn btn-outline"
+        type="button"
+        (click)="openEdgeCase('Circular Value', circularValue)"
+      >
+        Circular Value
+      </button>
+    </div>
+    <app-showcase-code label="Handle Value and Safety Cases" [code]="edgeCasesSnippet" />
+  </section>
+
+  <section class="value-viewer-section showcase-section">
+    <h2>RTL Layout</h2>
+    <p class="section-copy">
+      Header controls, content, and navigation retain logical layout inside an RTL subtree.
+    </p>
+    <div class="showcase-demo-panel" dir="rtl">
+      <button class="btn btn-primary" type="button" (click)="rtlOpen.set(true)">
+        Open RTL Viewer
+      </button>
+      @if (rtlOpen()) {
+        <ms-value-viewer title="RTL Value Viewer" [value]="rtlValue" (close)="rtlOpen.set(false)" />
+      }
+    </div>
+    <app-showcase-code label="Use the Viewer in RTL" [code]="rtlSnippet" />
+  </section>
+</main>

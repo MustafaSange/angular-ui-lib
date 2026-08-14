@@ -106,6 +106,12 @@ const SHOWCASES: readonly ShowcaseItem[] = [
     description: 'Readable JSON strings and structured values with safe pass-through behavior.',
   },
   {
+    name: 'Highlight',
+    type: 'Pipes',
+    path: '/highlight',
+    description: 'Safe literal text highlighting with case-insensitive matching and plain data.',
+  },
+  {
     name: 'Grid System',
     type: 'Layout',
     path: '/grid',
@@ -257,6 +263,12 @@ const SHOWCASES: readonly ShowcaseItem[] = [
     type: 'Utilities',
     path: '/utilities',
     description: 'Layout, spacing, typography, color, surface, and state helper classes.',
+  },
+  {
+    name: 'Value Viewer',
+    type: 'Components',
+    path: '/value-viewer',
+    description: 'Modal value inspection with formatting, copy, search, and match navigation.',
   },
 ];
 
