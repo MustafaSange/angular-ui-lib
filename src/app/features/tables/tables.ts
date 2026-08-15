@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, ElementRef, computed, inject, signal, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import {
@@ -9,6 +9,7 @@ import {
   SelectComponent,
   type SelectOption,
   SignalFormField,
+  TableClipboardService,
   type BadgeKind,
 } from '../../shared/ui-lib';
 import { ShowcaseCode } from '../../shared/showcase-code';
@@ -146,6 +147,12 @@ const INVOICES: readonly InvoiceRow[] = [
   styleUrl: './tables.scss',
 })
 export class Tables {
+  private readonly tableClipboard = inject(TableClipboardService);
+  private readonly clipboardTable =
+    viewChild.required<ElementRef<HTMLTableElement>>('clipboardTable');
+
+  protected readonly tableCopyStatus = signal('The table has not been copied yet.');
+  protected readonly rowCopyStatus = signal('No row has been copied yet.');
   protected readonly query = signal('');
   protected readonly statusFilter = signal<StatusFilter | StatusFilter[] | null>('all');
   protected readonly statusOptions: readonly SelectOption<StatusFilter>[] = [
@@ -315,11 +322,96 @@ export class Tables {
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
   }
 
+  protected async copyClipboardTable(): Promise<void> {
+    const result = await this.tableClipboard.copyTable(this.clipboardTable().nativeElement);
+    this.tableCopyStatus.set(result === 'copied' ? 'Table copied.' : 'Table copy failed.');
+  }
+
+  protected async copyClipboardRow(row: HTMLTableRowElement): Promise<void> {
+    const result = await this.tableClipboard.copyRow(row, {
+      excludeSelector: '[data-no-copy], [data-private]',
+    });
+    this.rowCopyStatus.set(result === 'copied' ? 'Row copied.' : 'Row copy failed.');
+  }
+
   private goToFirstPage(): void {
     this.pageState.update((state) => ({ ...state, page: 1 }));
   }
 
   protected readonly snippets = {
+    tableClipboard: `import { Component, ElementRef, inject, signal, viewChild } from '@angular/core';
+
+import { TableClipboardService } from './shared/ui-lib';
+
+@Component({
+  selector: 'app-table-clipboard-example',
+  template: \`
+    <button class="btn btn-outline btn-sm" type="button" (click)="copyTable()">
+      Copy Table
+    </button>
+
+    <p aria-live="polite">{{ tableStatus() }}</p>
+    <p aria-live="polite">{{ rowStatus() }}</p>
+
+    <div class="table-wrapper">
+      <table #invoiceTable class="table">
+        <caption>Invoices Available to Copy</caption>
+        <thead>
+          <tr>
+            <th scope="col" class="text-start">Invoice</th>
+            <th scope="col" class="text-start">Customer</th>
+            <th scope="col" class="text-end">Amount</th>
+            <th scope="col" data-no-copy>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr #firstRow>
+            <th scope="row" class="text-start">INV-2048</th>
+            <td class="text-start">
+              Northwind Studio <span data-private>(priority account)</span>
+            </td>
+            <td class="text-end">$4,200.00</td>
+            <td data-no-copy>
+              <button class="btn btn-ghost btn-sm" type="button" (click)="copyRow(firstRow)">
+                Copy Row
+              </button>
+            </td>
+          </tr>
+          <tr #secondRow>
+            <th scope="row" class="text-start">INV-2049</th>
+            <td class="text-start">Acme Supply</td>
+            <td class="text-end">$1,180.00</td>
+            <td data-no-copy>
+              <button class="btn btn-ghost btn-sm" type="button" (click)="copyRow(secondRow)">
+                Copy Row
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  \`,
+})
+export class TableClipboardExample {
+  private readonly tableClipboard = inject(TableClipboardService);
+  private readonly invoiceTable =
+    viewChild.required<ElementRef<HTMLTableElement>>('invoiceTable');
+
+  readonly tableStatus = signal('The table has not been copied yet.');
+  readonly rowStatus = signal('No row has been copied yet.');
+
+  async copyTable(): Promise<void> {
+    const result = await this.tableClipboard.copyTable(this.invoiceTable().nativeElement);
+    this.tableStatus.set(result === 'copied' ? 'Table copied.' : 'Table copy failed.');
+  }
+
+  async copyRow(row: HTMLTableRowElement): Promise<void> {
+    const result = await this.tableClipboard.copyRow(row, {
+      excludeSelector: '[data-no-copy], [data-private]',
+    });
+    this.rowStatus.set(result === 'copied' ? 'Row copied.' : 'Row copy failed.');
+  }
+}`,
     dataGrid: `import { Component, computed, signal } from '@angular/core';
 
 import {
