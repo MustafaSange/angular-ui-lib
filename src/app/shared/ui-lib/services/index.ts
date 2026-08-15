@@ -4,6 +4,8 @@ export * from './density-types';
 export * from './material-icons/icon-registry';
 export * from './material-icons/material-icons.service';
 export * from './provide-ui-lib';
+export * from './table-clipboard.service';
+export * from './table-clipboard-types';
 export * from './theme.service';
 export * from './theme-types';
 export * from './ui-lib-config';

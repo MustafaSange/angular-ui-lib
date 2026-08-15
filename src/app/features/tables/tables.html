@@ -212,6 +212,76 @@
   </section>
 
   <section class="tables-section">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Clipboard Service</p>
+        <h2>Copy Table and Row</h2>
+        <p class="section-description">
+          Copy rich table markup with a tab-separated fallback while excluding actions by default or
+          supplying a custom selector for row data.
+        </p>
+      </div>
+      <button class="btn btn-outline btn-sm" type="button" (click)="copyClipboardTable()">
+        Copy Table
+      </button>
+    </div>
+
+    <div class="clipboard-statuses">
+      <p aria-live="polite">{{ tableCopyStatus() }}</p>
+      <p aria-live="polite">{{ rowCopyStatus() }}</p>
+    </div>
+
+    <div class="table-wrapper">
+      <table #clipboardTable class="table">
+        <caption>
+          Invoices Available to Copy
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col" class="text-start">Invoice</th>
+            <th scope="col" class="text-start">Customer</th>
+            <th scope="col" class="text-end">Amount</th>
+            <th scope="col" data-no-copy>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr #firstClipboardRow>
+            <th scope="row" class="text-start">INV-2048</th>
+            <td class="text-start">
+              Northwind Studio <span data-private>(priority account)</span>
+            </td>
+            <td class="text-end">$4,200.00</td>
+            <td data-no-copy>
+              <button
+                class="btn btn-ghost btn-sm"
+                type="button"
+                (click)="copyClipboardRow(firstClipboardRow)"
+              >
+                Copy Row
+              </button>
+            </td>
+          </tr>
+          <tr #secondClipboardRow>
+            <th scope="row" class="text-start">INV-2049</th>
+            <td class="text-start">Acme Supply</td>
+            <td class="text-end">$1,180.00</td>
+            <td data-no-copy>
+              <button
+                class="btn btn-ghost btn-sm"
+                type="button"
+                (click)="copyClipboardRow(secondClipboardRow)"
+              >
+                Copy Row
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <app-showcase-code label="Table Clipboard Service" [code]="snippets.tableClipboard" />
+  </section>
+
+  <section class="tables-section">
     <h2>Striped and Hover Rows</h2>
     <div class="table-wrapper">
       <table class="table table-striped table-hover">
