@@ -11,7 +11,7 @@ ms-chip {
   --_chip-border: var(--color-border);
   --_chip-surface: var(--color-surface-muted);
   --_chip-text: var(--color-text-primary);
-  --_chip-selected-surface: color-mix(in srgb, var(--color-primary) 9%, var(--color-surface));
+  --_chip-selected-surface: var(--color-primary-subtle);
   --_chip-selected-border: var(--color-primary-border);
   --_chip-selected-text: var(--color-primary-text);
   --_chip-radius: var(--radius-sm);
@@ -175,6 +175,8 @@ ms-chip {
 
   .chip-neutral {
     --_chip-text: var(--color-text-primary);
+    --_chip-selected-surface: var(--color-primary-subtle);
+    --_chip-selected-border: var(--color-primary-border);
     --_chip-selected-text: var(--color-primary-text);
   }
 }
