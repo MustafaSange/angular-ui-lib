@@ -1,4 +1,5 @@
 export * from './modal';
+export * from './modal-close-types';
 export * from './modal-config';
 export * from './modal-outlet';
 export * from './modal-ref';

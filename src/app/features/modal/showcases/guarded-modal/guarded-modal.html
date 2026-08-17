@@ -1,0 +1,24 @@
+<h2>Close Guards and Service State</h2>
+<p class="showcase-description">
+  Dirty state can block synchronous or asynchronous close attempts, including service-level stack
+  operations.
+</p>
+<ul class="method-notes">
+  <li><code>canClose</code> allows or rejects synchronous and asynchronous close attempts.</li>
+  <li><code>hasOpenModals()</code> is a reactive boolean signal for stack state.</li>
+  <li><code>top()</code> returns the top modal reference or <code>null</code>.</li>
+  <li>
+    <code>closeAll()</code> closes top-down and stops when a guard rejects closing; pass
+    <code>&#123; force: true &#125;</code> to bypass guards explicitly.
+  </li>
+  <li><code>setCanClose()</code> lets modal content install or replace its close guard.</li>
+  <li><code>close()</code> resolves with whether the guarded close succeeded.</li>
+  <li><code>afterClosedWithReason()</code> emits only after an approved close.</li>
+</ul>
+<div class="modal-demo-row">
+  <button class="btn btn-primary" type="button" (click)="openModal()">Open Guarded Modal</button>
+  <span class="result-note">
+    Open modals: {{ modalService.hasOpenModals() ? 'Yes' : 'No' }} · {{ lastClose() }}
+  </span>
+</div>
+<app-showcase-code label="Close Guard and Service State" [code]="snippet" language="ts" />

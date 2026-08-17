@@ -1,4 +1,9 @@
+import type { ModalCanClose } from './modal-close-types';
+
+export type ModalSize = 'sm' | 'md' | 'lg' | 'xl' | 'fullscreen';
+
 export type ModalConfig = {
+  size?: ModalSize;
   closeOnEscape?: boolean;
   closeOnBackdrop?: boolean;
   showCloseButton?: boolean;
@@ -7,6 +12,7 @@ export type ModalConfig = {
   maxHeight?: string;
 };
 
-export type ModalOpenOptions<TData = unknown> = ModalConfig & {
+export type ModalOpenOptions<TData = unknown, TResult = unknown> = ModalConfig & {
   data?: TData;
+  canClose?: ModalCanClose<TResult>;
 };

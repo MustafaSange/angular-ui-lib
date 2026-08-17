@@ -2,9 +2,7 @@ import { Component, inject } from '@angular/core';
 
 import {
   MODAL_DATA,
-  MODAL_REF,
   ModalComponent,
-  ModalRef,
   ModalService,
 } from '../../../../shared/ui-lib/components/modal';
 import { ShowcaseCode } from '../../../../shared/showcase-code';
@@ -21,7 +19,6 @@ type StackedChildModalData = {
 })
 class StackedChildModalContent {
   protected readonly data = inject(MODAL_DATA) as StackedChildModalData;
-  protected readonly modalRef = inject(MODAL_REF) as ModalRef<void>;
 }
 
 @Component({
@@ -31,7 +28,6 @@ class StackedChildModalContent {
 })
 class StackedModalContent {
   private readonly modalService = inject(ModalService);
-  protected readonly modalRef = inject(MODAL_REF) as ModalRef<void>;
 
   protected openChild(): void {
     this.modalService.open<StackedChildModalContent, StackedChildModalData>(
@@ -61,7 +57,7 @@ export class StackedModalShowcase {
   protected readonly snippet = `// stacked-child-modal.ts
 import { Component, inject } from '@angular/core';
 
-import { MODAL_DATA, MODAL_REF, ModalComponent, ModalRef, } from './shared/ui-lib';
+import { MODAL_DATA, ModalComponent } from './shared/ui-lib';
 
 export type StackedChildModalData = {
   name: string;
@@ -70,7 +66,7 @@ export type StackedChildModalData = {
 
 @Component({
   selector: 'app-stacked-child-modal-content', imports: [ModalComponent], template: \`
-    <ms-modal title="Stacked Child Modal" (close)="modalRef.close()">
+    <ms-modal title="Stacked Child Modal">
       <div class="modal-stack">
         <p>
           <strong>{{ data.name }}</strong> is owned by {{ data.owner }}.
@@ -81,18 +77,17 @@ export type StackedChildModalData = {
   \`, })
 export class StackedChildModal {
   protected readonly data = inject(MODAL_DATA) as StackedChildModalData;
-  protected readonly modalRef = inject(MODAL_REF) as ModalRef<void>;
 }
 
 // stacked-parent-modal.ts
 import { Component, inject } from '@angular/core';
 
-import { MODAL_REF, ModalComponent, ModalRef, ModalService } from './shared/ui-lib';
+import { ModalComponent, ModalService } from './shared/ui-lib';
 import type { StackedChildModalData } from './stacked-child-modal';
 
 @Component({
   selector: 'app-stacked-parent-modal', imports: [ModalComponent], template: \`
-    <ms-modal title="Parent Modal" (close)="modalRef.close()">
+    <ms-modal title="Parent Modal">
       <div class="modal-stack">
         <p>Open another modal on top of this one to verify stacking and focus behavior.</p>
         <button class="btn btn-primary" type="button" (click)="openChild()">
@@ -103,7 +98,6 @@ import type { StackedChildModalData } from './stacked-child-modal';
   \`, })
 export class StackedParentModal {
   private readonly modalService = inject(ModalService);
-  protected readonly modalRef = inject(MODAL_REF) as ModalRef<void>;
 
   protected async openChild(): Promise<void> {
     const { StackedChildModal } = await import('./stacked-child-modal');

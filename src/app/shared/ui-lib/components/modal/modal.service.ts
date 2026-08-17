@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
-import { Injector, Service, Type, inject, signal } from '@angular/core';
+import { Injector, Service, Type, computed, inject, signal } from '@angular/core';
 
+import type { ModalCloseEvent, ModalCloseOptions } from './modal-close-types';
 import type { ModalConfig, ModalOpenOptions } from './modal-config';
 import { ModalRef } from './modal-ref';
 import { MODAL_CONFIG, MODAL_DATA, MODAL_REF } from './modal-tokens';
@@ -34,10 +35,14 @@ export class ModalService {
   private keydownListener: ((event: KeyboardEvent) => void) | undefined;
 
   readonly entries = this.modalEntries.asReadonly();
+  readonly hasOpenModals = computed(() => this.modalEntries().length > 0);
+  readonly top = computed<ModalRef<unknown> | null>(
+    () => this.modalEntries().at(-1)?.modalRef ?? null,
+  );
 
   open<TComponent, TData = unknown, TResult = unknown>(
     component: Type<TComponent>,
-    config: ModalOpenOptions<TData> = {},
+    config: ModalOpenOptions<TData, TResult> = {},
   ): ModalRef<TResult> {
     const modalRef = new ModalRef<TResult>();
     const previouslyFocusedElement = this.document.activeElement;
@@ -70,7 +75,8 @@ export class ModalService {
         previouslyFocusedElement instanceof HTMLElement ? previouslyFocusedElement : null,
     };
 
-    modalRef.setCloseHandler((result) => this.close(entry, result));
+    modalRef.setCanClose(config.canClose);
+    modalRef.setCloseHandler((event) => this.close(entry, event));
     this.modalEntries.update((entries) => this.withStacking([...entries, entry]));
     this.ensureKeydownListener();
     this.document.body.classList.add('ms-modal-open');
@@ -80,7 +86,25 @@ export class ModalService {
     return modalRef;
   }
 
-  private close<TResult>(entry: ModalEntry, result: TResult | undefined): void {
+  async closeAll(options: ModalCloseOptions = {}): Promise<boolean> {
+    while (this.modalEntries().length > 0) {
+      const topEntry = this.modalEntries().at(-1);
+
+      if (!topEntry) {
+        return true;
+      }
+
+      const didClose = await topEntry.modalRef.close(undefined, 'programmatic', options);
+
+      if (!didClose) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  private close(entry: ModalEntry, event: ModalCloseEvent): void {
     const entries = this.modalEntries();
     const entryIndex = entries.indexOf(entry);
 
@@ -89,7 +113,7 @@ export class ModalService {
     }
 
     this.modalEntries.set(this.withStacking(entries.filter((item) => item !== entry)));
-    entry.modalRef.finishClose(result);
+    entry.modalRef.finishClose(event);
     entry.previouslyFocusedElement?.focus();
 
     if (this.modalEntries().length === 0) {
@@ -125,7 +149,7 @@ export class ModalService {
 
     if (event.key === 'Escape' && topEntry.closeOnEscape) {
       event.preventDefault();
-      topEntry.modalRef.close();
+      void topEntry.modalRef.close(undefined, 'escape');
       return;
     }
 
@@ -191,10 +215,12 @@ export class ModalService {
     return this.getHostElement(entry)?.querySelector<HTMLElement>('[role="dialog"]') ?? null;
   }
 
-  private getModalConfig(config: ModalOpenOptions<unknown>): ModalConfig {
-    const { closeOnEscape, closeOnBackdrop, showCloseButton, width, maxWidth, maxHeight } = config;
+  private getModalConfig<TData, TResult>(config: ModalOpenOptions<TData, TResult>): ModalConfig {
+    const { size, closeOnEscape, closeOnBackdrop, showCloseButton, width, maxWidth, maxHeight } =
+      config;
 
     return {
+      size,
       closeOnEscape,
       closeOnBackdrop,
       showCloseButton,

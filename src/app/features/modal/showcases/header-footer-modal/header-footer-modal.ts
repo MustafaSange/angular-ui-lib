@@ -7,6 +7,7 @@ import {
   ModalRef,
   ModalService,
 } from '../../../../shared/ui-lib/components/modal';
+import type { ModalCloseReason } from '../../../../shared/ui-lib/components/modal';
 import { ShowcaseCode } from '../../../../shared/showcase-code';
 
 type TypedModalData = {
@@ -30,17 +31,19 @@ type ModalResultState =
     }
   | {
       status: 'closed';
+      reason: ModalCloseReason;
     }
   | {
       status: 'result';
       result: TypedModalResult;
+      reason: ModalCloseReason;
     };
 
 @Component({
   selector: 'app-header-footer-modal-content',
   imports: [ModalComponent],
   template: `
-    <ms-modal title="Review Changes" (close)="modalRef.close()">
+    <ms-modal title="Review Changes">
       <button slot="headerActions" class="btn btn-outline-primary btn-sm" type="button">
         Skip
       </button>
@@ -54,14 +57,16 @@ type ModalResultState =
         <button
           class="btn btn-secondary"
           type="button"
-          (click)="modalRef.close({ action: 'cancel' })"
+          (click)="modalRef.close({ action: 'cancel' }, 'action')"
         >
           Cancel
         </button>
         <button
           class="btn btn-primary"
           type="button"
-          (click)="modalRef.close({ action: 'save', payload: { name: data.projectName } })"
+          (click)="
+            modalRef.close({ action: 'save', payload: { name: data.projectName } }, 'action')
+          "
         >
           Save
         </button>
@@ -103,14 +108,14 @@ export class HeaderFooterModalShowcase {
     }
 
     if (state.status === 'closed') {
-      return 'Modal closed without a result.';
+      return `Modal closed without a result. Reason: ${state.reason}.`;
     }
 
     if (state.result.action === 'save') {
-      return `Last result: save ${state.result.payload.name}`;
+      return `Last result: save ${state.result.payload.name}. Reason: ${state.reason}.`;
     }
 
-    return 'Last result: cancel';
+    return `Last result: cancel. Reason: ${state.reason}.`;
   });
 
   protected readonly snippet = `// review-changes-modal.ts
@@ -135,7 +140,7 @@ export type ReviewChangesResult =
 
 @Component({
   selector: 'app-review-changes-modal', imports: [ModalComponent], template: \`
-    <ms-modal title="Review Changes" (close)="modalRef.close()">
+    <ms-modal title="Review Changes">
       <button slot="headerActions" class="btn btn-outline-primary btn-sm" type="button">
         Skip
       </button>
@@ -143,13 +148,13 @@ export type ReviewChangesResult =
       <p>Review changes for {{ data.projectName }} before saving.</p>
 
       <div class="modal-actions" slot="footer">
-        <button class="btn btn-secondary" type="button" (click)="modalRef.close({ action: 'cancel' })">
+        <button class="btn btn-secondary" type="button" (click)="modalRef.close({ action: 'cancel' }, 'action')">
           Cancel
         </button>
         <button
           class="btn btn-primary"
           type="button"
-          (click)="modalRef.close({ action: 'save', payload: { name: data.projectName } })"
+          (click)="modalRef.close({ action: 'save', payload: { name: data.projectName } }, 'action')"
         >
           Save
         </button>
@@ -173,6 +178,7 @@ export class ReviewChangesModal {
 import { Component, computed, inject, signal } from '@angular/core';
 
 import { ModalService } from './shared/ui-lib';
+import type { ModalCloseReason } from './shared/ui-lib';
 import type { ReviewChangesData, ReviewChangesResult } from './review-changes-modal';
 
 type SaveState =
@@ -181,10 +187,12 @@ type SaveState =
     }
   | {
       status: 'closed';
+      reason: ModalCloseReason;
     }
   | {
       status: 'result';
       result: ReviewChangesResult;
+      reason: ModalCloseReason;
     };
 
 @Component({
@@ -207,14 +215,14 @@ export class ProjectSettings {
     }
 
     if (state.status === 'closed') {
-      return 'Modal closed without a result.';
+      return \`Modal closed without a result. Reason: \${state.reason}.\`;
     }
 
     if (state.result.action === 'save') {
-      return \`Last result: save \${state.result.payload.name}\`;
+      return \`Last result: save \${state.result.payload.name}. Reason: \${state.reason}.\`;
     }
 
-    return 'Last result: cancel';
+    return \`Last result: cancel. Reason: \${state.reason}.\`;
   });
 
   protected async openReviewChanges(): Promise<void> {
@@ -230,13 +238,13 @@ export class ProjectSettings {
       },
     );
 
-    modalRef.afterClosed().subscribe((result) => {
+    modalRef.afterClosedWithReason().subscribe(({ result, reason }) => {
       if (!result) {
-        this.saveState.set({ status: 'closed' });
+        this.saveState.set({ status: 'closed', reason });
         return;
       }
 
-      this.saveState.set({ status: 'result', result });
+      this.saveState.set({ status: 'result', result, reason });
     });
   }
 }`;
@@ -253,13 +261,13 @@ export class ProjectSettings {
       width: '36rem',
     });
 
-    modalRef.afterClosed().subscribe((result) => {
+    modalRef.afterClosedWithReason().subscribe(({ result, reason }) => {
       if (!result) {
-        this.modalResult.set({ status: 'closed' });
+        this.modalResult.set({ status: 'closed', reason });
         return;
       }
 
-      this.modalResult.set({ status: 'result', result });
+      this.modalResult.set({ status: 'result', result, reason });
     });
   }
 }

@@ -17,7 +17,7 @@ type ScrollableModalData = {
   selector: 'app-scrollable-modal-content',
   imports: [ModalComponent],
   template: `
-    <ms-modal title="Scrollable Content" (close)="modalRef.close()">
+    <ms-modal title="Scrollable Content">
       <div class="modal-stack">
         @for (item of items; track item) {
           <p>
@@ -28,7 +28,9 @@ type ScrollableModalData = {
       </div>
 
       <div slot="footer">
-        <button class="btn btn-primary" type="button" (click)="modalRef.close()">Close</button>
+        <button class="btn btn-primary" type="button" (click)="modalRef.close(undefined, 'action')">
+          Close
+        </button>
       </div>
     </ms-modal>
   `,
@@ -62,7 +64,7 @@ export type ActivityLogModalData = {
 
 @Component({
   selector: 'app-activity-log-modal', imports: [ModalComponent], template: \`
-    <ms-modal title="Activity Log" (close)="modalRef.close()">
+    <ms-modal title="Activity Log">
       <div class="modal-stack">
         @for (item of items; track item) {
           <p>
@@ -73,7 +75,7 @@ export type ActivityLogModalData = {
       </div>
 
       <div slot="footer">
-        <button class="btn btn-primary" type="button" (click)="modalRef.close()">Close</button>
+        <button class="btn btn-primary" type="button" (click)="modalRef.close(undefined, 'action')">Close</button>
       </div>
     </ms-modal>
   \`, })

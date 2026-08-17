@@ -2,9 +2,7 @@ import { Component, inject } from '@angular/core';
 
 import {
   MODAL_DATA,
-  MODAL_REF,
   ModalComponent,
-  ModalRef,
   ModalService,
 } from '../../../../shared/ui-lib/components/modal';
 import { ShowcaseCode } from '../../../../shared/showcase-code';
@@ -18,7 +16,7 @@ type BasicModalData = {
   selector: 'app-basic-modal-content',
   imports: [ModalComponent],
   template: `
-    <ms-modal title="Project Details" (close)="modalRef.close()">
+    <ms-modal title="Project Details">
       <div class="modal-stack">
         <p>
           <strong>{{ data.name }}</strong> is owned by {{ data.owner }}.
@@ -29,7 +27,6 @@ type BasicModalData = {
 })
 class BasicModalContent {
   protected readonly data = inject(MODAL_DATA) as BasicModalData;
-  protected readonly modalRef = inject(MODAL_REF) as ModalRef<void>;
 }
 
 @Component({
@@ -47,7 +44,7 @@ export class BasicModalShowcase {
   protected readonly snippet = `// project-details-modal.ts
 import { Component, inject } from '@angular/core';
 
-import { MODAL_DATA, MODAL_REF, ModalComponent, ModalRef } from './shared/ui-lib';
+import { MODAL_DATA, ModalComponent } from './shared/ui-lib';
 
 export type ProjectDetailsData = {
   name: string;
@@ -56,7 +53,7 @@ export type ProjectDetailsData = {
 
 @Component({
   selector: 'app-project-details-modal', imports: [ModalComponent], template: \`
-    <ms-modal title="Project Details" (close)="modalRef.close()">
+    <ms-modal title="Project Details">
       <div class="modal-stack">
         <p>
           <strong>{{ data.name }}</strong> is owned by {{ data.owner }}.
@@ -66,7 +63,6 @@ export type ProjectDetailsData = {
   \`, })
 export class ProjectDetailsModal {
   protected readonly data = inject(MODAL_DATA) as ProjectDetailsData;
-  protected readonly modalRef = inject(MODAL_REF) as ModalRef<void>;
 }
 
 // project-list.ts
