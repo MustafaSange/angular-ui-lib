@@ -48,10 +48,10 @@ export class ConfirmDialogContentComponent {
   }
 
   protected confirm(): void {
-    this.modalRef.close(true);
+    void this.modalRef.close(true, 'action');
   }
 
   protected cancel(): void {
-    this.modalRef.close(false);
+    void this.modalRef.close(false, 'action');
   }
 }

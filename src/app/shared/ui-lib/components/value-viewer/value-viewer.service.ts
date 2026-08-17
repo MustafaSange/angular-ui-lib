@@ -1,6 +1,6 @@
 import { Component, Service, inject } from '@angular/core';
 
-import { MODAL_DATA, MODAL_REF, ModalRef, ModalService } from '../modal';
+import { MODAL_DATA, ModalRef, ModalService } from '../modal';
 import { ValueViewerComponent } from './value-viewer';
 import type { ValueViewerOpenOptions } from './value-viewer-types';
 
@@ -14,13 +14,10 @@ type ValueViewerData = {
 @Component({
   selector: 'ms-value-viewer-modal-content',
   imports: [ValueViewerComponent],
-  template: `
-    <ms-value-viewer [title]="data.title" [value]="data.value" (close)="modalRef.close()" />
-  `,
+  template: `<ms-value-viewer [title]="data.title" [value]="data.value" />`,
 })
 class ValueViewerModalContentComponent {
   protected readonly data = inject(MODAL_DATA) as ValueViewerData;
-  protected readonly modalRef = inject(MODAL_REF) as ModalRef<void>;
 }
 
 @Service()

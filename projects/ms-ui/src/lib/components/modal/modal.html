@@ -5,10 +5,19 @@
     (click)="handleBackdropClick()"
   ></div>
 
-  <div class="modal-host" [style.z-index]="modalZIndex()">
+  <div
+    class="modal-host"
+    [class.modal-host-fullscreen]="size() === 'fullscreen'"
+    [style.z-index]="modalZIndex()"
+  >
     <section
       #dialog
       class="modal"
+      [class.modal-sm]="size() === 'sm'"
+      [class.modal-md]="size() === 'md'"
+      [class.modal-lg]="size() === 'lg'"
+      [class.modal-xl]="size() === 'xl'"
+      [class.modal-fullscreen]="size() === 'fullscreen'"
       role="dialog"
       aria-modal="true"
       [attr.aria-labelledby]="titleId"
@@ -30,7 +39,7 @@
             class="btn btn-ghost btn-icon modal-close-button"
             type="button"
             aria-label="Close modal"
-            (click)="close.emit()"
+            (click)="requestClose('close-button')"
           >
             <span class="ms-icon" aria-hidden="true">close</span>
           </button>

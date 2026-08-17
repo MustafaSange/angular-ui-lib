@@ -1,0 +1,16 @@
+<h2>Size Presets</h2>
+<p class="showcase-description">
+  Use a standard preset for consistent modal dimensions, or provide explicit dimensions for a custom
+  case.
+</p>
+<div class="modal-demo-row">
+  <button class="btn btn-secondary" type="button" (click)="openPreset('sm')">Small</button>
+  <button class="btn btn-secondary" type="button" (click)="openPreset('md')">Medium</button>
+  <button class="btn btn-secondary" type="button" (click)="openPreset('lg')">Large</button>
+  <button class="btn btn-secondary" type="button" (click)="openPreset('xl')">Extra Large</button>
+  <button class="btn btn-secondary" type="button" (click)="openPreset('fullscreen')">
+    Fullscreen
+  </button>
+  <button class="btn btn-primary" type="button" (click)="openCustomWidth()">Custom Width</button>
+</div>
+<app-showcase-code label="Modal Size Presets" [code]="snippet" language="ts" />

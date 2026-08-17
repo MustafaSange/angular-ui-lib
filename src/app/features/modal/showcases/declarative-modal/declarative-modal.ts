@@ -12,7 +12,7 @@ import { ShowcaseCode } from '../../../../shared/showcase-code';
   selector: 'app-simple-modal-content',
   imports: [ModalComponent],
   template: `
-    <ms-modal title="Hello" (close)="modalRef.close()">
+    <ms-modal title="Hello">
       <button slot="headerActions" class="btn btn-outline-primary btn-sm" type="button">
         Help
       </button>
@@ -20,8 +20,16 @@ import { ShowcaseCode } from '../../../../shared/showcase-code';
       <p>Projected modal content.</p>
 
       <div class="modal-actions" slot="footer">
-        <button class="btn btn-secondary" type="button" (click)="modalRef.close()">Cancel</button>
-        <button class="btn btn-primary" type="button" (click)="modalRef.close()">Save</button>
+        <button
+          class="btn btn-secondary"
+          type="button"
+          (click)="modalRef.close(undefined, 'action')"
+        >
+          Cancel
+        </button>
+        <button class="btn btn-primary" type="button" (click)="modalRef.close(undefined, 'action')">
+          Save
+        </button>
       </div>
     </ms-modal>
   `,
@@ -58,7 +66,7 @@ import { MODAL_REF, ModalComponent, ModalRef } from './shared/ui-lib';
 
 @Component({
   selector: 'app-simple-modal-content', imports: [ModalComponent], template: \`
-    <ms-modal title="Hello" (close)="modalRef.close()">
+    <ms-modal title="Hello">
       <button slot="headerActions" class="btn btn-outline-primary btn-sm" type="button">
         Help
       </button>
@@ -66,8 +74,8 @@ import { MODAL_REF, ModalComponent, ModalRef } from './shared/ui-lib';
       <p>Projected modal content.</p>
 
       <div class="modal-actions" slot="footer">
-        <button class="btn btn-secondary" type="button" (click)="modalRef.close()">Cancel</button>
-        <button class="btn btn-primary" type="button" (click)="modalRef.close()">Save</button>
+        <button class="btn btn-secondary" type="button" (click)="modalRef.close(undefined, 'action')">Cancel</button>
+        <button class="btn btn-primary" type="button" (click)="modalRef.close(undefined, 'action')">Save</button>
       </div>
     </ms-modal>
   \`, styles: \`

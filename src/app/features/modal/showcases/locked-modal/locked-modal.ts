@@ -36,11 +36,11 @@ import { MODAL_REF, ModalComponent, ModalRef, } from './shared/ui-lib';
 
 @Component({
   selector: 'app-locked-modal-content', imports: [ModalComponent], template: \`
-    <ms-modal title="Explicit Close Required" (close)="modalRef.close()">
+    <ms-modal title="Explicit Close Required">
       <div class="modal-stack">
         <p>Backdrop and Escape closing are disabled for this modal.</p>
         <p>Use the explicit action button to close it.</p>
-        <button class="btn btn-primary" type="button" (click)="modalRef.close()">
+        <button class="btn btn-primary" type="button" (click)="modalRef.close(undefined, 'action')">
           Close Modal
         </button>
       </div>
@@ -72,6 +72,7 @@ export class SettingsPage {
     this.modalService.open(LockedModalContent, {
       closeOnBackdrop: false,
       closeOnEscape: false,
+      showCloseButton: false,
       width: '30rem',
     });
   }
@@ -81,6 +82,7 @@ export class SettingsPage {
     this.modalService.open<LockedModalContent, unknown, void>(LockedModalContent, {
       closeOnBackdrop: false,
       closeOnEscape: false,
+      showCloseButton: false,
     });
   }
 }

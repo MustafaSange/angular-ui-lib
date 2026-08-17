@@ -22,6 +22,10 @@ body.ms-modal-open {
   pointer-events: none;
 }
 
+.modal-host-fullscreen {
+  padding: 0;
+}
+
 .modal {
   position: relative;
   z-index: 1;
@@ -32,8 +36,8 @@ body.ms-modal-open {
   max-block-size: 90svh;
   overflow: hidden;
   border: var(--border-width-sm) solid var(--color-border);
-  border-radius: var(--radius-md);
-  background-color: var(--color-surface-overlay);
+  border-radius: var(--ms-modal-border-radius, var(--radius-md));
+  background-color: var(--ms-modal-background, var(--color-surface-overlay));
   color: var(--color-text-primary);
   box-shadow: var(--shadow-lg);
   pointer-events: auto;
@@ -45,20 +49,44 @@ body.ms-modal-open {
   }
 }
 
+.modal-sm {
+  inline-size: min(24rem, 100%);
+}
+
+.modal-md {
+  inline-size: min(36rem, 100%);
+}
+
+.modal-lg {
+  inline-size: min(48rem, 100%);
+}
+
+.modal-xl {
+  inline-size: min(64rem, 100%);
+}
+
+.modal-fullscreen {
+  inline-size: 100vi;
+  block-size: 100svh;
+  max-inline-size: none;
+  max-block-size: none;
+  border: 0;
+  border-radius: 0;
+}
+
 .modal-header,
 .modal-footer {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
   gap: var(--spacing-8);
-  padding: var(--spacing-12) var(--spacing-16);
 }
 
 .modal-header {
   justify-content: space-between;
   min-block-size: var(--spacing-40);
-  padding-block: 0;
-  padding-inline: var(--spacing-16) 0;
+  padding-block: var(--ms-modal-header-padding, 0);
+  padding-inline: var(--ms-modal-header-padding, var(--spacing-16) 0);
   border-block-end: var(--border-width-sm) solid var(--color-border-muted);
 }
 
@@ -104,11 +132,12 @@ body.ms-modal-open {
   flex: 1 1 auto;
   min-block-size: 0;
   overflow: auto;
-  padding: var(--spacing-16);
+  padding: var(--ms-modal-content-padding, var(--spacing-16));
 }
 
 .modal-footer {
   justify-content: flex-end;
+  padding: var(--ms-modal-footer-padding, var(--spacing-12) var(--spacing-16));
   border-block-start: var(--border-width-sm) solid var(--color-border-muted);
 
   &:empty {
