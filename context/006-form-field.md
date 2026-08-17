@@ -117,6 +117,12 @@ Keep text, select, and autocomplete fields enterprise-dense:
   density.
 - Native `input` and `select` controls should fill the projected control row without increasing
   the total field height.
+- Keep native `select` controls transparent so the shared control row continues to own default,
+  disabled, and readonly surfaces. Give native `option` and `optgroup` elements matching semantic
+  overlay-background and primary-text colors to prevent mismatched light popup backgrounds and
+  dark-theme text in desktop browsers that honor option styling. Native popup hover and selection
+  highlights remain browser/operating-system controlled; use `ms-select` when those states require
+  consistent application styling. Do not opt native selects out of Windows forced-colors behavior.
 - Projected custom controls such as `ms-select`, `ms-autocomplete`, and `ms-readonly-value` must
   align to the same 28px total control height when used inside `ms-signal-form-field`.
 - Form-control text uses `--font-size-sm` (14px).

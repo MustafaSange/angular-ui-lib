@@ -135,9 +135,12 @@ Feature styles live in `src/styles/components/_chip.scss` and are forwarded from
   the chip inline end.
 - `soft` uses a subtle surface with optional selected emphasis.
 - `outline` uses a transparent surface with a visible border.
+- Selected neutral chips use `--color-primary-subtle`, `--color-primary-border`, and
+  `--color-primary-text` in both light and dark modes so they align with selected-value chips in
+  shared form controls.
 - In dark mode, chip text should match the alert/toast tone model: mix
   `var(--color-text-primary)` at 78% with the chip variant color for readable, restrained
-  variant-tinted text. Selected chip text uses the same dark-mode mix.
+  variant-tinted text. Selected non-neutral chip text uses the same dark-mode mix.
 - Disabled chips reduce contrast, use `cursor: not-allowed`, and keep remove controls inactive.
 - Render the chip remove icon with `.ms-icon`.
 - Add any new Material Symbols ligature name used by the implementation to `MATERIAL_ICONS`.
@@ -196,6 +199,8 @@ Each visual example renders a matching hand-authored, full standalone Angular ex
 - Remove buttons are native buttons with accessible names and visible focus.
 - Styles are token-based, use logical properties, and are forwarded through the component styles
   index.
+- Selected neutral chips use the shared primary selected-value treatment consistently in light and
+  dark modes.
 - Leading content and chip remove buttons mirror correctly in RTL layouts.
 - The `/chip` route and home card expose copyable demonstrations of core behavior.
 - No tests are added or updated for this feature.

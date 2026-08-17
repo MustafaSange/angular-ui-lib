@@ -186,6 +186,12 @@ ms-signal-form-field {
 
   select {
     cursor: pointer;
+
+    option,
+    optgroup {
+      background-color: var(--color-surface-overlay);
+      color: var(--color-text-primary);
+    }
   }
 
   ms-readonly-value {
