@@ -719,8 +719,9 @@ Styling rules:
 - keep required rows compact by hiding the delete action instead of rendering disabled controls
 - use one Values grid column for option-only `in` and add the fixed trigger column only when custom
   values are enabled
-- keep option, combined-preview, and custom chips compact and visually consistent through the
-  primary-subtle selected treatment and primary border
+- keep option, combined-preview, and custom chips compact and visually consistent in both light and
+  dark modes through `--color-primary-subtle`, `--color-primary-border`, and
+  `--color-primary-text`
 - render action icons with `.ms-icon` or `.ms-icon-filled`
 - add every new Material Symbols ligature name to `MATERIAL_ICONS`
 - avoid hardcoded values when tokens exist
@@ -834,6 +835,8 @@ Render snippets near the matching visual example with `<app-showcase-code>`.
 - Option-only `in` renders a compact direct multi-select without reserving a custom-trigger column.
 - Custom-enabled `in` combines option and custom values in its readonly preview and emitted array.
 - The combined preview shows at most three removable chips and a plain remaining-value count.
+- Option-only select chips and combined-preview/custom `ms-chip` values use the same primary
+  selected-value colors in light and dark modes.
 - Option values remain controlled by `ms-select`; custom deletion never removes configured options.
 - Custom values are typed, trimmed, deduplicated, and capped by `maxInValues`, defaulting to `50`.
 - Manual GUID, integer, decimal, and string-length validation is displayed accessibly before Add.

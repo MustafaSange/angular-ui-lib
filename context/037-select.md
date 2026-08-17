@@ -387,6 +387,9 @@ Styling rules:
 - use popover anchor placement with logical fallback positions
 - keep projected source options hidden outside the rendered panel
 - render multiple selected values as compact chips with removable actions
+- use `--color-primary-subtle`, `--color-primary-border`, and `--color-primary-text` for multiple
+  selected-value chips in both light and dark modes so their colors align with selected neutral
+  `ms-chip` values
 - keep selected chips visible when a non-searchable multiple select receives focus inside a clipped,
   enterprise-dense form field; the internal focus target overlays the selected content instead of
   horizontally scrolling it out of view
@@ -453,5 +456,6 @@ public APIs through `./shared/ui-lib`, and are rendered near their matching visu
 - Keyboard navigation works for opening, active option movement, selection, closing, and tabbing away.
 - Styling uses existing tokens, compact form-field sizing, logical CSS properties, and RTL-safe
   placement.
+- Multiple selected-value chips match selected neutral `ms-chip` colors in light and dark modes.
 - Accessibility roles, states, focus behavior, and labels are implemented.
 - The showcase demonstrates core use cases and renders matching copyable snippets.
