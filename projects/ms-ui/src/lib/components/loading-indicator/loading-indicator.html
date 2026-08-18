@@ -1,0 +1,21 @@
+@if (isLoading()) {
+  @switch (variant()) {
+    @case ('overlay-spinner') {
+      <div
+        class="loading-indicator loading-indicator-overlay"
+        [class.is-blocking]="blocking()"
+        role="status"
+        aria-live="polite"
+      >
+        <ms-spinner size="lg" [variant]="spinnerVariant()" ariaLabel="" />
+        <span class="loading-indicator-status">{{ ariaLabel() }}</span>
+      </div>
+    }
+
+    @default {
+      <div class="loading-indicator loading-indicator-bar">
+        <ms-progress-indicator size="md" [ariaLabel]="ariaLabel()" />
+      </div>
+    }
+  }
+}

@@ -1,6 +1,7 @@
 export * from './direction.service';
 export * from './density.service';
 export * from './density-types';
+export * from './loading.service';
 export * from './material-icons/icon-registry';
 export * from './material-icons/material-icons.service';
 export * from './provide-ui-lib';

@@ -8,10 +8,35 @@
   [class.spinner-warning]="kind() === 'warning'"
   [class.spinner-danger]="kind() === 'danger'"
   [class.spinner-inherit]="kind() === 'inherit'"
+  [class.spinner-ring]="variant() === 'ring'"
+  [class.spinner-dots]="variant() === 'dots'"
+  [class.spinner-orbit]="variant() === 'orbit'"
+  [class.spinner-ring-dot]="variant() === 'ring-dot'"
   [attr.role]="ariaLabel() ? 'status' : null"
   [attr.aria-hidden]="ariaLabel() ? null : 'true'"
 >
-  <span class="spinner-circle" aria-hidden="true"></span>
+  @switch (variant()) {
+    @case ('dots') {
+      <span class="spinner-dots-track" aria-hidden="true">
+        <span class="spinner-dot"></span>
+        <span class="spinner-dot"></span>
+        <span class="spinner-dot"></span>
+      </span>
+    }
+
+    @case ('orbit') {
+      <span class="spinner-orbit-track" aria-hidden="true"></span>
+    }
+
+    @case ('ring-dot') {
+      <span class="spinner-ring-dot-track" aria-hidden="true"></span>
+    }
+
+    @default {
+      <span class="spinner-circle" aria-hidden="true"></span>
+    }
+  }
+
   @if (ariaLabel()) {
     <span class="spinner-status-text">{{ ariaLabel() }}</span>
   }

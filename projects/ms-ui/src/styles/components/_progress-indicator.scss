@@ -105,6 +105,90 @@ ms-spinner {
   animation: progress-spinner-rotate 800ms linear infinite;
 }
 
+.spinner-dots-track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10%;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.spinner-dot {
+  inline-size: 22%;
+  aspect-ratio: 1;
+  border-radius: var(--radius-full);
+  background-color: currentColor;
+  animation: progress-spinner-dot 900ms ease-in-out infinite;
+
+  &:nth-child(2) {
+    animation-delay: 150ms;
+  }
+
+  &:nth-child(3) {
+    animation-delay: 300ms;
+  }
+}
+
+.spinner-orbit-track {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  inline-size: 100%;
+  block-size: 100%;
+  border: var(--_progress-spinner-border) solid color-mix(in srgb, currentColor 30%, transparent);
+  border-radius: var(--radius-full);
+  animation: progress-spinner-rotate 1s linear infinite;
+
+  &::before,
+  &::after {
+    position: absolute;
+    border-radius: var(--radius-full);
+    background-color: currentColor;
+    content: '';
+  }
+
+  &::before {
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    inline-size: calc(var(--_progress-spinner-size) / 2);
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+  }
+
+  &::after {
+    inset-block-start: calc(var(--_progress-spinner-border) * -1);
+    inset-inline-start: 50%;
+    inline-size: 24%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.spinner-ring-dot-track {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  inline-size: 100%;
+  block-size: 100%;
+  border: var(--_progress-spinner-border) solid color-mix(in srgb, currentColor 30%, transparent);
+  border-block-start-color: currentColor;
+  border-radius: var(--radius-full);
+  animation: progress-spinner-rotate 800ms linear infinite;
+
+  &::before {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    inline-size: calc(var(--_progress-spinner-size) / 2);
+    aspect-ratio: 1;
+    border-radius: var(--radius-full);
+    background-color: currentColor;
+    content: '';
+    transform: translate(-50%, -50%);
+  }
+}
+
 .spinner-status-text {
   position: absolute;
   inline-size: 1px;
@@ -130,13 +214,29 @@ ms-spinner {
   }
 }
 
+@keyframes progress-spinner-dot {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(-30%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .progress-indicator-fill {
     transition: none;
   }
 
   .progress-indicator.is-indeterminate .progress-indicator-fill,
-  .spinner-circle {
+  .spinner-circle,
+  .spinner-dot,
+  .spinner-orbit-track,
+  .spinner-ring-dot-track {
     animation: none;
   }
 }
