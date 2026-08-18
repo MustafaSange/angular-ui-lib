@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { ToastOutletComponent } from './shared/ui-lib/components/feedback';
 import { BottomSheetOutletComponent } from './shared/ui-lib/components/bottom-sheet';
 import { DirectionSwitcher } from './shared/ui-lib/components/direction-switcher';
+import { LoadingIndicatorComponent } from './shared/ui-lib/components/loading-indicator';
 import { ModalOutletComponent } from './shared/ui-lib/components/modal';
 import { ThemeCustomizer } from './shared/ui-lib/components/theme-customizer';
 import { ThemeSwitcher } from './shared/ui-lib/components/theme-switcher';
@@ -18,6 +19,7 @@ import { DensityService, type UiDensity } from './shared/ui-lib/services';
     ThemeSwitcher,
     BottomSheetOutletComponent,
     ModalOutletComponent,
+    LoadingIndicatorComponent,
     ToastOutletComponent,
   ],
   templateUrl: './app.html',

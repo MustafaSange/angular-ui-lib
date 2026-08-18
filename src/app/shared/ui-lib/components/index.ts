@@ -15,6 +15,7 @@ export * from './date-picker';
 export * from './date-time-picker';
 export * from './feedback';
 export * from './file-upload';
+export * from './loading-indicator';
 export * from './media-slider';
 export * from './menu-popover';
 export * from './modal';

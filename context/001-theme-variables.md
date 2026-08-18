@@ -32,6 +32,10 @@ Create the foundational design-token system for the Angular UI library.
 - Keep tokens grouped by domain and document non-obvious usage with concise comments.
 - Do not add component styles.
 
+Layering follows `dropdown < sticky < modal < loading < toast`; the dedicated
+`--z-index-loading` token keeps global loading feedback above modal content while preserving toast
+visibility and interaction.
+
 Default density preserves the existing `24px`, `28px`, `32px`, and `48px` control height tiers.
 Compact density uses `24px`, `24px`, `28px`, and `40px` tiers and reduces related control spacing.
 Local density scopes redefine the same CSS custom properties so descendants inherit the nearest

@@ -1,6 +1,9 @@
 <main class="progress-page showcase-page">
   <header class="progress-header showcase-header">
-    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to Home</span></a>
+    <a class="btn btn-ghost back-link" routerLink="/"
+      ><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span
+      ><span>Back to Home</span></a
+    >
     <p class="eyebrow">Components</p>
     <h1>Progress Indicator and Spinner</h1>
     <p class="description">
@@ -87,6 +90,28 @@
     </p>
     <div class="spinner-demo showcase-demo-panel">
       <div class="spinner-group">
+        <h3>Variants</h3>
+        <div class="spinner-options">
+          <div class="spinner-option">
+            <ms-spinner variant="ring" ariaLabel="Loading ring example" />
+            <span>Ring</span>
+          </div>
+          <div class="spinner-option">
+            <ms-spinner variant="dots" ariaLabel="Loading dots example" />
+            <span>Dots</span>
+          </div>
+          <div class="spinner-option">
+            <ms-spinner variant="orbit" ariaLabel="Loading orbit example" />
+            <span>Orbit</span>
+          </div>
+          <div class="spinner-option">
+            <ms-spinner variant="ring-dot" ariaLabel="Loading ring and dot example" />
+            <span>Ring and Dot</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="spinner-group">
         <h3>Sizes</h3>
         <div class="spinner-options">
           <div class="spinner-option">
@@ -133,6 +158,88 @@
       </button>
     </div>
     <app-showcase-code label="Spinner Sizes and Composition" [code]="spinnerSnippet" />
+  </section>
+
+  <section class="progress-section showcase-section">
+    <h2>Global Loading Indicator</h2>
+    <p class="section-copy">
+      Track concurrent operations with a shared signal counter and choose either unobtrusive top-bar
+      feedback or a viewport overlay.
+    </p>
+    <div class="loading-demo showcase-demo-panel">
+      <div class="loading-variant-controls" role="group" aria-label="Loading indicator variant">
+        <button
+          class="btn btn-outline"
+          type="button"
+          [class.is-active]="loadingVariant() === 'top-bar'"
+          [attr.aria-pressed]="loadingVariant() === 'top-bar'"
+          (click)="setLoadingVariant('top-bar')"
+        >
+          Use Top Bar
+        </button>
+        <button
+          class="btn btn-outline"
+          type="button"
+          [class.is-active]="loadingVariant() === 'overlay-spinner'"
+          [attr.aria-pressed]="loadingVariant() === 'overlay-spinner'"
+          (click)="setLoadingVariant('overlay-spinner')"
+        >
+          Use Overlay Spinner
+        </button>
+      </div>
+
+      <div class="loading-state" aria-live="polite">
+        <span
+          >Active Requests: <strong>{{ activeCount() }}</strong></span
+        >
+        <span
+          >Loading: <strong>{{ isLoading() ? 'Yes' : 'No' }}</strong></span
+        >
+      </div>
+
+      <div class="progress-actions">
+        <button class="btn btn-primary" type="button" (click)="beginLoading()">
+          Begin Request
+        </button>
+        <button
+          class="btn btn-outline"
+          type="button"
+          [disabled]="!isLoading()"
+          (click)="endLoading()"
+        >
+          Complete Request
+        </button>
+      </div>
+
+      <p class="loading-guidance">
+        Select Begin Request more than once to simulate overlapping work. The indicator remains
+        visible until every request is completed. This manual demo disables overlay blocking so the
+        Complete Request button remains available.
+      </p>
+
+      <ms-loading-indicator
+        [variant]="loadingVariant()"
+        spinnerVariant="orbit"
+        [blocking]="false"
+        ariaLabel="Loading showcase requests"
+      />
+    </div>
+    <app-showcase-code label="Global Loading Indicator" [code]="globalLoadingSnippet" />
+
+    <div class="loading-demo showcase-demo-panel">
+      <div>
+        <h3>Ignored HTTP Request</h3>
+        <p class="loading-guidance">
+          The request runs normally while <code>SKIP_LOADING_INDICATOR</code> prevents it from
+          changing the active count.
+        </p>
+      </div>
+      <button class="btn btn-outline" type="button" (click)="runIgnoredRequest()">
+        Run Ignored Request
+      </button>
+      <p class="loading-guidance" aria-live="polite">{{ ignoredRequestStatus() }}</p>
+    </div>
+    <app-showcase-code label="Ignore Loading for One Request" [code]="ignoredLoadingSnippet" />
   </section>
 
   <section class="progress-section showcase-section">
