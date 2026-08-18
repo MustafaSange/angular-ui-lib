@@ -4,13 +4,18 @@
 
 Create reusable, accessible progress primitives for determinate task completion and indeterminate
 loading. The feature provides a linear progress indicator and a circular spinner with consistent
-sizes, semantic colors, reduced-motion behavior, and RTL-safe layout.
+sizes, semantic colors, ring, dots, orbit, and ring-with-dot variants, reduced-motion behavior, and
+RTL-safe layout.
 
 ## Non-Goals
 
 - The components do not own async work, timers, polling, cancellation, or loading state.
 - Circular determinate progress and buffered/segmented linear progress are out of scope for v1.
 - Labels, percentages, and surrounding status text remain consumer-owned content.
+
+Application-wide loading state, HTTP interception, blocking behavior, and shell integration are
+defined separately in `context/055-loading-indicator.md`. That feature composes these progress
+primitives without changing their standalone contracts.
 
 ## Public API
 
@@ -22,6 +27,7 @@ import {
   ProgressKind,
   ProgressSize,
   SpinnerComponent,
+  SpinnerVariant,
 } from './shared/ui-lib';
 ```
 
@@ -31,6 +37,7 @@ Public pieces:
 - `SpinnerComponent` with selector `ms-spinner`
 - `ProgressKind` type: `'primary' | 'success' | 'warning' | 'danger' | 'inherit'`
 - `ProgressSize` type: `'sm' | 'md' | 'lg'`
+- `SpinnerVariant` type: `'ring' | 'dots' | 'orbit' | 'ring-dot'`
 
 Required API:
 
@@ -48,6 +55,7 @@ class ProgressIndicatorComponent {
 class SpinnerComponent {
   readonly size = input<ProgressSize>('md');
   readonly kind = input<ProgressKind>('primary');
+  readonly variant = input<SpinnerVariant>('ring');
   readonly ariaLabel = input('Loading');
 }
 ```
@@ -95,13 +103,14 @@ Decorative inline spinner:
 The implementation lives in `src/app/shared/ui-lib/components/progress-indicator`:
 
 - `ProgressIndicatorComponent` normalizes progress values and renders the semantic linear track
-- `SpinnerComponent` renders an indeterminate circular status indicator
-- `progress-indicator-types.ts` contains the shared public size and kind types
+- `SpinnerComponent` renders an indeterminate ring, dots, or orbit status indicator
+- `progress-indicator-types.ts` contains the shared public size, kind, and spinner variant types
 - `index.ts` exposes the public API
 
 Neither component projects content. Consumers compose labels and status text beside the primitive.
-Internal styling hooks are `.progress-indicator`, `.progress-indicator-fill`, `.spinner`, and
-`.spinner-circle`.
+Internal styling hooks include `.progress-indicator`, `.progress-indicator-fill`, `.spinner`,
+`.spinner-circle`, `.spinner-dots-track`, `.spinner-dot`, and `.spinner-orbit-track`.
+The ring-dot variant uses `.spinner-ring-dot-track`.
 
 ## Behavior
 
@@ -111,6 +120,10 @@ Internal styling hooks are `.progress-indicator`, `.progress-indicator-fill`, `.
 - Determinate fill transitions when the value changes. Indeterminate progress uses a repeating
   logical inline sweep.
 - `ms-spinner` is always visually indeterminate.
+- `ring` is the backward-compatible default, `dots` renders three animated round dots, and `orbit`
+  renders a center dot with a smaller dot travelling around an outer circular track.
+- `ring-dot` combines the rotating ring with a center dot sized to half the spinner diameter and
+  omits the orbiting outer dot.
 - Size and kind changes update presentation without changing semantics.
 - `kind="inherit"` uses the surrounding text color for inline composition.
 - The components contain no timers or subscriptions and require no lifecycle cleanup.
@@ -122,8 +135,13 @@ Feature styles live in `src/styles/components/_progress-indicator.scss` and are 
 
 - Use existing theme, spacing, border, radius, and transition tokens.
 - Linear sizes are 2px, 4px, and 8px using spacing tokens; spinner sizes are 16px, 24px, and 32px.
-- Render spinners as a 30%-strength complete ring with one bright leading border segment and an
-  800ms rotation.
+- Render the ring spinner as a 30%-strength complete ring with one bright leading border segment
+  and an 800ms rotation.
+- Render the dots spinner as three evenly spaced round dots with a staggered vertical pulse.
+- Render the orbit spinner with a subtle outer circle, a solid center dot sized to half the spinner
+  diameter, and a smaller dot that travels around the outer track.
+- Render the ring-dot spinner as the highlighted rotating ring with a solid center dot sized to
+  half the spinner diameter and no orbiting outer dot.
 - Use logical sizing and placement so determinate and indeterminate bars originate at inline-start
   and mirror in RTL.
 - Use component-private custom properties prefixed with `--_progress-*`.
@@ -152,7 +170,10 @@ Add a dedicated `/progress` page and home card demonstrating:
 - semantic kinds and all sizes
 - visibly labeled spinner sizes and semantic kinds, with guidance that semantic color should match
   the operation context
+- all ring, dots, orbit, and ring-dot spinner variants
 - a decorative inherited-color spinner composed inside a disabled button
+- global top-bar and overlay loading indicators composed from the progress primitives
+- concurrent manual loading state and an HTTP request using the loading-context opt-out
 - RTL progress layout
 
 Each visual example renders a matching hand-authored, full standalone Angular example through
@@ -172,6 +193,8 @@ Each visual example renders a matching hand-authored, full standalone Angular ex
 - Determinate values, clamping, custom maxima, and indeterminate state work as documented.
 - ARIA values and accessible names match visual state.
 - Spinner status and decorative modes work as documented.
+- Ring, dots, and orbit variants preserve the documented spinner semantics, sizes, and colors.
+- The ring-dot variant preserves the same semantics, sizes, colors, and reduced-motion behavior.
 - Sizes and semantic kinds are token-based; inherited color works in composed controls.
 - Linear progress mirrors in LTR and RTL.
 - Reduced-motion users receive static visible indicators.

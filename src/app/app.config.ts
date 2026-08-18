@@ -3,12 +3,12 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { apiErrorInterceptor, provideUiLib } from './shared/ui-lib';
+import { apiErrorInterceptor, loadingInterceptor, provideUiLib } from './shared/ui-lib';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideHttpClient(withInterceptors([apiErrorInterceptor])),
+    provideHttpClient(withInterceptors([loadingInterceptor, apiErrorInterceptor])),
     provideUiLib(),
     provideRouter(routes),
   ],
