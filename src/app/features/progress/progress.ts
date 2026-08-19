@@ -33,7 +33,7 @@ export class Progress {
 
   protected readonly uploadedFiles = signal(6);
   protected readonly totalFiles = 10;
-  protected readonly loadingVariant = signal<LoadingIndicatorVariant>('top-bar');
+  protected readonly loadingVariant = signal<LoadingIndicatorVariant>('overlay-spinner');
   protected readonly activeCount = this.loading.activeCount;
   protected readonly isLoading = this.loading.isLoading;
   protected readonly ignoredRequestStatus = signal('No ignored request has run yet.');
@@ -192,14 +192,13 @@ import {
 
     <ms-loading-indicator
       [variant]="variant()"
-      spinnerVariant="orbit"
       [blocking]="false"
     />
   \`,
 })
 export class GlobalLoadingExample {
   protected readonly loading = inject(LoadingService);
-  protected readonly variant = signal<LoadingIndicatorVariant>('top-bar');
+  protected readonly variant = signal<LoadingIndicatorVariant>('overlay-spinner');
 }`;
 
   protected readonly ignoredLoadingSnippet = `import {
