@@ -57,8 +57,8 @@ export class LoadingIndicatorComponent {
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly loading = inject(LoadingService);
 
-  readonly variant = input<LoadingIndicatorVariant>('top-bar');
-  readonly spinnerVariant = input<SpinnerVariant>('ring');
+  readonly variant = input<LoadingIndicatorVariant>('overlay-spinner');
+  readonly spinnerVariant = input<SpinnerVariant>('ring-dot');
   readonly blocking = input(true);
   readonly ariaLabel = input('Loading');
 

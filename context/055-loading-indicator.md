@@ -36,8 +36,8 @@ Component inputs and defaults:
 
 ```ts
 class LoadingIndicatorComponent {
-  readonly variant = input<LoadingIndicatorVariant>('top-bar');
-  readonly spinnerVariant = input<SpinnerVariant>('ring');
+  readonly variant = input<LoadingIndicatorVariant>('overlay-spinner');
+  readonly spinnerVariant = input<SpinnerVariant>('ring-dot');
   readonly blocking = input(true);
   readonly ariaLabel = input('Loading');
 }
@@ -73,7 +73,8 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
-Place one indicator directly in the application shell. The top bar is the default:
+Place one indicator directly in the application shell. The blocking overlay with a ring-and-dot
+spinner is the default:
 
 ```html
 <router-outlet />
@@ -81,13 +82,18 @@ Place one indicator directly in the application shell. The top bar is the defaul
 <ms-toast-outlet />
 ```
 
-Use a blocking viewport overlay and select any public spinner variant when stronger interruption is
-required:
+Select the non-blocking top bar when loading should not interrupt application interaction:
 
 ```html
 <router-outlet />
-<ms-loading-indicator variant="overlay-spinner" spinnerVariant="ring-dot" />
+<ms-loading-indicator variant="top-bar" />
 <ms-toast-outlet />
+```
+
+Override `spinnerVariant` with any public spinner variant when using the overlay:
+
+```html
+<ms-loading-indicator spinnerVariant="orbit" />
 ```
 
 The component manages its sibling application content automatically. Consumers do not add an
