@@ -272,6 +272,10 @@ const SHOWCASES: readonly ShowcaseItem[] = [
   },
 ];
 
+const SHOWCASES_BY_NAME = [...SHOWCASES].sort((first, second) =>
+  first.name.localeCompare(second.name),
+);
+
 @Component({
   selector: 'app-home',
   imports: [RouterLink],
@@ -285,10 +289,10 @@ export class Home {
     const query = this.searchQuery().trim().toLocaleLowerCase();
 
     if (!query) {
-      return SHOWCASES;
+      return SHOWCASES_BY_NAME;
     }
 
-    return SHOWCASES.filter(({ description, name, type }) =>
+    return SHOWCASES_BY_NAME.filter(({ description, name, type }) =>
       `${name} ${type} ${description}`.toLocaleLowerCase().includes(query),
     );
   });
