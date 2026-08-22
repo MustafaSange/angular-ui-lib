@@ -73,9 +73,7 @@ import { ThemeService } from './shared/ui-lib';
 @Component({
   selector: 'app-theme-example',
   template: `
-    <button type="button" class="btn btn-primary" (click)="useGreenBrand()">
-      Use green brand
-    </button>
+    <button type="button" class="btn btn-primary" (click)="useGreenBrand()">Use green brand</button>
   `,
 })
 export class ThemeExample {
@@ -100,7 +98,7 @@ The feature includes:
 
 Theme customization types live beside the theme service in:
 
-`src/app/shared/ui-lib/services/theme-types.ts`
+`src/app/shared/ui-lib/services/theme/theme-types.ts`
 
 ## Behavior
 

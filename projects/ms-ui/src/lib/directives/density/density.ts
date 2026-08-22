@@ -1,6 +1,6 @@
 import { Directive, input } from '@angular/core';
 
-import type { UiDensity } from '../../services/density-types';
+import type { UiDensity } from '../../services/density';
 
 @Directive({
   selector: '[msDensity]',

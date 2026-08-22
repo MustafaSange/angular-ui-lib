@@ -80,6 +80,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/grid/grid').then((m) => m.Grid),
   },
   {
+    path: 'language',
+    loadComponent: () => import('./features/language/language').then((m) => m.Language),
+  },
+  {
     path: 'menu-popover',
     loadComponent: () => import('./features/menu-popover/menu-popover').then((m) => m.MenuPopover),
   },

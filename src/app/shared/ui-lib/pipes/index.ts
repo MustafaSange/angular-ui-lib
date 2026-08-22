@@ -1,4 +1,4 @@
-export { FormatJsonPipe } from './format-json.pipe';
-export { HighlightPipe } from './highlight.pipe';
-export type { HighlightPart } from './highlight.types';
-export { TimeAgoPipe } from './time-ago.pipe';
+export * from './format-json';
+export * from './highlight';
+export * from './time-ago';
+export * from './translate';

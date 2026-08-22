@@ -5,7 +5,7 @@ interface ShowcaseItem {
   readonly description: string;
   readonly name: string;
   readonly path: string;
-  readonly type: 'Components' | 'Layout' | 'Pipes' | 'Utilities';
+  readonly type: 'Components' | 'Layout' | 'Pipes' | 'Services' | 'Utilities';
 }
 
 const SHOWCASES: readonly ShowcaseItem[] = [
@@ -116,6 +116,12 @@ const SHOWCASES: readonly ShowcaseItem[] = [
     type: 'Layout',
     path: '/grid',
     description: 'Columns, responsive spans, row gaps, and containers.',
+  },
+  {
+    name: 'Language Localization',
+    type: 'Services',
+    path: '/language',
+    description: 'Typed English and Arabic translations with interpolation and RTL switching.',
   },
   {
     name: 'Menu and Popover',

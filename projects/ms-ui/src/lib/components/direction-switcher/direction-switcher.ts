@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 
-import { DirectionService, LayoutDirection } from '../../services/direction.service';
+import { DirectionService, LayoutDirection } from '../../services/direction';
 
 @Component({
   selector: 'ms-direction-switcher',

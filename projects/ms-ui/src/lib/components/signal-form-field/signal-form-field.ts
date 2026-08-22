@@ -1,7 +1,8 @@
-import { Component, computed, contentChild } from '@angular/core';
+import { Component, computed, contentChild, inject } from '@angular/core';
 import { FormField } from '@angular/forms/signals';
 import type { ValidationError } from '@angular/forms/signals';
 
+import { LanguageService } from '../../services/language';
 import { SignalFormError } from './signal-form-error/signal-form-error';
 import { SignalFormHint } from './signal-form-hint/signal-form-hint';
 import { SignalReadonlyValue } from './signal-readonly-value';
@@ -26,6 +27,7 @@ type ErrorWithLimit = ValidationError & {
   },
 })
 export class SignalFormField {
+  private readonly languageService = inject(LanguageService);
   private readonly field = contentChild<FormField<unknown>>(FormField);
   private readonly hint = contentChild(SignalFormHint);
   private readonly error = contentChild(SignalFormError);
@@ -65,21 +67,45 @@ export class SignalFormField {
 
     switch (error.kind) {
       case 'required':
-        return 'Required';
+        return this.languageService.translate('validation.required');
       case 'min':
-        return `Min ${errorWithLimit.min}`;
+        if (typeof errorWithLimit.min !== 'number') {
+          return error.kind;
+        }
+
+        return this.languageService.translate('validation.min', {
+          min: errorWithLimit.min,
+        });
       case 'max':
-        return `Max ${errorWithLimit.max}`;
+        if (typeof errorWithLimit.max !== 'number') {
+          return error.kind;
+        }
+
+        return this.languageService.translate('validation.max', {
+          max: errorWithLimit.max,
+        });
       case 'minLength':
-        return `Min ${errorWithLimit.minLength} chars`;
+        if (typeof errorWithLimit.minLength !== 'number') {
+          return error.kind;
+        }
+
+        return this.languageService.translate('validation.minLength', {
+          minLength: errorWithLimit.minLength,
+        });
       case 'maxLength':
-        return `Max ${errorWithLimit.maxLength} chars`;
+        if (typeof errorWithLimit.maxLength !== 'number') {
+          return error.kind;
+        }
+
+        return this.languageService.translate('validation.maxLength', {
+          maxLength: errorWithLimit.maxLength,
+        });
       case 'email':
-        return 'Invalid email';
+        return this.languageService.translate('validation.email');
       case 'pattern':
-        return 'Invalid format';
+        return this.languageService.translate('validation.pattern');
       case 'parse':
-        return 'Invalid value';
+        return this.languageService.translate('validation.parse');
       default:
         return error.kind;
     }

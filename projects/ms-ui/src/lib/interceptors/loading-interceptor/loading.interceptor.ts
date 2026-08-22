@@ -2,7 +2,7 @@ import type { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { defer, finalize } from 'rxjs';
 
-import { LoadingService } from '../../services/loading.service';
+import { LoadingService } from '../../services/loading';
 import { SKIP_LOADING_INDICATOR } from './loading-context';
 
 export const loadingInterceptor: HttpInterceptorFn = (request, next) => {

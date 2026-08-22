@@ -3,7 +3,7 @@ import { inject } from '@angular/core';
 import { tap } from 'rxjs';
 
 import { ToastService } from '../../components/feedback';
-import { DirectionService, type LayoutDirection } from '../../services/direction.service';
+import { DirectionService, type LayoutDirection } from '../../services/direction';
 import { NETWORK_ERROR_STATUS, SKIP_API_ERROR_TOAST } from './api-error-context';
 import type { ApiError } from './api-error-types';
 

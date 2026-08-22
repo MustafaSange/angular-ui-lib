@@ -59,11 +59,12 @@ export class TimeAgoExample {
 
 The implementation lives in:
 
-`src/app/shared/ui-lib/pipes/time-ago.pipe.ts`
+`src/app/shared/ui-lib/pipes/time-ago/time-ago.pipe.ts`
 
 The public exports live in:
 
 - `src/app/shared/ui-lib/pipes/index.ts`
+- `src/app/shared/ui-lib/pipes/time-ago/index.ts`
 - `src/app/shared/ui-lib/index.ts`
 
 No component, template, styles, service, or additional public types are required.
