@@ -1,5 +1,5 @@
-<main class="language-page">
-  <header class="language-header">
+<main class="localization-page">
+  <header class="localization-header">
     <a class="btn btn-ghost back-link" routerLink="/">
       <span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span>
       <span>Back to Home</span>
@@ -12,17 +12,17 @@
     </p>
   </header>
 
-  <section class="language-section" [attr.aria-busy]="loading()">
+  <section class="localization-section" [attr.aria-busy]="loading()">
     <div class="section-heading">
       <div>
         <h2>Live Language Switch</h2>
         <p>The selected language controls both translated values and document direction.</p>
       </div>
 
-      <div class="language-switcher" role="group" aria-label="Language">
+      <div class="localization-switcher" role="group" aria-label="Language">
         @for (option of languageOptions; track option.code) {
           <button
-            class="btn language-option"
+            class="btn localization-option"
             type="button"
             [class.btn-primary]="language() === option.code"
             [class.btn-outline]="language() !== option.code"
@@ -59,7 +59,7 @@
     <app-showcase-code label="Language Switch and Translate Pipe" [code]="switcherSnippet" />
   </section>
 
-  <section class="language-section">
+  <section class="localization-section">
     <div class="section-heading">
       <div>
         <h2>Typed Service Translation</h2>
@@ -84,7 +84,7 @@
     <app-showcase-code label="Language Service Translation" [code]="serviceSnippet" />
   </section>
 
-  <section class="language-section">
+  <section class="localization-section">
     <div class="section-heading">
       <div>
         <h2>Validation Messages and Fallbacks</h2>

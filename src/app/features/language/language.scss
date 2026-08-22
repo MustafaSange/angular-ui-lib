@@ -5,13 +5,13 @@
   color: var(--color-text-primary);
 }
 
-.language-page {
+.localization-page {
   max-inline-size: var(--container-page);
   margin-inline: auto;
   padding: var(--spacing-32) var(--spacing-16);
 }
 
-.language-header {
+.localization-header {
   margin-block-end: var(--spacing-32);
 }
 
@@ -51,7 +51,7 @@ h2 {
   color: var(--color-text-secondary);
 }
 
-.language-section {
+.localization-section {
   padding: var(--spacing-20);
   border: var(--border-width-sm) solid var(--color-border);
   border-radius: var(--radius-lg);
@@ -76,7 +76,7 @@ h2 {
   }
 }
 
-.language-switcher {
+.localization-switcher {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-8);
