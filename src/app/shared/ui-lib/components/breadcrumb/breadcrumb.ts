@@ -1,5 +1,6 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 
+import { LanguageService } from '../../services/language';
 import type { BreadcrumbSize } from './breadcrumb-types';
 
 @Component({
@@ -12,8 +13,12 @@ import type { BreadcrumbSize } from './breadcrumb-types';
   },
 })
 export class BreadcrumbComponent {
-  readonly label = input('Breadcrumb');
+  private readonly languageService = inject(LanguageService);
+  readonly label = input<string | null>(null);
   readonly size = input<BreadcrumbSize>('md');
+  protected readonly resolvedLabel = computed(
+    () => this.label() ?? this.languageService.translate('accessibility.breadcrumb'),
+  );
 
   protected readonly sizeValue = computed(() => {
     switch (this.size()) {

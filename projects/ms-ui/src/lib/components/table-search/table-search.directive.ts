@@ -3,12 +3,14 @@ import {
   booleanAttribute,
   computed,
   effect,
+  inject,
   input,
   model,
   output,
   untracked,
 } from '@angular/core';
 
+import { LanguageService } from '../../services/language';
 import {
   areRequiredSearchFiltersValid,
   areSearchQueryStatesEqual,
@@ -36,6 +38,7 @@ import {
   },
 })
 export class TableSearchDirective {
+  private readonly languageService = inject(LanguageService);
   readonly properties = input.required<readonly SearchPropertyConfig[]>();
   readonly sortConfig = input<SearchSortConfig | null>(null);
   readonly state = model<SearchQueryFormState>({ filters: [] });
@@ -85,7 +88,7 @@ export class TableSearchDirective {
   readonly resetDefaultsUnavailableReason = computed(() =>
     this.canResetDefaults() || this.disabled()
       ? ''
-      : 'Reset Defaults is unavailable because one or more configured defaults are invalid.',
+      : this.languageService.translate('tableSearch.resetDefaultsUnavailable'),
   );
   private readonly registeredColumns = new Set<string>();
 

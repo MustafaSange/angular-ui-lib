@@ -23,7 +23,7 @@
 >
   <div class="drop-zone-content" [id]="descriptionId()">
     @if (hasItems()) {
-      <ul class="file-list" aria-label="Selected files">
+      <ul class="file-list" [attr.aria-label]="'fileUpload.selectedFiles' | translate">
         @for (item of acceptedItems(); track item.safeName + item.size) {
           <li>
             <ms-chip
@@ -40,7 +40,7 @@
               <button
                 type="button"
                 msChipRemove
-                [attr.aria-label]="'Remove ' + item.safeName"
+                [attr.aria-label]="'fileUpload.removeFile' | translate: { file: item.safeName }"
               ></button>
             </ms-chip>
           </li>
@@ -61,6 +61,6 @@
     (click)="openFileDialog()"
   >
     <span class="ms-icon" aria-hidden="true">upload_file</span>
-    {{ multiple() ? 'Choose files' : 'Choose file' }}
+    {{ (multiple() ? 'fileUpload.chooseFiles' : 'fileUpload.chooseFile') | translate }}
   </button>
 </div>

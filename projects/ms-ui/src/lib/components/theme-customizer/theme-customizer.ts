@@ -1,16 +1,20 @@
 import { DOCUMENT } from '@angular/common';
 import { afterNextRender, Component, computed, inject, signal } from '@angular/core';
 
+import { TranslatePipe } from '../../pipes';
+import { LanguageService, type TranslationKey } from '../../services/language';
 import { THEME_SEMANTIC_COLORS, ThemeSemanticColor, ThemeService } from '../../services';
 
 @Component({
   selector: 'ms-theme-customizer',
+  imports: [TranslatePipe],
   templateUrl: './theme-customizer.html',
   styleUrl: './theme-customizer.scss',
 })
 export class ThemeCustomizer {
   private readonly document = inject(DOCUMENT);
   private readonly themeService = inject(ThemeService);
+  private readonly languageService = inject(LanguageService);
 
   protected readonly options = THEME_SEMANTIC_COLORS;
   protected readonly colorCustomizations = this.themeService.colorCustomizations;
@@ -49,6 +53,10 @@ export class ThemeCustomizer {
 
   protected resetColors(): void {
     this.themeService.resetColors();
+  }
+
+  protected colorLabel(color: ThemeSemanticColor): string {
+    return this.languageService.translate(`theme.${color}` as TranslationKey);
   }
 
   private readDefaultColors(): Partial<Record<ThemeSemanticColor, string>> {

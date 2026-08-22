@@ -11,13 +11,14 @@ import {
 } from '@angular/core';
 
 import { OverflowNavigation, OverflowNavigationButton } from '../../directives';
+import { TranslatePipe } from '../../pipes';
 import { TabComponent } from './tab';
 
 let nextTabsId = 0;
 
 @Component({
   selector: 'ms-tabs',
-  imports: [NgTemplateOutlet, OverflowNavigation, OverflowNavigationButton],
+  imports: [NgTemplateOutlet, OverflowNavigation, OverflowNavigationButton, TranslatePipe],
   templateUrl: './tabs.html',
 })
 export class TabsComponent {

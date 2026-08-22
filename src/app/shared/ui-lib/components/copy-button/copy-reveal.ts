@@ -10,9 +10,9 @@ import type { CopyButtonKind, CopyButtonSize } from './copy-button-types';
 })
 export class CopyRevealComponent {
   readonly text = input<string | undefined>(undefined);
-  readonly ariaLabel = input('Copy to clipboard');
-  readonly copiedLabel = input('Copied');
-  readonly failedLabel = input('Copy failed');
+  readonly ariaLabel = input<string | null>(null);
+  readonly copiedLabel = input<string | null>(null);
+  readonly failedLabel = input<string | null>(null);
   readonly resetDelay = input(2000);
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly kind = input<CopyButtonKind>('ghost');

@@ -1,6 +1,7 @@
 export * from './search-query-builder';
 export * from './search-query-date-time';
 export * from './search-query-equality';
+export * from './search-query-localization';
 export * from './search-query-operators';
 export * from './search-query-reconciliation';
 export * from './search-query-sort';

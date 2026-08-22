@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { DOCUMENT, NgClass } from '@angular/common';
 
+import { TranslatePipe } from '../../pipes';
 import type { DrawerPlacement } from './drawer-placement';
 
 let nextDrawerId = 0;
@@ -19,7 +20,7 @@ let openDrawerCount = 0;
 @Component({
   selector: 'ms-drawer',
   exportAs: 'msDrawer',
-  imports: [NgClass],
+  imports: [NgClass, TranslatePipe],
   templateUrl: './drawer.html',
 })
 export class DrawerComponent {

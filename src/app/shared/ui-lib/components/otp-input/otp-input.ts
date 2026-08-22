@@ -4,6 +4,7 @@ import {
   booleanAttribute,
   computed,
   effect,
+  inject,
   input,
   model,
   numberAttribute,
@@ -12,6 +13,7 @@ import {
 } from '@angular/core';
 import type { FormValueControl } from '@angular/forms/signals';
 
+import { LanguageService } from '../../services/language';
 import type { OtpInputMode } from './otp-input-types';
 
 const MIN_OTP_LENGTH = 1;
@@ -30,6 +32,7 @@ let nextOtpInputId = 0;
   },
 })
 export class OtpInputComponent implements FormValueControl<string> {
+  private readonly languageService = inject(LanguageService);
   private readonly inputRefs = viewChildren<ElementRef<HTMLInputElement>>('otpInput');
   private readonly generatedId = `ms-otp-input-${nextOtpInputId++}`;
   private interacted = false;
@@ -64,6 +67,9 @@ export class OtpInputComponent implements FormValueControl<string> {
   protected readonly inputPattern = computed(() =>
     this.normalizedMode() === 'numeric' ? '[0-9]*' : '[A-Za-z0-9]*',
   );
+  protected readonly resolvedAriaLabel = computed(
+    () => this.ariaLabel() ?? this.languageService.translate('accessibility.oneTimeCode'),
+  );
 
   constructor() {
     effect(() => {
@@ -95,9 +101,11 @@ export class OtpInputComponent implements FormValueControl<string> {
       return null;
     }
 
-    const label = this.ariaLabel() ?? 'One-time code';
-
-    return `${label} character ${index + 1} of ${this.effectiveLength()}`;
+    return this.languageService.translate('accessibility.oneTimeCodeCharacter', {
+      label: this.resolvedAriaLabel(),
+      current: index + 1,
+      total: this.effectiveLength(),
+    });
   }
 
   protected handleInput(index: number, event: Event): void {

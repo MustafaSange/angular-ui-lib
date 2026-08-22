@@ -8,7 +8,7 @@
             <button
               class="autocomplete-chip-remove"
               type="button"
-              [attr.aria-label]="'Remove ' + option.label"
+              [attr.aria-label]="'selection.removeOption' | translate: { option: option.label }"
               (click)="removeOption(option, $event)"
             >
               <span class="ms-icon" aria-hidden="true">close</span>
@@ -42,14 +42,18 @@
   </div>
 
   @if (loading()) {
-    <span class="autocomplete-progress" aria-label="Loading options" role="status"></span>
+    <span
+      class="autocomplete-progress"
+      [attr.aria-label]="'selection.loadingOptions' | translate"
+      role="status"
+    ></span>
   }
 
   @if (clearable() && hasSelection() && !isInteractiveDisabled()) {
     <button
       class="autocomplete-clear"
       type="button"
-      aria-label="Clear selection"
+      [attr.aria-label]="'selection.clearSelection' | translate"
       (click)="clearSelection()"
     >
       <span class="ms-icon" aria-hidden="true">close</span>
@@ -59,7 +63,7 @@
   <button
     class="autocomplete-toggle"
     type="button"
-    aria-label="Show options"
+    [attr.aria-label]="'selection.showOptions' | translate"
     [disabled]="isDisabled() || readonly()"
     [attr.aria-expanded]="open()"
     [attr.aria-controls]="panelId"
@@ -79,11 +83,13 @@
   (toggle)="handlePanelToggle($event)"
 >
   @if (loading()) {
-    <div class="autocomplete-status" role="status">Loading options</div>
+    <div class="autocomplete-status" role="status">
+      {{ 'selection.loadingOptions' | translate }}
+    </div>
   } @else if (error()) {
     <div class="autocomplete-status" role="status">{{ error() }}</div>
   } @else if (visibleOptions().length === 0) {
-    <div class="autocomplete-status">No options found</div>
+    <div class="autocomplete-status">{{ 'selection.noOptions' | translate }}</div>
   } @else {
     @for (option of visibleOptions(); track optionId(option); let index = $index) {
       @if (shouldRenderGroup(index)) {

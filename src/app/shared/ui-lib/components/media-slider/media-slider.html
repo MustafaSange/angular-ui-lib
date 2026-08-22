@@ -2,7 +2,7 @@
   <button
     class="media-slider-button media-slider-button-previous"
     type="button"
-    [attr.aria-label]="previousLabel()"
+    [attr.aria-label]="resolvedPreviousLabel()"
     [disabled]="!canScrollPrevious()"
     (click)="scrollPrevious()"
   >
@@ -14,7 +14,7 @@
     class="media-slider-track"
     role="region"
     tabindex="0"
-    [attr.aria-label]="ariaLabel()"
+    [attr.aria-label]="resolvedAriaLabel()"
   >
     <ng-content select="ms-media-slide" />
   </div>
@@ -22,7 +22,7 @@
   <button
     class="media-slider-button media-slider-button-next"
     type="button"
-    [attr.aria-label]="nextLabel()"
+    [attr.aria-label]="resolvedNextLabel()"
     [disabled]="!canScrollNext()"
     (click)="scrollNext()"
   >

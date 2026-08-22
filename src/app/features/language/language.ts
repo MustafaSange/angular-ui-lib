@@ -3,8 +3,13 @@ import { RouterLink } from '@angular/router';
 
 import { ShowcaseCode } from '../../shared/showcase-code';
 import {
+  AutocompleteComponent,
+  DatePickerComponent,
   DirectionService,
   LanguageService,
+  PaginationComponent,
+  type PaginationState,
+  ThemeSwitcher,
   TranslatePipe,
   type LanguageCode,
   type TranslationKey,
@@ -17,7 +22,15 @@ interface LanguageOption {
 
 @Component({
   selector: 'app-language',
-  imports: [RouterLink, ShowcaseCode, TranslatePipe],
+  imports: [
+    AutocompleteComponent,
+    DatePickerComponent,
+    PaginationComponent,
+    RouterLink,
+    ShowcaseCode,
+    ThemeSwitcher,
+    TranslatePipe,
+  ],
   templateUrl: './language.html',
   styleUrl: './language.scss',
 })
@@ -38,6 +51,44 @@ export class Language {
     { code: 'en', labelKey: 'language.english' },
     { code: 'ar', labelKey: 'language.arabic' },
   ];
+  protected readonly emptyPagination: PaginationState = {
+    totalItems: 0,
+    showSummary: true,
+    showPageSizeSelector: true,
+  };
+
+  protected readonly componentsSnippet = `import { Component } from '@angular/core';
+
+import {
+  AutocompleteComponent,
+  DatePickerComponent,
+  PaginationComponent,
+  type PaginationState,
+  ThemeSwitcher,
+} from './shared/ui-lib';
+
+@Component({
+  selector: 'app-localized-components-example',
+  imports: [
+    AutocompleteComponent,
+    DatePickerComponent,
+    PaginationComponent,
+    ThemeSwitcher,
+  ],
+  template: \`
+    <ms-theme-switcher />
+    <ms-autocomplete aria-label="Account" [options]="[]" />
+    <ms-date-picker />
+    <ms-pagination [state]="emptyPagination" />
+  \`,
+})
+export class LocalizedComponentsExample {
+  protected readonly emptyPagination: PaginationState = {
+    totalItems: 0,
+    showSummary: true,
+    showPageSizeSelector: true,
+  };
+}`;
 
   protected readonly switcherSnippet = `import { Component, inject } from '@angular/core';
 

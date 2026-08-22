@@ -16,16 +16,15 @@ import { ChipComponent, ChipRemoveDirective } from '../chip';
 import { SelectComponent, SelectOptionComponent } from '../select';
 import { SignalFormField, SignalReadonlyValue } from '../signal-form-field';
 import {
-  SEARCH_OPERATOR_LABELS,
   createSearchValueStatus,
   createSearchFilter,
   getAllowedSearchOperators,
   getSearchInputMode,
   getSearchInputStep,
   getSearchInputType,
+  getLocalizedSearchScalarError,
   getSearchMaxInValues,
   getSearchPropertyOptions,
-  getSearchScalarError,
   isBetweenValue,
   isSearchOptionInputValue,
   isSearchRangeReversed,
@@ -39,8 +38,11 @@ import {
   type SearchQueryFormFilter,
   type SearchRequestValue,
   type SearchScalarValue,
+  type SearchValueStatusKind,
 } from '../../search-query';
 import { TableSearchDirective } from './table-search.directive';
+import { TranslatePipe } from '../../pipes';
+import { LanguageService } from '../../services/language';
 
 interface FilterDraft {
   readonly operator: SearchOperator;
@@ -74,10 +76,12 @@ let nextFilterPopoverId = 0;
     SelectOptionComponent,
     SignalFormField,
     SignalReadonlyValue,
+    TranslatePipe,
   ],
   templateUrl: './table-search-filter-popover.html',
 })
 export class TableFilterPopoverComponent {
+  private readonly languageService = inject(LanguageService);
   readonly property = input.required<SearchPropertyConfig>();
 
   protected readonly table = inject(TableSearchDirective);
@@ -85,7 +89,6 @@ export class TableFilterPopoverComponent {
   protected readonly customValuesAnchor = `--${this.descriptionId}-custom-values`;
   protected readonly open = signal(false);
   protected readonly draft = signal<FilterDraft>(this.emptyDraft());
-  protected readonly operatorLabels = SEARCH_OPERATOR_LABELS;
   protected readonly allowedOperators = computed(() => getAllowedSearchOperators(this.property()));
   protected readonly propertyOptions = computed(() => getSearchPropertyOptions(this.property()));
   protected readonly appliedFilter = computed(() =>
@@ -122,13 +125,24 @@ export class TableFilterPopoverComponent {
   protected readonly isBetween = computed(() => this.draft().operator === 'between');
   protected readonly isIn = computed(() => this.draft().operator === 'in');
   protected readonly isValueless = computed(() => isValuelessSearchOperator(this.draft().operator));
-  protected readonly panelLabel = computed(() => `Filter ${this.label()}`);
+  protected readonly panelLabel = computed(() =>
+    this.languageService.translate('tableSearch.filter', { property: this.label() }),
+  );
   protected readonly triggerDescription = computed(() => {
     if (this.error()) {
-      return `${this.label()} filter is required and invalid.`;
+      return this.languageService.translate('tableSearch.requiredFilterInvalid', {
+        property: this.label(),
+      });
     }
-    return this.active() ? `${this.label()} filter is active.` : `${this.label()} has no filter.`;
+    return this.languageService.translate(
+      this.active() ? 'tableSearch.filterActive' : 'tableSearch.filterInactive',
+      { property: this.label() },
+    );
   });
+
+  protected operatorLabel(operator: SearchOperator): string {
+    return this.languageService.translate(`searchOperator.${operator}`);
+  }
 
   private readonly firstControl = viewChild<ElementRef<HTMLElement>>('firstControl');
   private readonly formElement = viewChild<ElementRef<HTMLFormElement>>('filterEditorForm');
@@ -138,9 +152,11 @@ export class TableFilterPopoverComponent {
   protected readonly filterForm = form(
     this.draft,
     schema<FilterDraft>((path) => {
-      required(path.operator, { message: 'Choose an operator.' });
+      required(path.operator, {
+        message: this.languageService.translate('validation.chooseOperator'),
+      });
       required(path.value, {
-        message: 'Enter a value.',
+        message: this.languageService.translate('validation.enterValue'),
         when: ({ valueOf }) =>
           valueOf(path.operator) !== 'between' &&
           valueOf(path.operator) !== 'in' &&
@@ -151,20 +167,23 @@ export class TableFilterPopoverComponent {
         if (operator === 'between' || operator === 'in' || isValuelessSearchOperator(operator)) {
           return undefined;
         }
-        const message = getSearchScalarError(this.property(), value());
+        const message = this.scalarError(this.property(), value());
         if (message) {
           return { kind: 'searchValue', message };
         }
         return isSearchOptionInputValue(this.propertyOptions(), value())
           ? undefined
-          : { kind: 'searchOption', message: 'Choose a configured value.' };
+          : {
+              kind: 'searchOption',
+              message: this.languageService.translate('validation.chooseConfiguredValue'),
+            };
       });
       required(path.from, {
-        message: 'Enter a from value.',
+        message: this.languageService.translate('validation.enterFromValue'),
         when: ({ valueOf }) => valueOf(path.operator) === 'between',
       });
       required(path.to, {
-        message: 'Enter a to value.',
+        message: this.languageService.translate('validation.enterToValue'),
         when: ({ valueOf }) => valueOf(path.operator) === 'between',
       });
       validate(path.to, ({ value, valueOf }) => {
@@ -172,28 +191,37 @@ export class TableFilterPopoverComponent {
           return undefined;
         }
         const property = this.property();
-        const message = getSearchScalarError(property, value());
+        const message = this.scalarError(property, value());
         if (message) {
           return { kind: 'searchValue', message };
         }
         if (!isSearchOptionInputValue(this.propertyOptions(), value())) {
-          return { kind: 'searchOption', message: 'Choose a configured value.' };
+          return {
+            kind: 'searchOption',
+            message: this.languageService.translate('validation.chooseConfiguredValue'),
+          };
         }
         return valueOf(path.from) && isSearchRangeReversed(property, valueOf(path.from), value())
-          ? { kind: 'searchRange', message: 'To must be greater than or equal to From.' }
+          ? {
+              kind: 'searchRange',
+              message: this.languageService.translate('validation.rangeOrder'),
+            }
           : undefined;
       });
       validate(path.from, ({ value, valueOf }) => {
         if (valueOf(path.operator) !== 'between' || !value()) {
           return undefined;
         }
-        const message = getSearchScalarError(this.property(), value());
+        const message = this.scalarError(this.property(), value());
         if (message) {
           return { kind: 'searchValue', message };
         }
         return isSearchOptionInputValue(this.propertyOptions(), value())
           ? undefined
-          : { kind: 'searchOption', message: 'Choose a configured value.' };
+          : {
+              kind: 'searchOption',
+              message: this.languageService.translate('validation.chooseConfiguredValue'),
+            };
       });
       validate(path.values, ({ value, valueOf }) => {
         if (valueOf(path.operator) !== 'in') {
@@ -201,10 +229,16 @@ export class TableFilterPopoverComponent {
         }
         const total = new Set([...value(), ...valueOf(path.customValues)]).size;
         if (total === 0) {
-          return { kind: 'required', message: 'Choose or enter at least one value.' };
+          return {
+            kind: 'required',
+            message: this.languageService.translate('validation.chooseOrEnterAtLeastOne'),
+          };
         }
         return total > getSearchMaxInValues(this.property())
-          ? { kind: 'maxValues', message: 'Too many values selected.' }
+          ? {
+              kind: 'maxValues',
+              message: this.languageService.translate('validation.tooManyValues'),
+            }
           : undefined;
       });
       validate(path.customValues, ({ value, valueOf }) => {
@@ -215,20 +249,26 @@ export class TableFilterPopoverComponent {
           (token) => parseCustomSearchValue(this.property(), token) === null,
         );
         return invalid
-          ? { kind: 'searchValue', message: 'One or more custom values are invalid.' }
+          ? {
+              kind: 'searchValue',
+              message: this.languageService.translate('validation.invalidCustomValues'),
+            }
           : undefined;
       });
       validate(path.customValueInput, ({ value, valueOf }) => {
         if (valueOf(path.operator) !== 'in' || !value().trim()) {
           return undefined;
         }
-        const message = getSearchScalarError(this.property(), value().trim());
+        const message = this.scalarError(this.property(), value().trim());
         if (message) {
           return { kind: 'searchValue', message };
         }
         return new Set([...valueOf(path.values), ...valueOf(path.customValues)]).size >=
           getSearchMaxInValues(this.property())
-          ? { kind: 'maxValues', message: 'Value limit reached.' }
+          ? {
+              kind: 'maxValues',
+              message: this.languageService.translate('validation.valueLimit'),
+            }
           : undefined;
       });
     }),
@@ -323,7 +363,7 @@ export class TableFilterPopoverComponent {
     this.draft.update((draft) => ({
       ...draft,
       values: values.slice(0, availableSlots),
-      customValueStatus: capped ? 'Value limit reached.' : '',
+      customValueStatus: capped ? this.languageService.translate('validation.valueLimit') : '',
     }));
   }
 
@@ -333,8 +373,8 @@ export class TableFilterPopoverComponent {
       return '';
     }
     return (
-      getSearchScalarError(this.property(), value) ||
-      (this.isAtInValueLimit() ? 'Value limit reached.' : '')
+      this.scalarError(this.property(), value) ||
+      (this.isAtInValueLimit() ? this.languageService.translate('validation.valueLimit') : '')
     );
   }
 
@@ -386,7 +426,7 @@ export class TableFilterPopoverComponent {
       input.focus();
       this.draft.update((draft) => ({
         ...draft,
-        customValueStatus: 'Clipboard access blocked. Paste into the field.',
+        customValueStatus: this.languageService.translate('search.clipboardBlocked'),
       }));
     }
   }
@@ -415,7 +455,7 @@ export class TableFilterPopoverComponent {
       ...draft,
       customValues: [],
       customValueInput: '',
-      customValueStatus: 'Custom values cleared.',
+      customValueStatus: this.languageService.translate('search.customValuesCleared'),
     }));
   }
 
@@ -480,13 +520,13 @@ export class TableFilterPopoverComponent {
     if (draft.operator === 'between') {
       if (
         !draft.from ||
-        getSearchScalarError(this.property(), draft.from) ||
+        this.scalarError(this.property(), draft.from) ||
         !isSearchOptionInputValue(this.propertyOptions(), draft.from)
       ) {
         return 'from';
       }
       return !draft.to ||
-        getSearchScalarError(this.property(), draft.to) ||
+        this.scalarError(this.property(), draft.to) ||
         !isSearchOptionInputValue(this.propertyOptions(), draft.to) ||
         isSearchRangeReversed(this.property(), draft.from, draft.to)
         ? 'to'
@@ -499,7 +539,7 @@ export class TableFilterPopoverComponent {
       return 'operator';
     }
     return !draft.value ||
-      getSearchScalarError(this.property(), draft.value) ||
+      this.scalarError(this.property(), draft.value) ||
       !isSearchOptionInputValue(this.propertyOptions(), draft.value)
       ? 'value'
       : 'operator';
@@ -612,6 +652,7 @@ export class TableFilterPopoverComponent {
         duplicateCount,
         invalidCount,
         cappedCount,
+        (kind, count) => this.searchValueStatus(kind, count),
       ),
     });
   }
@@ -627,5 +668,31 @@ export class TableFilterPopoverComponent {
       customValueInput: '',
       customValueStatus: '',
     };
+  }
+
+  private searchValueStatus(kind: SearchValueStatusKind, count: number): string {
+    switch (kind) {
+      case 'added':
+        return this.languageService.translate(
+          count === 1 ? 'search.valueAdded' : 'search.valuesAdded',
+          { count },
+        );
+      case 'duplicate':
+        return this.languageService.translate(
+          count === 1 ? 'search.duplicateSkipped' : 'search.duplicatesSkipped',
+          { count },
+        );
+      case 'invalid':
+        return this.languageService.translate(
+          count === 1 ? 'search.invalidValueSkipped' : 'search.invalidValuesSkipped',
+          { count },
+        );
+      case 'overLimit':
+        return this.languageService.translate('search.overLimitSkipped', { count });
+    }
+  }
+
+  private scalarError(property: SearchPropertyConfig, value: string): string {
+    return getLocalizedSearchScalarError(this.languageService, property, value);
   }
 }

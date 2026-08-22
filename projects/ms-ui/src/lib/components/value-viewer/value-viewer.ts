@@ -17,7 +17,8 @@ import { FormField, form, schema } from '@angular/forms/signals';
 import { CopyButtonComponent } from '../copy-button';
 import { ModalComponent } from '../modal';
 import { SignalFormField } from '../signal-form-field';
-import { FormatJsonPipe, HighlightPipe, type HighlightPart } from '../../pipes';
+import { FormatJsonPipe, HighlightPipe, TranslatePipe, type HighlightPart } from '../../pipes';
+import { LanguageService } from '../../services/language';
 
 type ValueViewerSearchForm = {
   searchText: string;
@@ -31,19 +32,20 @@ let nextValueViewerId = 0;
 
 @Component({
   selector: 'ms-value-viewer',
-  imports: [CopyButtonComponent, FormField, ModalComponent, SignalFormField],
+  imports: [CopyButtonComponent, FormField, ModalComponent, SignalFormField, TranslatePipe],
   providers: [FormatJsonPipe, HighlightPipe],
   templateUrl: './value-viewer.html',
 })
 export class ValueViewerComponent {
   private readonly formatJson = inject(FormatJsonPipe);
   private readonly highlight = inject(HighlightPipe);
+  private readonly languageService = inject(LanguageService);
   private readonly searchInput = viewChild.required<ElementRef<HTMLInputElement>>('searchInput');
   private readonly matchElements = viewChildren<ElementRef<HTMLElement>>('matchElement');
   private readonly searchModel = signal<ValueViewerSearchForm>({ searchText: '' });
 
   readonly value = input.required<unknown>();
-  readonly title = input('Value Viewer');
+  readonly title = input<string | null>(null);
   readonly close = output<void>();
 
   protected readonly searchInputId = `value-viewer-search-${nextValueViewerId++}`;
@@ -52,6 +54,9 @@ export class ValueViewerComponent {
     schema<ValueViewerSearchForm>(() => {}),
   );
   protected readonly searchField = this.searchForm.searchText;
+  protected readonly resolvedTitle = computed(
+    () => this.title() ?? this.languageService.translate('valueViewer.title'),
+  );
 
   protected readonly displayText = computed(() => this.resolveDisplayText(this.value()));
   protected readonly clipboardText = computed(() =>
@@ -81,10 +86,13 @@ export class ValueViewerComponent {
     const count = this.matchCount();
 
     if (count === 0) {
-      return 'No matches';
+      return this.languageService.translate('valueViewer.noMatches');
     }
 
-    return `${this.activeMatchIndex() + 1} of ${count}`;
+    return this.languageService.translate('valueViewer.matchStatus', {
+      current: this.activeMatchIndex() + 1,
+      total: count,
+    });
   });
   protected readonly navigationDisabled = computed(() => this.matchCount() < 2);
 

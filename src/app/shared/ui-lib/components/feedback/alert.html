@@ -30,7 +30,7 @@
       <button
         class="btn btn-ghost btn-icon btn-sm ms-alert-close"
         type="button"
-        aria-label="Dismiss alert"
+        [attr.aria-label]="'accessibility.closeAlert' | translate"
         (click)="dismiss()"
       >
         <span class="ms-icon" aria-hidden="true">close</span>

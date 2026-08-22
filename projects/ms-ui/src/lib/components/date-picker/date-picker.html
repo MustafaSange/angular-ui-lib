@@ -24,7 +24,12 @@
   />
 
   @if (clearable() && value() && !disabled() && !readonly()) {
-    <button class="date-picker-clear" type="button" aria-label="Clear date" (click)="clear($event)">
+    <button
+      class="date-picker-clear"
+      type="button"
+      [attr.aria-label]="'datePicker.clear' | translate"
+      (click)="clear($event)"
+    >
       <span class="ms-icon" aria-hidden="true">close</span>
     </button>
   }
@@ -32,7 +37,7 @@
   <button
     class="date-picker-toggle"
     type="button"
-    aria-label="Choose date"
+    [attr.aria-label]="'datePicker.choose' | translate"
     [disabled]="disabled()"
     [attr.aria-disabled]="readonly()"
     [attr.aria-controls]="panelId"
@@ -49,7 +54,7 @@
   popover="auto"
   role="dialog"
   aria-modal="false"
-  aria-label="Choose date"
+  [attr.aria-label]="'datePicker.choose' | translate"
   [id]="panelId"
   (toggle)="handlePanelToggle($event)"
 >
@@ -131,7 +136,7 @@
       <div
         class="calendar-selection-grid"
         role="grid"
-        [attr.aria-label]="'Choose month for ' + yearLabel()"
+        [attr.aria-label]="'datePicker.chooseMonthFor' | translate: { year: yearLabel() }"
       >
         @for (month of monthOptions(); track month.value) {
           <button
@@ -155,7 +160,11 @@
       </div>
     }
     @case ('year') {
-      <div class="calendar-selection-grid" role="grid" aria-label="Choose year">
+      <div
+        class="calendar-selection-grid"
+        role="grid"
+        [attr.aria-label]="'datePicker.chooseYear' | translate"
+      >
         @for (year of yearOptions(); track year) {
           <button
             #yearButton

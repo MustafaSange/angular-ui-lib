@@ -17,6 +17,7 @@ import {
   type ValidationError,
 } from '@angular/forms/signals';
 
+import { TranslatePipe } from '../../pipes';
 import {
   formatDisplayTime,
   formatTimeValue,
@@ -40,6 +41,7 @@ let nextTimePickerId = 0;
 
 @Component({
   selector: 'ms-time-picker',
+  imports: [TranslatePipe],
   templateUrl: './time-picker.html',
   host: {
     class: 'time-picker',

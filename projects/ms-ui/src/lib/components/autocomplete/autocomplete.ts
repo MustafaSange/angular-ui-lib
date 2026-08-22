@@ -18,6 +18,8 @@ import { NgTemplateOutlet } from '@angular/common';
 import type { FormValueControl } from '@angular/forms/signals';
 import { Observable, Subscription, isObservable } from 'rxjs';
 
+import { TranslatePipe } from '../../pipes';
+import { LanguageService } from '../../services/language';
 import type {
   AutocompleteCompareWith,
   AutocompleteDisplayWith,
@@ -41,7 +43,7 @@ let nextAutocompleteId = 0;
 
 @Component({
   selector: 'ms-autocomplete',
-  imports: [NgTemplateOutlet],
+  imports: [NgTemplateOutlet, TranslatePipe],
   templateUrl: './autocomplete.html',
   host: {
     class: 'autocomplete',
@@ -52,9 +54,7 @@ let nextAutocompleteId = 0;
     '[attr.formField]': 'true',
   },
 })
-export class AutocompleteComponent<TValue>
-  implements FormValueControl<AutocompleteValue<TValue>>
-{
+export class AutocompleteComponent<TValue> implements FormValueControl<AutocompleteValue<TValue>> {
   readonly options = input<readonly AutocompleteOption<TValue>[]>([]);
   readonly source = input<AutocompleteSearchSource<TValue> | null>(null);
   readonly value = model<AutocompleteValue<TValue>>(null);
@@ -76,9 +76,11 @@ export class AutocompleteComponent<TValue>
   readonly touch = output<void>();
 
   private readonly destroyRef = inject(DestroyRef);
+  private readonly languageService = inject(LanguageService);
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
-  private readonly projectedOptionComponents =
-    contentChildren<AutocompleteOptionComponent<TValue>>(AutocompleteOptionComponent);
+  private readonly projectedOptionComponents = contentChildren<AutocompleteOptionComponent<TValue>>(
+    AutocompleteOptionComponent,
+  );
   private readonly inputRef = viewChild<ElementRef<HTMLInputElement>>('autocompleteInput');
   private readonly panelRef = viewChild<ElementRef<HTMLElement>>('autocompletePanel');
 
@@ -150,7 +152,7 @@ export class AutocompleteComponent<TValue>
     }
 
     const value = this.singleValue();
-    return value === null ? this.query() : this.selectedOptions()[0]?.label ?? '';
+    return value === null ? this.query() : (this.selectedOptions()[0]?.label ?? '');
   });
 
   protected readonly inputPlaceholder = computed(() => {
@@ -493,7 +495,9 @@ export class AutocompleteComponent<TValue>
     }
 
     const selectedIndex = this.firstSelectedOptionIndex();
-    this.activeIndex.set(selectedIndex >= 0 ? selectedIndex : this.enabledOptionIndexes()[0] ?? -1);
+    this.activeIndex.set(
+      selectedIndex >= 0 ? selectedIndex : (this.enabledOptionIndexes()[0] ?? -1),
+    );
   }
 
   private firstSelectedOptionIndex(): number {
@@ -558,8 +562,7 @@ export class AutocompleteComponent<TValue>
 
   private loadSource(source: AutocompleteSearchSource<TValue>, query: string): void {
     const requestId = ++this.sourceRequestId;
-    const result =
-      typeof source === 'function' ? source(query) : this.filterOptions(source, query);
+    const result = typeof source === 'function' ? source(query) : this.filterOptions(source, query);
 
     if (isObservable(result)) {
       this.sourceSubscription = (
@@ -605,7 +608,7 @@ export class AutocompleteComponent<TValue>
     }
 
     this.loading.set(false);
-    this.error.set('Options could not be loaded');
+    this.error.set(this.languageService.translate('selection.loadError'));
     this.activeIndex.set(-1);
   }
 
@@ -685,8 +688,8 @@ export class AutocompleteComponent<TValue>
 
     return Boolean(
       activeElement &&
-        ((inputElement && inputElement === activeElement) ||
-          (panelElement && panelElement.contains(activeElement))),
+      ((inputElement && inputElement === activeElement) ||
+        (panelElement && panelElement.contains(activeElement))),
     );
   }
 }

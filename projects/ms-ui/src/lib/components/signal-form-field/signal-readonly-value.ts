@@ -10,17 +10,20 @@ import {
 } from '@angular/core';
 
 import { OverflowNavigation, OverflowNavigationButton } from '../../directives';
+import { TranslatePipe } from '../../pipes';
 
 @Component({
   selector: 'ms-readonly-value',
-  imports: [OverflowNavigation, OverflowNavigationButton],
+  imports: [OverflowNavigation, OverflowNavigationButton, TranslatePipe],
   template: `
     @let overflow = navigation.state();
 
     @if (overflow.hasOverflow && overflow.canScrollBackward) {
       <button
         msOverflowNavigationButton="backward"
-        aria-label="Scroll value backward"
+        [attr.aria-label]="
+          'accessibility.scrollBackward' | translate: { item: ('common.value' | translate) }
+        "
         (click)="navigation.scroll('backward')"
       ></button>
     }
@@ -41,7 +44,9 @@ import { OverflowNavigation, OverflowNavigationButton } from '../../directives';
     @if (overflow.hasOverflow && overflow.canScrollForward) {
       <button
         msOverflowNavigationButton="forward"
-        aria-label="Scroll value forward"
+        [attr.aria-label]="
+          'accessibility.scrollForward' | translate: { item: ('common.value' | translate) }
+        "
         (click)="navigation.scroll('forward')"
       ></button>
     }

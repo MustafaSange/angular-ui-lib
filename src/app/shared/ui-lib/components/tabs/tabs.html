@@ -5,7 +5,9 @@
     @if (overflow.hasOverflow && overflow.canScrollBackward) {
       <button
         msOverflowNavigationButton="backward"
-        aria-label="Scroll tabs backward"
+        [attr.aria-label]="
+          'accessibility.scrollBackward' | translate: { item: ('common.tabs' | translate) }
+        "
         (click)="navigation.scroll('backward')"
       ></button>
     }
@@ -42,7 +44,9 @@
     @if (overflow.hasOverflow && overflow.canScrollForward) {
       <button
         msOverflowNavigationButton="forward"
-        aria-label="Scroll tabs forward"
+        [attr.aria-label]="
+          'accessibility.scrollForward' | translate: { item: ('common.tabs' | translate) }
+        "
         (click)="navigation.scroll('forward')"
       ></button>
     }

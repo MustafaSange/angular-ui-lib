@@ -4,12 +4,14 @@ import {
   OnDestroy,
   booleanAttribute,
   computed,
+  inject,
   input,
   signal,
   viewChild,
 } from '@angular/core';
 
 import { copyTextToClipboard } from './copy-clipboard';
+import { LanguageService } from '../../services/language';
 import type { CopyButtonKind, CopyButtonSize, CopyClipboardResult } from './copy-button-types';
 
 type CopyState = 'idle' | CopyClipboardResult;
@@ -23,15 +25,16 @@ type CopyState = 'idle' | CopyClipboardResult;
 })
 export class CopyButtonComponent implements OnDestroy {
   readonly text = input<string | undefined>(undefined);
-  readonly ariaLabel = input('Copy to clipboard');
-  readonly copiedLabel = input('Copied');
-  readonly failedLabel = input('Copy failed');
+  readonly ariaLabel = input<string | null>(null);
+  readonly copiedLabel = input<string | null>(null);
+  readonly failedLabel = input<string | null>(null);
   readonly resetDelay = input(2000);
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly kind = input<CopyButtonKind>('ghost');
   readonly size = input<CopyButtonSize>('md');
 
   private readonly projectedContent = viewChild<ElementRef<HTMLElement>>('projectedContent');
+  private readonly languageService = inject(LanguageService);
   private resetTimer: ReturnType<typeof setTimeout> | undefined;
 
   protected readonly copyState = signal<CopyState>('idle');
@@ -50,11 +53,11 @@ export class CopyButtonComponent implements OnDestroy {
   protected readonly currentLabel = computed(() => {
     switch (this.copyState()) {
       case 'copied':
-        return this.copiedLabel();
+        return this.copiedLabel() ?? this.languageService.translate('clipboard.copied');
       case 'failed':
-        return this.failedLabel();
+        return this.failedLabel() ?? this.languageService.translate('clipboard.failed');
       default:
-        return this.ariaLabel();
+        return this.ariaLabel() ?? this.languageService.translate('clipboard.copy');
     }
   });
 

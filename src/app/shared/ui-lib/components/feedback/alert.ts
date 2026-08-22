@@ -1,9 +1,11 @@
 import { Component, booleanAttribute, computed, input, output, signal } from '@angular/core';
 
+import { TranslatePipe } from '../../pipes';
 import type { FeedbackKind } from './feedback-types';
 
 @Component({
   selector: 'ms-alert',
+  imports: [TranslatePipe],
   templateUrl: './alert.html',
 })
 export class AlertComponent {

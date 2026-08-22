@@ -4,7 +4,10 @@
   @if (overflow.hasOverflow && overflow.canScrollBackward) {
     <button
       msOverflowNavigationButton="backward"
-      aria-label="Scroll selected values backward"
+      [attr.aria-label]="
+        'accessibility.scrollBackward'
+          | translate: { item: ('selection.selectedValues' | translate) }
+      "
       (click)="navigation.scroll('backward')"
     ></button>
   }
@@ -31,7 +34,7 @@
             <button
               class="select-chip-remove"
               type="button"
-              [attr.aria-label]="'Remove ' + option.label"
+              [attr.aria-label]="'selection.removeOption' | translate: { option: option.label }"
               (click)="removeOption(option, $event)"
             >
               <span class="ms-icon" aria-hidden="true">close</span>
@@ -68,20 +71,27 @@
   @if (overflow.hasOverflow && overflow.canScrollForward) {
     <button
       msOverflowNavigationButton="forward"
-      aria-label="Scroll selected values forward"
+      [attr.aria-label]="
+        'accessibility.scrollForward'
+          | translate: { item: ('selection.selectedValues' | translate) }
+      "
       (click)="navigation.scroll('forward')"
     ></button>
   }
 
   @if (loading()) {
-    <span class="select-progress" aria-label="Loading options" role="status"></span>
+    <span
+      class="select-progress"
+      [attr.aria-label]="'selection.loadingOptions' | translate"
+      role="status"
+    ></span>
   }
 
   @if (clearable() && hasSelection() && !isInteractiveDisabled()) {
     <button
       class="select-clear"
       type="button"
-      aria-label="Clear selection"
+      [attr.aria-label]="'selection.clearSelection' | translate"
       (click)="clearSelection()"
     >
       <span class="ms-icon" aria-hidden="true">close</span>
@@ -91,7 +101,7 @@
   <button
     class="select-toggle"
     type="button"
-    aria-label="Show options"
+    [attr.aria-label]="'selection.showOptions' | translate"
     [disabled]="isDisabled() || readonly()"
     [attr.aria-expanded]="open()"
     [attr.aria-controls]="panelId"
@@ -111,11 +121,11 @@
   (toggle)="handlePanelToggle($event)"
 >
   @if (loading()) {
-    <div class="select-status" role="status">Loading options</div>
+    <div class="select-status" role="status">{{ 'selection.loadingOptions' | translate }}</div>
   } @else if (error()) {
     <div class="select-status" role="status">{{ error() }}</div>
   } @else if (visibleOptions().length === 0) {
-    <div class="select-status">No options found</div>
+    <div class="select-status">{{ 'selection.noOptions' | translate }}</div>
   } @else {
     @for (option of visibleOptions(); track optionId(option); let index = $index) {
       @if (shouldRenderGroup(index)) {

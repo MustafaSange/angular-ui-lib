@@ -6,7 +6,7 @@
       animate.leave="drawer-backdrop-leave"
       type="button"
       tabindex="-1"
-      aria-label="Close navigation"
+      [attr.aria-label]="'accessibility.closeNavigation' | translate"
       (click)="handleBackdropClick()"
     ></button>
 

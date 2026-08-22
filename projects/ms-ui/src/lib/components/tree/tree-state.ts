@@ -28,9 +28,9 @@ export class TreeState {
     new Map(),
   );
   readonly dataLoader = signal<TreeChildrenLoader | null>(null);
-  readonly loadingText = signal('Loading items…');
-  readonly loadErrorText = signal('Couldn’t load items.');
-  readonly retryText = signal('Retry');
+  readonly loadingText = signal('');
+  readonly loadErrorText = signal('');
+  readonly retryText = signal('');
 
   constructor() {
     this.destroyRef.onDestroy(() => this.clearTypeahead());

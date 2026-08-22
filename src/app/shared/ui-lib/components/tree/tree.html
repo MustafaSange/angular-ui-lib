@@ -3,7 +3,7 @@
   role="tree"
   [class.tree-projected-first]="mixedOrder() === 'projected-first'"
   [class.tree-data-first]="mixedOrder() === 'data-first'"
-  [attr.aria-label]="ariaLabel()"
+  [attr.aria-label]="resolvedAriaLabel()"
 >
   <div class="tree-projected-nodes" role="presentation">
     <ng-content select="ms-tree-node" />
@@ -26,6 +26,6 @@
   </div>
 
   @if (nodes().length === 0 && projectedNodes().length === 0) {
-    <div class="tree-empty">{{ emptyText() }}</div>
+    <div class="tree-empty">{{ resolvedEmptyText() }}</div>
   }
 </div>

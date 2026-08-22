@@ -2,6 +2,7 @@ import {
   Component,
   computed,
   effect,
+  inject,
   input,
   model,
   output,
@@ -23,6 +24,7 @@ import {
 
 import { buildSearchRequest, isBetweenValue } from '../../search-query/search-query-builder';
 import { createSearchFilterId } from '../../search-query/search-query-id';
+import { getLocalizedSearchScalarError } from '../../search-query/search-query-localization';
 import { reconcileSearchState } from '../../search-query/search-query-reconciliation';
 import { areSearchQueryStatesEqual } from '../../search-query/search-query-equality';
 import {
@@ -30,7 +32,6 @@ import {
   areSearchSortModelsEqual,
 } from './search-query-form-equality';
 import {
-  SEARCH_OPERATOR_LABELS,
   getCompatibleSearchOperators,
   getDefaultSearchOperator,
   isValuelessSearchOperator,
@@ -69,18 +70,20 @@ import {
   getSearchInputMode,
   getSearchInputStep,
   getSearchInputType,
-  getSearchScalarError,
   isSearchOptionInputValue,
   isSearchRangeReversed,
   parseCustomSearchValue,
   parseSearchScalar,
   stringifySearchScalar,
   tokenizeSearchValues,
+  type SearchValueStatusKind,
 } from '../../search-query/search-query-value';
 import { SignalFormField, SignalReadonlyValue } from '../signal-form-field';
 import { SelectComponent, SelectOptionComponent } from '../select';
 import { ChipComponent, ChipRemoveDirective } from '../chip';
 import { PopoverComponent, PopoverPanelComponent, PopoverTrigger } from '../menu-popover';
+import { TranslatePipe } from '../../pipes';
+import { LanguageService } from '../../services/language';
 
 @Component({
   selector: 'ms-search-query-form',
@@ -95,6 +98,7 @@ import { PopoverComponent, PopoverPanelComponent, PopoverTrigger } from '../menu
     SelectOptionComponent,
     SignalFormField,
     SignalReadonlyValue,
+    TranslatePipe,
   ],
   templateUrl: './search-query-form.html',
   host: {
@@ -102,6 +106,7 @@ import { PopoverComponent, PopoverPanelComponent, PopoverTrigger } from '../menu
   },
 })
 export class SearchQueryFormComponent {
+  private readonly languageService = inject(LanguageService);
   readonly properties = input.required<readonly SearchPropertyConfig[]>();
   readonly maxFilters = input(10);
   readonly sortConfig = input<SearchSortConfig | null>(null);
@@ -119,9 +124,13 @@ export class SearchQueryFormComponent {
       applyEach(
         path.filters,
         schema<SearchQueryFormFilterModel>((filter) => {
-          required(filter.property, { message: 'Choose a property.' });
+          required(filter.property, {
+            message: this.languageService.translate('validation.chooseProperty'),
+          });
           disabled(filter.property, { when: ({ valueOf }) => valueOf(filter.locked) });
-          required(filter.operator, { message: 'Choose an operator.' });
+          required(filter.operator, {
+            message: this.languageService.translate('validation.chooseOperator'),
+          });
           maxLength(filter.value, ({ valueOf }) => {
             const property = this.getProperty(valueOf(filter.property));
             return property?.dataType === 'string'
@@ -146,16 +155,19 @@ export class SearchQueryFormComponent {
             }
 
             const message =
-              property.dataType === 'string' ? '' : getSearchScalarError(property, value());
+              property.dataType === 'string' ? '' : this.scalarError(property, value());
             if (message) {
               return { kind: 'searchValue', message };
             }
             return isSearchOptionInputValue(this.propertyOptions(property), value())
               ? undefined
-              : { kind: 'searchOption', message: 'Choose a configured value.' };
+              : {
+                  kind: 'searchOption',
+                  message: this.languageService.translate('validation.chooseConfiguredValue'),
+                };
           });
           required(filter.value, {
-            message: 'Enter a value.',
+            message: this.languageService.translate('validation.enterValue'),
             when: ({ valueOf }) => {
               const operator = valueOf(filter.operator);
               return (
@@ -164,11 +176,11 @@ export class SearchQueryFormComponent {
             },
           });
           required(filter.from, {
-            message: 'Enter a from value.',
+            message: this.languageService.translate('validation.enterFromValue'),
             when: ({ valueOf }) => valueOf(filter.operator) === 'between',
           });
           required(filter.to, {
-            message: 'Enter a to value.',
+            message: this.languageService.translate('validation.enterToValue'),
             when: ({ valueOf }) => valueOf(filter.operator) === 'between',
           });
           validate(filter.from, ({ value, valueOf }) => {
@@ -178,13 +190,16 @@ export class SearchQueryFormComponent {
               return undefined;
             }
 
-            const message = getSearchScalarError(property, value());
+            const message = this.scalarError(property, value());
             if (message) {
               return { kind: 'searchValue', message };
             }
             return isSearchOptionInputValue(this.propertyOptions(property), value())
               ? undefined
-              : { kind: 'searchOption', message: 'Choose a configured value.' };
+              : {
+                  kind: 'searchOption',
+                  message: this.languageService.translate('validation.chooseConfiguredValue'),
+                };
           });
           validate(filter.to, ({ value, valueOf }) => {
             const property = this.getProperty(valueOf(filter.property));
@@ -195,34 +210,37 @@ export class SearchQueryFormComponent {
               return undefined;
             }
 
-            const message = getSearchScalarError(property, to);
+            const message = this.scalarError(property, to);
             if (message) {
               return { kind: 'searchValue', message };
             }
             if (!isSearchOptionInputValue(this.propertyOptions(property), to)) {
-              return { kind: 'searchOption', message: 'Choose a configured value.' };
+              return {
+                kind: 'searchOption',
+                message: this.languageService.translate('validation.chooseConfiguredValue'),
+              };
             }
 
             if (
               from &&
-              !getSearchScalarError(property, from) &&
+              !this.scalarError(property, from) &&
               isSearchRangeReversed(property, from, to)
             ) {
               return {
                 kind: 'searchRange',
-                message: 'To must be greater than or equal to From.',
+                message: this.languageService.translate('validation.rangeOrder'),
               };
             }
 
             return undefined;
           });
           required(filter.values, {
-            message: 'Choose at least one value.',
+            message: this.languageService.translate('validation.chooseAtLeastOne'),
             when: ({ valueOf }) =>
               valueOf(filter.operator) === 'in' && valueOf(filter.customValues).length === 0,
           });
           minLength(filter.values, 1, {
-            message: 'Choose at least one value.',
+            message: this.languageService.translate('validation.chooseAtLeastOne'),
             when: ({ valueOf }) =>
               valueOf(filter.operator) === 'in' && valueOf(filter.customValues).length === 0,
           });
@@ -234,20 +252,23 @@ export class SearchQueryFormComponent {
                 ? Math.max(0, this.maxInValues(property) - valueOf(filter.customValues).length)
                 : undefined;
             },
-            { message: 'Too many values selected.' },
+            { message: this.languageService.translate('validation.tooManyValues') },
           );
           validate(filter.customValueInput, ({ value, valueOf }) => {
             const property = this.getProperty(valueOf(filter.property));
             if (!property || valueOf(filter.operator) !== 'in' || !value().trim()) {
               return undefined;
             }
-            const message = getSearchScalarError(property, value().trim());
+            const message = this.scalarError(property, value().trim());
             if (message) {
               return { kind: 'searchValue', message };
             }
             return valueOf(filter.values).length + valueOf(filter.customValues).length >=
               this.maxInValues(property)
-              ? { kind: 'maxValues', message: 'Value limit reached.' }
+              ? {
+                  kind: 'maxValues',
+                  message: this.languageService.translate('validation.valueLimit'),
+                }
               : undefined;
           });
         }),
@@ -255,14 +276,17 @@ export class SearchQueryFormComponent {
       applyEach(
         path.sorts,
         schema<SearchQueryFormSortModel>((sort) => {
-          required(sort.property, { message: 'Choose a sort property.' });
-          required(sort.direction, { message: 'Choose a sort direction.' });
+          required(sort.property, {
+            message: this.languageService.translate('validation.chooseSortProperty'),
+          });
+          required(sort.direction, {
+            message: this.languageService.translate('validation.chooseSortDirection'),
+          });
         }),
       );
     }),
   );
 
-  protected readonly operatorLabels = SEARCH_OPERATOR_LABELS;
   protected readonly filters = computed(() => this.formModel().filters);
   protected readonly sorts = computed(() => this.formModel().sorts);
   protected readonly configuredSortOptions = computed(() =>
@@ -481,7 +505,15 @@ export class SearchQueryFormComponent {
   }
 
   protected propertyLabel(property: SearchPropertyConfig | null): string {
-    return property?.label ?? property?.propertyName ?? 'Unknown property';
+    return (
+      property?.label ??
+      property?.propertyName ??
+      this.languageService.translate('search.unknownProperty')
+    );
+  }
+
+  protected operatorLabel(operator: SearchOperator): string {
+    return this.languageService.translate(`searchOperator.${operator}`);
   }
 
   protected allowedOperators(property: SearchPropertyConfig): readonly SearchOperator[] {
@@ -574,8 +606,10 @@ export class SearchQueryFormComponent {
     }
 
     return (
-      getSearchScalarError(property, value) ||
-      (this.isAtInValueLimit(filter, property) ? 'Value limit reached.' : '')
+      this.scalarError(property, value) ||
+      (this.isAtInValueLimit(filter, property)
+        ? this.languageService.translate('validation.valueLimit')
+        : '')
     );
   }
 
@@ -591,7 +625,7 @@ export class SearchQueryFormComponent {
     this.replaceFilter(filter.id, {
       ...filter,
       values: values.slice(0, availableSlots),
-      customValueStatus: capped ? 'Value limit reached.' : '',
+      customValueStatus: capped ? this.languageService.translate('validation.valueLimit') : '',
     });
   }
 
@@ -643,7 +677,7 @@ export class SearchQueryFormComponent {
       input.focus();
       this.replaceFilter(filter.id, {
         ...filter,
-        customValueStatus: 'Clipboard access blocked. Paste into the field.',
+        customValueStatus: this.languageService.translate('search.clipboardBlocked'),
       });
     }
   }
@@ -722,7 +756,7 @@ export class SearchQueryFormComponent {
       ...filter,
       customValues: [],
       customValueInput: '',
-      customValueStatus: 'Custom values cleared.',
+      customValueStatus: this.languageService.translate('search.customValuesCleared'),
     });
   }
 
@@ -1206,7 +1240,34 @@ export class SearchQueryFormComponent {
         duplicateCount,
         invalidCount,
         cappedCount,
+        (kind, count) => this.searchValueStatus(kind, count),
       ),
     });
+  }
+
+  private searchValueStatus(kind: SearchValueStatusKind, count: number): string {
+    switch (kind) {
+      case 'added':
+        return this.languageService.translate(
+          count === 1 ? 'search.valueAdded' : 'search.valuesAdded',
+          { count },
+        );
+      case 'duplicate':
+        return this.languageService.translate(
+          count === 1 ? 'search.duplicateSkipped' : 'search.duplicatesSkipped',
+          { count },
+        );
+      case 'invalid':
+        return this.languageService.translate(
+          count === 1 ? 'search.invalidValueSkipped' : 'search.invalidValuesSkipped',
+          { count },
+        );
+      case 'overLimit':
+        return this.languageService.translate('search.overLimitSkipped', { count });
+    }
+  }
+
+  private scalarError(property: SearchPropertyConfig, value: string): string {
+    return getLocalizedSearchScalarError(this.languageService, property, value);
   }
 }

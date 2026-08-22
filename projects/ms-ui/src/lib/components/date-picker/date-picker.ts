@@ -4,6 +4,7 @@ import {
   booleanAttribute,
   computed,
   effect,
+  inject,
   input,
   model,
   numberAttribute,
@@ -18,6 +19,8 @@ import {
   type ValidationError,
 } from '@angular/forms/signals';
 
+import { TranslatePipe } from '../../pipes';
+import { LanguageService } from '../../services/language';
 import {
   addCalendarDays,
   addCalendarMonths,
@@ -55,6 +58,7 @@ let nextDatePickerId = 0;
 
 @Component({
   selector: 'ms-date-picker',
+  imports: [TranslatePipe],
   templateUrl: './date-picker.html',
   host: {
     class: 'date-picker',
@@ -68,6 +72,7 @@ let nextDatePickerId = 0;
   },
 })
 export class DatePickerComponent implements FormValueControl<DatePickerValue> {
+  private readonly languageService = inject(LanguageService);
   readonly value = model<DatePickerValue>(null);
   readonly open = model(false);
   readonly displayFormat = input<DatePickerDisplayFormat>('dd-MM-yyyy');
@@ -110,16 +115,19 @@ export class DatePickerComponent implements FormValueControl<DatePickerValue> {
   protected readonly effectivePlaceholder = computed(
     () => this.placeholder() ?? this.displayFormat().replace('dd', 'DD').replace('yyyy', 'YYYY'),
   );
+  protected readonly effectiveLocale = computed(
+    () => this.locale() ?? this.languageService.language(),
+  );
   protected readonly monthLabel = computed(() =>
-    new Intl.DateTimeFormat(this.locale(), { month: 'long' }).format(
+    new Intl.DateTimeFormat(this.effectiveLocale(), { month: 'long' }).format(
       new Date(this.visibleYear(), this.visibleMonth() - 1, 1, 12),
     ),
   );
   protected readonly yearLabel = computed(() => this.visibleYear().toString());
   protected readonly calendarLabel = computed(() => `${this.monthLabel()} ${this.yearLabel()}`);
   protected readonly monthOptions = computed<readonly CalendarMonthOption[]>(() => {
-    const shortFormatter = new Intl.DateTimeFormat(this.locale(), { month: 'short' });
-    const longFormatter = new Intl.DateTimeFormat(this.locale(), { month: 'long' });
+    const shortFormatter = new Intl.DateTimeFormat(this.effectiveLocale(), { month: 'short' });
+    const longFormatter = new Intl.DateTimeFormat(this.effectiveLocale(), { month: 'long' });
 
     return Array.from({ length: 12 }, (_, index) => {
       const date = new Date(this.visibleYear(), index, 1, 12);
@@ -147,25 +155,29 @@ export class DatePickerComponent implements FormValueControl<DatePickerValue> {
   protected readonly previousNavigationLabel = computed(() => {
     switch (this.calendarView()) {
       case 'month':
-        return 'Previous year';
+        return this.languageService.translate('datePicker.previousYear');
       case 'year':
-        return `Previous ${CALENDAR_YEAR_PAGE_SIZE} years`;
+        return this.languageService.translate('datePicker.previousYears', {
+          count: CALENDAR_YEAR_PAGE_SIZE,
+        });
       default:
-        return 'Previous month';
+        return this.languageService.translate('datePicker.previousMonth');
     }
   });
   protected readonly nextNavigationLabel = computed(() => {
     switch (this.calendarView()) {
       case 'month':
-        return 'Next year';
+        return this.languageService.translate('datePicker.nextYear');
       case 'year':
-        return `Next ${CALENDAR_YEAR_PAGE_SIZE} years`;
+        return this.languageService.translate('datePicker.nextYears', {
+          count: CALENDAR_YEAR_PAGE_SIZE,
+        });
       default:
-        return 'Next month';
+        return this.languageService.translate('datePicker.nextMonth');
     }
   });
   protected readonly weekdayLabels = computed(() => {
-    const formatter = new Intl.DateTimeFormat(this.locale(), { weekday: 'short' });
+    const formatter = new Intl.DateTimeFormat(this.effectiveLocale(), { weekday: 'short' });
     const firstDay = this.normalizedFirstDayOfWeek();
     const sunday = new Date(2024, 0, 7, 12);
 
@@ -431,7 +443,7 @@ export class DatePickerComponent implements FormValueControl<DatePickerValue> {
   protected dayLabel(date: string): string {
     const parts = parseIsoDate(date);
     return parts
-      ? new Intl.DateTimeFormat(this.locale(), { dateStyle: 'full' }).format(
+      ? new Intl.DateTimeFormat(this.effectiveLocale(), { dateStyle: 'full' }).format(
           new Date(parts.year, parts.month - 1, parts.day, 12),
         )
       : date;
@@ -489,7 +501,12 @@ export class DatePickerComponent implements FormValueControl<DatePickerValue> {
     }
 
     if (this.disabledDate()?.(parsed)) {
-      return { error: { kind: 'dateUnavailable', message: 'This date is unavailable.' } };
+      return {
+        error: {
+          kind: 'dateUnavailable',
+          message: this.languageService.translate('validation.dateUnavailable'),
+        },
+      };
     }
 
     this.activeDate.set(parsed);
