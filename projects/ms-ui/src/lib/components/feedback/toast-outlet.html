@@ -1,5 +1,5 @@
 @if (hasToasts()) {
-  <section class="ms-toast-region" aria-label="Notifications">
+  <section class="ms-toast-region" [attr.aria-label]="'accessibility.notifications' | translate">
     @for (entry of entries(); track entry.id) {
       <article
         class="ms-toast"
@@ -40,7 +40,7 @@
           <button
             class="btn btn-ghost btn-icon btn-sm ms-toast-close"
             type="button"
-            aria-label="Dismiss notification"
+            [attr.aria-label]="'accessibility.dismissNotification' | translate"
             (click)="close(entry.id)"
           >
             <span class="ms-icon" aria-hidden="true">close</span>

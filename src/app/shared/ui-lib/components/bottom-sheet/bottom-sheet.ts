@@ -12,6 +12,7 @@ import {
   viewChild,
 } from '@angular/core';
 
+import { TranslatePipe } from '../../pipes';
 import type { BottomSheetSize } from './bottom-sheet-config';
 import { BOTTOM_SHEET_CONFIG } from './bottom-sheet-tokens';
 
@@ -30,6 +31,7 @@ let openBottomSheetCount = 0;
 @Component({
   selector: 'ms-bottom-sheet',
   exportAs: 'msBottomSheet',
+  imports: [TranslatePipe],
   templateUrl: './bottom-sheet.html',
 })
 export class BottomSheetComponent {

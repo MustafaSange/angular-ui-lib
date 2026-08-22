@@ -14,6 +14,7 @@ import {
 } from '@angular/core';
 
 import { MediaSlideComponent } from './media-slide';
+import { LanguageService } from '../../services/language';
 import type { MediaSliderScrollBehavior, MediaSliderSnapAlign } from './media-slider-types';
 
 @Component({
@@ -31,6 +32,7 @@ import type { MediaSliderScrollBehavior, MediaSliderSnapAlign } from './media-sl
 export class MediaSliderComponent {
   private readonly document = inject(DOCUMENT);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly languageService = inject(LanguageService);
   private readonly track = viewChild<ElementRef<HTMLDivElement>>('track');
   private activeSlideFrame = 0;
 
@@ -47,9 +49,18 @@ export class MediaSliderComponent {
   readonly aspectRatio = input<string, string | undefined>('4 / 3', {
     transform: coerceAspectRatio,
   });
-  readonly ariaLabel = input('Media slider', { alias: 'aria-label' });
-  readonly previousLabel = input('Previous item');
-  readonly nextLabel = input('Next item');
+  readonly ariaLabel = input<string | null>(null, { alias: 'aria-label' });
+  readonly previousLabel = input<string | null>(null);
+  readonly nextLabel = input<string | null>(null);
+  protected readonly resolvedAriaLabel = computed(
+    () => this.ariaLabel() ?? this.languageService.translate('mediaSlider.label'),
+  );
+  protected readonly resolvedPreviousLabel = computed(
+    () => this.previousLabel() ?? this.languageService.translate('mediaSlider.previousItem'),
+  );
+  protected readonly resolvedNextLabel = computed(
+    () => this.nextLabel() ?? this.languageService.translate('mediaSlider.nextItem'),
+  );
 
   protected readonly activeIndex = signal(0);
   protected readonly canScrollPrevious = computed(

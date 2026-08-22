@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import type { FormValueControl, ValidationError } from '@angular/forms/signals';
 
+import { TranslatePipe } from '../../pipes';
 import type {
   FileUploadConfig,
   FileUploadItem,
@@ -41,7 +42,7 @@ let nextFileUploadId = 0;
 
 @Component({
   selector: 'ms-file-upload',
-  imports: [ChipComponent, ChipRemoveDirective],
+  imports: [ChipComponent, ChipRemoveDirective, TranslatePipe],
   templateUrl: './file-upload.html',
   host: {
     class: 'file-upload',
@@ -84,8 +85,12 @@ export class FileUploadComponent implements FormValueControl<FileUploadValue> {
       : Math.max(0, Math.floor(maxFiles));
   });
   protected readonly isDraggable = computed(() => this.config().draggable ?? true);
-  protected readonly isDisabled = computed(() => this.disabled() || this.config().disabled === true);
-  protected readonly isReadonly = computed(() => this.readonly() || this.config().readonly === true);
+  protected readonly isDisabled = computed(
+    () => this.disabled() || this.config().disabled === true,
+  );
+  protected readonly isReadonly = computed(
+    () => this.readonly() || this.config().readonly === true,
+  );
   protected readonly isInteractiveDisabled = computed(() => this.isDisabled() || this.isReadonly());
   protected readonly acceptedExtensions = computed(() =>
     this.normalizeExtensions(this.config().allowedExtensions ?? []),
@@ -286,11 +291,7 @@ export class FileUploadComponent implements FormValueControl<FileUploadValue> {
 
     if (maxFileSize !== undefined && file.size > maxFileSize) {
       return {
-        error: this.createError(
-          'maxSize',
-          file.name,
-          `Max ${this.formatFileSize(maxFileSize)}.`,
-        ),
+        error: this.createError('maxSize', file.name, `Max ${this.formatFileSize(maxFileSize)}.`),
       };
     }
 
@@ -343,10 +344,7 @@ export class FileUploadComponent implements FormValueControl<FileUploadValue> {
     };
   }
 
-  private createRejectedFileItem(
-    file: File,
-    error: FileUploadValidationError,
-  ): FileUploadItem {
+  private createRejectedFileItem(file: File, error: FileUploadValidationError): FileUploadItem {
     const sanitizedName = this.sanitizeFileNameForDisplay(file.name);
 
     return {
@@ -450,14 +448,16 @@ export class FileUploadComponent implements FormValueControl<FileUploadValue> {
     return Array.isArray(value);
   }
 
-  private normalizeExtensions(extensions: readonly FileUploadExtension[]): readonly FileUploadExtension[] {
+  private normalizeExtensions(
+    extensions: readonly FileUploadExtension[],
+  ): readonly FileUploadExtension[] {
     return Array.from(
       new Set(
         extensions
           .map((extension) => extension.trim().replace(/^\./, '').toLocaleLowerCase())
           .filter((extension): extension is FileUploadExtension =>
             this.isFileUploadExtension(extension),
-          )
+          ),
       ),
     );
   }

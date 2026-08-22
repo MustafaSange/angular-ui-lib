@@ -3,7 +3,7 @@
     <button
       class="bottom-sheet-backdrop"
       type="button"
-      aria-label="Close bottom sheet"
+      [attr.aria-label]="'accessibility.closeBottomSheet' | translate"
       [style.z-index]="backdropZIndex()"
       (click)="handleBackdropClick()"
     ></button>
@@ -44,7 +44,7 @@
           <button
             class="btn btn-ghost btn-icon bottom-sheet-close-button"
             type="button"
-            aria-label="Close bottom sheet"
+            [attr.aria-label]="'accessibility.closeBottomSheet' | translate"
             (click)="dismiss()"
           >
             <span class="ms-icon" aria-hidden="true">close</span>

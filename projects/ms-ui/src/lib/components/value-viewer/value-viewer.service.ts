@@ -1,10 +1,9 @@
 import { Component, Service, inject } from '@angular/core';
 
 import { MODAL_DATA, ModalRef, ModalService } from '../modal';
+import { LanguageService } from '../../services/language';
 import { ValueViewerComponent } from './value-viewer';
 import type { ValueViewerOpenOptions } from './value-viewer-types';
-
-const DEFAULT_TITLE = 'Value Viewer';
 
 type ValueViewerData = {
   readonly title: string;
@@ -23,9 +22,11 @@ class ValueViewerModalContentComponent {
 @Service()
 export class ValueViewerService {
   private readonly modal = inject(ModalService);
+  private readonly languageService = inject(LanguageService);
 
   open(value: unknown, options: ValueViewerOpenOptions = {}): ModalRef<void> {
-    const { title = DEFAULT_TITLE, ...modalOptions } = options;
+    const { title = this.languageService.translate('valueViewer.title'), ...modalOptions } =
+      options;
 
     return this.modal.open<ValueViewerModalContentComponent, ValueViewerData, void>(
       ValueViewerModalContentComponent,

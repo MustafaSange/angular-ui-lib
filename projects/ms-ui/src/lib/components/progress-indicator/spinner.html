@@ -12,8 +12,8 @@
   [class.spinner-dots]="variant() === 'dots'"
   [class.spinner-orbit]="variant() === 'orbit'"
   [class.spinner-ring-dot]="variant() === 'ring-dot'"
-  [attr.role]="ariaLabel() ? 'status' : null"
-  [attr.aria-hidden]="ariaLabel() ? null : 'true'"
+  [attr.role]="resolvedAriaLabel() ? 'status' : null"
+  [attr.aria-hidden]="resolvedAriaLabel() ? null : 'true'"
 >
   @switch (variant()) {
     @case ('dots') {
@@ -37,7 +37,7 @@
     }
   }
 
-  @if (ariaLabel()) {
-    <span class="spinner-status-text">{{ ariaLabel() }}</span>
+  @if (resolvedAriaLabel()) {
+    <span class="spinner-status-text">{{ resolvedAriaLabel() }}</span>
   }
 </span>

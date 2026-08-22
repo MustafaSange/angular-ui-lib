@@ -83,11 +83,33 @@ h2 {
 }
 
 .translation-preview,
-.service-example {
+.service-example,
+.localized-components {
   padding: var(--spacing-16);
   border: var(--border-width-sm) solid var(--color-border);
   border-radius: var(--radius-md);
   background-color: var(--color-surface-muted);
+}
+
+.localized-components {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacing-16);
+}
+
+.localized-component-example {
+  display: grid;
+  align-content: start;
+  gap: var(--spacing-8);
+
+  h3 {
+    margin: 0;
+    font-size: var(--font-size-sm);
+  }
+}
+
+.pagination-example {
+  grid-column: 1 / -1;
 }
 
 .translation-preview {
@@ -167,7 +189,8 @@ h2 {
 }
 
 .translation-preview + app-showcase-code,
-.service-example + app-showcase-code {
+.service-example + app-showcase-code,
+.localized-components + app-showcase-code {
   display: block;
   margin-block-start: var(--spacing-16);
 }
@@ -175,6 +198,7 @@ h2 {
 @media (max-width: 40rem) {
   .locale-state,
   .service-example,
+  .localized-components,
   .translation-list div {
     grid-template-columns: minmax(0, 1fr);
   }

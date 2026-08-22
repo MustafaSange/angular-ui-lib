@@ -1,7 +1,7 @@
-<ms-modal [title]="title()" (close)="close.emit()">
+<ms-modal [title]="resolvedTitle()" (close)="close.emit()">
   <div slot="headerActions" class="value-viewer-toolbar">
     <ms-signal-form-field class="no-label no-message value-viewer-search">
-      <label [for]="searchInputId">Search Value</label>
+      <label [for]="searchInputId">{{ 'valueViewer.search' | translate }}</label>
       <span class="form-field-prefix" aria-hidden="true">
         <span class="ms-icon">search</span>
       </span>
@@ -9,7 +9,7 @@
         #searchInput
         [id]="searchInputId"
         type="search"
-        aria-label="Search value"
+        [attr.aria-label]="'valueViewer.search' | translate"
         autocomplete="off"
         [formField]="searchField"
         (keydown.enter)="handleSearchEnter($event)"
@@ -20,11 +20,15 @@
       <span class="value-viewer-match-status" aria-live="polite">{{ matchStatus() }}</span>
     }
 
-    <div class="value-viewer-navigation" role="group" aria-label="Search result navigation">
+    <div
+      class="value-viewer-navigation"
+      role="group"
+      [attr.aria-label]="'valueViewer.navigation' | translate"
+    >
       <button
         class="btn btn-ghost btn-icon btn-sm"
         type="button"
-        aria-label="Previous match"
+        [attr.aria-label]="'valueViewer.previousMatch' | translate"
         [disabled]="navigationDisabled()"
         (click)="previousMatch()"
       >
@@ -33,7 +37,7 @@
       <button
         class="btn btn-ghost btn-icon btn-sm"
         type="button"
-        aria-label="Next match"
+        [attr.aria-label]="'valueViewer.nextMatch' | translate"
         [disabled]="navigationDisabled()"
         (click)="nextMatch()"
       >
@@ -43,7 +47,7 @@
 
     <ms-copy-button
       size="sm"
-      ariaLabel="Copy value"
+      [ariaLabel]="'clipboard.copyValue' | translate"
       [text]="clipboardText()"
       [disabled]="!clipboardText()"
     />

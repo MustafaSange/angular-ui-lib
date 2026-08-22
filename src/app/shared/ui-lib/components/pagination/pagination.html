@@ -10,18 +10,21 @@
       @if (showSummary()) {
         <p class="pagination-summary" aria-live="polite">
           @if (totalItems() > 0) {
-            Showing {{ itemStart() }}-{{ itemEnd() }} of {{ totalItems() }}
+            {{
+              'pagination.showing'
+                | translate: { start: itemStart(), end: itemEnd(), total: totalItems() }
+            }}
           } @else {
-            No items
+            {{ 'pagination.noItems' | translate }}
           }
         </p>
       }
 
       @if (showPageSizeSelector()) {
         <span class="pagination-page-size">
-          <span>Items per Page</span>
+          <span>{{ 'pagination.itemsPerPage' | translate }}</span>
           <select
-            aria-label="Items per Page"
+            [attr.aria-label]="'pagination.itemsPerPage' | translate"
             [disabled]="disabled()"
             (change)="changePageSize($event)"
           >
@@ -42,7 +45,7 @@
       <button
         class="pagination-button pagination-icon-button"
         type="button"
-        aria-label="Go to previous page"
+        [attr.aria-label]="'pagination.previousPage' | translate"
         [disabled]="disabled() || !hasPrevious()"
         (click)="goToPage(previousPage())"
       >
@@ -57,7 +60,7 @@
             class="pagination-button pagination-page"
             type="button"
             [class.pagination-page-current]="item.page === currentPage()"
-            [attr.aria-label]="'Go to page ' + item.page"
+            [attr.aria-label]="'pagination.goToPage' | translate: { page: item.page }"
             [attr.aria-current]="item.page === currentPage() ? 'page' : null"
             [disabled]="disabled()"
             (click)="goToPage(item.page)"
@@ -74,7 +77,7 @@
       <button
         class="pagination-button pagination-icon-button"
         type="button"
-        aria-label="Go to next page"
+        [attr.aria-label]="'pagination.nextPage' | translate"
         [disabled]="disabled() || !hasNext()"
         (click)="goToPage(nextPage())"
       >

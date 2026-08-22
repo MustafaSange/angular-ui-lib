@@ -19,6 +19,8 @@ import {
   type SearchSortRequest,
 } from '../../search-query';
 import { TableSearchDirective } from './table-search.directive';
+import { TranslatePipe } from '../../pipes';
+import { LanguageService } from '../../services/language';
 
 interface SortDraftRow {
   readonly id: string;
@@ -35,10 +37,18 @@ let nextSortPopoverId = 0;
 
 @Component({
   selector: 'ms-table-sort-popover',
-  imports: [FormField, PopoverComponent, PopoverPanelComponent, PopoverTrigger, SignalFormField],
+  imports: [
+    FormField,
+    PopoverComponent,
+    PopoverPanelComponent,
+    PopoverTrigger,
+    SignalFormField,
+    TranslatePipe,
+  ],
   templateUrl: './table-search-sort-popover.html',
 })
 export class TableSortPopoverComponent {
+  private readonly languageService = inject(LanguageService);
   readonly property = input.required<SearchPropertyConfig>();
 
   protected readonly table = inject(TableSearchDirective);
@@ -79,14 +89,19 @@ export class TableSortPopoverComponent {
   protected readonly description = computed(() => {
     const sorts = this.activeSorts();
     if (sorts.length === 0) {
-      return 'No table sorting is active.';
+      return this.languageService.translate('tableSearch.noSortingActive');
     }
     return sorts
-      .map(
-        (sort, index) =>
-          `${this.sortLabel(sort.property)} priority ${index + 1}, ${
-            sort.direction === SEARCH_SORT_DIRECTION.DESCENDING ? 'descending' : 'ascending'
-          }`,
+      .map((sort, index) =>
+        this.languageService.translate('tableSearch.sortPriority', {
+          property: this.sortLabel(sort.property),
+          priority: index + 1,
+          direction: this.languageService.translate(
+            sort.direction === SEARCH_SORT_DIRECTION.DESCENDING
+              ? 'search.descending'
+              : 'search.ascending',
+          ),
+        }),
       )
       .join('. ');
   });
@@ -102,8 +117,12 @@ export class TableSortPopoverComponent {
       applyEach(
         path.sorts,
         schema<SortDraftRow>((row) => {
-          required(row.property, { message: 'Choose a sort property.' });
-          required(row.direction, { message: 'Choose a sort direction.' });
+          required(row.property, {
+            message: this.languageService.translate('validation.chooseSortProperty'),
+          });
+          required(row.direction, {
+            message: this.languageService.translate('validation.chooseSortDirection'),
+          });
         }),
       );
     }),
@@ -192,7 +211,7 @@ export class TableSortPopoverComponent {
     event.preventDefault();
     await submit(this.sortForm, async () => {
       if (this.hasDuplicates()) {
-        this.liveMessage.set('Each sort property can be selected only once.');
+        this.liveMessage.set(this.languageService.translate('tableSearch.duplicateSort'));
         return undefined;
       }
       const sorts = this.sorts().map(

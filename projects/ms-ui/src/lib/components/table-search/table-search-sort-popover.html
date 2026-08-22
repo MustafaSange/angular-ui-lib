@@ -7,9 +7,9 @@
     aria-haspopup="dialog"
     [class.is-active]="active()"
     [disabled]="table.disabled()"
-    aria-label="Edit table sorting"
+    [attr.aria-label]="'tableSearch.editSorting' | translate"
     [attr.aria-describedby]="descriptionId"
-    title="Edit table sorting"
+    [attr.title]="'tableSearch.editSorting' | translate"
   >
     <span class="ms-icon" [class.ms-icon-filled]="active()" aria-hidden="true">
       {{ triggerIcon() }}
@@ -23,16 +23,20 @@
     {{ description() }}
   </span>
 
-  <ms-popover-panel class="sort-panel" role="dialog" aria-label="Edit table sorting">
+  <ms-popover-panel
+    class="sort-panel"
+    role="dialog"
+    [attr.aria-label]="'tableSearch.editSorting' | translate"
+  >
     @if (open()) {
       <form class="table-search-form" (submit)="apply($event)">
         <header class="table-search-panel-header table-search-dialog-header">
-          <h3 class="table-search-panel-title">Sort Properties</h3>
+          <h3 class="table-search-panel-title">{{ 'tableSearch.sortProperties' | translate }}</h3>
           <button
             class="btn btn-ghost btn-icon table-search-panel-close-button"
             type="button"
-            aria-label="Cancel sort editing"
-            title="Cancel"
+            [attr.aria-label]="'tableSearch.cancelSortEditing' | translate"
+            [attr.title]="'common.cancel' | translate"
             (click)="cancel()"
           >
             <span class="ms-icon" aria-hidden="true">close</span>
@@ -41,16 +45,17 @@
 
         <div class="table-search-panel-body sort-editor">
           <p class="sort-help">
-            Order controls precedence. The first property is the primary sort. Use the arrow
-            buttons, drag, or Alt+Arrow keys to reorder.
+            {{ 'tableSearch.sortInstructions' | translate }}
           </p>
 
-          <div class="sort-list" aria-label="Active sorts">
+          <div class="sort-list" [attr.aria-label]="'tableSearch.activeSorts' | translate">
             @for (sort of sorts(); track sort.id) {
               @let rowField = field($index);
               <div class="sort-row" (dragover)="allowDrop($event)" (drop)="drop($index, $event)">
                 <ms-signal-form-field class="sort-property no-message">
-                  <label>Property {{ $index + 1 }}</label>
+                  <label>{{
+                    'tableSearch.propertyNumber' | translate: { number: $index + 1 }
+                  }}</label>
                   <select #firstControl [formField]="rowField.property">
                     @for (option of table.sortOptions(); track option.value) {
                       <option
@@ -64,10 +69,14 @@
                 </ms-signal-form-field>
 
                 <ms-signal-form-field class="sort-direction no-message">
-                  <label>Direction</label>
+                  <label>{{ 'tableSearch.direction' | translate }}</label>
                   <select [formField]="rowField.direction">
-                    <option [value]="SEARCH_SORT_DIRECTION.ASCENDING">Ascending</option>
-                    <option [value]="SEARCH_SORT_DIRECTION.DESCENDING">Descending</option>
+                    <option [value]="SEARCH_SORT_DIRECTION.ASCENDING">
+                      {{ 'search.ascending' | translate }}
+                    </option>
+                    <option [value]="SEARCH_SORT_DIRECTION.DESCENDING">
+                      {{ 'search.descending' | translate }}
+                    </option>
                   </select>
                 </ms-signal-form-field>
 
@@ -78,9 +87,10 @@
                       type="button"
                       draggable="true"
                       [attr.aria-label]="
-                        'Reorder ' + sortLabel(sort.property) + ', position ' + ($index + 1)
+                        'tableSearch.reorderPosition'
+                          | translate: { property: sortLabel(sort.property), position: $index + 1 }
                       "
-                      title="Drag or Use Alt+Arrow Keys to Reorder"
+                      [attr.title]="'tableSearch.dragToReorder' | translate"
                       (dragstart)="startDrag($index, $event)"
                       (dragend)="endDrag()"
                       (keydown)="handleReorderKey($index, $event)"
@@ -91,8 +101,12 @@
                       class="btn btn-ghost btn-icon btn-sm"
                       type="button"
                       [disabled]="$first"
-                      [attr.aria-label]="'Move ' + sortLabel(sort.property) + ' up'"
-                      title="Move Up"
+                      [attr.aria-label]="
+                        'tableSearch.moveUp' | translate: { property: sortLabel(sort.property) }
+                      "
+                      [attr.title]="
+                        'tableSearch.moveUp' | translate: { property: sortLabel(sort.property) }
+                      "
                       (click)="moveUp($index)"
                     >
                       <span class="ms-icon" aria-hidden="true">arrow_upward</span>
@@ -101,8 +115,12 @@
                       class="btn btn-ghost btn-icon btn-sm"
                       type="button"
                       [disabled]="$last"
-                      [attr.aria-label]="'Move ' + sortLabel(sort.property) + ' down'"
-                      title="Move Down"
+                      [attr.aria-label]="
+                        'tableSearch.moveDown' | translate: { property: sortLabel(sort.property) }
+                      "
+                      [attr.title]="
+                        'tableSearch.moveDown' | translate: { property: sortLabel(sort.property) }
+                      "
                       (click)="moveDown($index)"
                     >
                       <span class="ms-icon" aria-hidden="true">arrow_downward</span>
@@ -112,8 +130,12 @@
                   <button
                     class="btn btn-outline-danger btn-icon btn-sm remove-sort"
                     type="button"
-                    [attr.aria-label]="'Remove ' + sortLabel(sort.property) + ' sort'"
-                    title="Remove Sort"
+                    [attr.aria-label]="
+                      'tableSearch.removeSort' | translate: { property: sortLabel(sort.property) }
+                    "
+                    [attr.title]="
+                      'tableSearch.removeSort' | translate: { property: sortLabel(sort.property) }
+                    "
                     (click)="remove($index)"
                   >
                     <span class="ms-icon" aria-hidden="true">delete</span>
@@ -121,7 +143,7 @@
                 </div>
               </div>
             } @empty {
-              <p class="sort-empty">No sorting will be applied.</p>
+              <p class="sort-empty">{{ 'tableSearch.noSortingApplied' | translate }}</p>
             }
           </div>
 
@@ -132,13 +154,13 @@
             (click)="add()"
           >
             <span class="ms-icon" aria-hidden="true">add</span>
-            Add Sort
+            {{ 'tableSearch.addSort' | translate }}
           </button>
           @if (!table.requestValid()) {
             <p class="table-search-blocked-note" role="status">
-              Complete all invalid filters before applying table sorting.
+              {{ 'tableSearch.completeInvalidForSort' | translate }}
               @if (invalidFilterLabels(); as labels) {
-                Invalid filters: {{ labels }}.
+                {{ 'tableSearch.invalidFilters' | translate: { filters: labels } }}
               }
             </p>
           }
@@ -156,7 +178,7 @@
               [disabled]="activeSorts().length === 0"
               (click)="clear()"
             >
-              Clear Sorts
+              {{ 'tableSearch.clearSorts' | translate }}
             </button>
             <button
               class="btn btn-outline btn-sm"
@@ -165,11 +187,13 @@
               (click)="resetDefaults()"
             >
               <span class="ms-icon" aria-hidden="true">settings_backup_restore</span>
-              Reset Defaults
+              {{ 'search.resetDefaults' | translate }}
             </button>
           </div>
           <div class="table-search-footer-actions table-search-footer-actions-end">
-            <button class="btn btn-outline btn-sm" type="button" (click)="cancel()">Cancel</button>
+            <button class="btn btn-outline btn-sm" type="button" (click)="cancel()">
+              {{ 'common.cancel' | translate }}
+            </button>
             <button
               class="btn btn-primary btn-sm"
               type="submit"
@@ -180,7 +204,7 @@
                 !table.requestValid()
               "
             >
-              Apply
+              {{ 'search.apply' | translate }}
             </button>
           </div>
         </footer>

@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, effect, ElementRef, inject, input } from '@angular/core';
+import { Component, computed, effect, ElementRef, inject, input } from '@angular/core';
 
+import { LanguageService } from '../../services/language';
 import { LoadingService } from '../../services/loading';
 import { ProgressIndicatorComponent, SpinnerComponent } from '../progress-indicator';
 import type { SpinnerVariant } from '../progress-indicator/progress-indicator-types';
@@ -56,13 +57,17 @@ export class LoadingIndicatorComponent {
   private readonly document = inject(DOCUMENT);
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly loading = inject(LoadingService);
+  private readonly languageService = inject(LanguageService);
 
   readonly variant = input<LoadingIndicatorVariant>('overlay-spinner');
   readonly spinnerVariant = input<SpinnerVariant>('ring-dot');
   readonly blocking = input(true);
-  readonly ariaLabel = input('Loading');
+  readonly ariaLabel = input<string | null>(null);
 
   protected readonly isLoading = this.loading.isLoading;
+  protected readonly resolvedAriaLabel = computed(
+    () => this.ariaLabel() ?? this.languageService.translate('common.loading'),
+  );
 
   constructor() {
     effect((onCleanup) => {

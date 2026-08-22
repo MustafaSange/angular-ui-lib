@@ -1,38 +1,38 @@
 <details class="theme-customizer">
   <summary class="theme-trigger">
     <span class="ms-icon" aria-hidden="true">palette</span>
-    <span>Colors</span>
+    <span>{{ 'theme.colors' | translate }}</span>
   </summary>
 
-  <div class="theme-panel" aria-label="Theme color customizer">
+  <div class="theme-panel" [attr.aria-label]="'theme.colorCustomizer' | translate">
     <div class="theme-header">
-      <span class="theme-title">Theme colors</span>
+      <span class="theme-title">{{ 'theme.colorTitle' | translate }}</span>
       <button
         type="button"
         class="theme-reset-all"
         [disabled]="!hasCustomizations()"
         (click)="resetColors()"
       >
-        Reset All
+        {{ 'theme.resetAll' | translate }}
       </button>
     </div>
 
     <div class="theme-list">
       @for (option of options; track option.value) {
         <label class="theme-field">
-          <span class="theme-label">{{ option.label }}</span>
+          <span class="theme-label">{{ colorLabel(option.value) }}</span>
           <input
             type="color"
             class="theme-input"
             [value]="colorValue(option.value)"
-            [attr.aria-label]="option.label + ' theme color'"
+            [attr.aria-label]="'theme.colorLabel' | translate: { color: colorLabel(option.value) }"
             (input)="setColor(option.value, $event)"
           />
           <button
             type="button"
             class="theme-reset"
             [disabled]="!isCustomized(option.value)"
-            [attr.aria-label]="'Reset ' + option.label + ' theme color'"
+            [attr.aria-label]="'theme.resetColor' | translate: { color: colorLabel(option.value) }"
             (click)="resetColor(option.value)"
           >
             <span class="ms-icon" aria-hidden="true">restart_alt</span>

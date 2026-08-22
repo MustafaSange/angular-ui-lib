@@ -7,6 +7,25 @@ import type {
 export const DEFAULT_SEARCH_STRING_MAX_LENGTH = 50;
 export const DEFAULT_SEARCH_MAX_IN_VALUES = 50;
 
+export type SearchValueStatusKind = 'added' | 'duplicate' | 'invalid' | 'overLimit';
+
+export type SearchValueStatusFormatter = (kind: SearchValueStatusKind, count: number) => string;
+
+export type SearchScalarErrorKind =
+  | 'guid'
+  | 'wholeNumber'
+  | 'safeWholeNumber'
+  | 'number'
+  | 'date'
+  | 'time'
+  | 'dateTime'
+  | 'maxLength';
+
+export type SearchScalarErrorFormatter = (
+  kind: SearchScalarErrorKind,
+  params: Readonly<{ maxLength?: number }>,
+) => string;
+
 const GUID_PATTERN = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i;
 
 export function getSearchInputType(property: SearchPropertyConfig | null): string {
@@ -115,35 +134,51 @@ export function parseCustomSearchValue(
   }
 }
 
-export function getSearchScalarError(property: SearchPropertyConfig, value: string): string {
+export function getSearchScalarError(
+  property: SearchPropertyConfig,
+  value: string,
+  formatter?: SearchScalarErrorFormatter,
+): string {
+  const format = (
+    kind: SearchScalarErrorKind,
+    fallback: string,
+    params: Readonly<{ maxLength?: number }> = {},
+  ): string => formatter?.(kind, params) ?? fallback;
+
   switch (property.dataType) {
     case 'guid':
-      return GUID_PATTERN.test(value) ? '' : 'Enter a valid GUID.';
+      return GUID_PATTERN.test(value) ? '' : format('guid', 'Enter a valid GUID.');
     case 'int':
     case 'long':
       if (!/^-?\d+$/.test(value)) {
-        return 'Enter a whole number.';
+        return format('wholeNumber', 'Enter a whole number.');
       }
 
-      return Number.isSafeInteger(Number(value)) ? '' : 'Enter a safe whole number.';
+      return Number.isSafeInteger(Number(value))
+        ? ''
+        : format('safeWholeNumber', 'Enter a safe whole number.');
     case 'decimal':
-      return Number.isFinite(Number(value)) ? '' : 'Enter a valid number.';
+      return Number.isFinite(Number(value)) ? '' : format('number', 'Enter a valid number.');
     case 'date':
-      return isValidDateValue(value) ? '' : 'Enter a valid date in YYYY-MM-DD format.';
+      return isValidDateValue(value)
+        ? ''
+        : format('date', 'Enter a valid date in YYYY-MM-DD format.');
     case 'time':
-      return isValidTimeValue(value) ? '' : 'Enter a valid time.';
+      return isValidTimeValue(value) ? '' : format('time', 'Enter a valid time.');
     case 'dateTime': {
       const [date, time, extra] = value.split('T');
       return !extra && date && time && isValidDateValue(date) && isValidTimeValue(time)
         ? ''
-        : 'Enter a valid date and time.';
+        : format('dateTime', 'Enter a valid date and time.');
     }
     case 'string': {
       const maxLength = Math.min(
         property.maxStringLength ?? DEFAULT_SEARCH_STRING_MAX_LENGTH,
         DEFAULT_SEARCH_STRING_MAX_LENGTH,
       );
-      return value.length <= maxLength ? '' : `Enter no more than ${maxLength} characters.`;
+      return value.length <= maxLength
+        ? ''
+        : format('maxLength', `Enter no more than ${maxLength} characters.`, { maxLength });
     }
     default:
       return '';
@@ -181,23 +216,33 @@ export function createSearchValueStatus(
   duplicateCount: number,
   invalidCount: number,
   cappedCount: number,
+  formatter?: SearchValueStatusFormatter,
 ): string {
   const messages: string[] = [];
 
   if (addedCount > 0) {
-    messages.push(`${addedCount} ${addedCount === 1 ? 'value' : 'values'} added`);
+    messages.push(
+      formatter?.('added', addedCount) ??
+        `${addedCount} ${addedCount === 1 ? 'value' : 'values'} added`,
+    );
   }
 
   if (duplicateCount > 0) {
-    messages.push(`${duplicateCount} duplicate${duplicateCount === 1 ? '' : 's'} skipped`);
+    messages.push(
+      formatter?.('duplicate', duplicateCount) ??
+        `${duplicateCount} duplicate${duplicateCount === 1 ? '' : 's'} skipped`,
+    );
   }
 
   if (invalidCount > 0) {
-    messages.push(`${invalidCount} invalid ${invalidCount === 1 ? 'value' : 'values'} skipped`);
+    messages.push(
+      formatter?.('invalid', invalidCount) ??
+        `${invalidCount} invalid ${invalidCount === 1 ? 'value' : 'values'} skipped`,
+    );
   }
 
   if (cappedCount > 0) {
-    messages.push(`${cappedCount} over the limit skipped`);
+    messages.push(formatter?.('overLimit', cappedCount) ?? `${cappedCount} over the limit skipped`);
   }
 
   return messages.join('. ');

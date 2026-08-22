@@ -1,5 +1,6 @@
 import { Component, computed, inject, input, output } from '@angular/core';
 
+import { TranslatePipe } from '../../pipes';
 import type { ModalCloseReason } from './modal-close-types';
 import { MODAL_CONFIG, MODAL_REF } from './modal-tokens';
 
@@ -7,6 +8,7 @@ let nextModalId = 0;
 
 @Component({
   selector: 'ms-modal',
+  imports: [TranslatePipe],
   templateUrl: './modal.html',
 })
 export class ModalComponent<TResult = unknown> {

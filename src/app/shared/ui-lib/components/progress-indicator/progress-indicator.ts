@@ -1,5 +1,6 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 
+import { LanguageService } from '../../services/language';
 import type { ProgressKind, ProgressSize } from './progress-indicator-types';
 
 @Component({
@@ -7,13 +8,17 @@ import type { ProgressKind, ProgressSize } from './progress-indicator-types';
   templateUrl: './progress-indicator.html',
 })
 export class ProgressIndicatorComponent {
+  private readonly languageService = inject(LanguageService);
   readonly value = input<number | null>(null);
   readonly max = input(100);
   readonly size = input<ProgressSize>('md');
   readonly kind = input<ProgressKind>('primary');
-  readonly ariaLabel = input('Progress');
+  readonly ariaLabel = input<string | null>(null);
   readonly ariaLabelledby = input('');
   readonly ariaValueText = input('');
+  protected readonly resolvedAriaLabel = computed(
+    () => this.ariaLabel() ?? this.languageService.translate('common.progress'),
+  );
 
   protected readonly normalizedMax = computed(() => {
     const max = this.max();

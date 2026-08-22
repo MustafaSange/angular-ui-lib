@@ -1,4 +1,13 @@
-import { Component, booleanAttribute, input, model, output, signal } from '@angular/core';
+import {
+  Component,
+  booleanAttribute,
+  computed,
+  inject,
+  input,
+  model,
+  output,
+  signal,
+} from '@angular/core';
 import {
   transformedValue,
   type FormValueControl,
@@ -12,6 +21,7 @@ import type {
   DatePickerValue,
 } from '../date-picker';
 import { TimePickerComponent } from '../time-picker';
+import { LanguageService } from '../../services/language';
 import type { TimePickerDisplayFormat, TimePickerPrecision, TimePickerValue } from '../time-picker';
 import type { DateTimePickerValue } from './date-time-picker-types';
 
@@ -42,6 +52,7 @@ const LOCAL_DATE_TIME_PATTERN = /^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2}(?::\d{2})?)$/
   },
 })
 export class DateTimePickerComponent implements FormValueControl<DateTimePickerValue> {
+  private readonly languageService = inject(LanguageService);
   readonly value = model<DateTimePickerValue>(null);
   readonly dateDisplayFormat = input<DatePickerDisplayFormat>('dd-MM-yyyy');
   readonly timeDisplayFormat = input<TimePickerDisplayFormat>('24-hour');
@@ -66,13 +77,19 @@ export class DateTimePickerComponent implements FormValueControl<DateTimePickerV
   readonly ariaLabel = input<string | null>(null, { alias: 'aria-label' });
   readonly ariaLabelledby = input<string | null>(null, { alias: 'aria-labelledby' });
   readonly ariaDescribedby = input<string | null>(null, { alias: 'aria-describedby' });
-  readonly dateAriaLabel = input('Date');
-  readonly timeAriaLabel = input('Time');
+  readonly dateAriaLabel = input<string | null>(null);
+  readonly timeAriaLabel = input<string | null>(null);
   readonly touch = output<void>();
 
   private readonly generatedId = `ms-date-time-picker-${nextDateTimePickerId++}`;
   private readonly dateParseError = signal<ValidationError | null>(null);
   private readonly timeParseError = signal<ValidationError | null>(null);
+  protected readonly resolvedDateAriaLabel = computed(
+    () => this.dateAriaLabel() ?? this.languageService.translate('dateTimePicker.date'),
+  );
+  protected readonly resolvedTimeAriaLabel = computed(
+    () => this.timeAriaLabel() ?? this.languageService.translate('dateTimePicker.time'),
+  );
   protected readonly inputValue = transformedValue(this.value, {
     parse: (parts: DateTimePickerParts) => {
       const error = this.dateParseError() ?? this.timeParseError();
@@ -86,11 +103,21 @@ export class DateTimePickerComponent implements FormValueControl<DateTimePickerV
       }
 
       if (!parts.date) {
-        return { error: { kind: 'required', message: 'Choose a date.' } };
+        return {
+          error: {
+            kind: 'required',
+            message: this.languageService.translate('dateTimePicker.chooseDate'),
+          },
+        };
       }
 
       if (!parts.time) {
-        return { error: { kind: 'required', message: 'Choose a time.' } };
+        return {
+          error: {
+            kind: 'required',
+            message: this.languageService.translate('dateTimePicker.chooseTime'),
+          },
+        };
       }
 
       return { value: `${parts.date}T${parts.time}` };

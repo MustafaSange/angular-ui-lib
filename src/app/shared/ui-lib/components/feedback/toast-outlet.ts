@@ -1,10 +1,12 @@
 import { Component, computed, inject } from '@angular/core';
 
+import { TranslatePipe } from '../../pipes';
 import type { FeedbackKind } from './feedback-types';
 import { ToastService } from './toast.service';
 
 @Component({
   selector: 'ms-toast-outlet',
+  imports: [TranslatePipe],
   templateUrl: './toast-outlet.html',
 })
 export class ToastOutletComponent {

@@ -20,6 +20,8 @@ import type { FormValueControl } from '@angular/forms/signals';
 import { Observable, Subscription, isObservable } from 'rxjs';
 
 import { OverflowNavigation, OverflowNavigationButton } from '../../directives';
+import { TranslatePipe } from '../../pipes';
+import { LanguageService } from '../../services/language';
 import type {
   SelectCompareWith,
   SelectDisplayWith,
@@ -44,7 +46,7 @@ let nextSelectId = 0;
 
 @Component({
   selector: 'ms-select',
-  imports: [NgTemplateOutlet, OverflowNavigation, OverflowNavigationButton],
+  imports: [NgTemplateOutlet, OverflowNavigation, OverflowNavigationButton, TranslatePipe],
   templateUrl: './select.html',
   host: {
     class: 'select',
@@ -58,9 +60,7 @@ let nextSelectId = 0;
     '[attr.formField]': 'true',
   },
 })
-export class SelectComponent<TValue>
-  implements FormValueControl<SelectValue<TValue>>
-{
+export class SelectComponent<TValue> implements FormValueControl<SelectValue<TValue>> {
   readonly options = input<readonly SelectOption<TValue>[]>([]);
   readonly source = input<SelectSearchSource<TValue> | null>(null);
   readonly value = model<SelectValue<TValue>>(null);
@@ -81,14 +81,13 @@ export class SelectComponent<TValue>
   readonly selectedOptionTemplate = input<TemplateRef<SelectSelectedOptionContext<TValue>> | null>(
     null,
   );
-  readonly valueSerializer = input<SelectValueSerializer<TValue>>((value) =>
-    String(value ?? ''),
-  );
+  readonly valueSerializer = input<SelectValueSerializer<TValue>>((value) => String(value ?? ''));
   readonly id = input<string | null>(null);
   readonly ariaLabel = input('', { alias: 'aria-label' });
   readonly touch = output<void>();
 
   private readonly destroyRef = inject(DestroyRef);
+  private readonly languageService = inject(LanguageService);
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly projectedOptionComponents =
     contentChildren<SelectOptionComponent<TValue>>(SelectOptionComponent);
@@ -163,7 +162,7 @@ export class SelectComponent<TValue>
     }
 
     const value = this.singleValue();
-    return value === null ? this.query() : this.selectedOptions()[0]?.label ?? '';
+    return value === null ? this.query() : (this.selectedOptions()[0]?.label ?? '');
   });
 
   protected readonly inputPlaceholder = computed(() => {
@@ -519,7 +518,9 @@ export class SelectComponent<TValue>
     }
 
     const selectedIndex = this.firstSelectedOptionIndex();
-    this.activeIndex.set(selectedIndex >= 0 ? selectedIndex : this.enabledOptionIndexes()[0] ?? -1);
+    this.activeIndex.set(
+      selectedIndex >= 0 ? selectedIndex : (this.enabledOptionIndexes()[0] ?? -1),
+    );
   }
 
   private firstSelectedOptionIndex(): number {
@@ -584,13 +585,10 @@ export class SelectComponent<TValue>
 
   private loadSource(source: SelectSearchSource<TValue>, query: string): void {
     const requestId = ++this.sourceRequestId;
-    const result =
-      typeof source === 'function' ? source(query) : this.filterOptions(source, query);
+    const result = typeof source === 'function' ? source(query) : this.filterOptions(source, query);
 
     if (isObservable(result)) {
-      this.sourceSubscription = (
-        result as Observable<readonly SelectOption<TValue>[]>
-      ).subscribe({
+      this.sourceSubscription = (result as Observable<readonly SelectOption<TValue>[]>).subscribe({
         next: (options) => this.applySourceResult(requestId, options),
         error: () => this.applySourceError(requestId),
       });
@@ -607,10 +605,7 @@ export class SelectComponent<TValue>
     this.applySourceResult(requestId, result);
   }
 
-  private applySourceResult(
-    requestId: number,
-    options: readonly SelectOption<TValue>[],
-  ): void {
+  private applySourceResult(requestId: number, options: readonly SelectOption<TValue>[]): void {
     if (requestId !== this.sourceRequestId) {
       return;
     }
@@ -631,7 +626,7 @@ export class SelectComponent<TValue>
     }
 
     this.loading.set(false);
-    this.error.set('Options could not be loaded');
+    this.error.set(this.languageService.translate('selection.loadError'));
     this.activeIndex.set(-1);
   }
 
@@ -711,8 +706,8 @@ export class SelectComponent<TValue>
 
     return Boolean(
       activeElement &&
-        ((inputElement && inputElement === activeElement) ||
-          (panelElement && panelElement.contains(activeElement))),
+      ((inputElement && inputElement === activeElement) ||
+        (panelElement && panelElement.contains(activeElement))),
     );
   }
 }

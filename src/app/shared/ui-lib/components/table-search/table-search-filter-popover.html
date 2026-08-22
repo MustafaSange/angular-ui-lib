@@ -30,8 +30,8 @@
           <button
             class="btn btn-ghost btn-icon table-search-panel-close-button"
             type="button"
-            aria-label="Cancel filter editing"
-            title="Cancel"
+            [attr.aria-label]="'tableSearch.cancelFilterEditing' | translate"
+            [attr.title]="'common.cancel' | translate"
             (click)="cancel()"
           >
             <span class="ms-icon" aria-hidden="true">close</span>
@@ -40,7 +40,7 @@
 
         <div class="table-search-panel-body filter-editor">
           <ms-signal-form-field>
-            <label>Operator</label>
+            <label>{{ 'search.operator' | translate }}</label>
             <select
               #firstControl
               data-filter-control="operator"
@@ -48,7 +48,7 @@
               (change)="handleOperatorChange($event)"
             >
               @for (operator of allowedOperators(); track operator) {
-                <option [value]="operator">{{ operatorLabels[operator] }}</option>
+                <option [value]="operator">{{ operatorLabel(operator) }}</option>
               }
             </select>
           </ms-signal-form-field>
@@ -56,10 +56,10 @@
           @if (isBetween()) {
             <div class="filter-range" [class.is-stacked]="property().dataType === 'dateTime'">
               <ms-signal-form-field>
-                <label>From</label>
+                <label>{{ 'search.from' | translate }}</label>
                 @if (propertyOptions().length > 0) {
                   <select data-filter-control="from" [formField]="filterForm.from">
-                    <option value="">Choose from</option>
+                    <option value="">{{ 'search.chooseFrom' | translate }}</option>
                     @for (option of propertyOptions(); track option.value) {
                       <option [value]="option.value">{{ option.label }}</option>
                     }
@@ -76,10 +76,10 @@
                 }
               </ms-signal-form-field>
               <ms-signal-form-field>
-                <label>To</label>
+                <label>{{ 'search.to' | translate }}</label>
                 @if (propertyOptions().length > 0) {
                   <select data-filter-control="to" [formField]="filterForm.to">
-                    <option value="">Choose to</option>
+                    <option value="">{{ 'search.chooseTo' | translate }}</option>
                     @for (option of propertyOptions(); track option.value) {
                       <option [value]="option.value">{{ option.label }}</option>
                     }
@@ -103,7 +103,7 @@
                 [class.has-custom-values]="allowCustomInValues()"
               >
                 <ms-signal-form-field [style.--form-field-control-anchor]="customValuesAnchor">
-                  <label>Values</label>
+                  <label>{{ 'search.values' | translate }}</label>
                   @if (!allowCustomInValues() && propertyOptions().length > 0) {
                     <ms-select
                       data-filter-control="values"
@@ -123,7 +123,9 @@
                     <ms-readonly-value readonly overflowNavigation>
                       <span class="table-filter-in-values-preview">
                         @if (totalInValues() === 0) {
-                          <span class="table-filter-in-values-placeholder">Add values</span>
+                          <span class="table-filter-in-values-placeholder">{{
+                            'search.addValues' | translate
+                          }}</span>
                         } @else {
                           @for (item of inValuePreview(); track item.custom + '-' + item.value) {
                             <ms-chip size="xs" selected removable>
@@ -131,14 +133,16 @@
                               <button
                                 msChipRemove
                                 type="button"
-                                [attr.aria-label]="'Remove value ' + item.label"
+                                [attr.aria-label]="
+                                  'search.removeValue' | translate: { value: item.label }
+                                "
                                 (click)="removeInValue(item.value, item.custom)"
                               ></button>
                             </ms-chip>
                           }
                           @if (totalInValues() > 3) {
                             <span class="table-filter-in-values-more">
-                              +{{ totalInValues() - 3 }} more
+                              {{ 'search.more' | translate: { count: totalInValues() - 3 } }}
                             </span>
                           }
                         }
@@ -160,8 +164,8 @@
                       class="btn btn-icon"
                       type="button"
                       msPopoverTrigger
-                      [attr.aria-label]="'Manage values for ' + label()"
-                      [attr.title]="'Manage values for ' + label()"
+                      [attr.aria-label]="'search.manageValues' | translate: { property: label() }"
+                      [attr.title]="'search.manageValues' | translate: { property: label() }"
                       [class.btn-outline]="totalInValues() === 0"
                       [class.btn-primary]="totalInValues() > 0"
                     >
@@ -170,13 +174,13 @@
 
                     <ms-popover-panel
                       class="table-filter-custom-values-popover"
-                      [attr.aria-label]="'Manage values for ' + label()"
+                      [attr.aria-label]="'search.manageValues' | translate: { property: label() }"
                       [style.position-anchor]="customValuesAnchor"
                     >
                       <div class="table-filter-custom-values-editor">
                         @if (propertyOptions().length > 0) {
                           <ms-signal-form-field class="no-message">
-                            <label>Options</label>
+                            <label>{{ 'search.options' | translate }}</label>
                             <ms-select
                               multiple
                               overflowNavigation
@@ -202,8 +206,12 @@
                             [type]="inputType(property())"
                             [inputMode]="inputMode(property())"
                             [step]="step(property())"
-                            [attr.aria-label]="'Custom value for ' + label()"
-                            [placeholder]="property().placeholder ?? 'Add value'"
+                            [attr.aria-label]="
+                              'search.customValue' | translate: { property: label() }
+                            "
+                            [placeholder]="
+                              property().placeholder ?? ('search.addValues' | translate)
+                            "
                             [value]="draft().customValueInput"
                             [attr.aria-invalid]="customValueInputError() ? 'true' : null"
                             [attr.aria-describedby]="
@@ -216,8 +224,8 @@
                           <button
                             class="form-field-suffix form-field-action"
                             type="button"
-                            [attr.aria-label]="'Add value for ' + label()"
-                            [attr.title]="'Add value for ' + label()"
+                            [attr.aria-label]="'search.addValue' | translate: { property: label() }"
+                            [attr.title]="'search.addValue' | translate: { property: label() }"
                             [disabled]="
                               !draft().customValueInput.trim() ||
                               customValueInputError() ||
@@ -230,8 +238,10 @@
                           <button
                             class="form-field-suffix form-field-action"
                             type="button"
-                            [attr.aria-label]="'Paste values for ' + label()"
-                            [attr.title]="'Paste values for ' + label()"
+                            [attr.aria-label]="
+                              'search.pasteValues' | translate: { property: label() }
+                            "
+                            [attr.title]="'search.pasteValues' | translate: { property: label() }"
                             [disabled]="!clipboardPasteAvailable() || isAtInValueLimit()"
                             (click)="pasteCustomValues(customValueInput)"
                           >
@@ -250,7 +260,10 @@
                         }
 
                         <div class="table-filter-custom-values-meta">
-                          <span>{{ totalInValues() }} / {{ maxInValues() }} values</span>
+                          <span>{{
+                            'search.valueCount'
+                              | translate: { current: totalInValues(), limit: maxInValues() }
+                          }}</span>
                           @if (draft().customValues.length > 0) {
                             <button
                               class="btn btn-ghost btn-sm"
@@ -258,20 +271,25 @@
                               (click)="clearCustomValues()"
                             >
                               <span class="ms-icon" aria-hidden="true">clear_all</span>
-                              Clear Custom
+                              {{ 'search.clearCustom' | translate }}
                             </button>
                           }
                         </div>
 
                         @if (draft().customValues.length > 0) {
-                          <div class="table-filter-custom-values-list" aria-label="Custom values">
+                          <div
+                            class="table-filter-custom-values-list"
+                            [attr.aria-label]="'search.customValues' | translate"
+                          >
                             @for (value of draft().customValues; track value) {
                               <ms-chip removable size="xs" selected>
                                 {{ value }}
                                 <button
                                   msChipRemove
                                   type="button"
-                                  [attr.aria-label]="'Remove custom value ' + value"
+                                  [attr.aria-label]="
+                                    'search.removeCustomValue' | translate: { value }
+                                  "
                                   (click)="removeInValue(value, true)"
                                 ></button>
                               </ms-chip>
@@ -292,10 +310,10 @@
             </div>
           } @else if (!isValueless()) {
             <ms-signal-form-field>
-              <label>Value</label>
+              <label>{{ 'search.value' | translate }}</label>
               @if (propertyOptions().length > 0) {
                 <select data-filter-control="value" [formField]="filterForm.value">
-                  <option value="">Choose value</option>
+                  <option value="">{{ 'search.chooseValue' | translate }}</option>
                   @for (option of propertyOptions(); track option.value) {
                     <option [value]="option.value">{{ option.label }}</option>
                   }
@@ -315,14 +333,14 @@
 
           @if (!otherRequiredFiltersValid()) {
             <p class="table-search-blocked-note" role="status">
-              Complete the other required filters before applying this filter.
+              {{ 'tableSearch.completeOtherRequired' | translate }}
             </p>
           } @else if (!otherActiveFiltersValid()) {
             <p class="table-search-blocked-note" role="status">
               @if (otherInvalidOptionalFilterLabels(); as labels) {
-                Complete or clear the invalid filters before applying: {{ labels }}.
+                {{ 'tableSearch.completeInvalidFilters' | translate: { filters: labels } }}
               } @else {
-                Another active filter is invalid. Complete or clear it before applying.
+                {{ 'tableSearch.anotherInvalidFilter' | translate }}
               }
             </p>
           }
@@ -335,7 +353,7 @@
           <div class="table-search-footer-actions table-search-footer-actions-start">
             @if (canClear()) {
               <button class="btn btn-ghost btn-sm" type="button" (click)="clear()">
-                Clear Filter
+                {{ 'search.clearFilter' | translate }}
               </button>
             }
             <button
@@ -345,11 +363,13 @@
               (click)="resetDefaults()"
             >
               <span class="ms-icon" aria-hidden="true">settings_backup_restore</span>
-              Reset Defaults
+              {{ 'search.resetDefaults' | translate }}
             </button>
           </div>
           <div class="table-search-footer-actions table-search-footer-actions-end">
-            <button class="btn btn-outline btn-sm" type="button" (click)="cancel()">Cancel</button>
+            <button class="btn btn-outline btn-sm" type="button" (click)="cancel()">
+              {{ 'common.cancel' | translate }}
+            </button>
             <button
               class="btn btn-primary btn-sm"
               type="submit"
@@ -360,7 +380,7 @@
                 !otherActiveFiltersValid()
               "
             >
-              Apply
+              {{ 'search.apply' | translate }}
             </button>
           </div>
         </footer>

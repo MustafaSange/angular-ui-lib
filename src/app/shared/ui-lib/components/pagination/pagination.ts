@@ -1,5 +1,7 @@
-import { Component, computed, model } from '@angular/core';
+import { Component, computed, inject, model } from '@angular/core';
 
+import { TranslatePipe } from '../../pipes';
+import { LanguageService } from '../../services/language';
 import { getPaginationMeta } from './pagination-meta';
 import type { PaginationState } from './pagination-state';
 
@@ -15,9 +17,11 @@ type PaginationItem =
 
 @Component({
   selector: 'ms-pagination',
+  imports: [TranslatePipe],
   templateUrl: './pagination.html',
 })
 export class PaginationComponent {
+  private readonly languageService = inject(LanguageService);
   readonly state = model<PaginationState>({});
 
   protected readonly meta = computed(() => getPaginationMeta(this.state()));
@@ -29,7 +33,9 @@ export class PaginationComponent {
   );
   protected readonly safeSiblingCount = computed(() => this.meta().siblingCount);
   protected readonly disabled = computed(() => this.meta().disabled);
-  protected readonly ariaLabel = computed(() => this.meta().ariaLabel);
+  protected readonly ariaLabel = computed(
+    () => this.state().ariaLabel?.trim() || this.languageService.translate('pagination.label'),
+  );
   protected readonly showSummary = computed(() => this.meta().showSummary);
   protected readonly showPageSizeSelector = computed(() => this.meta().showPageSizeSelector);
   protected readonly alignment = computed(() => this.meta().alignment);

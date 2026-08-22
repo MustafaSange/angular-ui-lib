@@ -2,10 +2,8 @@ import { Service, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 
 import { ModalService } from '../modal';
-import {
-  ConfirmDialogContentComponent,
-  type ConfirmDialogData,
-} from './confirm-dialog-content';
+import { LanguageService } from '../../services/language';
+import { ConfirmDialogContentComponent, type ConfirmDialogData } from './confirm-dialog-content';
 import type { ConfirmDialogConfig } from './confirm-dialog-types';
 
 const DEFAULT_WIDTH = '28rem';
@@ -14,6 +12,7 @@ const DEFAULT_MAX_WIDTH = 'calc(100vw - (var(--spacing-16) * 2))';
 @Service()
 export class ConfirmDialogService {
   private readonly modal = inject(ModalService);
+  private readonly languageService = inject(LanguageService);
 
   confirm(config: ConfirmDialogConfig): Observable<boolean> {
     const data = this.getDialogData(config);
@@ -65,8 +64,8 @@ export class ConfirmDialogService {
       title: config.title,
       message: config.message,
       kind: config.kind ?? 'info',
-      confirmText: config.confirmText ?? 'Confirm',
-      cancelText: config.cancelText ?? 'Cancel',
+      confirmText: config.confirmText ?? this.languageService.translate('common.confirm'),
+      cancelText: config.cancelText ?? this.languageService.translate('common.cancel'),
     };
   }
 }

@@ -62,6 +62,42 @@
   <section class="localization-section">
     <div class="section-heading">
       <div>
+        <h2>Localized Library Components</h2>
+        <p>
+          Built-in labels, empty states, accessibility text, and date formatting react to the
+          selected language while consumer-provided content remains unchanged.
+        </p>
+      </div>
+    </div>
+
+    <div class="localized-components">
+      <div class="localized-component-example">
+        <h3>Theme Mode</h3>
+        <ms-theme-switcher />
+      </div>
+
+      <div class="localized-component-example">
+        <h3>Empty Autocomplete</h3>
+        <ms-autocomplete aria-label="Account" [options]="[]" />
+      </div>
+
+      <div class="localized-component-example">
+        <h3>Date Picker</h3>
+        <ms-date-picker />
+      </div>
+
+      <div class="localized-component-example pagination-example">
+        <h3>Empty Pagination</h3>
+        <ms-pagination [state]="emptyPagination" />
+      </div>
+    </div>
+
+    <app-showcase-code label="Localized Library Components" [code]="componentsSnippet" />
+  </section>
+
+  <section class="localization-section">
+    <div class="section-heading">
+      <div>
         <h2>Typed Service Translation</h2>
         <p>The service derives the accepted parameter name from the selected translation key.</p>
       </div>
