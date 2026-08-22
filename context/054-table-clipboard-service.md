@@ -139,12 +139,13 @@ const result = await tableClipboard.copyRow(rowElement, {
 
 The implementation lives in:
 
-`src/app/shared/ui-lib/services`
+`src/app/shared/ui-lib/services/table-clipboard`
 
 The feature includes:
 
 - `table-clipboard.service.ts`
 - `table-clipboard-types.ts`
+- `index.ts`
 - exports from `src/app/shared/ui-lib/services/index.ts`
 - the existing root `src/app/shared/ui-lib/index.ts` service export path
 

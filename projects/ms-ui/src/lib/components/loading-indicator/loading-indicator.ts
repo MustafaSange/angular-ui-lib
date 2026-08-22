@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, effect, ElementRef, inject, input } from '@angular/core';
 
-import { LoadingService } from '../../services/loading.service';
+import { LoadingService } from '../../services/loading';
 import { ProgressIndicatorComponent, SpinnerComponent } from '../progress-indicator';
 import type { SpinnerVariant } from '../progress-indicator/progress-indicator-types';
 import type { LoadingIndicatorVariant } from './loading-indicator-types';

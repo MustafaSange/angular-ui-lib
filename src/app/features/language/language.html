@@ -1,0 +1,110 @@
+<main class="language-page">
+  <header class="language-header">
+    <a class="btn btn-ghost back-link" routerLink="/">
+      <span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span>
+      <span>Back to Home</span>
+    </a>
+    <p class="eyebrow">Services and Pipes</p>
+    <h1>Language Localization</h1>
+    <p class="description">
+      Switch between English and Arabic to see lazy locale loading, interpolation, persistence, and
+      document direction working together.
+    </p>
+  </header>
+
+  <section class="language-section" [attr.aria-busy]="loading()">
+    <div class="section-heading">
+      <div>
+        <h2>Live Language Switch</h2>
+        <p>The selected language controls both translated values and document direction.</p>
+      </div>
+
+      <div class="language-switcher" role="group" aria-label="Language">
+        @for (option of languageOptions; track option.code) {
+          <button
+            class="btn language-option"
+            type="button"
+            [class.btn-primary]="language() === option.code"
+            [class.btn-outline]="language() !== option.code"
+            [disabled]="loading()"
+            [attr.aria-pressed]="language() === option.code"
+            (click)="setLanguage(option.code)"
+          >
+            {{ option.labelKey | translate }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <article class="translation-preview" aria-live="polite">
+      <p class="preview-label">Translated Greeting</p>
+      <strong>{{ 'greeting.welcome' | translate: { name: 'Maya' } }}</strong>
+
+      <dl class="locale-state">
+        <div>
+          <dt>Language</dt>
+          <dd>{{ language() }}</dd>
+        </div>
+        <div>
+          <dt>Direction</dt>
+          <dd>{{ direction() }}</dd>
+        </div>
+        <div>
+          <dt>Loading</dt>
+          <dd>{{ loading() ? 'Yes' : 'No' }}</dd>
+        </div>
+      </dl>
+    </article>
+
+    <app-showcase-code label="Language Switch and Translate Pipe" [code]="switcherSnippet" />
+  </section>
+
+  <section class="language-section">
+    <div class="section-heading">
+      <div>
+        <h2>Typed Service Translation</h2>
+        <p>The service derives the accepted parameter name from the selected translation key.</p>
+      </div>
+    </div>
+
+    <div class="service-example">
+      <label class="form-field" for="translated-name">
+        <span class="form-field-label">Interpolation Name</span>
+        <span class="form-field-control">
+          <input id="translated-name" type="text" [value]="name()" (input)="updateName($event)" />
+        </span>
+      </label>
+
+      <div class="translated-result" aria-live="polite">
+        <span>Result</span>
+        <strong>{{ greeting() }}</strong>
+      </div>
+    </div>
+
+    <app-showcase-code label="Language Service Translation" [code]="serviceSnippet" />
+  </section>
+
+  <section class="language-section">
+    <div class="section-heading">
+      <div>
+        <h2>Validation Messages and Fallbacks</h2>
+        <p>Form validation messages use the same locale and typed interpolation contract.</p>
+      </div>
+    </div>
+
+    <dl class="translation-list">
+      <div>
+        <dt><code>validation.required</code></dt>
+        <dd>{{ 'validation.required' | translate }}</dd>
+      </div>
+      <div>
+        <dt><code>validation.max</code></dt>
+        <dd>{{ 'validation.max' | translate: { max: 25 } }}</dd>
+      </div>
+      <div>
+        <dt>Missing <code>name</code> parameter</dt>
+        <dd>{{ 'greeting.welcome' | translate }}</dd>
+      </div>
+    </dl>
+  </section>
+</main>

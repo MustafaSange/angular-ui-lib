@@ -71,8 +71,9 @@ structured data so consumers can choose semantic markup without trusting generat
 
 The implementation lives in:
 
-- `src/app/shared/ui-lib/pipes/highlight.pipe.ts`
-- `src/app/shared/ui-lib/pipes/highlight.types.ts`
+- `src/app/shared/ui-lib/pipes/highlight/highlight.pipe.ts`
+- `src/app/shared/ui-lib/pipes/highlight/highlight.types.ts`
+- `src/app/shared/ui-lib/pipes/highlight/index.ts`
 
 The public exports live in:
 

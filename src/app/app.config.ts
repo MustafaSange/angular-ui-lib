@@ -16,7 +16,12 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([cookieInterceptor, loadingInterceptor, apiErrorInterceptor]),
     ),
-    provideUiLib(),
+    provideUiLib({
+      locales: {
+        en: async () => (await import('./core/locales/en')).en,
+        ar: async () => (await import('./core/locales/ar')).ar,
+      },
+    }),
     provideRouter(routes),
   ],
 };

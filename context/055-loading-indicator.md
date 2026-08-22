@@ -135,7 +135,7 @@ The implementation is split across:
 
 - `src/app/shared/ui-lib/components/loading-indicator/` for the global visual component and variant
   type
-- `src/app/shared/ui-lib/services/loading.service.ts` for the signal counter
+- `src/app/shared/ui-lib/services/loading/loading.service.ts` for the signal counter
 - `src/app/shared/ui-lib/interceptors/loading-interceptor/` for request tracking and the HTTP
   context opt-out
 - `src/styles/components/_loading-indicator.scss` for fixed positioning, overlay interaction, busy

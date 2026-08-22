@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Service, inject } from '@angular/core';
 
-import { UI_LIB_CONFIG } from '../density-config';
+import { UI_LIB_CONFIG } from '../config/ui-lib-config-token';
 import { MATERIAL_ICONS } from './icon-registry';
 
 const MATERIAL_SYMBOLS_LINK_ID = 'ms-material-symbols-font';
