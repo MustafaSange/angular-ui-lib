@@ -9,7 +9,8 @@ uses standalone component APIs, signals, Vitest, and SCSS design tokens.
 - Reusable shared components under `src/app/shared/ui-lib/components`.
 - Reusable directives, pipes, HTTP interceptors, services, public types, and search-query helpers
   under `src/app/shared/ui-lib`.
-- Theme, direction, density, loading, Material Symbols, table clipboard, and value-viewer services.
+- Theme, direction, language, density, loading, Material Symbols, table clipboard, and value-viewer
+  services.
 - Feature showcase pages under `src/app/features`.
 - A public in-app UI library API barrel at `src/app/shared/ui-lib`.
 - A locally installable Angular library package under `projects/ms-ui`.
@@ -77,8 +78,8 @@ not part of the reusable library API.
 - Value viewer
 
 The public barrel also exports the density and overflow-navigation directives; the format JSON,
-highlight, and time-ago pipes; search-query helpers; and the cookie, loading, and API-error HTTP
-interceptors.
+highlight, time-ago, and translate pipes; search-query helpers; and the cookie, loading, and
+API-error HTTP interceptors.
 
 ## Styles and theme
 
@@ -186,6 +187,78 @@ Existing `size` inputs and classes continue to select a relative size tier withi
 density. General page, card, drawer, and dialog spacing is not reduced automatically. Keep default
 density for touch-heavy interfaces; compact density is intended for data-dense enterprise
 workflows.
+
+## Language Localization
+
+The library includes typed English and Arabic locales. `LanguageService` loads locales lazily,
+persists the selected language in local storage, and keeps `DirectionService` synchronized so
+English uses LTR and Arabic uses RTL. Built-in component labels, empty states, validation messages,
+and accessibility text react to the active language.
+
+Switch languages through the service and use `TranslatePipe` in templates. Translation keys and
+interpolation parameter names are derived from the canonical English locale and checked by
+TypeScript.
+
+```ts
+import { Component, inject } from '@angular/core';
+
+import { LanguageService, TranslatePipe } from './shared/ui-lib';
+
+@Component({
+  selector: 'app-language-control',
+  imports: [TranslatePipe],
+  template: `
+    <button type="button" [disabled]="language.loading()" (click)="useArabic()">
+      {{ 'language.arabic' | translate }}
+    </button>
+
+    <p>{{ 'greeting.welcome' | translate: { name: 'Maya' } }}</p>
+  `,
+})
+export class LanguageControl {
+  protected readonly language = inject(LanguageService);
+
+  protected async useArabic(): Promise<void> {
+    await this.language.setLanguage('ar');
+  }
+}
+```
+
+Applications can override built-in translations without changing the library. Define patches with
+`defineLocalePatch()` so unknown keys and mismatched interpolation parameters fail type checking,
+then register eager values or lazy loaders through `provideUiLib()`.
+
+```ts
+// src/app/core/locales/en.ts
+import { defineLocalePatch } from '../../shared/ui-lib';
+
+export const en = defineLocalePatch({
+  greeting: {
+    welcome: 'Welcome to the UI library, {{name}}!',
+  },
+});
+```
+
+```ts
+// src/app/app.config.ts
+import { ApplicationConfig } from '@angular/core';
+
+import { provideUiLib } from './shared/ui-lib';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideUiLib({
+      locales: {
+        en: async () => (await import('./core/locales/en')).en,
+        ar: async () => (await import('./core/locales/ar')).ar,
+      },
+    }),
+  ],
+};
+```
+
+The built-in English locale is the canonical contract. Complete additional locales can be checked
+with `defineLocale()`, while application overrides should use `defineLocalePatch()`.
 
 ## HTTP Interceptors and Global Loading
 
@@ -364,7 +437,7 @@ npm run build-ui-lib
 ```
 
 The latest package is written to `dist/ms-ui`, with a versioned snapshot such as
-`dist/ms-ui-0.5.1`. See the
+`dist/ms-ui-0.6.0`. See the
 [`MS UI` consumer guide](projects/ms-ui/README.md) for local installation, styles, provider setup,
 component imports, and version updates in another Angular application.
 
