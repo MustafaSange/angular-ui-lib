@@ -1,5 +1,9 @@
+@use 'sass:map';
+@use '../tokens/breakpoints';
+
 .form-field,
-ms-signal-form-field {
+ms-signal-form-field,
+ms-horizontal-signal-form-field {
   display: grid;
   align-content: start;
   // row-gap: var(--spacing-2);
@@ -399,6 +403,70 @@ ms-signal-form-field {
     ms-file-upload,
     ms-readonly-value {
       cursor: default;
+    }
+  }
+}
+
+ms-horizontal-signal-form-field {
+  --_label-width: var(--label-width, 10rem);
+
+  grid-template-columns: var(--_label-width) minmax(0, 1fr);
+  column-gap: var(--horizontal-form-field-column-gap, var(--spacing-16));
+
+  > .form-field-label {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: start;
+    min-block-size: var(--control-height-sm);
+    min-inline-size: 0;
+    gap: var(--spacing-8);
+    text-align: start;
+    overflow-wrap: anywhere;
+  }
+
+  > .form-field-control {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: start;
+    min-inline-size: 0;
+  }
+
+  > .form-field-message {
+    grid-column: 2;
+    grid-row: 2;
+    min-inline-size: 0;
+    min-block-size: 0;
+    overflow-wrap: anywhere;
+
+    &:not(:has(ms-hint, ms-error)) {
+      display: none;
+    }
+  }
+
+  &.no-label {
+    grid-template-columns: minmax(0, 1fr);
+
+    > .form-field-control,
+    > .form-field-message {
+      grid-column: 1;
+    }
+  }
+}
+
+@media #{map.get(breakpoints.$media-aliases, xs)} {
+  ms-horizontal-signal-form-field {
+    grid-template-columns: minmax(0, 1fr);
+    column-gap: 0;
+
+    > .form-field-label,
+    > .form-field-control,
+    > .form-field-message {
+      grid-column: 1;
+      grid-row: auto;
+    }
+
+    > .form-field-label {
+      min-block-size: auto;
     }
   }
 }

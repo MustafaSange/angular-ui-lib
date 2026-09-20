@@ -64,7 +64,8 @@ ms-otp-input,
 }
 
 .form-field ms-otp-input .otp-cell,
-ms-signal-form-field ms-otp-input .otp-cell {
+ms-signal-form-field ms-otp-input .otp-cell,
+ms-horizontal-signal-form-field ms-otp-input .otp-cell {
   inline-size: var(--control-height-md);
   min-inline-size: var(--control-height-md);
   block-size: var(--control-height-md);
@@ -81,7 +82,8 @@ ms-signal-form-field ms-otp-input .otp-cell {
 }
 
 .form-field ms-otp-input,
-ms-signal-form-field ms-otp-input {
+ms-signal-form-field ms-otp-input,
+ms-horizontal-signal-form-field ms-otp-input {
   inline-size: fit-content;
   max-inline-size: 100%;
 

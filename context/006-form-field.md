@@ -41,11 +41,35 @@ Selection controls are handled separately by projected choice components. Follow
 
 ## Component Structure
 
-Create a form field layout with 3 rows:
+The default vertical form field layout has 3 rows:
 
 1. Label row
 2. Control row
 3. Message row
+
+## Horizontal Field Styling
+
+`ms-horizontal-signal-form-field` shares the same control, message, state, and adornment styling
+as `.form-field` and `ms-signal-form-field`. Its layout rules live in `_form-fields.scss`;
+`_otp-input.scss` also includes its selector for consistent projected OTP sizing.
+
+- Use a two-column grid: label at inline-start, control at inline-end, and message below the control.
+- Label width: private `--_label-width`, resolved from the public
+  `var(--label-width, 10rem)`. Consumers can set `--label-width` on one field or an ancestor;
+  internal layout rules use only the private variable.
+- Column gap: `var(--horizontal-form-field-column-gap, var(--spacing-16))`.
+- Keep the control column shrinkable with `minmax(0, 1fr)` and allow long labels/messages to wrap.
+- Align labels to the first small-control row; use `--control-height-sm` for label alignment.
+- Use the existing `xs` media alias from `_breakpoints.scss` to restore the vertical layout on
+  screens up to 599px. Do not use a container query or the previously discussed 480px threshold.
+- Keep horizontal placement above the mobile breakpoint, including inside desktop panels.
+- Preserve RTL mirroring and error-over-hint precedence. Unlike the vertical field, the horizontal
+  message row collapses when neither a hint nor a visible error is present and appears automatically
+  when either message is rendered.
+- `no-label` collapses the grid to one full-width control/message column; `no-message` hides
+  the message row.
+- Share density tokens: 28px small controls in Default and 24px in Compact, including borders,
+  with 14px control text and muted labels. Do not hardcode a separate horizontal control height.
 
 ## Naming Rules
 
@@ -232,7 +256,8 @@ Include styles for:
   - mixins
   - utility helpers
 - Do not duplicate values already defined in the style guide.
-- Keep selectors scoped to `.form-field`.
+- Keep shared selectors scoped to `.form-field`, `ms-signal-form-field`, and
+  `ms-horizontal-signal-form-field`.
 - Avoid global styling leakage.
 - Keep the implementation modular, reusable, and production-ready.
 - Keep text/select/textarea form-field styles in `_form-fields.scss`.
