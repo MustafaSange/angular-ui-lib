@@ -7,6 +7,7 @@ import { DisplayValuesShowcase } from './showcases/display-values/display-values
 import { FieldActionsShowcase } from './showcases/field-actions/field-actions';
 import { FieldLayoutUtilitiesShowcase } from './showcases/field-layout-utilities/field-layout-utilities';
 import { FieldWithHintShowcase } from './showcases/field-with-hint/field-with-hint';
+import { HorizontalFieldShowcase } from './showcases/horizontal-field/horizontal-field';
 import { PrefixFieldShowcase } from './showcases/prefix-field/prefix-field';
 import { ReadonlyFieldShowcase } from './showcases/readonly-field/readonly-field';
 import { RequiredEmailFieldShowcase } from './showcases/required-email-field/required-email-field';
@@ -19,6 +20,7 @@ import { TextareaFieldShowcase } from './showcases/textarea-field/textarea-field
   selector: 'app-form-fields',
   imports: [
     RouterLink,
+    HorizontalFieldShowcase,
     BasicTextFieldShowcase,
     FieldLayoutUtilitiesShowcase,
     RequiredEmailFieldShowcase,

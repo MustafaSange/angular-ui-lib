@@ -17,6 +17,7 @@ Import the public components from the folder barrel:
 
 ```ts
 import {
+  HorizontalSignalFormField,
   SignalFormError,
   SignalFormField,
   SignalFormHint,
@@ -27,6 +28,7 @@ import {
 Components:
 
 - `SignalFormField` with selector `ms-signal-form-field`
+- `HorizontalSignalFormField` with selector `ms-horizontal-signal-form-field`
 - `SignalFormHint` with selector `ms-hint`
 - `SignalFormError` with selector `ms-error`
 - `SignalReadonlyValue` with selector `ms-readonly-value`
@@ -143,11 +145,53 @@ protected readonly form = form(
 Do not combine `[formField]` with native validation attributes such as `required`, `minlength`, or
 `pattern` on the same input, textarea, or select.
 
+## Horizontal Layout
+
+Use the separate `HorizontalSignalFormField` component for enterprise forms with labels beside
+controls. It is exported through the signal-form-field folder barrel and the root UI library barrel.
+It has no layout or density input; the existing vertical component remains unchanged.
+
+```html
+<ms-horizontal-signal-form-field>
+  <label for="work-email">Work Email</label>
+  <input id="work-email" type="email" [formField]="emailField" />
+  <ms-hint>Use your company email address.</ms-hint>
+</ms-horizontal-signal-form-field>
+```
+
+- `HorizontalSignalFormField` extends `SignalFormField` and reuses `signal-form-field.html`,
+  inherited content queries, computed state, validation messages, and host state classes.
+- Labels occupy the inline-start column; controls and messages occupy the inline-end column.
+  Labels align with the first control line, including for textareas, and long labels wrap.
+- Default label width is `10rem` (160px at the default root size). Consumers can override it with
+  the short public `--label-width` property on one field or a parent form. The component resolves
+  that value into private `--_label-width` for its internal grid. The column gap is
+  `var(--spacing-16)` (16px) and can be overridden with
+  `--horizontal-form-field-column-gap` on a parent form.
+- The shared `xs` screen media alias stacks labels above controls at a maximum width of
+  `37.4375rem` (599px). At 600px and above, fields stay horizontal even in narrow desktop panels.
+  This is a viewport breakpoint, not a field-width/container breakpoint.
+- Logical CSS placement mirrors the columns in RTL.
+- Both variants use the same density tokens: small controls are 28px in Default and 24px in
+  Compact, including the wrapper border. Control text remains 14px; labels remain muted.
+- Prefixes, suffixes, label actions, required markers, readonly/disabled styling, and projected
+  hints/custom errors keep the existing behavior. The horizontal message row is collapsed when
+  neither a hint nor visible error is rendered, appears automatically when either exists, and does
+  not reserve empty block space. An active error replaces the hint; clearing the error restores the
+  hint if provided. The vertical field keeps its reserved message line.
+- `no-label` removes the label column and lets the control/message span the full width.
+  `no-message` hides the reserved message row.
+
+The `/form-fields` showcase includes a **Horizontal Fields** section implemented under
+`showcases/horizontal-field`, with matching standalone snippets for profile fields and validation,
+select/autocomplete, and readonly/disabled states plus custom errors and layout utilities.
+
 ## Component Structure
 
 The implementation is split into separate files:
 
 - `signal-form-field.ts`
+- `horizontal-signal-form-field.ts`
 - `signal-form-field.html`
 - `signal-form-hint/signal-form-hint.ts`
 - `signal-form-hint/signal-form-hint.html`
@@ -158,7 +202,8 @@ The implementation is split into separate files:
 
 `signal-form-field.ts` owns the wrapper component behavior.
 
-`signal-form-field.html` renders the 3-row layout:
+`signal-form-field.html` provides three containers, arranged vertically by default and as a
+two-column grid by the horizontal component:
 
 1. Label row with a 2-column label area
 2. Projected input/control row
@@ -183,7 +228,9 @@ projected display-value component for non-editing field rows.
   `ms-date-picker`, `ms-time-picker`, and `ms-date-time-picker`.
 - The wrapper detects projected `ms-hint`, `ms-error`, `ms-readonly-value`, and Angular signal
   `FormField`.
-- The wrapper shows `ms-error` only when an error component exists and the projected signal field is invalid and touched or dirty.
+- The wrapper shows an error when the projected signal field is invalid, touched or dirty, and
+  its first error resolves to a non-empty message. A projected `ms-error` takes precedence;
+  otherwise the wrapper renders the generated validation message in its own `ms-error`.
 - The wrapper shows `ms-hint` before interaction and whenever no error is visible.
 - Initial invalid fields should not display errors until the field becomes touched or dirty.
 - The message row remains present so spacing does not jump.
@@ -207,7 +254,8 @@ Reuse the existing form field styling in:
 The styles support both:
 
 - legacy `.form-field` markup
-- `ms-signal-form-field`, `ms-hint`, `ms-error`, and `ms-readonly-value` element selectors
+- `ms-signal-form-field`, `ms-horizontal-signal-form-field`, `ms-hint`, `ms-error`, and
+  `ms-readonly-value` element selectors
 - a 2-column `.form-field-label` area using `1fr auto`
 - a compact label-side button treatment for `[slot='label-action']`
 - 2-column `ms-hint` and `ms-error` message layouts using `1fr auto`
@@ -219,7 +267,7 @@ Dense form-field sizing is part of the component contract:
 
 - native `input` and `select` controls, `ms-select`, `ms-autocomplete`, `ms-date-picker`,
   `ms-time-picker`, `ms-date-time-picker`, and `ms-readonly-value` align to `--control-height-sm`
-  with a 28px total control height including the outer form-field border
+  with a 28px Default / 24px Compact total control height including the outer form-field border
 - control text uses `--font-size-sm` (14px)
 - labels use `--color-text-muted`
 - checkbox, radio, and switch labels should match that muted 14px label treatment when shown in
@@ -255,8 +303,8 @@ The rendered showcase and its copyable snippet must stay behaviorally aligned:
 
 - If the snippet uses `signal`, `computed`, `form(...)`, `schema(...)`, or `[formField]`, the live
   showcase component/template should use the same behavior rather than static markup.
-- If the snippet demonstrates validation, the live example should project `ms-error` and derive the
-  displayed message from signal form errors.
+- If the snippet demonstrates validation, the live example should use the same schema and
+  automatic error messages or projected custom `ms-error` as the snippet.
 - If the snippet demonstrates live derived UI, such as a textarea character count, the live example
   should derive it from the signal form field/control state so it updates while typing.
 - If the snippet demonstrates interaction state, such as a password visibility toggle, the live
@@ -288,6 +336,9 @@ part of the projected field state and appear in the standard message row after i
 ## Acceptance Criteria
 
 - `ms-signal-form-field` renders label, control, and message rows.
+- `ms-horizontal-signal-form-field` shares the same behavior, places messages below the control,
+  and switches from horizontal to vertical at the shared 599px maximum screen breakpoint.
+- Both variants respect Default/Compact density and RTL.
 - Label-side content can be projected with `slot="label-extra"` or `slot="label-action"`.
 - Label actions expose hover, focus-visible, and disabled treatments without increasing field
   control height.

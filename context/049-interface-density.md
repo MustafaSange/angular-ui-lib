@@ -117,6 +117,11 @@ The contract applies to native form controls, autocomplete, select, buttons, but
 controls, date/time pickers, file upload, menus, pagination, navigation, sliders, steppers, tabs,
 tables, trees, and similar token-based controls.
 
+Both `ms-signal-form-field` and `ms-horizontal-signal-form-field` consume the same small-control
+height token, including their wrapper borders. The horizontal field also uses that token to align
+the label with the first control row. Its label-column width and column gap are layout settings;
+they do not change automatically with density. See `context/008-signal-form-field.md`.
+
 ## Accessibility
 
 - Keep control text readable at the existing 14px small-control size.
