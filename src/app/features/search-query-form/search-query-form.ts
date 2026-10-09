@@ -2,12 +2,15 @@ import { Component, computed, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import {
+  ButtonToggleDirective,
+  ButtonToggleGroup,
   SEARCH_SORT_DIRECTION,
   SearchPropertyConfig,
   SearchQueryFormComponent,
   SearchQueryFormState,
   buildSearchRequest,
   createTodayDateTimeRange,
+  type SearchQueryFormLayout,
   type PaginatedSearchRequest,
   type SearchSortConfig,
   type SearchSortOption,
@@ -34,7 +37,13 @@ const userDefaultSorts = [
 
 @Component({
   selector: 'app-search-query-form',
-  imports: [RouterLink, SearchQueryFormComponent, ShowcaseCode],
+  imports: [
+    RouterLink,
+    SearchQueryFormComponent,
+    ShowcaseCode,
+    ButtonToggleGroup,
+    ButtonToggleDirective,
+  ],
   templateUrl: './search-query-form.html',
   styleUrl: './search-query-form.scss',
 })
@@ -263,6 +272,67 @@ export class SearchQueryForm {
     JSON.stringify(this.emptyRequest(), null, 2),
   );
   protected readonly userRequestJson = computed(() => JSON.stringify(this.userRequest(), null, 2));
+
+  protected readonly horizontalLayout = signal<SearchQueryFormLayout>('horizontal');
+  protected readonly horizontalProperties: readonly SearchPropertyConfig[] = [
+    {
+      propertyName: 'name',
+      label: 'Name',
+      dataType: 'string',
+      required: true,
+      defaultOperator: 'contains',
+      defaultValue: 'Alice',
+      allowedOperators: ['contains', 'eq', 'in', 'isEmpty'],
+      allowCustomInValues: true,
+      maxStringLength: 50,
+      placeholder: 'Search name',
+    },
+    {
+      propertyName: 'status',
+      label: 'Status',
+      dataType: 'enum',
+      visibleByDefault: true,
+      defaultOperator: 'in',
+      defaultValue: ['ACTIVE'],
+      allowedOperators: ['eq', 'neq', 'in'],
+      allowCustomInValues: true,
+      options: [
+        { label: 'Active', value: 'ACTIVE' },
+        { label: 'Pending', value: 'PENDING' },
+      ],
+    },
+    {
+      propertyName: 'age',
+      label: 'Age',
+      dataType: 'int',
+      visibleByDefault: true,
+      defaultOperator: 'between',
+      defaultValue: { from: 18, to: 65 },
+      allowedOperators: ['between', 'eq', 'gte', 'lte', 'isNull'],
+    },
+  ];
+  protected readonly horizontalSortConfig: SearchSortConfig = {
+    sortOptions: [
+      { label: 'Name', value: 'name' },
+      { label: 'Age', value: 'age' },
+    ],
+    defaultSorts: [{ property: 'name', direction: SEARCH_SORT_DIRECTION.ASCENDING }],
+    maxSorts: 2,
+  };
+  protected readonly horizontalState = signal<SearchQueryFormState>({
+    filters: [
+      { id: 'horizontal-name', property: 'name', operator: 'contains', value: 'Alice' },
+      { id: 'horizontal-status', property: 'status', operator: 'in', value: ['ACTIVE'] },
+      { id: 'horizontal-age', property: 'age', operator: 'between', value: { from: 18, to: 65 } },
+    ],
+    sort: [{ property: 'name', direction: SEARCH_SORT_DIRECTION.ASCENDING }],
+  });
+  protected readonly horizontalRequest = signal<PaginatedSearchRequest>(
+    buildSearchRequest(this.horizontalState()),
+  );
+  protected readonly horizontalRequestJson = computed(() =>
+    JSON.stringify(this.horizontalRequest(), null, 2),
+  );
 
   protected readonly emptySnippet = `import { Component, computed, signal } from '@angular/core';
 
@@ -556,6 +626,100 @@ export class UserSearchQueryExample {
       { property: 'name', direction: SEARCH_SORT_DIRECTION.ASCENDING },
       { property: 'createdAt', direction: SEARCH_SORT_DIRECTION.DESCENDING },
     ],
+  });
+  readonly request = signal<PaginatedSearchRequest>(buildSearchRequest(this.searchState()));
+  readonly requestJson = computed(() => JSON.stringify(this.request(), null, 2));
+}`;
+
+  protected readonly horizontalSnippet = `import { Component, computed, signal } from '@angular/core';
+import {
+  ButtonToggleDirective,
+  ButtonToggleGroup,
+  SEARCH_SORT_DIRECTION,
+  SearchQueryFormComponent,
+  buildSearchRequest,
+  type SearchPropertyConfig,
+  type SearchQueryFormState,
+  type SearchSortConfig,
+  type SearchQueryFormLayout,
+  type PaginatedSearchRequest,
+} from './shared/ui-lib';
+
+@Component({
+  selector: 'app-horizontal-search-query-example',
+  imports: [SearchQueryFormComponent, ButtonToggleGroup, ButtonToggleDirective],
+  template: \`
+    <ms-button-toggle-group aria-label="Field layout" [value]="layout()"
+      (valueChange)="layout.set($event === 'vertical' ? 'vertical' : 'horizontal')">
+      <button msButtonToggleValue="vertical">Vertical</button>
+      <button msButtonToggleValue="horizontal">Horizontal</button>
+    </ms-button-toggle-group>
+    <ms-search-query-form
+      [layout]="layout()"
+      [properties]="properties"
+      [sortConfig]="sortConfig"
+      [(state)]="searchState"
+      (requestChange)="request.set($event)"
+    />
+    <pre>{{ requestJson() }}</pre>
+  \`,
+})
+export class HorizontalSearchQueryExample {
+  readonly layout = signal<SearchQueryFormLayout>('horizontal');
+  readonly properties: readonly SearchPropertyConfig[] = [
+    {
+      propertyName: 'name',
+      label: 'Name',
+      dataType: 'string',
+      required: true,
+      defaultOperator: 'contains',
+      defaultValue: 'Alice',
+      allowedOperators: ['contains', 'eq', 'in', 'isEmpty'],
+      allowCustomInValues: true,
+      maxStringLength: 50,
+      placeholder: 'Search name',
+    },
+    {
+      propertyName: 'status',
+      label: 'Status',
+      dataType: 'enum',
+      visibleByDefault: true,
+      defaultOperator: 'in',
+      defaultValue: ['ACTIVE'],
+      allowedOperators: ['eq', 'neq', 'in'],
+      allowCustomInValues: true,
+      options: [
+        { label: 'Active', value: 'ACTIVE' },
+        { label: 'Pending', value: 'PENDING' },
+      ],
+    },
+    {
+      propertyName: 'age',
+      label: 'Age',
+      dataType: 'int',
+      visibleByDefault: true,
+      defaultOperator: 'between',
+      defaultValue: { from: 18, to: 65 },
+      allowedOperators: ['between', 'eq', 'gte', 'lte', 'isNull'],
+    },
+  ];
+  readonly sortConfig: SearchSortConfig = {
+    sortOptions: [
+      { label: 'Name', value: 'name' },
+      { label: 'Age', value: 'age' },
+    ],
+    defaultSorts: [
+      { property: 'name', direction: SEARCH_SORT_DIRECTION.ASCENDING },
+    ],
+    maxSorts: 2,
+  };
+  readonly searchState = signal<SearchQueryFormState>({
+    filters: [
+      { id: 'horizontal-name', property: 'name', operator: 'contains', value: 'Alice' },
+      { id: 'horizontal-status', property: 'status', operator: 'in', value: ['ACTIVE'] },
+      { id: 'horizontal-age', property: 'age', operator: 'between', value: { from: 18, to: 65 } },
+    ],
+    sort: [{ property: 'name', direction: SEARCH_SORT_DIRECTION.ASCENDING }],
   });
   readonly request = signal<PaginatedSearchRequest>(buildSearchRequest(this.searchState()));
   readonly requestJson = computed(() => JSON.stringify(this.request(), null, 2));

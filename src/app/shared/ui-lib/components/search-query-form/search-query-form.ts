@@ -78,19 +78,24 @@ import {
   tokenizeSearchValues,
   type SearchValueStatusKind,
 } from '../../search-query/search-query-value';
+import { BadgeComponent } from '../badge';
 import { SignalFormField, SignalReadonlyValue } from '../signal-form-field';
 import { SelectComponent, SelectOptionComponent } from '../select';
 import { ChipComponent, ChipRemoveDirective } from '../chip';
 import { PopoverComponent, PopoverPanelComponent, PopoverTrigger } from '../menu-popover';
 import { TranslatePipe } from '../../pipes';
 import { LanguageService } from '../../services/language';
+import type { SearchQueryFormLayout } from './search-query-form-types';
+import { SearchQueryField } from './search-query-field';
 
 @Component({
   selector: 'ms-search-query-form',
   imports: [
+    BadgeComponent,
     ChipComponent,
     ChipRemoveDirective,
     FormField,
+    SearchQueryField,
     PopoverComponent,
     PopoverPanelComponent,
     PopoverTrigger,
@@ -109,6 +114,7 @@ export class SearchQueryFormComponent {
   private readonly languageService = inject(LanguageService);
   readonly properties = input.required<readonly SearchPropertyConfig[]>();
   readonly maxFilters = input(10);
+  readonly layout = input<SearchQueryFormLayout>('vertical');
   readonly sortConfig = input<SearchSortConfig | null>(null);
   readonly state = model<SearchQueryFormState>({ filters: [] });
   readonly requestChange = output<PaginatedSearchRequest>();
@@ -698,10 +704,17 @@ export class SearchQueryFormComponent {
   }
 
   protected handleCustomValuesPopover(
+    filter: SearchQueryFormFilterModel,
     open: boolean,
     input: HTMLInputElement,
     trigger: HTMLButtonElement,
   ): void {
+    if (!open) {
+      const index = this.filters().findIndex((item) => item.id === filter.id);
+      if (index >= 0) {
+        this.filterField(index).values().markAsTouched();
+      }
+    }
     queueMicrotask(() => (open ? input.focus() : trigger.focus()));
   }
 
@@ -1075,9 +1088,24 @@ export class SearchQueryFormComponent {
   }
 
   private replaceFilter(id: string, nextFilter: SearchQueryFormFilterModel): void {
+    const index = this.filters().findIndex((filter) => filter.id === id);
+    const current = this.filters()[index];
+    const inValuesChanged =
+      current?.operator === 'in' &&
+      nextFilter.operator === 'in' &&
+      current.property === nextFilter.property &&
+      (current.values.length !== nextFilter.values.length ||
+        current.values.some((value, index) => value !== nextFilter.values[index]) ||
+        current.customValues.length !== nextFilter.customValues.length ||
+        current.customValues.some((value, index) => value !== nextFilter.customValues[index]));
+
     this.updateFormModel({
       filters: this.filters().map((filter) => (filter.id === id ? nextFilter : filter)),
     });
+
+    if (inValuesChanged) {
+      this.filterField(index).values().markAsDirty();
+    }
   }
 
   private updateFormModel(patch: Partial<SearchQueryFormModel>): void {

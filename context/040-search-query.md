@@ -455,8 +455,9 @@ The implementation lives in `src/app/shared/ui-lib/components/search-query-form`
 
 - `SearchQueryFormComponent` coordinates signal-form state, filter interactions, compact multi-sort
   selection, Clear filters, Reset defaults, and Search actions.
-- `search-query-form-types.ts` defines form state, property config, request, response, value, and
-  operator types.
+- `search-query-form-types.ts` defines the public `SearchQueryFormLayout` presentation type.
+- Shared form state, property config, request, response, value, and operator types live in
+  `src/app/shared/ui-lib/search-query/search-query-types.ts`.
 - `search-query-form-model.ts` defines private editable filter/sort form models.
 - `search-query-form-sort.ts` normalizes sort options, limits, defaults, directions, and ordered
   request values.
@@ -483,14 +484,22 @@ and submitting search. Each row contains:
 - a dedicated action column that renders a delete button for optional rows and reserved empty space
   for required rows
 
-The add-filter picker is rendered inside `ms-signal-form-field.add-filter.no-message` so it keeps
+Vertical filter rows use the shared row-padding token (12px in default density), matching horizontal rows,
+and collapse empty field-message space. Validation errors
+and hints still render beneath their controls when present. Fields align to the block start, and
+action buttons stay aligned with controls as validation messages expand the row.
+
+The add-filter picker is rendered inside the internal `ms-search-query-field.add-filter.no-message` so it keeps
 the shared compact control treatment without reserving a message row in the toolbar.
 
 Sorting is optional. When `sortConfig.sortOptions` contains valid options, the toolbar renders a
 non-searchable multiple `ms-select`. Active sorts use the select's removable chips and a custom
 selected-option template. Each chip shows the property, registered `arrow_upward` or
 `arrow_downward` icon, and `ASC` or `DESC`; its direction button toggles the direction. Chip order is
-request priority. The active/max sort count is rendered in the Sort by label-extra area.
+request priority. The active/max sort count is rendered as a compact neutral badge beside Sort By. Filter and sort
+count badges show only current/limit (for example, `3/10` and `1/2`), use tabular numerals, and retain
+the full localized count descriptions for screen readers through their status accessible names.
+In vertical layout, badges align to the inline end of each label row; in horizontal layout, they stay beside their labels.
 
 Shared reusable components use the `ms-` selector prefix. Internal styling hooks are
 `.search-query-form`, `.filter-list`, `.filter-row`, `.filter-property`, `.filter-operator`,
@@ -498,6 +507,42 @@ Shared reusable components use the `ms-` selector prefix. Internal styling hooks
 `.custom-values-editor`, `.custom-values-list`, `.filter-actions`, `.filter-toolbar`,
 `.add-filter`, `.add-sort`, `.sort-direction-toggle`, `.toolbar-actions`, `.search-filters`,
 `.clear-filters`, `.reset-filters`, and `.remove-filter`.
+
+## Field Layout
+
+`layout` accepts `SearchQueryFormLayout` (`'vertical' | 'horizontal'`) and defaults to `'vertical'`.
+It controls presentation only; property configuration, form state, validation, and request output
+are identical in both layouts.
+
+```html
+<ms-search-query-form
+  layout="horizontal"
+  [properties]="properties"
+  [sortConfig]="sortConfig"
+  [(state)]="searchState"
+  (requestChange)="request.set($event)"
+/>
+```
+
+Horizontal mode applies to Property, Operator, Value, Values, From, To, Add Filter, and Sort By.
+The custom-values popover keeps its existing vertical and label-free fields. The internal,
+non-barrel-exported `SearchQueryField` extends `HorizontalSignalFormField` and uses the shared
+field template with direct content projection, retaining signal-form validation queries without
+duplicating control templates. Its horizontal styles activate only for the horizontal layout.
+
+- Labels sit at inline-start; errors appear beneath controls without reserving an empty message row.
+- Rows retain the 56rem and 36rem container breakpoints. Toolbar pickers share a row when space
+  allows; actions occupy a separate row in horizontal mode.
+- Fields stack vertically at the shared `xs` viewport breakpoint (up to 599px), including in RTL.
+  Narrow containers above that viewport breakpoint retain labels beside controls.
+- Label widths use the existing inherited `--label-width` customization, with consistent compact
+  widths across scalar, multi-value, and range editors. Required markers stay beside label text.
+  The toolbar stacks Add Filter above Sort By in the inline-start column and places actions at the
+  block start of the inline-end column. Below the 56rem container breakpoint, actions move below
+  the fields. Count badges sit beside labels, and controls fill their column. Labels retain
+  consistent muted styling, including readonly previews. Controls retain shared density and
+  typography tokens.
+- Omitting `layout`, or setting `layout="vertical"`, retains the existing vertical presentation.
 
 ## Behavior
 
@@ -591,6 +636,11 @@ Operator behavior:
 - Option-only `in` renders the compact multiple `ms-select` directly in the Values field.
 - Custom-enabled `in` renders a readonly combined preview with up to three option and custom chips,
   followed by plain `+N more` text.
+- Values shows a required marker for every `in` filter. The combined preview reads validation state
+  directly, even while its bound option control is in the popover. Removing the last option or
+  custom value marks the Values field dirty and shows the localized required error beneath the
+  preview in either layout. Closing an empty editor marks it touched. Any valid option or custom
+  value satisfies the requirement; adding one clears the error while retaining the marker.
 - Every visible combined-preview chip is removable. Option removal updates `ms-select`; custom
   removal updates only the custom-value list.
 - The custom-values trigger opens a popover directly below the Values form control at its logical

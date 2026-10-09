@@ -1,4 +1,8 @@
-<form class="search-query-form" (submit)="submitSearch($event)">
+<form
+  class="search-query-form"
+  [class.is-horizontal]="layout() === 'horizontal'"
+  (submit)="submitSearch($event)"
+>
   @if (filters().length > 0) {
     <div class="filter-list" [attr.aria-label]="'search.filters' | translate">
       @for (filter of filters(); track filter.id) {
@@ -9,31 +13,31 @@
           role="group"
           [attr.aria-label]="'search.filterFor' | translate: { property: propertyLabel(property) }"
         >
-          <ms-signal-form-field class="filter-property">
+          <ms-search-query-field [layout]="layout()" class="filter-property">
             <label>{{ 'search.property' | translate }}</label>
             <select [formField]="field.property" (change)="handlePropertyChange(filter, $event)">
               @for (option of rowPropertyOptions(filter); track option.propertyName) {
                 <option [value]="option.propertyName">{{ propertyLabel(option) }}</option>
               }
             </select>
-          </ms-signal-form-field>
+          </ms-search-query-field>
 
           @if (property) {
-            <ms-signal-form-field class="filter-operator">
+            <ms-search-query-field [layout]="layout()" class="filter-operator">
               <label>{{ 'search.operator' | translate }}</label>
               <select [formField]="field.operator" (change)="handleOperatorChange(filter, $event)">
                 @for (operator of allowedOperators(property); track operator) {
                   <option [value]="operator">{{ operatorLabel(operator) }}</option>
                 }
               </select>
-            </ms-signal-form-field>
+            </ms-search-query-field>
 
             @if (isValuelessOperator(filter)) {
               <span class="filter-value" aria-hidden="true"></span>
             } @else {
               <div class="filter-value">
                 @if (isBetweenOperator(filter)) {
-                  <ms-signal-form-field>
+                  <ms-search-query-field [layout]="layout()">
                     <label>{{ 'search.from' | translate }}</label>
                     @if (hasOptions(property)) {
                       <select [formField]="field.from">
@@ -51,9 +55,9 @@
                         [formField]="field.from"
                       />
                     }
-                  </ms-signal-form-field>
+                  </ms-search-query-field>
 
-                  <ms-signal-form-field>
+                  <ms-search-query-field [layout]="layout()">
                     <label>{{ 'search.to' | translate }}</label>
                     @if (hasOptions(property)) {
                       <select [formField]="field.to">
@@ -71,14 +75,17 @@
                         [formField]="field.to"
                       />
                     }
-                  </ms-signal-form-field>
+                  </ms-search-query-field>
                 } @else if (isInOperator(filter)) {
                   <div class="in-values">
                     <div
                       class="in-values-control"
                       [class.has-custom-values]="allowCustomInValues(property)"
                     >
-                      <ms-signal-form-field
+                      <ms-search-query-field
+                        [layout]="layout()"
+                        [validationState]="field.values()"
+                        [required]="true"
                         [style.--form-field-control-anchor]="'--custom-values-' + filter.id"
                       >
                         <label>{{ 'search.values' | translate }}</label>
@@ -132,7 +139,7 @@
                             </span>
                           </ms-readonly-value>
                         }
-                      </ms-signal-form-field>
+                      </ms-search-query-field>
 
                       @if (allowCustomInValues(property)) {
                         <div class="custom-values-toggle-container">
@@ -140,6 +147,7 @@
                             placement="bottom-start"
                             (openChange)="
                               handleCustomValuesPopover(
+                                filter,
                                 $event,
                                 customValueInput,
                                 customValuesTrigger
@@ -330,7 +338,7 @@
                     </div>
                   </div>
                 } @else if (hasOptions(property)) {
-                  <ms-signal-form-field>
+                  <ms-search-query-field [layout]="layout()">
                     <label>{{ 'search.value' | translate }}</label>
                     <select [formField]="field.value">
                       <option value="">{{ 'search.chooseValue' | translate }}</option>
@@ -338,9 +346,9 @@
                         <option [value]="option.value">{{ option.label }}</option>
                       }
                     </select>
-                  </ms-signal-form-field>
+                  </ms-search-query-field>
                 } @else {
-                  <ms-signal-form-field>
+                  <ms-search-query-field [layout]="layout()">
                     <label>{{ 'search.value' | translate }}</label>
                     <input
                       [type]="inputType(property)"
@@ -349,7 +357,7 @@
                       [placeholder]="property.placeholder ?? ''"
                       [formField]="field.value"
                     />
-                  </ms-signal-form-field>
+                  </ms-search-query-field>
                 }
               </div>
             }
@@ -380,11 +388,19 @@
   }
 
   <div class="filter-toolbar" [class.has-sort-options]="hasSortOptions()">
-    <ms-signal-form-field class="add-filter no-message">
+    <ms-search-query-field [layout]="layout()" class="add-filter no-message">
       <label>{{ 'search.addFilter' | translate }}</label>
-      <span slot="label-extra" class="filter-count">
-        {{ 'search.filterCount' | translate: { current: filters().length, limit: filterLimit() } }}
-      </span>
+      <ms-badge
+        slot="label-extra"
+        class="filter-count"
+        appearance="outline"
+        role="status"
+        [attr.aria-label]="
+          'search.filterCount' | translate: { current: filters().length, limit: filterLimit() }
+        "
+      >
+        <bdi aria-hidden="true">{{ filters().length }}/{{ filterLimit() }}</bdi>
+      </ms-badge>
       <select
         [attr.aria-label]="'search.addFilter' | translate"
         [disabled]="availableProperties().length === 0"
@@ -395,14 +411,22 @@
           <option [value]="property.propertyName">{{ propertyLabel(property) }}</option>
         }
       </select>
-    </ms-signal-form-field>
+    </ms-search-query-field>
 
     @if (hasSortOptions()) {
-      <ms-signal-form-field class="add-sort no-message">
+      <ms-search-query-field [layout]="layout()" class="add-sort no-message">
         <label>{{ 'search.sortBy' | translate }}</label>
-        <span slot="label-extra" class="sort-count">
-          {{ 'search.sortCount' | translate: { current: sorts().length, limit: sortLimit() } }}
-        </span>
+        <ms-badge
+          slot="label-extra"
+          class="sort-count"
+          appearance="outline"
+          role="status"
+          [attr.aria-label]="
+            'search.sortCount' | translate: { current: sorts().length, limit: sortLimit() }
+          "
+        >
+          <bdi aria-hidden="true">{{ sorts().length }}/{{ sortLimit() }}</bdi>
+        </ms-badge>
 
         <ng-template #selectedSortOption let-index="index">
           @if (sorts()[index]; as sort) {
@@ -460,7 +484,7 @@
             </ms-select-option>
           }
         </ms-select>
-      </ms-signal-form-field>
+      </ms-search-query-field>
     }
 
     <div class="toolbar-actions">

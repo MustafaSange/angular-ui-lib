@@ -1,6 +1,9 @@
 <main class="search-query-form-page">
   <header class="search-query-form-header">
-    <a class="btn btn-ghost back-link" routerLink="/"><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span><span>Back to Home</span></a>
+    <a class="btn btn-ghost back-link" routerLink="/"
+      ><span class="ms-icon back-link-icon" aria-hidden="true">arrow_back</span
+      ><span>Back to Home</span></a
+    >
     <p class="eyebrow">Components</p>
     <h1>Search Query Form</h1>
     <p class="description">
@@ -36,10 +39,10 @@
       mixed option and custom, and other typed multi-value filters in one backend-compatible
       request. Enum options use display labels with backend string values: users see Engineering and
       Operations while state emits ENG and OPS. The multi-select creates compact priority chips;
-      each chip can toggle direction or be removed. Sorts are emitted in chip order, limited to three
-      unique properties, and reset to Name ascending then Created At descending when Clear filters
-      is selected. Reset defaults restores the required Tenant plus the default-visible Status and
-      Created At filters with their configured values.
+      each chip can toggle direction or be removed. Sorts are emitted in chip order, limited to
+      three unique properties, and reset to Name ascending then Created At descending when Clear
+      filters is selected. Reset defaults restores the required Tenant plus the default-visible
+      Status and Created At filters with their configured values.
     </p>
     <div class="search-query-form-demo-panel">
       <ms-search-query-form
@@ -52,5 +55,34 @@
       <pre aria-label="User search request">{{ userRequestJson() }}</pre>
     </div>
     <app-showcase-code label="Search Query Form with Required Filters" [code]="fullSnippet" />
+  </section>
+  <section class="search-query-form-section">
+    <h2>Horizontal Fields</h2>
+    <p class="section-copy">
+      Labels sit beside controls in filter rows and the toolbar, and stack above controls on screens
+      below 600px. Name is required, Status supports option and custom In values, and Age shows a
+      From and To range. The custom-values popover keeps its compact layout. Omitting the layout
+      input keeps the vertical layout shown above.
+    </p>
+    <div class="search-query-form-demo-panel">
+      <ms-button-toggle-group
+        class="horizontal-layout-controls"
+        aria-label="Field layout"
+        [value]="horizontalLayout()"
+        (valueChange)="horizontalLayout.set($event === 'vertical' ? 'vertical' : 'horizontal')"
+      >
+        <button msButtonToggleValue="vertical">Vertical</button>
+        <button msButtonToggleValue="horizontal">Horizontal</button>
+      </ms-button-toggle-group>
+      <ms-search-query-form
+        [layout]="horizontalLayout()"
+        [properties]="horizontalProperties"
+        [sortConfig]="horizontalSortConfig"
+        [(state)]="horizontalState"
+        (requestChange)="horizontalRequest.set($event)"
+      />
+      <pre aria-label="Horizontal search request">{{ horizontalRequestJson() }}</pre>
+    </div>
+    <app-showcase-code label="Horizontal Search Query Form" [code]="horizontalSnippet" />
   </section>
 </main>
