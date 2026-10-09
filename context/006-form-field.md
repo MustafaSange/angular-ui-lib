@@ -141,6 +141,9 @@ Keep text, select, and autocomplete fields enterprise-dense:
   density.
 - Native `input` and `select` controls should fill the projected control row without increasing
   the total field height.
+- Native single-line selects use a muted chevron inset 8px from the inline end, with text padding
+  reserved for the icon. Placement mirrors in RTL. Multiple/list selects retain native appearance,
+  and forced-colors mode restores the browser arrow.
 - Keep native `select` controls transparent so the shared control row continues to own default,
   disabled, and readonly surfaces. Give native `option` and `optgroup` elements matching semantic
   overlay-background and primary-text colors to prevent mismatched light popup backgrounds and

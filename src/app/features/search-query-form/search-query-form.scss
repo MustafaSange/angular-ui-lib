@@ -91,3 +91,7 @@ pre {
   color: var(--color-text-primary);
   font-size: var(--font-size-sm);
 }
+
+.horizontal-layout-controls {
+  justify-self: start;
+}

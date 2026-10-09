@@ -1,6 +1,6 @@
 import { Component, computed, contentChild, inject } from '@angular/core';
 import { FormField } from '@angular/forms/signals';
-import type { ValidationError } from '@angular/forms/signals';
+import type { ReadonlyFieldState, ValidationError } from '@angular/forms/signals';
 
 import { LanguageService } from '../../services/language';
 import { SignalFormError } from './signal-form-error/signal-form-error';
@@ -34,15 +34,14 @@ export class SignalFormField {
   private readonly readonlyValue = contentChild(SignalReadonlyValue);
 
   protected readonly showError = computed(() => {
-    const field = this.field();
-    const state = field?.state();
+    const state = this.getFieldState();
 
     return Boolean(state?.invalid() && (state.touched() || state.dirty()) && this.errorMessage());
   });
 
   protected readonly showHint = computed(() => Boolean(this.hint() && !this.showError()));
 
-  protected readonly isRequired = computed(() => Boolean(this.field()?.state().required()));
+  protected readonly isRequired = computed(() => Boolean(this.getFieldState()?.required()));
 
   protected readonly hasErrorContent = computed(() => Boolean(this.error()));
 
@@ -53,7 +52,7 @@ export class SignalFormField {
   protected readonly isDisabled = computed(() => Boolean(this.readonlyValue()?.disabled()));
 
   protected readonly errorMessage = computed(() => {
-    const error = this.field()?.errors()[0];
+    const error = this.getFieldErrors()[0];
 
     if (!error) {
       return '';
@@ -61,6 +60,15 @@ export class SignalFormField {
 
     return error.message ?? this.getDefaultErrorMessage(error);
   });
+
+  /** Allows internal adapters to connect a preview to a control rendered elsewhere. */
+  protected getFieldState(): ReadonlyFieldState<unknown> | undefined {
+    return this.field()?.state();
+  }
+
+  protected getFieldErrors(): readonly ValidationError[] {
+    return this.field()?.errors() ?? [];
+  }
 
   private getDefaultErrorMessage(error: ValidationError): string {
     const errorWithLimit = error as ErrorWithLimit;
