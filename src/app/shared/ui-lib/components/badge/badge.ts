@@ -1,7 +1,7 @@
 import { Component, booleanAttribute, computed, input } from '@angular/core';
 
 import { shapeRadiusValue, type ShapeRadius } from '../../types';
-import type { BadgeAppearance, BadgeKind } from './badge-types';
+import type { BadgeAppearance, BadgeFontWeight, BadgeKind } from './badge-types';
 
 @Component({
   selector: 'ms-badge',
@@ -10,6 +10,7 @@ import type { BadgeAppearance, BadgeKind } from './badge-types';
 export class BadgeComponent {
   readonly kind = input<BadgeKind>('neutral');
   readonly appearance = input<BadgeAppearance>('soft');
+  readonly fontWeight = input<BadgeFontWeight>('normal');
   readonly radius = input<ShapeRadius>('full');
   readonly dot = input(false, { transform: booleanAttribute });
 

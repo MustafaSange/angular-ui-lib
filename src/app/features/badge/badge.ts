@@ -37,6 +37,20 @@ import { BadgeComponent } from './shared/ui-lib';
   \`, })
 export class BadgeAppearancesExample {}`;
 
+  protected readonly fontWeightSnippet = `import { Component } from '@angular/core';
+
+import { BadgeComponent } from './shared/ui-lib';
+
+@Component({
+  selector: 'app-badge-font-weight-example',
+  imports: [BadgeComponent],
+  template: \`
+    <ms-badge kind="info">Normal (Default)</ms-badge>
+    <ms-badge kind="info" fontWeight="semibold">Semibold</ms-badge>
+  \`,
+})
+export class BadgeFontWeightExample {}`;
+
   protected readonly radiusSnippet = `import { Component } from '@angular/core';
 
 import { BadgeComponent } from './shared/ui-lib';

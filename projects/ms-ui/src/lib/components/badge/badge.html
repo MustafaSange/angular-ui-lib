@@ -1,5 +1,6 @@
 <span
   class="badge"
+  [class.badge-semibold]="fontWeight() === 'semibold'"
   [class.badge-neutral]="kind() === 'neutral'"
   [class.badge-info]="kind() === 'info'"
   [class.badge-success]="kind() === 'success'"
