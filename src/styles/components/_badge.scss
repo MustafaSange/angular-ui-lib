@@ -26,9 +26,13 @@ ms-badge {
   border: var(--border-width-sm) solid transparent;
   border-radius: var(--_badge-radius);
   font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-regular);
   line-height: var(--line-height-control);
   white-space: nowrap;
+}
+
+.badge-semibold {
+  font-weight: var(--font-weight-semibold);
 }
 
 .badge-neutral {
@@ -54,7 +58,7 @@ ms-badge {
 }
 
 .badge-soft {
-  border-color: transparent;
+  border-color: color-mix(in srgb, var(--_badge-border) 55%, var(--_badge-surface));
   background-color: var(--_badge-surface);
   color: var(--_badge-text);
 }
