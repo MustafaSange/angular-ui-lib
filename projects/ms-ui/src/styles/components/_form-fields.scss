@@ -85,6 +85,11 @@ ms-horizontal-signal-form-field {
     }
   }
 
+  .form-field-control > ms-button-toggle-group {
+    border: 0;
+    border-radius: 0;
+  }
+
   .form-field-prefix,
   .form-field-suffix {
     display: inline-flex;
