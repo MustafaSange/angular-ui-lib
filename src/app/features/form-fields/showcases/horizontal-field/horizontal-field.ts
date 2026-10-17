@@ -69,6 +69,50 @@ export class HorizontalProfileExample {
   }));
 }`;
 
+  private readonly labelWidthsModel = signal({
+    company: 'Analytical Engines',
+    contact: 'Ada Lovelace',
+    code: 'AE',
+  });
+  protected readonly labelWidths = form(this.labelWidthsModel);
+
+  protected readonly labelWidthsSnippet = `import { Component, signal } from '@angular/core';
+import { FormField, form } from '@angular/forms/signals';
+import { HorizontalSignalFormField, SignalFormHint } from './shared/ui-lib';
+
+@Component({
+  selector: 'app-horizontal-label-widths-example',
+  imports: [FormField, HorizontalSignalFormField, SignalFormHint],
+  template: \`
+    <div class="fields" style="--label-width: 14rem">
+      <ms-horizontal-signal-form-field>
+        <label for="horizontal-legal-name">Registered Company Name</label>
+        <input id="horizontal-legal-name" type="text" [formField]="labelWidths.company" />
+        <ms-hint>Inherits the parent's 14rem label width.</ms-hint>
+      </ms-horizontal-signal-form-field>
+      <ms-horizontal-signal-form-field>
+        <label for="horizontal-contact">Primary Contact Name</label>
+        <input id="horizontal-contact" type="text" [formField]="labelWidths.contact" />
+        <ms-hint>Uses the same 14rem label column to keep controls aligned.</ms-hint>
+      </ms-horizontal-signal-form-field>
+      <ms-horizontal-signal-form-field style="--label-width: 8rem">
+        <label for="horizontal-short-code">Short Code</label>
+        <input id="horizontal-short-code" type="text" [formField]="labelWidths.code" />
+        <ms-hint>Overrides the parent with an 8rem label width for this field.</ms-hint>
+      </ms-horizontal-signal-form-field>
+    </div>
+  \`,
+  styles: [\`.fields { display: grid; gap: var(--spacing-16); max-inline-size: 48rem; min-inline-size: 0; }\`],
+})
+export class HorizontalLabelWidthsExample {
+  private readonly labelWidthsModel = signal({
+    company: 'Analytical Engines',
+    contact: 'Ada Lovelace',
+    code: 'AE',
+  });
+  protected readonly labelWidths = form(this.labelWidthsModel);
+}`;
+
   private readonly choicesModel = signal<{ department: string; city: string | string[] | null }>({
     department: 'engineering',
     city: null,

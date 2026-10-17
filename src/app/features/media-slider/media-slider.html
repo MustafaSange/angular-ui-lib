@@ -9,25 +9,73 @@
     </p>
   </header>
 
+  <section class="media-slider-section" aria-labelledby="sizing-reference-title">
+    <h2 id="sizing-reference-title">Aspect Ratio and Dimension Reference</h2>
+    <p class="section-copy">
+      Ratios are width:height; dimensions below are example source image sizes in pixels.
+      Display sizes respond to the viewport and the configured slide width.
+    </p>
+    <div class="table-wrapper">
+      <table class="table">
+        <caption>Media frame sizing at a glance</caption>
+        <thead>
+          <tr>
+            <th class="text-start" scope="col">Format</th>
+            <th class="text-start" scope="col">Aspect Ratio</th>
+            <th class="text-start" scope="col">Example Dimensions (W × H)</th>
+            <th class="text-start" scope="col">Configuration</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th class="text-start" scope="row">Standard</th>
+            <td>4:3 (default)</td>
+            <td>1200 × 900 px</td>
+            <td><code>aspectRatio="4 / 3"</code></td>
+          </tr>
+          <tr>
+            <th class="text-start" scope="row">Widescreen</th>
+            <td>16:9</td>
+            <td>1920 × 1080 px</td>
+            <td><code>aspectRatio="16 / 9"</code></td>
+          </tr>
+          <tr>
+            <th class="text-start" scope="row">Portrait</th>
+            <td>9:16</td>
+            <td>1080 × 1920 px</td>
+            <td><code>aspectRatio="9 / 16"</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sizing-note">
+      Frame height = slide width × ratio height ÷ ratio width. Captions sit below the frame
+      and add to the total slide height. Images and videos fill the frame with
+      <code>object-fit: cover</code>, so different source ratios may be cropped.
+      Projected content with a minimum height can make the frame taller than its preferred ratio.
+    </p>
+  </section>
+
   <section class="media-slider-section">
     <h2>Centered Photo Slider</h2>
     <p class="section-copy">The default snap alignment centers the active slide in the viewport.</p>
+    <p class="demo-sizing">4:3 preferred frame · Width: <code>min(78vw, 22rem)</code> · Demo content minimum height: <code>16rem</code></p>
     <div class="media-slider-demo">
       <ms-media-slider aria-label="Featured photos">
         <ms-media-slide>
-          <div class="photo photo-coast" role="img" aria-label="Rocky coast at sunrise"></div>
+          <div class="photo photo-coast" role="group" aria-label="Rocky coast at sunrise"><span class="frame-sizing" dir="ltr">4:3<br /><small>Example source: 1200 × 900 px</small></span></div>
         </ms-media-slide>
 
         <ms-media-slide>
-          <div class="photo photo-city" role="img" aria-label="City street at dusk"></div>
+          <div class="photo photo-city" role="group" aria-label="City street at dusk"><span class="frame-sizing" dir="ltr">4:3<br /><small>Example source: 1200 × 900 px</small></span></div>
         </ms-media-slide>
 
         <ms-media-slide>
-          <div class="photo photo-studio" role="img" aria-label="Studio desk with sketches"></div>
+          <div class="photo photo-studio" role="group" aria-label="Studio desk with sketches"><span class="frame-sizing" dir="ltr">4:3<br /><small>Example source: 1200 × 900 px</small></span></div>
         </ms-media-slide>
 
         <ms-media-slide>
-          <div class="photo photo-garden" role="img" aria-label="Garden path after rain"></div>
+          <div class="photo photo-garden" role="group" aria-label="Garden path after rain"><span class="frame-sizing" dir="ltr">4:3<br /><small>Example source: 1200 × 900 px</small></span></div>
         </ms-media-slide>
       </ms-media-slider>
     </div>
@@ -39,20 +87,21 @@
     <p class="section-copy">
       Use `slideSize="90%"` when one large slide should dominate the track.
     </p>
+    <p class="demo-sizing">4:3 preferred frame · Width: 90% of the track · Demo content minimum height: <code>min(34rem, 62vh)</code></p>
     <div class="media-slider-demo">
       <ms-media-slider slideSize="90%" aria-label="Large feature slides">
         <ms-media-slide>
-          <div class="feature-frame feature-frame-primary">Launch story</div>
+          <div class="feature-frame feature-frame-primary">Launch story<span class="frame-sizing" dir="ltr">4:3<br /><small>Example source: 1200 × 900 px</small></span></div>
           <p msMediaCaption>Each slide takes 90% of the slider track.</p>
         </ms-media-slide>
 
         <ms-media-slide>
-          <div class="feature-frame feature-frame-success">Product detail</div>
+          <div class="feature-frame feature-frame-success">Product detail<span class="frame-sizing" dir="ltr">4:3<br /><small>Example source: 1200 × 900 px</small></span></div>
           <p msMediaCaption>Center snapping keeps one large slide in focus.</p>
         </ms-media-slide>
 
         <ms-media-slide>
-          <div class="feature-frame feature-frame-danger">Editorial crop</div>
+          <div class="feature-frame feature-frame-danger">Editorial crop<span class="frame-sizing" dir="ltr">4:3<br /><small>Example source: 1200 × 900 px</small></span></div>
         </ms-media-slide>
       </ms-media-slider>
     </div>
@@ -63,35 +112,37 @@
     <h2>Aspect Ratios</h2>
     <p class="section-copy">Set `aspectRatio` to control the media frame shape for every slide.</p>
     <div class="media-slider-demo aspect-ratio-demo">
+      <p class="demo-sizing">16:9 frame · Width: <code>min(78vw, 22rem)</code> · Example source dimensions: 1920 × 1080 px</p>
       <ms-media-slider aspectRatio="16 / 9" aria-label="Widescreen media">
         <ms-media-slide>
-          <div class="aspect-frame tile-blue">16:9</div>
+          <div class="aspect-frame tile-blue">16:9<span class="frame-sizing" dir="ltr">16:9<br /><small>Example source: 1920 × 1080 px</small></span></div>
         </ms-media-slide>
 
         <ms-media-slide>
-          <div class="aspect-frame tile-green">Widescreen</div>
+          <div class="aspect-frame tile-green">Widescreen<span class="frame-sizing" dir="ltr">16:9<br /><small>Example source: 1920 × 1080 px</small></span></div>
         </ms-media-slide>
 
         <ms-media-slide>
-          <div class="aspect-frame tile-coral">Landscape crop</div>
+          <div class="aspect-frame tile-coral">Landscape crop<span class="frame-sizing" dir="ltr">16:9<br /><small>Example source: 1920 × 1080 px</small></span></div>
         </ms-media-slide>
       </ms-media-slider>
 
+      <p class="demo-sizing">9:16 frame · Width: <code>min(72vw, 16rem)</code> · Example source dimensions: 1080 × 1920 px</p>
       <ms-media-slider
         aspectRatio="9 / 16"
         slideSize="min(72vw, 16rem)"
         aria-label="Portrait media"
       >
         <ms-media-slide>
-          <div class="aspect-frame tile-coral">9:16</div>
+          <div class="aspect-frame tile-coral">9:16<span class="frame-sizing" dir="ltr">9:16<br /><small>Example source: 1080 × 1920 px</small></span></div>
         </ms-media-slide>
 
         <ms-media-slide>
-          <div class="aspect-frame tile-blue">Portrait crop</div>
+          <div class="aspect-frame tile-blue">Portrait crop<span class="frame-sizing" dir="ltr">9:16<br /><small>Example source: 1080 × 1920 px</small></span></div>
         </ms-media-slide>
 
         <ms-media-slide>
-          <div class="aspect-frame tile-green">Vertical story</div>
+          <div class="aspect-frame tile-green">Vertical story<span class="frame-sizing" dir="ltr">9:16<br /><small>Example source: 1080 × 1920 px</small></span></div>
         </ms-media-slide>
       </ms-media-slider>
     </div>
@@ -103,19 +154,20 @@
     <p class="section-copy">
       Caption space appears only on slides that project `[msMediaCaption]`.
     </p>
+    <p class="demo-sizing">4:3 preferred frame · Width: <code>min(78vw, 22rem)</code> · Demo content minimum height: <code>16rem</code> · Captions add height below the frame</p>
     <div class="media-slider-demo">
       <ms-media-slider aria-label="Gallery with captions">
         <ms-media-slide>
-          <div class="photo photo-market" role="img" aria-label="Open-air market tables"></div>
+          <div class="photo photo-market" role="group" aria-label="Open-air market tables"><span class="frame-sizing" dir="ltr">4:3<br /><small>Example source: 1200 × 900 px</small></span></div>
           <p msMediaCaption>Morning market, natural light, editorial crop.</p>
         </ms-media-slide>
 
         <ms-media-slide>
-          <div class="photo photo-interior" role="img" aria-label="Warm modern interior"></div>
+          <div class="photo photo-interior" role="group" aria-label="Warm modern interior"><span class="frame-sizing" dir="ltr">4:3<br /><small>Example source: 1200 × 900 px</small></span></div>
         </ms-media-slide>
 
         <ms-media-slide>
-          <div class="photo photo-trail" role="img" aria-label="Green hillside trail"></div>
+          <div class="photo photo-trail" role="group" aria-label="Green hillside trail"><span class="frame-sizing" dir="ltr">4:3<br /><small>Example source: 1200 × 900 px</small></span></div>
           <p msMediaCaption>Trail study for outdoor campaign imagery.</p>
         </ms-media-slide>
       </ms-media-slider>
@@ -128,28 +180,29 @@
     <p class="section-copy">
       Set `snapAlign` when a layout should snap to an edge instead of center.
     </p>
+    <p class="demo-sizing">4:3 preferred frame · Width: <code>min(78vw, 22rem)</code> · Demo content minimum height: <code>16rem</code></p>
     <div class="media-slider-demo alignment-demo">
       <ms-media-slider snapAlign="start" aria-label="Start aligned photos">
         <ms-media-slide>
-          <div class="alignment-tile tile-blue">Start</div>
+          <div class="alignment-tile tile-blue">Start<span class="frame-sizing" dir="ltr">4:3<br /><small>Example source: 1200 × 900 px</small></span></div>
         </ms-media-slide>
         <ms-media-slide>
-          <div class="alignment-tile tile-green">Middle</div>
+          <div class="alignment-tile tile-green">Middle<span class="frame-sizing" dir="ltr">4:3<br /><small>Example source: 1200 × 900 px</small></span></div>
         </ms-media-slide>
         <ms-media-slide>
-          <div class="alignment-tile tile-coral">End</div>
+          <div class="alignment-tile tile-coral">End<span class="frame-sizing" dir="ltr">4:3<br /><small>Example source: 1200 × 900 px</small></span></div>
         </ms-media-slide>
       </ms-media-slider>
 
       <ms-media-slider snapAlign="end" aria-label="End aligned photos">
         <ms-media-slide>
-          <div class="alignment-tile tile-coral">Start</div>
+          <div class="alignment-tile tile-coral">Start<span class="frame-sizing" dir="ltr">4:3<br /><small>Example source: 1200 × 900 px</small></span></div>
         </ms-media-slide>
         <ms-media-slide>
-          <div class="alignment-tile tile-blue">Middle</div>
+          <div class="alignment-tile tile-blue">Middle<span class="frame-sizing" dir="ltr">4:3<br /><small>Example source: 1200 × 900 px</small></span></div>
         </ms-media-slide>
         <ms-media-slide>
-          <div class="alignment-tile tile-green">End</div>
+          <div class="alignment-tile tile-green">End<span class="frame-sizing" dir="ltr">4:3<br /><small>Example source: 1200 × 900 px</small></span></div>
         </ms-media-slide>
       </ms-media-slider>
     </div>
@@ -159,6 +212,7 @@
   <section class="media-slider-section">
     <h2>Mixed Projected Content</h2>
     <p class="section-copy">Slides can contain cards, media previews, or other reusable content.</p>
+    <p class="demo-sizing">4:3 frame · Width: <code>min(78vw, 22rem)</code> · Example source dimensions: 1200 × 900 px</p>
     <div class="media-slider-demo">
       <ms-media-slider aria-label="Mixed media cards">
         <ms-media-slide>
@@ -168,17 +222,18 @@
             </header>
             <section msCardContent>
               <p>Use any projected content as a snapped slide.</p>
+              <p class="demo-sizing" dir="ltr">4:3 · Example source: 1200 × 900 px</p>
             </section>
           </ms-card>
           <p msMediaCaption>Projected card content.</p>
         </ms-media-slide>
 
         <ms-media-slide>
-          <div class="media-panel">Video preview</div>
+          <div class="media-panel">Video preview<span class="frame-sizing" dir="ltr">4:3<br /><small>Example source: 1200 × 900 px</small></span></div>
         </ms-media-slide>
 
         <ms-media-slide>
-          <div class="media-panel">Product crop</div>
+          <div class="media-panel">Product crop<span class="frame-sizing" dir="ltr">4:3<br /><small>Example source: 1200 × 900 px</small></span></div>
           <p msMediaCaption>Caption text stays optional per slide.</p>
         </ms-media-slide>
       </ms-media-slider>
@@ -191,19 +246,20 @@
     <p class="section-copy">
       Controls and scroll behavior remain usable in right-to-left containers.
     </p>
+    <p class="demo-sizing">4:3 preferred frame · Width: <code>min(78vw, 22rem)</code> · Demo content minimum height: <code>16rem</code></p>
     <div class="media-slider-demo rtl-demo" dir="rtl">
       <ms-media-slider aria-label="معرض الصور">
         <ms-media-slide>
-          <div class="alignment-tile tile-blue">الأول</div>
+          <div class="alignment-tile tile-blue">الأول<span class="frame-sizing" dir="ltr">4:3<br /><small>Example source: 1200 × 900 px</small></span></div>
           <p msMediaCaption>تعليق اختياري أسفل الشريحة.</p>
         </ms-media-slide>
 
         <ms-media-slide>
-          <div class="alignment-tile tile-green">الثاني</div>
+          <div class="alignment-tile tile-green">الثاني<span class="frame-sizing" dir="ltr">4:3<br /><small>Example source: 1200 × 900 px</small></span></div>
         </ms-media-slide>
 
         <ms-media-slide>
-          <div class="alignment-tile tile-coral">الثالث</div>
+          <div class="alignment-tile tile-coral">الثالث<span class="frame-sizing" dir="ltr">4:3<br /><small>Example source: 1200 × 900 px</small></span></div>
         </ms-media-slide>
       </ms-media-slider>
     </div>

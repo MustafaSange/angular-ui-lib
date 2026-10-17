@@ -72,11 +72,7 @@ h2 {
   margin-block-start: var(--spacing-16);
 }
 
-.alignment-demo {
-  display: grid;
-  gap: var(--spacing-20);
-}
-
+.alignment-demo,
 .aspect-ratio-demo {
   display: grid;
   gap: var(--spacing-20);
@@ -86,6 +82,7 @@ h2 {
 .alignment-tile,
 .feature-frame,
 .aspect-frame {
+  position: relative;
   display: grid;
   place-items: center;
 }
@@ -191,6 +188,7 @@ h2 {
 }
 
 .media-panel {
+  position: relative;
   display: grid;
   place-items: center;
   aspect-ratio: 4 / 3;
@@ -200,5 +198,37 @@ h2 {
 }
 
 .rtl-demo {
+  text-align: start;
+}
+
+.sizing-note,
+.demo-sizing {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-body);
+}
+
+.sizing-note {
+  margin-block-start: var(--spacing-16);
+}
+
+.demo-sizing {
+  margin-block-end: var(--spacing-8);
+}
+
+.aspect-ratio-demo > .demo-sizing {
+  margin-block-end: calc(-1 * var(--spacing-12));
+}
+
+.frame-sizing {
+  position: absolute;
+  inset-block-start: var(--spacing-8);
+  inset-inline-end: var(--spacing-8);
+  padding: var(--spacing-4) var(--spacing-8);
+  border: var(--border-width-sm) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
   text-align: start;
 }

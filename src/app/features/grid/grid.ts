@@ -66,11 +66,12 @@ export class ResponsiveGridExample {}`,
 @Component({
   selector: 'app-containers-example',
   template: \`
-    <div class="container-narrow">container-narrow</div>
-    <div class="container-content">container-content</div>
-    <div class="container-page">container-page</div>
-    <div class="container-wide">container-wide</div>
-    <div class="container-full">container-full</div>
+    <!-- Containers shrink to fit; pixel equivalents assume a 16px root font size. -->
+    <div class="container-narrow">container-narrow · max 40rem (640px)</div>
+    <div class="container-content">container-content · max 48rem (768px)</div>
+    <div class="container-page">container-page · max 75rem (1200px)</div>
+    <div class="container-wide">container-wide · max 90rem (1440px)</div>
+    <div class="container-full">container-full · 100% available width</div>
   \`,
 })
 export class ContainersExample {}`,

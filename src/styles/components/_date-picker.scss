@@ -92,6 +92,14 @@ ms-date-picker {
     animation: ms-floating-surface-enter var(--transition-fast);
   }
 
+  .calendar-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-8);
+    padding-block-start: var(--spacing-8);
+    border-block-start: var(--border-width-sm) solid var(--color-border-muted);
+  }
+
   .calendar-header {
     display: grid;
     grid-template-columns: var(--control-height-sm) 1fr var(--control-height-sm);

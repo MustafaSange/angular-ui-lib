@@ -17,6 +17,29 @@
 </div>
 <app-showcase-code label="Horizontal Profile Fields" [code]="profileSnippet" />
 
+<p>
+  Set <code>--label-width</code> on a parent to align multiple fields, or on an individual field to
+  override it. The default is <code>10rem</code>; labels still stack on screens up to 599px wide.
+</p>
+<div class="showcase-preview" style="--label-width: 14rem">
+  <ms-horizontal-signal-form-field>
+    <label for="horizontal-legal-name">Registered Company Name</label>
+    <input id="horizontal-legal-name" type="text" [formField]="labelWidths.company" />
+    <ms-hint>Inherits the parent's 14rem label width.</ms-hint>
+  </ms-horizontal-signal-form-field>
+  <ms-horizontal-signal-form-field>
+    <label for="horizontal-contact">Primary Contact Name</label>
+    <input id="horizontal-contact" type="text" [formField]="labelWidths.contact" />
+    <ms-hint>Uses the same 14rem label column to keep controls aligned.</ms-hint>
+  </ms-horizontal-signal-form-field>
+  <ms-horizontal-signal-form-field style="--label-width: 8rem">
+    <label for="horizontal-short-code">Short Code</label>
+    <input id="horizontal-short-code" type="text" [formField]="labelWidths.code" />
+    <ms-hint>Overrides the parent with an 8rem label width for this field.</ms-hint>
+  </ms-horizontal-signal-form-field>
+</div>
+<app-showcase-code label="Custom Horizontal Label Widths" [code]="labelWidthsSnippet" />
+
 <div class="showcase-preview">
   <ms-horizontal-signal-form-field>
     <label for="horizontal-department">Department</label>

@@ -50,6 +50,8 @@ export const ar = defineLocale({
     selectedValues: 'القيم المحددة',
   },
   datePicker: {
+    clearAction: 'مسح',
+    today: 'اليوم',
     clear: 'مسح التاريخ',
     choose: 'اختيار التاريخ',
     previousYear: 'السنة السابقة',
@@ -62,6 +64,9 @@ export const ar = defineLocale({
     chooseYear: 'اختيار السنة',
   },
   timePicker: {
+    invalidFormat: 'أدخل وقتًا صالحًا بالتنسيق {{format}}.',
+    minTime: 'يجب أن يكون الوقت {{time}} أو بعده.',
+    maxTime: 'يجب أن يكون الوقت {{time}} أو قبله.',
     clear: 'مسح الوقت',
     choose: 'اختيار الوقت',
     hour: 'الساعة',

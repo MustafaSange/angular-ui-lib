@@ -36,6 +36,14 @@ type SelectForm = {
   styleUrl: './select.scss',
 })
 export class Select {
+  private readonly nativeFormModel = signal({ country: '' });
+  protected readonly nativeForm = form(
+    this.nativeFormModel,
+    schema((path) => {
+      required(path.country, { message: 'Choose a country.' });
+    }),
+  );
+
   private readonly signalFormModel = signal<SelectForm>({
     country: null,
   });
@@ -125,6 +133,52 @@ export class Select {
   protected readonly compareCities = (a: City, b: City) => a.id === b.id;
   protected readonly displayCity = (city: City) => `${city.name}, ${city.country}`;
   protected readonly serializeCity = (city: City) => city.id;
+
+  protected readonly nativeSnippet = `import { Component, signal } from '@angular/core';
+import { FormField, form, required, schema } from '@angular/forms/signals';
+
+import { SignalFormField } from './shared/ui-lib';
+
+@Component({
+  selector: 'app-native-select-example',
+  imports: [FormField, SignalFormField],
+  template: \`
+    <ms-signal-form-field>
+      <label for="native-country">Country</label>
+      <select id="native-country" [formField]="nativeForm.country">
+        <option value="">Choose a country</option>
+        <optgroup label="Middle East">
+          <option value="QA">Qatar</option>
+          <option value="AE">United Arab Emirates</option>
+          <option value="SA">Saudi Arabia</option>
+        </optgroup>
+        <optgroup label="Europe">
+          <option value="GB">United Kingdom</option>
+          <option value="ES" disabled>Spain (unavailable)</option>
+        </optgroup>
+      </select>
+    </ms-signal-form-field>
+    <p>Selected country code: {{ nativeForm.country().value() || 'None' }}</p>
+
+    <ms-signal-form-field>
+      <label for="native-disabled-status">Disabled Status</label>
+      <select id="native-disabled-status" disabled>
+        <option value="active">Active</option>
+        <option value="paused">Paused</option>
+        <option value="archived">Archived</option>
+      </select>
+    </ms-signal-form-field>
+  \`,
+})
+export class NativeSelectExample {
+  private readonly nativeFormModel = signal({ country: '' });
+  protected readonly nativeForm = form(
+    this.nativeFormModel,
+    schema((path) => {
+      required(path.country, { message: 'Choose a country.' });
+    }),
+  );
+}`;
 
   protected readonly basicSnippet = `import { Component, signal } from '@angular/core';
 

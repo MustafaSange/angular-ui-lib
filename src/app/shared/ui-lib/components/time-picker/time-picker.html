@@ -54,6 +54,7 @@
   popover="auto"
   role="dialog"
   [attr.aria-label]="'timePicker.choose' | translate"
+  [attr.aria-describedby]="panelError() ? panelErrorId : null"
   [id]="panelId"
   (keydown)="handlePanelKeydown($event)"
   (toggle)="handlePanelToggle($event)"
@@ -68,7 +69,7 @@
         (change)="updateHour($event)"
       >
         @for (hour of hourOptions(); track hour) {
-          <option [value]="hour">{{ optionLabel(hour) }}</option>
+          <option [value]="hour" [selected]="hour === draftHour()">{{ optionLabel(hour) }}</option>
         }
       </select>
     </label>
@@ -83,7 +84,9 @@
         (change)="updateMinute($event)"
       >
         @for (minute of minuteOptions(); track minute) {
-          <option [value]="minute">{{ optionLabel(minute) }}</option>
+          <option [value]="minute" [selected]="minute === draftMinute()">
+            {{ optionLabel(minute) }}
+          </option>
         }
       </select>
     </label>
@@ -99,7 +102,9 @@
           (change)="updateSecond($event)"
         >
           @for (second of secondOptions(); track second) {
-            <option [value]="second">{{ optionLabel(second) }}</option>
+            <option [value]="second" [selected]="second === draftSecond()">
+              {{ optionLabel(second) }}
+            </option>
           }
         </select>
       </label>
@@ -114,12 +119,16 @@
           (change)="updatePeriod($event)"
         >
           @for (period of periodOptions; track period) {
-            <option [value]="period">{{ period }}</option>
+            <option [value]="period" [selected]="period === draftPeriod()">{{ period }}</option>
           }
         </select>
       </label>
     }
   </div>
+
+  @if (panelError(); as message) {
+    <p class="time-picker-error" [id]="panelErrorId" role="alert">{{ message }}</p>
+  }
 
   <div class="time-picker-actions">
     <button class="btn btn-primary btn-sm" type="button" (click)="finishSelection()">

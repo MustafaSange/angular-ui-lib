@@ -48,6 +48,8 @@ export const en = {
     selectedValues: 'selected values',
   },
   datePicker: {
+    clearAction: 'Clear',
+    today: 'Today',
     clear: 'Clear date',
     choose: 'Choose date',
     previousYear: 'Previous year',
@@ -60,6 +62,9 @@ export const en = {
     chooseYear: 'Choose year',
   },
   timePicker: {
+    invalidFormat: 'Enter a valid time in {{format}} format.',
+    minTime: 'Time must be at or after {{time}}.',
+    maxTime: 'Time must be at or before {{time}}.',
     clear: 'Clear time',
     choose: 'Choose time',
     hour: 'Hour',

@@ -11,7 +11,7 @@
 
   <section class="format-json-section showcase-section">
     <h2>JSON String</h2>
-    <p class="section-copy">Parse a valid JSON string and display it with two-space indentation.</p>
+    <p class="section-copy">Parse a valid JSON string and display it with the default two-space indentation.</p>
     <div class="showcase-demo-panel">
       <pre class="json-output"><code>{{ jsonString | formatJson }}</code></pre>
     </div>
@@ -21,10 +21,10 @@
   <section class="format-json-section showcase-section">
     <h2>Structured Value</h2>
     <p class="section-copy">
-      Serialize an object directly without converting it to a string first.
+      Serialize an object directly with four-space indentation using the optional indentation parameter.
     </p>
     <div class="showcase-demo-panel">
-      <pre class="json-output"><code>{{ structuredValue | formatJson }}</code></pre>
+      <pre class="json-output"><code>{{ structuredValue | formatJson:4 }}</code></pre>
     </div>
     <app-showcase-code label="Format a Structured Value" [code]="structuredValueSnippet" />
   </section>

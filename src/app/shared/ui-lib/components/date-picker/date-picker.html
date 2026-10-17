@@ -57,6 +57,7 @@
   [attr.aria-label]="'datePicker.choose' | translate"
   [id]="panelId"
   (toggle)="handlePanelToggle($event)"
+  (keydown.escape)="closePanelFromKeyboard($event)"
 >
   <div class="calendar-header">
     <button
@@ -186,4 +187,24 @@
       </div>
     }
   }
+  <div class="calendar-actions">
+    @if (clearable()) {
+      <button
+        class="btn btn-ghost btn-sm"
+        type="button"
+        [disabled]="disabled() || readonly() || !inputText()"
+        (click)="clear($event)"
+      >
+        {{ 'datePicker.clearAction' | translate }}
+      </button>
+    }
+    <button
+      class="btn btn-outline btn-sm"
+      type="button"
+      [disabled]="disabled() || readonly() || isDateDisabled(today())"
+      (click)="selectToday()"
+    >
+      {{ 'datePicker.today' | translate }}
+    </button>
+  </div>
 </div>
