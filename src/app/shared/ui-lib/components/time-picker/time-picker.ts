@@ -4,6 +4,7 @@ import {
   booleanAttribute,
   computed,
   effect,
+  inject,
   input,
   model,
   numberAttribute,
@@ -18,6 +19,7 @@ import {
 } from '@angular/forms/signals';
 
 import { TranslatePipe } from '../../pipes';
+import { LanguageService } from '../../services/language';
 import {
   formatDisplayTime,
   formatTimeValue,
@@ -55,6 +57,7 @@ let nextTimePickerId = 0;
   },
 })
 export class TimePickerComponent implements FormValueControl<TimePickerValue> {
+  private readonly languageService = inject(LanguageService);
   readonly value = model<TimePickerValue>(null);
   readonly open = model(false);
   readonly displayFormat = input<TimePickerDisplayFormat>('24-hour');
@@ -87,6 +90,11 @@ export class TimePickerComponent implements FormValueControl<TimePickerValue> {
   });
   protected readonly invalidInput = computed(() => this.inputText.parseErrors().length > 0);
   protected readonly panelId = `${this.generatedInputId}-panel`;
+  protected readonly panelErrorId = `${this.generatedInputId}-panel-error`;
+  private readonly selectionAttempted = signal(false);
+  protected readonly panelError = computed(() =>
+    this.selectionAttempted() ? (this.inputText.parseErrors()[0]?.message ?? null) : null,
+  );
   protected readonly draftHour = signal(0);
   protected readonly draftMinute = signal(0);
   protected readonly draftSecond = signal(0);
@@ -108,8 +116,12 @@ export class TimePickerComponent implements FormValueControl<TimePickerValue> {
       this.showPeriod() ? index + 1 : index,
     ),
   );
-  protected readonly minuteOptions = computed(() => this.createPartOptions(this.minuteStep()));
-  protected readonly secondOptions = computed(() => this.createPartOptions(this.secondStep()));
+  protected readonly minuteOptions = computed(() =>
+    this.createPartOptions(this.minuteStep(), this.draftMinute()),
+  );
+  protected readonly secondOptions = computed(() =>
+    this.createPartOptions(this.secondStep(), this.draftSecond()),
+  );
   protected readonly periodOptions: readonly TimePeriod[] = ['AM', 'PM'];
 
   constructor() {
@@ -235,6 +247,7 @@ export class TimePickerComponent implements FormValueControl<TimePickerValue> {
 
   protected finishSelection(): void {
     this.commitSelectors();
+    this.selectionAttempted.set(true);
     this.emitTouch();
 
     if (!this.invalidInput()) {
@@ -279,7 +292,9 @@ export class TimePickerComponent implements FormValueControl<TimePickerValue> {
       return {
         error: {
           kind: 'parse',
-          message: `Enter a valid time in ${this.effectivePlaceholder()} format.`,
+          message: this.languageService.translate('timePicker.invalidFormat', {
+            format: this.effectivePlaceholder(),
+          }),
         },
       };
     }
@@ -292,11 +307,9 @@ export class TimePickerComponent implements FormValueControl<TimePickerValue> {
       return {
         error: {
           kind: 'min',
-          message: `Time must be at or after ${formatDisplayTime(
-            this.minTime() ?? null,
-            this.displayFormat(),
-            precision,
-          )}.`,
+          message: this.languageService.translate('timePicker.minTime', {
+            time: formatDisplayTime(this.minTime() ?? null, this.displayFormat(), precision),
+          }),
         },
       };
     }
@@ -305,11 +318,9 @@ export class TimePickerComponent implements FormValueControl<TimePickerValue> {
       return {
         error: {
           kind: 'max',
-          message: `Time must be at or before ${formatDisplayTime(
-            this.maxTime() ?? null,
-            this.displayFormat(),
-            precision,
-          )}.`,
+          message: this.languageService.translate('timePicker.maxTime', {
+            time: formatDisplayTime(this.maxTime() ?? null, this.displayFormat(), precision),
+          }),
         },
       };
     }
@@ -318,14 +329,19 @@ export class TimePickerComponent implements FormValueControl<TimePickerValue> {
   }
 
   private prepareSelectors(): void {
-    const totalSeconds = parseTimeValue(this.value()) ?? 0;
+    this.selectionAttempted.set(false);
+    const precisionUnit = this.showSeconds() ? 1 : 60;
+    const firstAllowedTime =
+      Math.ceil((parseTimeValue(this.minTime()) ?? 0) / precisionUnit) * precisionUnit;
+    const totalSeconds =
+      parseTimeValue(this.value()) ?? Math.min(firstAllowedTime, 86400 - precisionUnit);
     const hour24 = Math.floor(totalSeconds / 3600);
     const minute = Math.floor((totalSeconds % 3600) / 60);
     const second = totalSeconds % 60;
 
     this.draftHour.set(this.showPeriod() ? hour24 % 12 || 12 : hour24);
-    this.draftMinute.set(this.closestOption(minute, this.minuteOptions()));
-    this.draftSecond.set(this.closestOption(second, this.secondOptions()));
+    this.draftMinute.set(minute);
+    this.draftSecond.set(second);
     this.draftPeriod.set(hour24 >= 12 ? 'PM' : 'AM');
   }
 
@@ -346,12 +362,18 @@ export class TimePickerComponent implements FormValueControl<TimePickerValue> {
     return this.precision() === 'second' ? 'second' : 'minute';
   }
 
-  private createPartOptions(stepValue: number): number[] {
+  private createPartOptions(stepValue: number, selectedValue: number): number[] {
     const step = this.normalizedPartStep(stepValue);
     const values: number[] = [];
 
     for (let value = 0; value < 60; value += step) {
       values.push(value);
+    }
+
+    // Keep existing values and range boundaries selectable even between step options.
+    if (!values.includes(selectedValue)) {
+      values.push(selectedValue);
+      values.sort((left, right) => left - right);
     }
 
     return values;
@@ -360,14 +382,6 @@ export class TimePickerComponent implements FormValueControl<TimePickerValue> {
   private normalizedPartStep(stepValue: number): number {
     const step = Math.trunc(stepValue);
     return Number.isFinite(step) && step >= 1 && step <= 59 ? step : 1;
-  }
-
-  private closestOption(value: number, options: readonly number[]): number {
-    return options.reduce(
-      (closest, option) =>
-        Math.abs(option - value) < Math.abs(closest - value) ? option : closest,
-      options[0] ?? 0,
-    );
   }
 
   private emitTouch(): void {

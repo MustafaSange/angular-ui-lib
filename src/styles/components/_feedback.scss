@@ -106,7 +106,6 @@ ms-alert {
 .ms-alert-actions .btn-ghost,
 .ms-alert-actions .btn-outline,
 .ms-alert-close,
-.ms-toast-action,
 .ms-toast-close {
   color: var(--_feedback-text);
 }
@@ -192,22 +191,23 @@ ms-alert {
 }
 
 .ms-toast-action {
+  --color-button-secondary-border: var(--_feedback-color);
+  --color-button-secondary-outline-text: var(--_feedback-text);
+  --color-button-secondary-outline-hover: color-mix(
+    in srgb,
+    var(--_feedback-color) 12%,
+    var(--_feedback-surface)
+  );
+  --color-button-secondary-outline-active: color-mix(
+    in srgb,
+    var(--_feedback-color) 20%,
+    var(--_feedback-surface)
+  );
+  --color-button-secondary-outline-active-text: var(--_feedback-text);
+
   flex-shrink: 0;
   max-inline-size: 100%;
-  padding-inline: var(--spacing-8);
-  border-color: color-mix(in srgb, var(--_feedback-color) 45%, var(--_feedback-surface));
-  background-color: color-mix(in srgb, var(--_feedback-color) 8%, var(--_feedback-surface));
-  font-weight: var(--font-weight-semibold);
   overflow-wrap: anywhere;
-
-  &:hover:not(:disabled):not([aria-disabled='true']) {
-    border-color: var(--_feedback-color);
-    background-color: color-mix(in srgb, var(--_feedback-color) 14%, var(--_feedback-surface));
-  }
-
-  &:active:not(:disabled):not([aria-disabled='true']) {
-    background-color: color-mix(in srgb, var(--_feedback-color) 20%, var(--_feedback-surface));
-  }
 }
 
 @media screen and (max-width: 22.5rem) {

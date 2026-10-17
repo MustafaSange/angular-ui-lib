@@ -97,15 +97,12 @@ ms-time-picker {
   }
 
   .time-picker-segment {
+    --native-select-arrow-center: calc(100% - var(--control-height-sm) / 2);
+
     display: grid;
     flex: 0 0 auto;
     gap: var(--spacing-4);
     inline-size: auto;
-
-    &::after {
-      display: none;
-      content: none;
-    }
 
     > span {
       color: var(--color-text-muted);
@@ -128,7 +125,7 @@ ms-time-picker {
     cursor: pointer;
 
     &:focus-visible {
-      outline: var(--focus-ring-width) solid var(--color-focus-ring);
+      outline: var(--control-border-width) solid var(--color-focus-ring);
       outline-offset: var(--spacing-2);
     }
   }
@@ -148,6 +145,14 @@ ms-time-picker {
     color: var(--color-text-muted);
     font-weight: var(--font-weight-medium);
     line-height: 1;
+  }
+
+  .time-picker-error {
+    max-inline-size: 32ch;
+    margin: 0;
+    color: var(--color-danger-text);
+    font-size: var(--font-size-xs);
+    overflow-wrap: anywhere;
   }
 
   .time-picker-actions {

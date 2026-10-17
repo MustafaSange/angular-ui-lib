@@ -40,6 +40,7 @@ $confirm-dialog-kinds: info, success, warning, danger;
 }
 
 .confirm-dialog-message {
+  align-self: center;
   margin: 0;
   color: var(--color-text-primary);
   font-size: var(--font-size-md);

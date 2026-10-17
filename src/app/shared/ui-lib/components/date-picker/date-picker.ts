@@ -100,16 +100,16 @@ export class DatePickerComponent implements FormValueControl<DatePickerValue> {
   private readonly monthButtons = viewChildren<ElementRef<HTMLButtonElement>>('monthButton');
   private readonly yearButtons = viewChildren<ElementRef<HTMLButtonElement>>('yearButton');
   private readonly generatedInputId = `ms-date-picker-${nextDatePickerId++}`;
-  private readonly today = todayIsoDate();
+  protected readonly today = signal(todayIsoDate());
 
   protected readonly inputText = transformedValue(this.value, {
     parse: (text: string) => this.parseInputValue(text),
     format: (value) => formatDisplayDate(value, this.displayFormat()),
   });
   protected readonly invalidInput = computed(() => this.inputText.parseErrors().length > 0);
-  protected readonly activeDate = signal(this.today);
-  protected readonly visibleYear = signal(parseIsoDate(this.today)?.year ?? 1970);
-  protected readonly visibleMonth = signal(parseIsoDate(this.today)?.month ?? 1);
+  protected readonly activeDate = signal(this.today());
+  protected readonly visibleYear = signal(parseIsoDate(this.today())?.year ?? 1970);
+  protected readonly visibleMonth = signal(parseIsoDate(this.today())?.month ?? 1);
   protected readonly calendarView = signal<CalendarView>('day');
   protected readonly panelId = `${this.generatedInputId}-panel`;
   protected readonly effectivePlaceholder = computed(
@@ -269,9 +269,19 @@ export class DatePickerComponent implements FormValueControl<DatePickerValue> {
 
   protected clear(event: MouseEvent): void {
     event.stopPropagation();
+    if (!this.clearable() || this.disabled() || this.readonly()) {
+      return;
+    }
+
     this.inputText.set('');
+    this.open.set(false);
     this.emitTouch();
     this.focus();
+  }
+
+  protected selectToday(): void {
+    this.today.set(todayIsoDate());
+    this.selectDate(this.today());
   }
 
   protected navigatePrevious(): void {
@@ -363,7 +373,7 @@ export class DatePickerComponent implements FormValueControl<DatePickerValue> {
   }
 
   protected selectDate(date: string): void {
-    if (this.isDateDisabled(date)) {
+    if (this.disabled() || this.readonly() || this.isDateDisabled(date)) {
       return;
     }
 
@@ -415,7 +425,7 @@ export class DatePickerComponent implements FormValueControl<DatePickerValue> {
   }
 
   protected isToday(date: string): boolean {
-    return date === this.today;
+    return date === this.today();
   }
 
   protected isActive(date: string): boolean {
@@ -514,8 +524,9 @@ export class DatePickerComponent implements FormValueControl<DatePickerValue> {
   }
 
   private prepareCalendar(): void {
+    this.today.set(todayIsoDate());
     const candidate =
-      this.value() && !this.isDateDisabled(this.value()!) ? this.value()! : this.today;
+      this.value() && !this.isDateDisabled(this.value()!) ? this.value()! : this.today();
     const parts = parseIsoDate(candidate);
 
     if (parts) {
@@ -615,7 +626,7 @@ export class DatePickerComponent implements FormValueControl<DatePickerValue> {
     button?.nativeElement.focus();
   }
 
-  private closePanelFromKeyboard(event: KeyboardEvent): void {
+  protected closePanelFromKeyboard(event: Event): void {
     event.preventDefault();
     this.open.set(false);
     this.focus();

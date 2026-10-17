@@ -23,18 +23,20 @@
       @if (showPageSizeSelector()) {
         <span class="pagination-page-size">
           <span>{{ 'pagination.itemsPerPage' | translate }}</span>
-          <select
-            [attr.aria-label]="'pagination.itemsPerPage' | translate"
-            [disabled]="disabled()"
-            (change)="changePageSize($event)"
-          >
-            @if (!hasCurrentPageSizeOption()) {
-              <option [value]="pageSize()" selected hidden>{{ pageSize() }}</option>
-            }
-            @for (option of pageSizeOptions(); track option) {
-              <option [value]="option" [selected]="option === pageSize()">{{ option }}</option>
-            }
-          </select>
+          <span class="pagination-page-size-control">
+            <select
+              [attr.aria-label]="'pagination.itemsPerPage' | translate"
+              [disabled]="disabled()"
+              (change)="changePageSize($event)"
+            >
+              @if (!hasCurrentPageSizeOption()) {
+                <option [value]="pageSize()" selected hidden>{{ pageSize() }}</option>
+              }
+              @for (option of pageSizeOptions(); track option) {
+                <option [value]="option" [selected]="option === pageSize()">{{ option }}</option>
+              }
+            </select>
+          </span>
         </span>
       }
     </div>

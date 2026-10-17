@@ -4,10 +4,46 @@
     <p class="eyebrow">Components</p>
     <h1>Select</h1>
     <p class="description">
-      Searchable selection controls with separate display labels, stored values, and signal form
-      binding.
+      Native and searchable selection controls with signal form binding, grouped options, and
+      disabled states.
     </p>
   </header>
+
+  <section class="select-section">
+    <h2>Native Select</h2>
+    <p class="section-copy">
+      Use the browser's built-in picker with grouped options, disabled states, and required
+      validation through signal forms.
+    </p>
+    <div class="select-demo">
+      <ms-signal-form-field>
+        <label for="native-country">Country</label>
+        <select id="native-country" [formField]="nativeForm.country">
+          <option value="">Choose a country</option>
+          <optgroup label="Middle East">
+            <option value="QA">Qatar</option>
+            <option value="AE">United Arab Emirates</option>
+            <option value="SA">Saudi Arabia</option>
+          </optgroup>
+          <optgroup label="Europe">
+            <option value="GB">United Kingdom</option>
+            <option value="ES" disabled>Spain (unavailable)</option>
+          </optgroup>
+        </select>
+      </ms-signal-form-field>
+      <p>Selected country code: {{ nativeForm.country().value() || 'None' }}</p>
+
+      <ms-signal-form-field>
+        <label for="native-disabled-status">Disabled Status</label>
+        <select id="native-disabled-status" disabled>
+          <option value="active">Active</option>
+          <option value="paused">Paused</option>
+          <option value="archived">Archived</option>
+        </select>
+      </ms-signal-form-field>
+    </div>
+    <app-showcase-code label="Native Select" [code]="nativeSnippet" />
+  </section>
 
   <section class="select-section">
     <h2>Searchable Select</h2>

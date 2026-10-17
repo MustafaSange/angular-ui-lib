@@ -41,7 +41,7 @@ import { FormatJsonPipe } from './shared/ui-lib';
 @Component({
   selector: 'app-structured-json-example',
   imports: [FormatJsonPipe],
-  template: \`<pre><code>{{ settings | formatJson }}</code></pre>\`,
+  template: \`<pre><code>{{ settings | formatJson:4 }}</code></pre>\`,
 })
 export class StructuredJsonExample {
   readonly settings = {
