@@ -9,38 +9,156 @@
   </header>
 
   <section class="component-section">
-    <h2>Examples</h2>
+    <h2>Compare Variants</h2>
+    <div class="showcase-preview switch-comparison">
+      @for (variant of variants; track variant.value) {
+        <ms-switch-group>
+          <legend>{{ variant.label }}</legend>
+          @for (example of variant.examples; track example.label) {
+            <ms-switch-control [variant]="variant.value" kind="success">
+              <input
+                type="checkbox"
+                role="switch"
+                #toggle
+                [checked]="example.checked()"
+                (change)="example.checked.set(toggle.checked)"
+                [disabled]="example.disabled"
+              />
+              <label>
+                {{ example.label }}
+                <span aria-hidden="true"> · {{ example.checked() ? 'On' : 'Off' }}</span>
+              </label>
+            </ms-switch-control>
+          }
+        </ms-switch-group>
+      }
+    </div>
+    <app-showcase-code label="Compare Switch Variants" [code]="comparisonSnippet" />
+  </section>
 
-<div class="showcase-preview">
+  <section class="component-section">
+    <h2>Classic</h2>
+
+    <div class="showcase-preview">
       <ms-switch-group>
-        <legend>Switches</legend>
-        <ms-switch-control>
+        <legend>Classic Switches</legend>
+        <ms-switch-control variant="classic">
           <input type="checkbox" role="switch" checked />
           <label>Notifications</label>
           <ms-choice-hint>Push critical alerts immediately.</ms-choice-hint>
         </ms-switch-control>
-        <ms-switch-control>
+        <ms-switch-control variant="classic">
           <input type="checkbox" role="switch" />
           <label>Compact Mode</label>
           <ms-choice-hint>Reduce spacing in dense views.</ms-choice-hint>
         </ms-switch-control>
-        <ms-switch-control>
+        <ms-switch-control variant="classic">
           <input type="checkbox" role="switch" disabled />
           <label>Audit Logging</label>
           <ms-choice-hint>Available on enterprise plans.</ms-choice-hint>
         </ms-switch-control>
-        <ms-switch-control>
+        <ms-switch-control variant="classic">
+          <input type="checkbox" role="switch" checked disabled />
+          <label>Managed Backups</label>
+          <ms-choice-hint>Enabled by your administrator.</ms-choice-hint>
+        </ms-switch-control>
+        <ms-switch-control variant="classic">
           <input type="checkbox" role="switch" />
           <label>Public Profile</label>
           <ms-choice-error>Review visibility settings before enabling.</ms-choice-error>
         </ms-switch-control>
-        <ms-switch-control slot="label-before">
+        <ms-switch-control variant="classic" slot="label-before">
           <input type="checkbox" role="switch" />
           <label>Label Before</label>
           <ms-choice-hint>Places text before the switch.</ms-choice-hint>
         </ms-switch-control>
       </ms-switch-group>
     </div>
-    <app-showcase-code label="Switch Controls" [code]="snippet" />
+    <app-showcase-code label="Classic Switches" [code]="classicSnippet" />
+  </section>
+
+  <section class="component-section">
+    <h2>Slim Track</h2>
+    <p class="variant-description">
+      Set variant="slim-track" for a 24px thumb centered over a 16px track, extending 4px above
+      and below the track. Set variant="classic" for the original style. Omitting variant uses
+      the global default, which is classic unless configured.
+    </p>
+    <div class="showcase-preview">
+      <ms-switch-group>
+        <legend>Slim Track Switches</legend>
+        <ms-switch-control variant="slim-track">
+          <input type="checkbox" role="switch" checked />
+          <label>Notifications</label>
+          <ms-choice-hint>Push critical alerts immediately.</ms-choice-hint>
+        </ms-switch-control>
+        <ms-switch-control variant="slim-track">
+          <input type="checkbox" role="switch" />
+          <label>Compact Mode</label>
+          <ms-choice-hint>Reduce spacing in dense views.</ms-choice-hint>
+        </ms-switch-control>
+        <ms-switch-control variant="slim-track">
+          <input type="checkbox" role="switch" disabled />
+          <label>Audit Logging</label>
+          <ms-choice-hint>Available on enterprise plans.</ms-choice-hint>
+        </ms-switch-control>
+        <ms-switch-control variant="slim-track">
+          <input type="checkbox" role="switch" checked disabled />
+          <label>Managed Backups</label>
+          <ms-choice-hint>Enabled by your administrator.</ms-choice-hint>
+        </ms-switch-control>
+        <ms-switch-control variant="slim-track">
+          <input type="checkbox" role="switch" />
+          <label>Public Profile</label>
+          <ms-choice-error>Review visibility settings before enabling.</ms-choice-error>
+        </ms-switch-control>
+        <ms-switch-control variant="slim-track" slot="label-before">
+          <input type="checkbox" role="switch" />
+          <label>Label Before</label>
+          <ms-choice-hint>Places text before the switch.</ms-choice-hint>
+        </ms-switch-control>
+      </ms-switch-group>
+    </div>
+    <app-showcase-code label="Slim Track Switches" [code]="slimTrackSnippet" />
+  </section>
+
+  <section class="component-section">
+    <h2>Disabled Slim Track</h2>
+    <p class="variant-description">
+      Both the track and thumb are muted. The thumb position still shows whether the switch is
+      off or on, even when a selected color is configured.
+    </p>
+    <div class="showcase-preview">
+      <ms-switch-group>
+        <legend>Disabled States</legend>
+        <ms-switch-control variant="slim-track" kind="success">
+          <input type="checkbox" role="switch" disabled />
+          <label>Disabled Off</label>
+        </ms-switch-control>
+        <ms-switch-control variant="slim-track" kind="success">
+          <input type="checkbox" role="switch" checked disabled />
+          <label>Disabled On</label>
+        </ms-switch-control>
+      </ms-switch-group>
+    </div>
+    <app-showcase-code label="Disabled Slim Track" [code]="disabledSlimTrackSnippet" />
+  </section>
+
+  <section class="component-section">
+    <h2>Semantic Colors and Global Defaults</h2>
+    <p class="variant-description">
+      Choose success, warning, danger, or info with the kind input. Selected switches use a solid
+      semantic track and a contrasting thumb in both variants. Configure defaults through provideUiLib
+      and override kind or variant on individual switches. These examples inherit success and
+      slim-track defaults. Toggle a switch to compare its states.
+    </p>
+    <p class="variant-description">
+      For custom palettes, selectedTrackColor and selectedThumbColor still accept CSS colors and
+      theme variables. Explicit color settings take precedence over the semantic palette.
+    </p>
+    <div class="showcase-preview">
+      <app-switch-configuration-example />
+    </div>
+    <app-showcase-code label="Semantic Switch Colors and Global Defaults" [code]="configurationSnippet" />
   </section>
 </main>

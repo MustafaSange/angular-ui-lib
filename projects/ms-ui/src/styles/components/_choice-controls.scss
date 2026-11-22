@@ -185,13 +185,14 @@ ms-choice-error {
   }
 }
 
+$switch-track-width: 2.75rem;
+
 .switch-control {
-  grid-template-columns: 2.75rem 1fr;
-  max-inline-size: 34rem;
+  grid-template-columns: $switch-track-width 1fr;
 }
 
 .is-label-before .switch-control {
-  grid-template-columns: 1fr 2.75rem;
+  grid-template-columns: 1fr $switch-track-width;
 
   .switch-input,
   .switch-track {
@@ -220,7 +221,7 @@ ms-choice-error {
 
 .switch-track {
   position: relative;
-  inline-size: 2.75rem;
+  inline-size: $switch-track-width;
   block-size: 1.5rem;
   margin-block-start: 0.125rem;
   border: var(--control-border-width) solid var(--control-border-color);
@@ -257,14 +258,27 @@ ms-choice-error {
   border-color: var(--color-control-border-hover);
 }
 
-.switch-input:checked + .switch-track {
-  border-color: var(--color-accent);
-  background-color: var(--color-accent);
+@each $kind in success, warning, danger, info {
+  ms-switch-control[data-kind='#{$kind}'] {
+    --_switch-kind-color: var(--color-#{$kind});
+    --_switch-kind-contrast: var(--color-#{$kind}-contrast);
+  }
+}
+
+.switch-input:enabled:checked + .switch-track {
+  --_switch-checked-track: var(--switch-selected-track-color, var(--_switch-kind-color, var(--color-accent)));
+  --_switch-checked-thumb: var(--switch-selected-thumb-color, var(--_switch-kind-contrast, var(--color-accent-contrast)));
+
+  border-color: var(--_switch-checked-track);
+  background-color: var(--_switch-checked-track);
+
+  .switch-thumb {
+    border-color: var(--_switch-checked-thumb-outline, var(--_switch-checked-thumb));
+    background-color: var(--_switch-checked-thumb);
+  }
 }
 
 .switch-input:checked + .switch-track .switch-thumb {
-  border-color: var(--color-accent-contrast);
-  background-color: var(--color-accent-contrast);
   transform: translateX(1.25rem);
 }
 
@@ -277,4 +291,53 @@ ms-choice-error {
   background-color: var(--color-surface-muted);
   cursor: not-allowed;
   opacity: var(--opacity-muted);
+
+  .switch-thumb {
+    border-color: var(--color-border);
+    background-color: color-mix(in srgb, var(--color-border) 40%, var(--color-surface-raised));
+  }
+}
+
+ms-switch-control.is-slim-track {
+  $track-height: 1rem;
+  $thumb-size: 1.5rem;
+  $overhang: calc(($thumb-size - $track-height) / 2);
+
+  .switch-control {
+    min-block-size: $thumb-size;
+  }
+
+  .switch-track {
+    --_switch-checked-thumb-outline: var(--switch-selected-thumb-color, var(--_switch-kind-color, var(--color-accent)));
+
+    box-sizing: border-box;
+    block-size: $track-height;
+    margin-block-start: $overhang;
+    background-color: var(--color-border);
+
+    // Keep the clickable area as tall as the protruding thumb.
+    &::before {
+      position: absolute;
+      inset-block: -$overhang;
+      inset-inline: 0;
+      content: '';
+    }
+  }
+
+  .switch-thumb {
+    box-sizing: border-box;
+    inset-block-start: calc(50% - $thumb-size / 2);
+    inset-inline-start: calc(-1 * var(--control-border-width));
+    inline-size: $thumb-size;
+    block-size: $thumb-size;
+    transition:
+      background-color var(--transition-fast),
+      border-color var(--transition-fast),
+      inset-inline-start var(--transition-fast);
+  }
+
+  .switch-input:checked + .switch-track .switch-thumb {
+    inset-inline-start: calc(100% - $thumb-size + var(--control-border-width));
+    transform: none;
+  }
 }

@@ -55,6 +55,15 @@ h2 {
   background-color: var(--color-surface);
 }
 
+.component-section + .component-section {
+  margin-block-start: var(--spacing-24);
+}
+
+.variant-description {
+  margin-block-end: var(--spacing-16);
+  color: var(--color-text-secondary);
+}
+
 .showcase-preview {
   display: grid;
   gap: var(--spacing-16);
@@ -70,4 +79,8 @@ h2 {
 app-showcase-code + .showcase-preview {
   display: block;
   margin-block-start: var(--spacing-16);
+}
+
+.switch-comparison {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
 }
