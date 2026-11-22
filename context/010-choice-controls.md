@@ -76,13 +76,36 @@ Switch:
 <ms-switch-group>
   <legend>Preferences</legend>
 
-  <ms-switch-control>
+  <ms-switch-control variant="classic">
     <input type="checkbox" role="switch" checked />
     <label>Notifications</label>
     <ms-choice-hint>Push critical alerts immediately.</ms-choice-hint>
   </ms-switch-control>
 </ms-switch-group>
 ```
+
+### Switch Variants and Colors
+
+The public `SwitchVariant` type accepts `'classic'` and `'slim-track'`. Classic keeps the thumb
+inside the track. Slim Track centers a 24px thumb over a 16px track, with 4px of overhang above and
+below. If you omit `variant`, the switch uses `provideUiLib({ switch: { variant: … } })` and
+falls back to Classic when no global variant is configured.
+
+Both variants accept `kind="success"`, `"warning"`, `"danger"`, or `"info"` for a solid
+selected track and a contrasting thumb. Without a kind, both variants use a solid theme accent
+track and its contrasting thumb color.
+Set `selectedTrackColor` or `selectedThumbColor` to a CSS color or theme variable to override
+the corresponding selected color.
+
+```ts
+provideUiLib({
+  switch: { variant: 'slim-track', kind: 'success' },
+});
+```
+
+The public `SwitchConfig` type supports the same four options as the component. A switch can
+override each option independently. Configured explicit colors take precedence over the
+semantic palette, including when a switch overrides the global kind.
 
 Label-before layout:
 
@@ -146,12 +169,15 @@ Do not put choice-control styles in `_form-fields.scss`.
 Styling rules:
 
 - Use existing tokens for color, spacing, radius, border width, motion, and focus rings.
-- Checked checkbox, radio, and switch states use accent colors.
+- Checked checkbox and radio states use accent colors. Checked switches use the configured
+  colors, the semantic palette, or the theme accent.
 - Checkbox and radio controls use `var(--border-width-md)`.
 - Checkbox, radio, and switch labels use the same muted compact label treatment as form-field
   labels: `--font-size-sm` (14px) text with `--color-text-muted`.
 - `ms-choice-hint` and `ms-choice-error` use the same font size as form field hint/error messages.
 - Disabled controls must use `cursor: not-allowed`.
+- Disabled switches use muted track and thumb colors, including when checked. The thumb position
+  still shows whether the switch is on or off.
 - The visible switch track must use `cursor: pointer` and remain clickable.
 - `.is-label-before` on the control host owns the reversed grid layout.
 - Checkbox, radio, switch, and label-before arrangements use logical inline layout in both
@@ -160,16 +186,16 @@ Styling rules:
 
 ## Showcase
 
-The Form Fields showcase should include a Selection Controls section with:
+Choice controls have dedicated showcase pages at `/checkbox`, `/radio`, and `/switch`.
+The Compare Variants section pairs Classic and Slim Track with the same color and on, off,
+and disabled examples. The columns stack when space is limited.
+Classic and Slim Track show the same checked, unchecked, disabled, error, and label-before
+examples. The Disabled Slim Track section compares disabled off and on with the same semantic
+color setting. The semantic color section shows both variants, including inherited settings and
+per-switch overrides.
 
-- checkbox checked/default/disabled/error examples
-- radio default/checked/disabled error examples
-- switch checked/default/disabled/error examples
-- one `slot="label-before"` example for checkbox, radio, and switch
-
-Showcase snippets should use the projected component API, not raw `.choice-*` or `.switch-*` class markup.
-
-Each selection-control group should keep its matching `<app-showcase-code>` snippet directly below the visual group in the Form Fields showcase.
+Keep a matching `<app-showcase-code>` snippet directly below each demo. Use the projected
+component API in snippets.
 
 ## Angular Rules
 
@@ -186,7 +212,7 @@ Each selection-control group should keep its matching `<app-showcase-code>` snip
 - Choice controls render with projected native `input` and `label`.
 - `legend` is projected into the semantic group fieldset.
 - Hints and errors render through `ms-choice-hint` and `ms-choice-error`.
-- Checkbox, radio, and switch checked/default/disabled/error states are visible in the showcase.
+- Checkbox, radio, and switch checked, unchecked, disabled, and error examples are visible in their showcases.
 - `slot="label-before"` renders label/support text before the input or switch track.
 - The switch can be toggled by clicking either its text label or visual track.
 - Checked switches and label-before arrangements mirror correctly in `dir="rtl"`.

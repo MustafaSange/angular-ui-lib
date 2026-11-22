@@ -84,13 +84,15 @@ export const appConfig: ApplicationConfig = {
 | --- | --- | --- | --- |
 | `density` | `'default'` or `'compact'` | `'default'` | Sets the initial control density on the document. |
 | `additionalMaterialIcons` | `readonly string[]` | `[]` | Adds Material Symbol names to the library's built-in icon set. Duplicate names are removed. |
+| `switch` | `SwitchConfig` | Classic with theme accent colors | Sets the switch variant, semantic color, and selected track and thumb colors. |
 
-An example using every startup option:
+An example configuring control density, extra icons, and switch defaults:
 
 ```ts
 provideUiLib({
   density: 'compact',
   additionalMaterialIcons: ['home', 'notifications'],
+  switch: { variant: 'slim-track', kind: 'success' },
 });
 ```
 
@@ -99,6 +101,27 @@ network access unless the consuming application provides its own font setup.
 
 Theme mode and layout direction are controlled at runtime through services rather than
 `provideUiLib()`. They restore their most recently selected values from browser local storage.
+
+### Switch Controls
+
+Import `SwitchControl` from `ms-ui` and project a native checkbox and label.
+
+```html
+<ms-switch-control variant="classic" kind="info">
+  <input type="checkbox" role="switch" checked />
+  <label>Notifications</label>
+</ms-switch-control>
+```
+
+`SwitchVariant` accepts `'classic'` and `'slim-track'`. Classic keeps the thumb inside the track.
+Slim Track uses a 24px thumb centered over a 16px track. Omitting `variant` uses the global
+setting and falls back to Classic.
+
+Both variants support `kind="success"`, `"warning"`, `"danger"`, and `"info"` for a solid
+selected track and a contrasting thumb. Individual inputs override the corresponding global
+settings. Set `selectedTrackColor` or `selectedThumbColor` to a CSS color or theme variable for
+a custom selected palette. Explicit colors take precedence over `kind`.
+Disabled switches mute the track and thumb while keeping the thumb position as an on or off cue.
 
 ### Theme Settings
 

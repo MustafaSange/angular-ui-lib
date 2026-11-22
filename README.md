@@ -46,7 +46,7 @@ not part of the reusable library API.
 - Button toggle
 - Card
 - Chip
-- Choice controls
+- [Choice controls, including Classic and Slim Track switches](context/010-choice-controls.md)
 - Clipboard copy
 - Confirm dialog
 - Date picker

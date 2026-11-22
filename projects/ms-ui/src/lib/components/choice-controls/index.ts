@@ -5,4 +5,6 @@ export { ChoiceHint } from './choice-hint';
 export { RadioControl } from './radio-control';
 export { RadioGroup } from './radio-group';
 export { SwitchControl } from './switch-control';
+export type { SwitchKind, SwitchVariant } from './switch-control';
+export type { SwitchConfig } from './switch-control';
 export { SwitchGroup } from './switch-group';
