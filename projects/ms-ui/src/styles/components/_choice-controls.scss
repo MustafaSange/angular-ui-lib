@@ -341,3 +341,11 @@ ms-switch-control.is-slim-track {
     transform: none;
   }
 }
+
+.switch-control:not(:has(ms-choice-hint, ms-choice-error)) {
+  align-items: center;
+
+  .switch-track {
+    margin-block-start: 0;
+  }
+}
